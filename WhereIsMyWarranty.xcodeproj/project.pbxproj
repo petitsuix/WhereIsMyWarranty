@@ -1,0 +1,968 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 55;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		97630447275A68B200688DDB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97630446275A68B200688DDB /* AppDelegate.swift */; };
+		97630449275A68B200688DDB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97630448275A68B200688DDB /* SceneDelegate.swift */; };
+		9763044B275A68B200688DDB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9763044A275A68B200688DDB /* ViewController.swift */; };
+		97630451275A68B200688DDB /* WhereIsMyWarranty.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9763044F275A68B200688DDB /* WhereIsMyWarranty.xcdatamodeld */; };
+		97630453275A68B300688DDB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97630452275A68B300688DDB /* Assets.xcassets */; };
+		97630456275A68B300688DDB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97630454275A68B300688DDB /* LaunchScreen.storyboard */; };
+		97630461275A68B300688DDB /* WhereIsMyWarrantyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97630460275A68B300688DDB /* WhereIsMyWarrantyTests.swift */; };
+		9763046B275A68B300688DDB /* WhereIsMyWarrantyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9763046A275A68B300688DDB /* WhereIsMyWarrantyUITests.swift */; };
+		9763046D275A68B300688DDB /* WhereIsMyWarrantyUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9763046C275A68B300688DDB /* WhereIsMyWarrantyUITestsLaunchTests.swift */; };
+		97630480275A6A4E00688DDB /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9763047F275A6A4E00688DDB /* UserNotifications.framework */; };
+		97630482275A6A4E00688DDB /* UserNotificationsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97630481275A6A4E00688DDB /* UserNotificationsUI.framework */; };
+		97630485275A6A4E00688DDB /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97630484275A6A4E00688DDB /* NotificationViewController.swift */; };
+		97630488275A6A4E00688DDB /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97630486275A6A4E00688DDB /* MainInterface.storyboard */; };
+		9763048C275A6A4E00688DDB /* WhereIsMyWarranty-notification.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 9763047D275A6A4E00688DDB /* WhereIsMyWarranty-notification.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		9763049E275A6C1E00688DDB /* CornerRadius.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9763049D275A6C1E00688DDB /* CornerRadius.swift */; };
+		976304A0275A6D9400688DDB /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9763049F275A6D9400688DDB /* TabBarViewController.swift */; };
+		976304A2275A6DAE00688DDB /* WarrantiesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976304A1275A6DAE00688DDB /* WarrantiesViewController.swift */; };
+		976304A4275A6EB100688DDB /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976304A3275A6EB100688DDB /* Strings.swift */; };
+		976304A8275A6ECC00688DDB /* MWColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976304A5275A6ECC00688DDB /* MWColor.swift */; };
+		976304A9275A6ECC00688DDB /* MWImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976304A6275A6ECC00688DDB /* MWImages.swift */; };
+		976304AA275A6ECC00688DDB /* NWFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976304A7275A6ECC00688DDB /* NWFont.swift */; };
+		976304AE275A6EDF00688DDB /* Ou__est_ma_garantie__.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 976304AC275A6EDF00688DDB /* Ou__est_ma_garantie__.xcdatamodeld */; };
+		976304B0275A6F3A00688DDB /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976304AF275A6F3A00688DDB /* Category.swift */; };
+		976304B2275A6F4000688DDB /* TopCategoriesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976304B1275A6F3F00688DDB /* TopCategoriesCell.swift */; };
+		976304B4275A6F4E00688DDB /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976304B3275A6F4E00688DDB /* SettingsViewController.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		9763045D275A68B300688DDB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9763043B275A68B200688DDB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 97630442275A68B200688DDB;
+			remoteInfo = WhereIsMyWarranty;
+		};
+		97630467275A68B300688DDB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9763043B275A68B200688DDB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 97630442275A68B200688DDB;
+			remoteInfo = WhereIsMyWarranty;
+		};
+		9763048A275A6A4E00688DDB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9763043B275A68B200688DDB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9763047C275A6A4E00688DDB;
+			remoteInfo = "WhereIsMyWarranty-notification";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		97630490275A6A4E00688DDB /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				9763048C275A6A4E00688DDB /* WhereIsMyWarranty-notification.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		97630443275A68B200688DDB /* WhereIsMyWarranty.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WhereIsMyWarranty.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		97630446275A68B200688DDB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		97630448275A68B200688DDB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		9763044A275A68B200688DDB /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		97630450275A68B200688DDB /* WhereIsMyWarranty.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = WhereIsMyWarranty.xcdatamodel; sourceTree = "<group>"; };
+		97630452275A68B300688DDB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		97630455275A68B300688DDB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		97630457275A68B300688DDB /* WhereIsMyWarranty-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "WhereIsMyWarranty-Info.plist"; sourceTree = "<group>"; };
+		9763045C275A68B300688DDB /* WhereIsMyWarrantyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WhereIsMyWarrantyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		97630460275A68B300688DDB /* WhereIsMyWarrantyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhereIsMyWarrantyTests.swift; sourceTree = "<group>"; };
+		97630466275A68B300688DDB /* WhereIsMyWarrantyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WhereIsMyWarrantyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		9763046A275A68B300688DDB /* WhereIsMyWarrantyUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhereIsMyWarrantyUITests.swift; sourceTree = "<group>"; };
+		9763046C275A68B300688DDB /* WhereIsMyWarrantyUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhereIsMyWarrantyUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		9763047D275A6A4E00688DDB /* WhereIsMyWarranty-notification.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "WhereIsMyWarranty-notification.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9763047F275A6A4E00688DDB /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
+		97630481275A6A4E00688DDB /* UserNotificationsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotificationsUI.framework; path = System/Library/Frameworks/UserNotificationsUI.framework; sourceTree = SDKROOT; };
+		97630484275A6A4E00688DDB /* NotificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
+		97630487275A6A4E00688DDB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		97630489275A6A4E00688DDB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9763049D275A6C1E00688DDB /* CornerRadius.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CornerRadius.swift; sourceTree = "<group>"; };
+		9763049F275A6D9400688DDB /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
+		976304A1275A6DAE00688DDB /* WarrantiesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WarrantiesViewController.swift; sourceTree = "<group>"; };
+		976304A3275A6EB100688DDB /* Strings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
+		976304A5275A6ECC00688DDB /* MWColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MWColor.swift; sourceTree = "<group>"; };
+		976304A6275A6ECC00688DDB /* MWImages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MWImages.swift; sourceTree = "<group>"; };
+		976304A7275A6ECC00688DDB /* NWFont.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NWFont.swift; sourceTree = "<group>"; };
+		976304AD275A6EDF00688DDB /* Ou__est_ma_garantie__.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Ou__est_ma_garantie__.xcdatamodel; sourceTree = "<group>"; };
+		976304AF275A6F3A00688DDB /* Category.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
+		976304B1275A6F3F00688DDB /* TopCategoriesCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopCategoriesCell.swift; sourceTree = "<group>"; };
+		976304B3275A6F4E00688DDB /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		97630440275A68B200688DDB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		97630459275A68B300688DDB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		97630463275A68B300688DDB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9763047A275A6A4E00688DDB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				97630482275A6A4E00688DDB /* UserNotificationsUI.framework in Frameworks */,
+				97630480275A6A4E00688DDB /* UserNotifications.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		9763043A275A68B200688DDB = {
+			isa = PBXGroup;
+			children = (
+				97630445275A68B200688DDB /* WhereIsMyWarranty */,
+				9763045F275A68B300688DDB /* WhereIsMyWarrantyTests */,
+				97630469275A68B300688DDB /* WhereIsMyWarrantyUITests */,
+				97630483275A6A4E00688DDB /* WhereIsMyWarranty-notification */,
+				9763047E275A6A4E00688DDB /* Frameworks */,
+				97630444275A68B200688DDB /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		97630444275A68B200688DDB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				97630443275A68B200688DDB /* WhereIsMyWarranty.app */,
+				9763045C275A68B300688DDB /* WhereIsMyWarrantyTests.xctest */,
+				97630466275A68B300688DDB /* WhereIsMyWarrantyUITests.xctest */,
+				9763047D275A6A4E00688DDB /* WhereIsMyWarranty-notification.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		97630445275A68B200688DDB /* WhereIsMyWarranty */ = {
+			isa = PBXGroup;
+			children = (
+				97630492275A6AB300688DDB /* Application */,
+				97630493275A6ABC00688DDB /* Flows */,
+				97630494275A6AC200688DDB /* Service */,
+				97630495275A6AC800688DDB /* Styles */,
+				97630496275A6ACF00688DDB /* Supporting files */,
+				97630497275A6ADA00688DDB /* Helpers */,
+				97630498275A6AE400688DDB /* Resources */,
+				97630499275A6AEB00688DDB /* Extensions */,
+				97630491275A6AAB00688DDB /* Models */,
+				9763044A275A68B200688DDB /* ViewController.swift */,
+				976304AF275A6F3A00688DDB /* Category.swift */,
+				976304B1275A6F3F00688DDB /* TopCategoriesCell.swift */,
+				9763044F275A68B200688DDB /* WhereIsMyWarranty.xcdatamodeld */,
+			);
+			path = WhereIsMyWarranty;
+			sourceTree = "<group>";
+		};
+		9763045F275A68B300688DDB /* WhereIsMyWarrantyTests */ = {
+			isa = PBXGroup;
+			children = (
+				97630460275A68B300688DDB /* WhereIsMyWarrantyTests.swift */,
+			);
+			path = WhereIsMyWarrantyTests;
+			sourceTree = "<group>";
+		};
+		97630469275A68B300688DDB /* WhereIsMyWarrantyUITests */ = {
+			isa = PBXGroup;
+			children = (
+				9763046A275A68B300688DDB /* WhereIsMyWarrantyUITests.swift */,
+				9763046C275A68B300688DDB /* WhereIsMyWarrantyUITestsLaunchTests.swift */,
+			);
+			path = WhereIsMyWarrantyUITests;
+			sourceTree = "<group>";
+		};
+		9763047E275A6A4E00688DDB /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				9763047F275A6A4E00688DDB /* UserNotifications.framework */,
+				97630481275A6A4E00688DDB /* UserNotificationsUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		97630483275A6A4E00688DDB /* WhereIsMyWarranty-notification */ = {
+			isa = PBXGroup;
+			children = (
+				97630484275A6A4E00688DDB /* NotificationViewController.swift */,
+				97630486275A6A4E00688DDB /* MainInterface.storyboard */,
+				97630489275A6A4E00688DDB /* Info.plist */,
+			);
+			path = "WhereIsMyWarranty-notification";
+			sourceTree = "<group>";
+		};
+		97630491275A6AAB00688DDB /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		97630492275A6AB300688DDB /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				9763049F275A6D9400688DDB /* TabBarViewController.swift */,
+				97630446275A68B200688DDB /* AppDelegate.swift */,
+				97630448275A68B200688DDB /* SceneDelegate.swift */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		97630493275A6ABC00688DDB /* Flows */ = {
+			isa = PBXGroup;
+			children = (
+				9763049A275A6BB800688DDB /* Warranties */,
+			);
+			path = Flows;
+			sourceTree = "<group>";
+		};
+		97630494275A6AC200688DDB /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				976304AB275A6ED700688DDB /* Storage */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		97630495275A6AC800688DDB /* Styles */ = {
+			isa = PBXGroup;
+			children = (
+				976304A5275A6ECC00688DDB /* MWColor.swift */,
+				976304A6275A6ECC00688DDB /* MWImages.swift */,
+				976304A7275A6ECC00688DDB /* NWFont.swift */,
+			);
+			path = Styles;
+			sourceTree = "<group>";
+		};
+		97630496275A6ACF00688DDB /* Supporting files */ = {
+			isa = PBXGroup;
+			children = (
+				97630457275A68B300688DDB /* WhereIsMyWarranty-Info.plist */,
+				97630454275A68B300688DDB /* LaunchScreen.storyboard */,
+			);
+			path = "Supporting files";
+			sourceTree = "<group>";
+		};
+		97630497275A6ADA00688DDB /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				976304A3275A6EB100688DDB /* Strings.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		97630498275A6AE400688DDB /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				97630452275A68B300688DDB /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		97630499275A6AEB00688DDB /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				9763049D275A6C1E00688DDB /* CornerRadius.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		9763049A275A6BB800688DDB /* Warranties */ = {
+			isa = PBXGroup;
+			children = (
+				9763049B275A6BBF00688DDB /* Home */,
+				9763049C275A6BCD00688DDB /* Settings */,
+			);
+			path = Warranties;
+			sourceTree = "<group>";
+		};
+		9763049B275A6BBF00688DDB /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				976304A1275A6DAE00688DDB /* WarrantiesViewController.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		9763049C275A6BCD00688DDB /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				976304B3275A6F4E00688DDB /* SettingsViewController.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		976304AB275A6ED700688DDB /* Storage */ = {
+			isa = PBXGroup;
+			children = (
+				976304AC275A6EDF00688DDB /* Ou__est_ma_garantie__.xcdatamodeld */,
+			);
+			path = Storage;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		97630442275A68B200688DDB /* WhereIsMyWarranty */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 97630470275A68B300688DDB /* Build configuration list for PBXNativeTarget "WhereIsMyWarranty" */;
+			buildPhases = (
+				9763043F275A68B200688DDB /* Sources */,
+				97630440275A68B200688DDB /* Frameworks */,
+				97630441275A68B200688DDB /* Resources */,
+				97630490275A6A4E00688DDB /* Embed App Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				9763048B275A6A4E00688DDB /* PBXTargetDependency */,
+			);
+			name = WhereIsMyWarranty;
+			productName = WhereIsMyWarranty;
+			productReference = 97630443275A68B200688DDB /* WhereIsMyWarranty.app */;
+			productType = "com.apple.product-type.application";
+		};
+		9763045B275A68B300688DDB /* WhereIsMyWarrantyTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 97630473275A68B300688DDB /* Build configuration list for PBXNativeTarget "WhereIsMyWarrantyTests" */;
+			buildPhases = (
+				97630458275A68B300688DDB /* Sources */,
+				97630459275A68B300688DDB /* Frameworks */,
+				9763045A275A68B300688DDB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				9763045E275A68B300688DDB /* PBXTargetDependency */,
+			);
+			name = WhereIsMyWarrantyTests;
+			productName = WhereIsMyWarrantyTests;
+			productReference = 9763045C275A68B300688DDB /* WhereIsMyWarrantyTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		97630465275A68B300688DDB /* WhereIsMyWarrantyUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 97630476275A68B300688DDB /* Build configuration list for PBXNativeTarget "WhereIsMyWarrantyUITests" */;
+			buildPhases = (
+				97630462275A68B300688DDB /* Sources */,
+				97630463275A68B300688DDB /* Frameworks */,
+				97630464275A68B300688DDB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				97630468275A68B300688DDB /* PBXTargetDependency */,
+			);
+			name = WhereIsMyWarrantyUITests;
+			productName = WhereIsMyWarrantyUITests;
+			productReference = 97630466275A68B300688DDB /* WhereIsMyWarrantyUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		9763047C275A6A4E00688DDB /* WhereIsMyWarranty-notification */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9763048D275A6A4E00688DDB /* Build configuration list for PBXNativeTarget "WhereIsMyWarranty-notification" */;
+			buildPhases = (
+				97630479275A6A4E00688DDB /* Sources */,
+				9763047A275A6A4E00688DDB /* Frameworks */,
+				9763047B275A6A4E00688DDB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "WhereIsMyWarranty-notification";
+			productName = "WhereIsMyWarranty-notification";
+			productReference = 9763047D275A6A4E00688DDB /* WhereIsMyWarranty-notification.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		9763043B275A68B200688DDB /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1310;
+				LastUpgradeCheck = 1310;
+				TargetAttributes = {
+					97630442275A68B200688DDB = {
+						CreatedOnToolsVersion = 13.1;
+					};
+					9763045B275A68B300688DDB = {
+						CreatedOnToolsVersion = 13.1;
+						TestTargetID = 97630442275A68B200688DDB;
+					};
+					97630465275A68B300688DDB = {
+						CreatedOnToolsVersion = 13.1;
+						TestTargetID = 97630442275A68B200688DDB;
+					};
+					9763047C275A6A4E00688DDB = {
+						CreatedOnToolsVersion = 13.1;
+					};
+				};
+			};
+			buildConfigurationList = 9763043E275A68B200688DDB /* Build configuration list for PBXProject "WhereIsMyWarranty" */;
+			compatibilityVersion = "Xcode 13.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 9763043A275A68B200688DDB;
+			productRefGroup = 97630444275A68B200688DDB /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				97630442275A68B200688DDB /* WhereIsMyWarranty */,
+				9763045B275A68B300688DDB /* WhereIsMyWarrantyTests */,
+				97630465275A68B300688DDB /* WhereIsMyWarrantyUITests */,
+				9763047C275A6A4E00688DDB /* WhereIsMyWarranty-notification */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		97630441275A68B200688DDB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				97630456275A68B300688DDB /* LaunchScreen.storyboard in Resources */,
+				97630453275A68B300688DDB /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9763045A275A68B300688DDB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		97630464275A68B300688DDB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9763047B275A6A4E00688DDB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				97630488275A6A4E00688DDB /* MainInterface.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		9763043F275A68B200688DDB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9763044B275A68B200688DDB /* ViewController.swift in Sources */,
+				976304AE275A6EDF00688DDB /* Ou__est_ma_garantie__.xcdatamodeld in Sources */,
+				97630447275A68B200688DDB /* AppDelegate.swift in Sources */,
+				976304A4275A6EB100688DDB /* Strings.swift in Sources */,
+				976304A9275A6ECC00688DDB /* MWImages.swift in Sources */,
+				976304B2275A6F4000688DDB /* TopCategoriesCell.swift in Sources */,
+				976304A8275A6ECC00688DDB /* MWColor.swift in Sources */,
+				9763049E275A6C1E00688DDB /* CornerRadius.swift in Sources */,
+				976304B4275A6F4E00688DDB /* SettingsViewController.swift in Sources */,
+				976304A2275A6DAE00688DDB /* WarrantiesViewController.swift in Sources */,
+				976304AA275A6ECC00688DDB /* NWFont.swift in Sources */,
+				976304B0275A6F3A00688DDB /* Category.swift in Sources */,
+				97630449275A68B200688DDB /* SceneDelegate.swift in Sources */,
+				976304A0275A6D9400688DDB /* TabBarViewController.swift in Sources */,
+				97630451275A68B200688DDB /* WhereIsMyWarranty.xcdatamodeld in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		97630458275A68B300688DDB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				97630461275A68B300688DDB /* WhereIsMyWarrantyTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		97630462275A68B300688DDB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9763046D275A68B300688DDB /* WhereIsMyWarrantyUITestsLaunchTests.swift in Sources */,
+				9763046B275A68B300688DDB /* WhereIsMyWarrantyUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		97630479275A6A4E00688DDB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				97630485275A6A4E00688DDB /* NotificationViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		9763045E275A68B300688DDB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 97630442275A68B200688DDB /* WhereIsMyWarranty */;
+			targetProxy = 9763045D275A68B300688DDB /* PBXContainerItemProxy */;
+		};
+		97630468275A68B300688DDB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 97630442275A68B200688DDB /* WhereIsMyWarranty */;
+			targetProxy = 97630467275A68B300688DDB /* PBXContainerItemProxy */;
+		};
+		9763048B275A6A4E00688DDB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9763047C275A6A4E00688DDB /* WhereIsMyWarranty-notification */;
+			targetProxy = 9763048A275A6A4E00688DDB /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		97630454275A68B300688DDB /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				97630455275A68B300688DDB /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		97630486275A6A4E00688DDB /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				97630487275A6A4E00688DDB /* Base */,
+			);
+			name = MainInterface.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		9763046E275A68B300688DDB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		9763046F275A68B300688DDB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		97630471275A68B300688DDB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = T4959W6459;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = WhereIsMyWarranty/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = fr.ianisrichardier.WhereIsMyWarranty;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		97630472275A68B300688DDB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = T4959W6459;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = WhereIsMyWarranty/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = fr.ianisrichardier.WhereIsMyWarranty;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		97630474275A68B300688DDB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = T4959W6459;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = fr.ianisrichardier.WhereIsMyWarrantyTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WhereIsMyWarranty.app/WhereIsMyWarranty";
+			};
+			name = Debug;
+		};
+		97630475275A68B300688DDB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = T4959W6459;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = fr.ianisrichardier.WhereIsMyWarrantyTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WhereIsMyWarranty.app/WhereIsMyWarranty";
+			};
+			name = Release;
+		};
+		97630477275A68B300688DDB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = T4959W6459;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = fr.ianisrichardier.WhereIsMyWarrantyUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = WhereIsMyWarranty;
+			};
+			name = Debug;
+		};
+		97630478275A68B300688DDB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = T4959W6459;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = fr.ianisrichardier.WhereIsMyWarrantyUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = WhereIsMyWarranty;
+			};
+			name = Release;
+		};
+		9763048E275A6A4E00688DDB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = T4959W6459;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "WhereIsMyWarranty-notification/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "WhereIsMyWarranty-notification";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "fr.ianisrichardier.WhereIsMyWarranty.WhereIsMyWarranty-notification";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		9763048F275A6A4E00688DDB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = T4959W6459;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "WhereIsMyWarranty-notification/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "WhereIsMyWarranty-notification";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "fr.ianisrichardier.WhereIsMyWarranty.WhereIsMyWarranty-notification";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		9763043E275A68B200688DDB /* Build configuration list for PBXProject "WhereIsMyWarranty" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9763046E275A68B300688DDB /* Debug */,
+				9763046F275A68B300688DDB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		97630470275A68B300688DDB /* Build configuration list for PBXNativeTarget "WhereIsMyWarranty" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				97630471275A68B300688DDB /* Debug */,
+				97630472275A68B300688DDB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		97630473275A68B300688DDB /* Build configuration list for PBXNativeTarget "WhereIsMyWarrantyTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				97630474275A68B300688DDB /* Debug */,
+				97630475275A68B300688DDB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		97630476275A68B300688DDB /* Build configuration list for PBXNativeTarget "WhereIsMyWarrantyUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				97630477275A68B300688DDB /* Debug */,
+				97630478275A68B300688DDB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9763048D275A6A4E00688DDB /* Build configuration list for PBXNativeTarget "WhereIsMyWarranty-notification" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9763048E275A6A4E00688DDB /* Debug */,
+				9763048F275A6A4E00688DDB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		9763044F275A68B200688DDB /* WhereIsMyWarranty.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				97630450275A68B200688DDB /* WhereIsMyWarranty.xcdatamodel */,
+			);
+			currentVersion = 97630450275A68B200688DDB /* WhereIsMyWarranty.xcdatamodel */;
+			path = WhereIsMyWarranty.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+		976304AC275A6EDF00688DDB /* Ou__est_ma_garantie__.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				976304AD275A6EDF00688DDB /* Ou__est_ma_garantie__.xcdatamodel */,
+			);
+			currentVersion = 976304AD275A6EDF00688DDB /* Ou__est_ma_garantie__.xcdatamodel */;
+			path = Ou__est_ma_garantie__.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 9763043B275A68B200688DDB /* Project object */;
+}
