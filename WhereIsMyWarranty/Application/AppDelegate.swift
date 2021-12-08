@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if #available(iOS 13.0, *) {
             // In iOS 13 setup is done in SceneDelegate
         } else {
-            self.window?.makeKeyAndVisible()
+             self.window?.makeKeyAndVisible()
         }
         return true
     }

@@ -32,6 +32,9 @@
 		976304B0275A6F3A00688DDB /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976304AF275A6F3A00688DDB /* Category.swift */; };
 		976304B2275A6F4000688DDB /* TopCategoriesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976304B1275A6F3F00688DDB /* TopCategoriesCell.swift */; };
 		976304B4275A6F4E00688DDB /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976304B3275A6F4E00688DDB /* SettingsViewController.swift */; };
+		976304B6275E38A300688DDB /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976304B5275E38A300688DDB /* Coordinator.swift */; };
+		976304B8275E396300688DDB /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976304B7275E396300688DDB /* AppCoordinator.swift */; };
+		976304BA275F80B900688DDB /* NewWarrantyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976304B9275F80B900688DDB /* NewWarrantyViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -103,6 +106,9 @@
 		976304AF275A6F3A00688DDB /* Category.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		976304B1275A6F3F00688DDB /* TopCategoriesCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopCategoriesCell.swift; sourceTree = "<group>"; };
 		976304B3275A6F4E00688DDB /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		976304B5275E38A300688DDB /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
+		976304B7275E396300688DDB /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		976304B9275F80B900688DDB /* NewWarrantyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWarrantyViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -176,7 +182,6 @@
 				97630491275A6AAB00688DDB /* Models */,
 				9763044A275A68B200688DDB /* ViewController.swift */,
 				976304AF275A6F3A00688DDB /* Category.swift */,
-				976304B1275A6F3F00688DDB /* TopCategoriesCell.swift */,
 				9763044F275A68B200688DDB /* WhereIsMyWarranty.xcdatamodeld */,
 			);
 			path = WhereIsMyWarranty;
@@ -229,8 +234,10 @@
 			isa = PBXGroup;
 			children = (
 				9763049F275A6D9400688DDB /* TabBarViewController.swift */,
-				97630446275A68B200688DDB /* AppDelegate.swift */,
 				97630448275A68B200688DDB /* SceneDelegate.swift */,
+				97630446275A68B200688DDB /* AppDelegate.swift */,
+				976304B5275E38A300688DDB /* Coordinator.swift */,
+				976304B7275E396300688DDB /* AppCoordinator.swift */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -307,6 +314,8 @@
 			isa = PBXGroup;
 			children = (
 				976304A1275A6DAE00688DDB /* WarrantiesViewController.swift */,
+				976304B1275A6F3F00688DDB /* TopCategoriesCell.swift */,
+				976304B9275F80B900688DDB /* NewWarrantyViewController.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -488,9 +497,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				976304B6275E38A300688DDB /* Coordinator.swift in Sources */,
 				9763044B275A68B200688DDB /* ViewController.swift in Sources */,
+				976304B8275E396300688DDB /* AppCoordinator.swift in Sources */,
 				976304AE275A6EDF00688DDB /* Ou__est_ma_garantie__.xcdatamodeld in Sources */,
 				97630447275A68B200688DDB /* AppDelegate.swift in Sources */,
+				976304BA275F80B900688DDB /* NewWarrantyViewController.swift in Sources */,
 				976304A4275A6EB100688DDB /* Strings.swift in Sources */,
 				976304A9275A6ECC00688DDB /* MWImages.swift in Sources */,
 				976304B2275A6F4000688DDB /* TopCategoriesCell.swift in Sources */,

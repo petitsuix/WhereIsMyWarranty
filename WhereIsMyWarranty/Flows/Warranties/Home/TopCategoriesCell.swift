@@ -24,7 +24,7 @@ class TopCategoriesCell: UICollectionViewCell {
         contentView.layer.borderWidth = 1
         myLabel.textColor = #colorLiteral(red: 0.2539245784, green: 0.3356729746, blue: 0.3600735664, alpha: 1)
         myLabel.textAlignment = .center
-        roundingCellCorners(radius: 8)
+        roundingCellCorners(radius: 15)
       //  contentView.layer.cornerRadius = 8
         contentView.addSubview(myLabel)
         
