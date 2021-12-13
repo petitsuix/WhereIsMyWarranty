@@ -11,9 +11,9 @@ class TopCategoriesCell: UICollectionViewCell {
     
     static let identifier = "CustomCollectionViewCell"
     
-    private let myLabel: UILabel = {
+    private let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "custom"
+        label.text = "éléctroniques"
         return label
     }()
     
@@ -22,11 +22,10 @@ class TopCategoriesCell: UICollectionViewCell {
         contentView.backgroundColor = .white
         contentView.layer.borderColor = #colorLiteral(red: 0.2539245784, green: 0.3356729746, blue: 0.3600735664, alpha: 1)
         contentView.layer.borderWidth = 1
-        myLabel.textColor = #colorLiteral(red: 0.2539245784, green: 0.3356729746, blue: 0.3600735664, alpha: 1)
-        myLabel.textAlignment = .center
+        titleLabel.textColor = #colorLiteral(red: 0.2539245784, green: 0.3356729746, blue: 0.3600735664, alpha: 1)
+        titleLabel.textAlignment = .center
         roundingCellCorners(radius: 15)
-      //  contentView.layer.cornerRadius = 8
-        contentView.addSubview(myLabel)
+        contentView.addSubview(titleLabel)
         
     }
     
@@ -36,7 +35,7 @@ class TopCategoriesCell: UICollectionViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        myLabel.frame = CGRect(x: 0, y: 0, width: contentView.frame.size.width, height: contentView.frame.size.height)
+        titleLabel.frame = CGRect(x: 0, y: 0, width: contentView.frame.size.width, height: contentView.frame.size.height)
     }
     
     func configureCell() {

@@ -9,29 +9,22 @@ import UIKit
 import CoreData
 
 @main
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
 
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        if #available(iOS 13.0, *) {
-            // In iOS 13 setup is done in SceneDelegate
-        } else {
-             self.window?.makeKeyAndVisible()
-        }
+        MWAppearance.setup()
         return true
     }
     
+//    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse) async {
+//        coordinator.handleNotifaction(notification)
+//    }
+    
+    
     func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-        if #available(iOS 13.0, *) {
-            // In iOS 13 setup is done in SceneDelegate
-        } else {
-            let window = UIWindow(frame: UIScreen.main.bounds)
-            self.window = window
-            let viewController = TabBarViewController()
-            window.rootViewController = viewController
-        }
         return true
     }
 

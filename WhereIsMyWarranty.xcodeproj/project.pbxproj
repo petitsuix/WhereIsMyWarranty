@@ -22,7 +22,6 @@
 		97630488275A6A4E00688DDB /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97630486275A6A4E00688DDB /* MainInterface.storyboard */; };
 		9763048C275A6A4E00688DDB /* WhereIsMyWarranty-notification.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 9763047D275A6A4E00688DDB /* WhereIsMyWarranty-notification.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		9763049E275A6C1E00688DDB /* CornerRadius.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9763049D275A6C1E00688DDB /* CornerRadius.swift */; };
-		976304A0275A6D9400688DDB /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9763049F275A6D9400688DDB /* TabBarViewController.swift */; };
 		976304A2275A6DAE00688DDB /* WarrantiesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976304A1275A6DAE00688DDB /* WarrantiesViewController.swift */; };
 		976304A4275A6EB100688DDB /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976304A3275A6EB100688DDB /* Strings.swift */; };
 		976304A8275A6ECC00688DDB /* MWColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976304A5275A6ECC00688DDB /* MWColor.swift */; };
@@ -35,6 +34,12 @@
 		976304B6275E38A300688DDB /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976304B5275E38A300688DDB /* Coordinator.swift */; };
 		976304B8275E396300688DDB /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976304B7275E396300688DDB /* AppCoordinator.swift */; };
 		976304BA275F80B900688DDB /* NewWarrantyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976304B9275F80B900688DDB /* NewWarrantyViewController.swift */; };
+		976304BE2762454D00688DDB /* MWAppearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976304BD2762454D00688DDB /* MWAppearance.swift */; };
+		976304C0276365F700688DDB /* WarrantiesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976304BF276365F700688DDB /* WarrantiesViewModel.swift */; };
+		976304C2276393CF00688DDB /* WarrantiesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976304C1276393CF00688DDB /* WarrantiesCell.swift */; };
+		976304C42763A73D00688DDB /* AddShadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976304C32763A73D00688DDB /* AddShadow.swift */; };
+		97E03BD32767638700EFEE79 /* WarrantiesCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E03BD22767638700EFEE79 /* WarrantiesCoordinator.swift */; };
+		97E03BD52767639800EFEE79 /* SettingsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E03BD42767639800EFEE79 /* SettingsCoordinator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -96,7 +101,6 @@
 		97630487275A6A4E00688DDB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		97630489275A6A4E00688DDB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9763049D275A6C1E00688DDB /* CornerRadius.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CornerRadius.swift; sourceTree = "<group>"; };
-		9763049F275A6D9400688DDB /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		976304A1275A6DAE00688DDB /* WarrantiesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WarrantiesViewController.swift; sourceTree = "<group>"; };
 		976304A3275A6EB100688DDB /* Strings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		976304A5275A6ECC00688DDB /* MWColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MWColor.swift; sourceTree = "<group>"; };
@@ -109,6 +113,12 @@
 		976304B5275E38A300688DDB /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		976304B7275E396300688DDB /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		976304B9275F80B900688DDB /* NewWarrantyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWarrantyViewController.swift; sourceTree = "<group>"; };
+		976304BD2762454D00688DDB /* MWAppearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWAppearance.swift; sourceTree = "<group>"; };
+		976304BF276365F700688DDB /* WarrantiesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarrantiesViewModel.swift; sourceTree = "<group>"; };
+		976304C1276393CF00688DDB /* WarrantiesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarrantiesCell.swift; sourceTree = "<group>"; };
+		976304C32763A73D00688DDB /* AddShadow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddShadow.swift; sourceTree = "<group>"; };
+		97E03BD22767638700EFEE79 /* WarrantiesCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarrantiesCoordinator.swift; sourceTree = "<group>"; };
+		97E03BD42767639800EFEE79 /* SettingsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCoordinator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -233,11 +243,8 @@
 		97630492275A6AB300688DDB /* Application */ = {
 			isa = PBXGroup;
 			children = (
-				9763049F275A6D9400688DDB /* TabBarViewController.swift */,
-				97630448275A68B200688DDB /* SceneDelegate.swift */,
-				97630446275A68B200688DDB /* AppDelegate.swift */,
-				976304B5275E38A300688DDB /* Coordinator.swift */,
-				976304B7275E396300688DDB /* AppCoordinator.swift */,
+				97E03BD8276763DB00EFEE79 /* Delegates */,
+				97E03BD6276763A600EFEE79 /* Coordinators */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -264,6 +271,7 @@
 				976304A5275A6ECC00688DDB /* MWColor.swift */,
 				976304A6275A6ECC00688DDB /* MWImages.swift */,
 				976304A7275A6ECC00688DDB /* NWFont.swift */,
+				976304BD2762454D00688DDB /* MWAppearance.swift */,
 			);
 			path = Styles;
 			sourceTree = "<group>";
@@ -297,6 +305,7 @@
 			isa = PBXGroup;
 			children = (
 				9763049D275A6C1E00688DDB /* CornerRadius.swift */,
+				976304C32763A73D00688DDB /* AddShadow.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -314,8 +323,10 @@
 			isa = PBXGroup;
 			children = (
 				976304A1275A6DAE00688DDB /* WarrantiesViewController.swift */,
-				976304B1275A6F3F00688DDB /* TopCategoriesCell.swift */,
+				976304BF276365F700688DDB /* WarrantiesViewModel.swift */,
 				976304B9275F80B900688DDB /* NewWarrantyViewController.swift */,
+				976304B1275A6F3F00688DDB /* TopCategoriesCell.swift */,
+				976304C1276393CF00688DDB /* WarrantiesCell.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -334,6 +345,42 @@
 				976304AC275A6EDF00688DDB /* Ou__est_ma_garantie__.xcdatamodeld */,
 			);
 			path = Storage;
+			sourceTree = "<group>";
+		};
+		97E03BD6276763A600EFEE79 /* Coordinators */ = {
+			isa = PBXGroup;
+			children = (
+				97E03BD9276763FE00EFEE79 /* Coordinator Protocol */,
+				976304B7275E396300688DDB /* AppCoordinator.swift */,
+				97E03BD7276763BA00EFEE79 /* Child Coordinators */,
+			);
+			path = Coordinators;
+			sourceTree = "<group>";
+		};
+		97E03BD7276763BA00EFEE79 /* Child Coordinators */ = {
+			isa = PBXGroup;
+			children = (
+				97E03BD22767638700EFEE79 /* WarrantiesCoordinator.swift */,
+				97E03BD42767639800EFEE79 /* SettingsCoordinator.swift */,
+			);
+			path = "Child Coordinators";
+			sourceTree = "<group>";
+		};
+		97E03BD8276763DB00EFEE79 /* Delegates */ = {
+			isa = PBXGroup;
+			children = (
+				97630448275A68B200688DDB /* SceneDelegate.swift */,
+				97630446275A68B200688DDB /* AppDelegate.swift */,
+			);
+			path = Delegates;
+			sourceTree = "<group>";
+		};
+		97E03BD9276763FE00EFEE79 /* Coordinator Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				976304B5275E38A300688DDB /* Coordinator.swift */,
+			);
+			path = "Coordinator Protocol";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -497,7 +544,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				97E03BD52767639800EFEE79 /* SettingsCoordinator.swift in Sources */,
 				976304B6275E38A300688DDB /* Coordinator.swift in Sources */,
+				976304BE2762454D00688DDB /* MWAppearance.swift in Sources */,
 				9763044B275A68B200688DDB /* ViewController.swift in Sources */,
 				976304B8275E396300688DDB /* AppCoordinator.swift in Sources */,
 				976304AE275A6EDF00688DDB /* Ou__est_ma_garantie__.xcdatamodeld in Sources */,
@@ -506,14 +555,17 @@
 				976304A4275A6EB100688DDB /* Strings.swift in Sources */,
 				976304A9275A6ECC00688DDB /* MWImages.swift in Sources */,
 				976304B2275A6F4000688DDB /* TopCategoriesCell.swift in Sources */,
+				976304C2276393CF00688DDB /* WarrantiesCell.swift in Sources */,
+				976304C0276365F700688DDB /* WarrantiesViewModel.swift in Sources */,
 				976304A8275A6ECC00688DDB /* MWColor.swift in Sources */,
 				9763049E275A6C1E00688DDB /* CornerRadius.swift in Sources */,
 				976304B4275A6F4E00688DDB /* SettingsViewController.swift in Sources */,
 				976304A2275A6DAE00688DDB /* WarrantiesViewController.swift in Sources */,
 				976304AA275A6ECC00688DDB /* NWFont.swift in Sources */,
+				97E03BD32767638700EFEE79 /* WarrantiesCoordinator.swift in Sources */,
 				976304B0275A6F3A00688DDB /* Category.swift in Sources */,
+				976304C42763A73D00688DDB /* AddShadow.swift in Sources */,
 				97630449275A68B200688DDB /* SceneDelegate.swift in Sources */,
-				976304A0275A6D9400688DDB /* TabBarViewController.swift in Sources */,
 				97630451275A68B200688DDB /* WhereIsMyWarranty.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

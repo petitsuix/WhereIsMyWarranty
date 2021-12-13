@@ -7,11 +7,16 @@
 
 import UIKit
 
-class WarrantiesViewController: UIViewController, UINavigationBarDelegate {
+class WarrantiesViewController: UIViewController {
     
     var categories = ["Toutes", "Non-catégorisées"]
-   
-    private var collectionView: UICollectionView!
+    
+    var viewModel: WarrantiesViewModel?
+    
+    weak var coordinator: AppCoordinator?
+    
+    private var categoriesCollectionView: UICollectionView!
+    private var warrantiesCollectionView: UICollectionView!
     
     let navBarAppearance = UINavigationBarAppearance()
     let addWarrantyButton = UIButton()
@@ -26,14 +31,14 @@ class WarrantiesViewController: UIViewController, UINavigationBarDelegate {
         configureNavigationBar()
         configureCategoriesStackView()
         configureBottomBorder()
+        configureWarrantiesCollectionView()
         configureAddWarrantyButton()
         activateConstraints()
+        
+        viewModel?.fetchWarranties()
     }
     
     func configureNavigationBar() {
-        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: "Chalkduster", size: 27)!,
-                                                                        NSAttributedString.Key.foregroundColor: UIColor.black]
-        
         navBarAppearance.backgroundColor = #colorLiteral(red: 0.9285728335, green: 0.7623301148, blue: 0.6474828124, alpha: 1)
         navigationController?.navigationBar.standardAppearance = navBarAppearance
         navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
@@ -45,7 +50,7 @@ class WarrantiesViewController: UIViewController, UINavigationBarDelegate {
         categoriesStackView.spacing = 5.5
         view.addSubview(categoriesStackView)
         configureAddCategoryButton()
-        configureCollectionView()
+        configureCategoriesCollectionView()
     }
     
     func configureBottomBorder() {
@@ -62,17 +67,31 @@ class WarrantiesViewController: UIViewController, UINavigationBarDelegate {
         categoriesStackView.addArrangedSubview(addCategoryButton)
     }
     
-    func configureCollectionView() {
+    func configureCategoriesCollectionView() {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.itemSize = CGSize(width: view.frame.size.width/5, height: view.frame.size.width/13.5)
-        collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout) // self.view.frame c'est pareil ?
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.register(TopCategoriesCell.self, forCellWithReuseIdentifier: TopCategoriesCell.identifier)
-        collectionView.dataSource = self
-        collectionView.delegate = self
-        collectionView.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height/6.5)
-        categoriesStackView.addArrangedSubview(collectionView)
+        categoriesCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout) // self.view.frame c'est pareil ?
+        categoriesCollectionView.translatesAutoresizingMaskIntoConstraints = false
+        categoriesCollectionView.register(TopCategoriesCell.self, forCellWithReuseIdentifier: TopCategoriesCell.identifier)
+        categoriesCollectionView.dataSource = self
+        categoriesCollectionView.delegate = self
+        categoriesCollectionView.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height/6.5)
+        categoriesStackView.addArrangedSubview(categoriesCollectionView)
+    }
+    
+    func configureWarrantiesCollectionView() {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        layout.itemSize = CGSize(width: view.frame.size.width-16, height: view.frame.size.width/4)
+        layout.minimumLineSpacing = 24
+        warrantiesCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        warrantiesCollectionView.translatesAutoresizingMaskIntoConstraints = false
+        warrantiesCollectionView.register(WarrantiesCell.self, forCellWithReuseIdentifier: WarrantiesCell.identifier)
+        warrantiesCollectionView.dataSource = self
+        warrantiesCollectionView.delegate = self
+        warrantiesCollectionView.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height)
+        view.addSubview(warrantiesCollectionView)
     }
     
     func configureAddWarrantyButton() {
@@ -81,9 +100,13 @@ class WarrantiesViewController: UIViewController, UINavigationBarDelegate {
         addWarrantyButton.tintColor = #colorLiteral(red: 0.2539245784, green: 0.3356729746, blue: 0.3600735664, alpha: 1)
         view.addSubview(addWarrantyButton)
         addWarrantyButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        
+        addWarrantyButton.addTarget(self, action: #selector(addWarrantyButtonAction), for: .touchUpInside)
     }
     
+    @objc func addWarrantyButtonAction() {
+        viewModel?.showDetail()
+        //coordinator?.showNewWarrantiesScreenFor(category: "MA SUPER CATEGORY")
+    }
     
     func activateConstraints() {
         NSLayoutConstraint.activate([
@@ -100,8 +123,24 @@ class WarrantiesViewController: UIViewController, UINavigationBarDelegate {
             bottomBorder.heightAnchor.constraint(equalToConstant: 0.4),
             bottomBorder.leadingAnchor.constraint(equalToSystemSpacingAfter: view.leadingAnchor, multiplier: 0),
             bottomBorder.trailingAnchor.constraint(equalToSystemSpacingAfter: view.trailingAnchor, multiplier: 0),
-            bottomBorder.topAnchor.constraint(equalToSystemSpacingBelow: categoriesStackView.bottomAnchor, multiplier: 0)
+            bottomBorder.topAnchor.constraint(equalToSystemSpacingBelow: categoriesStackView.bottomAnchor, multiplier: 0),
+            
+            warrantiesCollectionView.topAnchor.constraint(equalTo: bottomBorder.bottomAnchor, constant: 0),
+            warrantiesCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
+            warrantiesCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
+            warrantiesCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0)
         ])
+    }
+}
+
+extension WarrantiesViewController {
+    private func setupView() {
+        // Ici
+        // creation des lable
+        // configuration des view
+        // config stack view
+        
+        // nalayoutconstraint ....
     }
 }
 
@@ -109,14 +148,23 @@ extension WarrantiesViewController: UICollectionViewDataSource, UICollectionView
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // return user.categories.count
-        return 30
+        if collectionView == self.categoriesCollectionView {
+            return viewModel?.warranties.count ?? 0 // On devrait pouvoir retourner user.categories.count
+        }
+        return viewModel?.warranties.count ?? 0
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TopCategoriesCell.identifier, for: indexPath)
+        var cell = UICollectionViewCell()
         
+        if collectionView ==  self.categoriesCollectionView {
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: TopCategoriesCell.identifier, for: indexPath)
+            print(viewModel?.warranties[indexPath.row] as Any)
+        } else {
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: WarrantiesCell.identifier, for: indexPath)
+        }
         return cell
-     }
+    }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
@@ -129,4 +177,10 @@ extension WarrantiesViewController: UICollectionViewDataSource, UICollectionView
         
         // displayWarrantiesFor(selectedCategory)
     }
+    
+    func refreshWith(warranties: [String]) {
+        categoriesCollectionView.reloadData()
+    }
 }
+
+

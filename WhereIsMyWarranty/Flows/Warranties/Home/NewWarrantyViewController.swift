@@ -7,14 +7,22 @@
 
 import UIKit
 
-class NewWarrantyOneViewController: UIViewController {
+class NewWarrantyViewController: UIViewController {
     
     let navBarAppearance = UINavigationBarAppearance()
+    weak var coordinator: AppCoordinator?
+    
+    var category: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = .cyan
         configureNavigationBar()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        print("Category : \(category ?? "Missing")")
     }
     
     func configureNavigationBar() {
