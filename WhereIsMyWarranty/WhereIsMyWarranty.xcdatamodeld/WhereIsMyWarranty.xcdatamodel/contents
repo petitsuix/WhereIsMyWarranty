@@ -1,4 +1,31 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1" systemVersion="11A491" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="true" userDefinedModelVersionIdentifier="">
-    <elements/>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19574" systemVersion="21A559" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="YES" userDefinedModelVersionIdentifier="">
+    <entity name="CategoryEntity" representedClassName="CategoryEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="activateNotifications" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="attribute" optional="YES" attributeType="Binary"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="WarrantyEntity" representedClassName="WarrantyEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="category" optional="YES" attributeType="String"/>
+        <attribute name="currency" optional="YES" attributeType="String"/>
+        <attribute name="invoicePhoto" optional="YES" attributeType="Binary"/>
+        <attribute name="lifetimeWarranty" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="model" optional="YES" attributeType="String"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="notes" optional="YES" attributeType="String"/>
+        <attribute name="paymentMethod" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="price" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="productPhoto" optional="YES" attributeType="Binary"/>
+        <attribute name="sellersContact" optional="YES" attributeType="String"/>
+        <attribute name="sellersLocation" optional="YES" attributeType="String"/>
+        <attribute name="sellersName" optional="YES" attributeType="String"/>
+        <attribute name="sellersWebsite" optional="YES" attributeType="String"/>
+        <attribute name="serialNumber" optional="YES" attributeType="String"/>
+        <attribute name="warrantyEnd" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="warrantyStart" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+    </entity>
+    <elements>
+        <element name="CategoryEntity" positionX="-63" positionY="-18" width="128" height="74"/>
+        <element name="WarrantyEntity" positionX="-54" positionY="18" width="128" height="284"/>
+    </elements>
 </model>

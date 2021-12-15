@@ -9,9 +9,11 @@ import UIKit
 
 class TopCategoriesCell: UICollectionViewCell {
     
+    var viewModel: WarrantiesViewModel?
+    
     static let identifier = "CustomCollectionViewCell"
     
-    private let titleLabel: UILabel = {
+     let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "éléctroniques"
         return label
@@ -39,11 +41,16 @@ class TopCategoriesCell: UICollectionViewCell {
     }
     
     func configureCell() {
-
+        
     }
-    
     /* func refreshData() {
-        title.text = category?.name
-    } */
+     title.text = category?.name
+     } */
+    
+    func activateConstraints() {
+        NSLayoutConstraint.activate([
+            
+        ])
+    }
     
 }

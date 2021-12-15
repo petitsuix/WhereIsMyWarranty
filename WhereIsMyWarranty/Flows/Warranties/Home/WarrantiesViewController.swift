@@ -9,8 +9,6 @@ import UIKit
 
 class WarrantiesViewController: UIViewController {
     
-    var categories = ["Toutes", "Non-catégorisées"]
-    
     var viewModel: WarrantiesViewModel?
     
     weak var coordinator: AppCoordinator?
@@ -36,6 +34,7 @@ class WarrantiesViewController: UIViewController {
         activateConstraints()
         
         viewModel?.fetchWarranties()
+        viewModel?.fetchCategories()
     }
     
     func configureNavigationBar() {
@@ -83,7 +82,7 @@ class WarrantiesViewController: UIViewController {
     func configureWarrantiesCollectionView() {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        layout.itemSize = CGSize(width: view.frame.size.width-16, height: view.frame.size.width/4)
+        layout.itemSize = CGSize(width: view.frame.size.width-16, height: view.frame.size.width/3.3)
         layout.minimumLineSpacing = 24
         warrantiesCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         warrantiesCollectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -97,15 +96,15 @@ class WarrantiesViewController: UIViewController {
     func configureAddWarrantyButton() {
         addWarrantyButton.translatesAutoresizingMaskIntoConstraints = false
         addWarrantyButton.setImage(UIImage(systemName: "plus.circle.fill", withConfiguration: UIImage.SymbolConfiguration(pointSize: 38, weight: .light, scale: .small)), for: .normal)
-        addWarrantyButton.tintColor = #colorLiteral(red: 0.2539245784, green: 0.3356729746, blue: 0.3600735664, alpha: 1)
+        addWarrantyButton.tintColor = MWColor.bluegrey
         view.addSubview(addWarrantyButton)
         addWarrantyButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         addWarrantyButton.addTarget(self, action: #selector(addWarrantyButtonAction), for: .touchUpInside)
     }
     
     @objc func addWarrantyButtonAction() {
-        viewModel?.showDetail()
-        //coordinator?.showNewWarrantiesScreenFor(category: "MA SUPER CATEGORY")
+        viewModel?.showNewWarrantyScreen()
+        // coordinator?.showNewWarrantiesScreenFor(category: "MA SUPER CATEGORY")
     }
     
     func activateConstraints() {
@@ -125,7 +124,7 @@ class WarrantiesViewController: UIViewController {
             bottomBorder.trailingAnchor.constraint(equalToSystemSpacingAfter: view.trailingAnchor, multiplier: 0),
             bottomBorder.topAnchor.constraint(equalToSystemSpacingBelow: categoriesStackView.bottomAnchor, multiplier: 0),
             
-            warrantiesCollectionView.topAnchor.constraint(equalTo: bottomBorder.bottomAnchor, constant: 0),
+            warrantiesCollectionView.topAnchor.constraint(equalTo: bottomBorder.bottomAnchor, constant: 14),
             warrantiesCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
             warrantiesCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
             warrantiesCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0)
@@ -144,7 +143,7 @@ extension WarrantiesViewController {
     }
 }
 
-extension WarrantiesViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+extension WarrantiesViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // return user.categories.count
@@ -157,11 +156,12 @@ extension WarrantiesViewController: UICollectionViewDataSource, UICollectionView
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         var cell = UICollectionViewCell()
         
-        if collectionView ==  self.categoriesCollectionView {
+        if collectionView == self.categoriesCollectionView {
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: TopCategoriesCell.identifier, for: indexPath)
-            print(viewModel?.warranties[indexPath.row] as Any)
+            print(viewModel?.categories[indexPath.row] as Any)
         } else {
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: WarrantiesCell.identifier, for: indexPath)
+            print(viewModel?.warranties[indexPath.row] as Any)
         }
         return cell
     }
@@ -178,7 +178,20 @@ extension WarrantiesViewController: UICollectionViewDataSource, UICollectionView
         // displayWarrantiesFor(selectedCategory)
     }
     
+   /* func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let categoryCell = TopCategoriesCell()
+        if collectionView == categoriesCollectionView {
+            return categoryCell.titleLabel.frame.size
+        } else {
+            return CGSize(width: view.frame.size.width-16, height: view.frame.size.width/3.3)
+        }
+    } */
+    
     func refreshWith(warranties: [String]) {
+        warrantiesCollectionView.reloadData()
+    }
+    
+    func refreshWith(categories: [String]) {
         categoriesCollectionView.reloadData()
     }
 }

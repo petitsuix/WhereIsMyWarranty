@@ -22,8 +22,14 @@ class WarrantiesViewModel: NSObject {
         }
     }
     
-    func showDetail() {
-        coordinator.showNewWarrantiesScreenFor(category: "categ")
+    var categories: [String] = [] {
+        didSet {
+            viewDelegate?.refreshWith(categories: categories)
+        }
+    }
+    
+    func showNewWarrantyScreen() {
+        coordinator.showAddNewWarrantyScreen()
     }
     
     func fetchWarranties() {
@@ -31,5 +37,9 @@ class WarrantiesViewModel: NSObject {
         // response
         // warratnesiappelreseau = warranties
         warranties = ["war1", "war2","war3"]
+    }
+    
+    func fetchCategories() {
+        categories = ["Electroménager", "Pro", "Informatique"]
     }
 }

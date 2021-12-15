@@ -14,7 +14,6 @@ class WarrantiesCoordinator: Coordinator {
 
     init() {
         self.navigationController = UINavigationController()
-        self.navigationController.view.backgroundColor = .yellow
     }
 
     public var rootViewController: UIViewController {
@@ -34,12 +33,9 @@ class WarrantiesCoordinator: Coordinator {
         navigationController.setViewControllers([warrantiesVC], animated: false)
     }
     
-    func showNewWarrantiesScreenFor(category: String) {
-            let newWarrantiesVC = NewWarrantyViewController()
-    
-    
-            navigationController.pushViewController(newWarrantiesVC, animated: true)
-    
+    func showAddNewWarrantyScreen() {
+            let newWarrantyViewController = NewWarrantyViewController()
+            navigationController.pushViewController(newWarrantyViewController, animated: true)
         }
     
     // func showAddNewWarrantiesScreenFor(category: String) {

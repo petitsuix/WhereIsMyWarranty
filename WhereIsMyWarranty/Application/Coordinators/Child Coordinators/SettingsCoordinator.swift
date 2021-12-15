@@ -10,17 +10,25 @@ import UIKit
 
 class SettingsCoordinator: Coordinator {
     
-    func start() {
-    }
-    
     public var navigationController: UINavigationController
 
     init() {
         self.navigationController = UINavigationController()
-        self.navigationController.view.backgroundColor = .blue
+        // FIXME: Est-ce que c'est normal de devoir placer showSettingsScreen ici ou ça a rien à faire dans le init ?
+        showSettingsScreen()
     }
 
     public var rootViewController: UIViewController {
         return navigationController
+    }
+    
+    func start() {
+        showSettingsScreen()
+    }
+    
+    func showSettingsScreen() {
+        let settingsVC = SettingsViewController()
+       // let settingsViewModel = SettingsViewModel(coordinator: self)
+        navigationController.setViewControllers([settingsVC], animated: false)
     }
 }

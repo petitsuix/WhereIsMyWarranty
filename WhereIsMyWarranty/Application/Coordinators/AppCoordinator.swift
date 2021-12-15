@@ -34,14 +34,20 @@ class AppCoordinator: NSObject, Coordinator, UITabBarControllerDelegate {
         let warrantiesViewController = warrantiesCoordinator.rootViewController
         warrantiesViewController.tabBarItem = UITabBarItem(title: "Garanties", image: UIImage(systemName: "newspaper"), selectedImage: UIImage(systemName: "newspaper.fill"))
         
+     //   warrantiesViewController.tabBarController?.target(forAction: Selector, withSender: <#T##Any?#>)
+        
         let settingsViewController = settingsCoordinator.rootViewController
         settingsViewController.tabBarItem = UITabBarItem(title: "Réglages", image: UIImage(systemName: "gearshape"), selectedImage: UIImage(systemName: "gearshape.fill"))
+        
+        
+        
         
         tabBarControllers.append(warrantiesViewController)
         tabBarControllers.append(settingsViewController)
         
         tabBarController.viewControllers = tabBarControllers
         tabBarController.tabBar.isTranslucent = false
+        tabBarController.tabBar.backgroundColor = MWColor.paleOrange
         //  tabBarController.delegate = self
     }
     
@@ -68,8 +74,6 @@ class AppCoordinator: NSObject, Coordinator, UITabBarControllerDelegate {
         //            showNewWarrantiesScreenFor(category: "TEST RANDOM")
         //        }
     }
-    
-    
     
     //    func showNewWarrantiesScreenFor(category: String) {
     //        let newWarrantiesVC = NewWarrantyViewController()

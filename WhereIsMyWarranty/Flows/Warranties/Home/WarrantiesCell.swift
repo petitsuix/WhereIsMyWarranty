@@ -12,6 +12,8 @@ class WarrantiesCell: UICollectionViewCell {
     static let identifier = "WarrantiesCollectionViewCell"
     
     private var warrantyProductImageView = UIImageView()
+    private var warrantyInfoStackView = UIStackView()
+    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -21,6 +23,7 @@ class WarrantiesCell: UICollectionViewCell {
         roundingCellCorners(radius: 10)
         addShadow()
         configureImageView()
+        activateConstraints()
     }
     
     required init?(coder: NSCoder) {
@@ -34,7 +37,23 @@ class WarrantiesCell: UICollectionViewCell {
     func configureImageView() {
         let image = UIImage(named: "Launchscreen")
         warrantyProductImageView.image = image
+        warrantyProductImageView.translatesAutoresizingMaskIntoConstraints = false
+        warrantyProductImageView.roundingViewCorners(radius: 10)
+        warrantyProductImageView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMinXMaxYCorner] // to round specific corners (top left and bottom left)
         contentView.addSubview(warrantyProductImageView)
+    }
+    
+    func configureWarrantyInfoStackView() {
+        
+    }
+    
+    func activateConstraints() {
+        NSLayoutConstraint.activate([
+            warrantyProductImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 0),
+            warrantyProductImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 0),
+            warrantyProductImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 0),
+            warrantyProductImageView.widthAnchor.constraint(equalTo: warrantyProductImageView.heightAnchor)
+        ])
     }
     
 }
