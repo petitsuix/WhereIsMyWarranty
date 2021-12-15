@@ -12,8 +12,9 @@ class WarrantiesViewModel: NSObject {
 
     //private let webservice: Websercice ...
     private let coordinator: WarrantiesCoordinator
-    init(coordinator: WarrantiesCoordinator) {
+    init(coordinator: WarrantiesCoordinator/*, storageService: StorageService*/) {
         self.coordinator = coordinator
+        
     }
     
     var warranties: [String] = [] {

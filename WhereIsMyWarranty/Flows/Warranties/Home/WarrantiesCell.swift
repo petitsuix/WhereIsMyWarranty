@@ -14,6 +14,17 @@ class WarrantiesCell: UICollectionViewCell {
     private var warrantyProductImageView = UIImageView()
     private var warrantyInfoStackView = UIStackView()
     
+    private var warrantyCellInfo = UIStackView()
+    private var warrantyName = UILabel()
+    private var sellersNameAndLocation = UILabel()
+    private var warrantyEnd = UILabel()
+    private var remainingTime = UILabel()
+    
+    var warranty: Warranty? {
+        didSet {
+            refreshWarrantyData()
+        }
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -23,6 +34,7 @@ class WarrantiesCell: UICollectionViewCell {
         roundingCellCorners(radius: 10)
         addShadow()
         configureImageView()
+        configureWarrantyCellInfoStackView()
         activateConstraints()
     }
     
@@ -43,8 +55,24 @@ class WarrantiesCell: UICollectionViewCell {
         contentView.addSubview(warrantyProductImageView)
     }
     
-    func configureWarrantyInfoStackView() {
+    func configureWarrantyCellInfoStackView() {
+        warrantyCellInfo.axis = .vertical
+        warrantyCellInfo.translatesAutoresizingMaskIntoConstraints = false
+        warrantyCellInfo.spacing = 8
         
+        sellersNameAndLocation.text = "Apple Store" + ", " + "Lyon"
+        remainingTime.text = "178 jours restants"
+        warrantyEnd.text = "Garanti jusqu'au 14 avril 2022"
+        warrantyCellInfo.addArrangedSubview(warrantyName)
+        warrantyCellInfo.addArrangedSubview(sellersNameAndLocation)
+        warrantyCellInfo.addArrangedSubview(remainingTime)
+        warrantyCellInfo.addArrangedSubview(warrantyEnd)
+        
+        contentView.addSubview(warrantyCellInfo)
+    }
+    
+    func refreshWarrantyData() {
+        warrantyName.text = warranty?.name
     }
     
     func activateConstraints() {
@@ -52,7 +80,12 @@ class WarrantiesCell: UICollectionViewCell {
             warrantyProductImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 0),
             warrantyProductImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 0),
             warrantyProductImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 0),
-            warrantyProductImageView.widthAnchor.constraint(equalTo: warrantyProductImageView.heightAnchor)
+            warrantyProductImageView.widthAnchor.constraint(equalTo: warrantyProductImageView.heightAnchor),
+            
+            warrantyCellInfo.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 4),
+            warrantyCellInfo.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
+            warrantyCellInfo.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -4),
+            warrantyCellInfo.leadingAnchor.constraint(equalTo: warrantyProductImageView.trailingAnchor, constant: 8)
         ])
     }
     

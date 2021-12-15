@@ -22,10 +22,21 @@ class AppCoordinator: NSObject, Coordinator, UITabBarControllerDelegate {
     let settingsCoordinator: SettingsCoordinator
     let window: UIWindow
     
+    /*
+    let userdefault ..
+    let networkSetrvice: Network..
+    let storage: staor...State
+    
+    init(window: UIWindow, storageService: StorageService = StorageService() ...) {
+        self.window =
+        ...
+    }
+     */
+    
     init(window: UIWindow) {
         self.window = window
         tabBarController = UITabBarController()
-        warrantiesCoordinator = WarrantiesCoordinator()
+        warrantiesCoordinator = WarrantiesCoordinator() //WarrantiesCoordinator(storageservice : stor)
         settingsCoordinator = SettingsCoordinator()
         navigationController = UINavigationController()
         

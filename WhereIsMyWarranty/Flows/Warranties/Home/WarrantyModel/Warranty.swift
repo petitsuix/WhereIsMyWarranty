@@ -16,7 +16,7 @@ struct Warranty {
     // FIXME: Photo c'est du String ?
     let invoicePhoto: Data?
     let price: Double?
-    let paymentMethod: Int?
+    let paymentMethod: String?
     let model: String?
     let serialNumber: String?
     let currency: String?
@@ -37,7 +37,7 @@ extension Warranty {
         self.lifetimeWarranty = warrantyEntity.lifetimeWarranty
         self.invoicePhoto = warrantyEntity.invoicePhoto
         self.price = warrantyEntity.price
-        self.paymentMethod = Int(warrantyEntity.paymentMethod)
+        self.paymentMethod = warrantyEntity.paymentMethod
         self.model = warrantyEntity.model
         self.serialNumber = warrantyEntity.serialNumber
         self.currency = warrantyEntity.currency

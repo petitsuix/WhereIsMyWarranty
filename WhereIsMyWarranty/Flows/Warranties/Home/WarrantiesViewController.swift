@@ -7,11 +7,64 @@
 
 import UIKit
 
+enum State<Data> { // To execute particular actions according to the situation
+    case loading
+    case empty
+    case error
+    case showData(Data)
+}
+
 class WarrantiesViewController: UIViewController {
     
     var viewModel: WarrantiesViewModel?
     
     weak var coordinator: AppCoordinator?
+    var warranties: [Warranty] = []
+    var categories: [Category] = []
+    var storageService = StorageService()
+    
+    private var viewState2: State<Void> = .loading {
+        didSet {
+            // resetState() // Hides tableview, stops activity indicator animation
+            switch viewState {
+            case .loading :
+                print("loading")
+            case .empty :
+                displayNoWarrantiesView()
+                print("empty")
+            case .error :
+                alert("Oops...", "Something went wrong, please try again.")
+                print("error : fell into the .error case of viewState")
+            case .showData :
+                //self.warranties = warranties
+                warrantiesCollectionView.reloadData()
+                warrantiesCollectionView.isHidden = false
+            }
+        }
+    }
+    
+    private func resetViewState() {
+        
+    }
+    private var viewState: State<[Warranty]> = .loading {
+        didSet {
+            // resetState() // Hides tableview, stops activity indicator animation
+            switch viewState {
+            case .loading :
+                print("loading")
+            case .empty :
+                displayNoWarrantiesView()
+                print("empty")
+            case .error :
+                alert("Oops...", "Something went wrong, please try again.")
+                print("error : fell into the .error case of viewState")
+            case .showData(let warranties) :
+                self.warranties = warranties
+                warrantiesCollectionView.reloadData()
+                warrantiesCollectionView.isHidden = false
+            }
+        }
+    }
     
     private var categoriesCollectionView: UICollectionView!
     private var warrantiesCollectionView: UICollectionView!
@@ -32,9 +85,19 @@ class WarrantiesViewController: UIViewController {
         configureWarrantiesCollectionView()
         configureAddWarrantyButton()
         activateConstraints()
-        
+        do {
+            for warranty in warranties {
+                try storageService.saveWarranty(warranty)
+            }
+        }
+        catch { print(error) }
         viewModel?.fetchWarranties()
         viewModel?.fetchCategories()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        fetchWarrantiesFromDatabase()
     }
     
     func configureNavigationBar() {
@@ -56,6 +119,18 @@ class WarrantiesViewController: UIViewController {
         bottomBorder.translatesAutoresizingMaskIntoConstraints = false
         bottomBorder.backgroundColor = #colorLiteral(red: 0.2539245784, green: 0.3356729746, blue: 0.3600735664, alpha: 1)
         view.addSubview(bottomBorder)
+    }
+    
+    private func displayNoWarrantiesView() {
+        let noResultTextView = UITextView.init(frame: self.view.frame)
+        noResultTextView.text = "\n\n\n\n\nOops, nothing to show here !"
+        noResultTextView.font = UIFont.preferredFont(forTextStyle: .subheadline)
+        noResultTextView.textColor = .systemGray
+        noResultTextView.textAlignment = .center
+        noResultTextView.isEditable = false
+        noResultTextView.translatesAutoresizingMaskIntoConstraints = false
+        noResultTextView.adjustsFontForContentSizeCategory = true
+        view.insertSubview(noResultTextView, at: 0)
     }
     
     func configureAddCategoryButton() {
@@ -101,37 +176,48 @@ class WarrantiesViewController: UIViewController {
         addWarrantyButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         addWarrantyButton.addTarget(self, action: #selector(addWarrantyButtonAction), for: .touchUpInside)
     }
-    
+    // MARK: - private / actions / delegate /
     @objc func addWarrantyButtonAction() {
         viewModel?.showNewWarrantyScreen()
         // coordinator?.showNewWarrantiesScreenFor(category: "MA SUPER CATEGORY")
     }
     
-    func activateConstraints() {
-        NSLayoutConstraint.activate([
-            // FIXME: view.safeAreaLayoutGuide.topAnchor ??? Comment fixer une stackview à une navigationbar ?
-            categoriesStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
-            categoriesStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 6),
-            categoriesStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
-            categoriesStackView.heightAnchor.constraint(equalToConstant: 60),
-            
-            addWarrantyButton.bottomAnchor.constraint(equalToSystemSpacingBelow: view.safeAreaLayoutGuide.bottomAnchor, multiplier: 0),
-            addWarrantyButton.heightAnchor.constraint(equalToConstant: 50),
-            addWarrantyButton.widthAnchor.constraint(equalToConstant: 50),
-            
-            bottomBorder.heightAnchor.constraint(equalToConstant: 0.4),
-            bottomBorder.leadingAnchor.constraint(equalToSystemSpacingAfter: view.leadingAnchor, multiplier: 0),
-            bottomBorder.trailingAnchor.constraint(equalToSystemSpacingAfter: view.trailingAnchor, multiplier: 0),
-            bottomBorder.topAnchor.constraint(equalToSystemSpacingBelow: categoriesStackView.bottomAnchor, multiplier: 0),
-            
-            warrantiesCollectionView.topAnchor.constraint(equalTo: bottomBorder.bottomAnchor, constant: 14),
-            warrantiesCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
-            warrantiesCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
-            warrantiesCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0)
-        ])
+    func fetchWarrantiesFromDatabase() {
+        do {
+            warranties = try storageService.loadWarranties()
+            if warranties.isEmpty {
+                viewState = .empty // Displays "no results found" view
+            } else {
+                viewState = .showData(warranties) // bouger en bas
+            }
+        } catch { print("erreur : \(error)"); alert("Can't load data", "Something went wrong, please try again later")}
     }
-}
 
+func activateConstraints() {
+    NSLayoutConstraint.activate([
+        // FIXME: view.safeAreaLayoutGuide.topAnchor ??? Comment fixer une stackview à une navigationbar ?
+        categoriesStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
+        categoriesStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 6),
+        categoriesStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
+        categoriesStackView.heightAnchor.constraint(equalToConstant: 60),
+        
+        addWarrantyButton.bottomAnchor.constraint(equalToSystemSpacingBelow: view.safeAreaLayoutGuide.bottomAnchor, multiplier: 0),
+        addWarrantyButton.heightAnchor.constraint(equalToConstant: 50),
+        addWarrantyButton.widthAnchor.constraint(equalToConstant: 50),
+        
+        bottomBorder.heightAnchor.constraint(equalToConstant: 0.4),
+        bottomBorder.leadingAnchor.constraint(equalToSystemSpacingAfter: view.leadingAnchor, multiplier: 0),
+        bottomBorder.trailingAnchor.constraint(equalToSystemSpacingAfter: view.trailingAnchor, multiplier: 0),
+        bottomBorder.topAnchor.constraint(equalToSystemSpacingBelow: categoriesStackView.bottomAnchor, multiplier: 0),
+        
+        warrantiesCollectionView.topAnchor.constraint(equalTo: bottomBorder.bottomAnchor, constant: 14),
+        warrantiesCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
+        warrantiesCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
+        warrantiesCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0)
+    ])
+}
+}
+// MARK: - View Configuration
 extension WarrantiesViewController {
     private func setupView() {
         // Ici
@@ -148,22 +234,28 @@ extension WarrantiesViewController: UICollectionViewDataSource, UICollectionView
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // return user.categories.count
         if collectionView == self.categoriesCollectionView {
-            return viewModel?.warranties.count ?? 0 // On devrait pouvoir retourner user.categories.count
+            return warranties.count ?? 0 // On devrait pouvoir retourner user.categories.count
         }
-        return viewModel?.warranties.count ?? 0
+        return warranties.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        var cell = UICollectionViewCell()
+       // var cell = UICollectionViewCell() // mettre ma cellule à moi
         
         if collectionView == self.categoriesCollectionView {
-            cell = collectionView.dequeueReusableCell(withReuseIdentifier: TopCategoriesCell.identifier, for: indexPath)
-            print(viewModel?.categories[indexPath.row] as Any)
+          let categoryCell = collectionView.dequeueReusableCell(withReuseIdentifier: TopCategoriesCell.identifier, for: indexPath) as! TopCategoriesCell
+       //     categoryCell.category = categories[indexPath.row]
+            return categoryCell
+          //  print(viewModel?.categories[indexPath.row] as Any)
         } else {
-            cell = collectionView.dequeueReusableCell(withReuseIdentifier: WarrantiesCell.identifier, for: indexPath)
-            print(viewModel?.warranties[indexPath.row] as Any)
+           let warrantyCell = collectionView.dequeueReusableCell(withReuseIdentifier: WarrantiesCell.identifier, for: indexPath) as! WarrantiesCell
+            warrantyCell.warranty = warranties[indexPath.row]
+
+           // cell = warranties[indexPath.row].name
+            print(warranties[indexPath.row].name)
+            return warrantyCell
         }
-        return cell
+      //  return cell
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -178,22 +270,27 @@ extension WarrantiesViewController: UICollectionViewDataSource, UICollectionView
         // displayWarrantiesFor(selectedCategory)
     }
     
-   /* func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let categoryCell = TopCategoriesCell()
-        if collectionView == categoriesCollectionView {
-            return categoryCell.titleLabel.frame.size
-        } else {
-            return CGSize(width: view.frame.size.width-16, height: view.frame.size.width/3.3)
-        }
-    } */
+    /* func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+     let categoryCell = TopCategoriesCell()
+     if collectionView == categoriesCollectionView {
+     return categoryCell.titleLabel.frame.size
+     } else {
+     return CGSize(width: view.frame.size.width-16, height: view.frame.size.width/3.3)
+     }
+     } */
     
+    
+}
+
+// MARK: - Viewmodel delegate
+
+extension WarrantiesViewController {
     func refreshWith(warranties: [String]) {
-        warrantiesCollectionView.reloadData()
+        warrantiesCollectionView.reloadData() // pas de reloaddata ici
+        //viewState = .showData(warranties)
     }
     
     func refreshWith(categories: [String]) {
         categoriesCollectionView.reloadData()
     }
 }
-
-

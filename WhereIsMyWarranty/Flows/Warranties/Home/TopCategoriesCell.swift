@@ -12,7 +12,7 @@ class TopCategoriesCell: UICollectionViewCell {
     var viewModel: WarrantiesViewModel?
     
     static let identifier = "CustomCollectionViewCell"
-    
+    var category: Category? 
      let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "éléctroniques"
