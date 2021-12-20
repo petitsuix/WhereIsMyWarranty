@@ -11,7 +11,6 @@ class StorageService {
     
     // MARK: - Properties
     
-    static let shared = StorageService()
     private var viewContext: NSManagedObjectContext
     
     // MARK: - Methods
@@ -53,12 +52,14 @@ class StorageService {
         warrantyEntity.sellersContact = warranty.sellersContact
         warrantyEntity.category = warranty.category
         if viewContext.hasChanges {
-            do { try viewContext.save() }
+            do {
+                try viewContext.save()
+            }
             catch { throw error }
         }
     }
     
-    func deleteRecipe(_ warranty: Warranty) throws {
+    func deleteWarranty(_ warranty: Warranty) throws {
         let fetchRequest: NSFetchRequest<WarrantyEntity> = WarrantyEntity.fetchRequest() // Instantiating NSFetchRequest to retrieve a group of managed objects held in the persistent store
         let predicate = NSPredicate(format: "name == %@", warranty.name) // Condition used to constrain the search
         fetchRequest.predicate = predicate
@@ -68,7 +69,7 @@ class StorageService {
             warrantyEntities.forEach { (warrantyEntity) in
                 viewContext.delete(warrantyEntity)
             }
-            try viewContext.save() // Save when a recipe is deleted
+            try viewContext.save() // Save once a recipe is deleted
         } catch { throw error }
     }
 }

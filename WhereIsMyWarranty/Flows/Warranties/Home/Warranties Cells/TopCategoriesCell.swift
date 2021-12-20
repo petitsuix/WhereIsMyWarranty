@@ -11,13 +11,20 @@ class TopCategoriesCell: UICollectionViewCell {
     
     var viewModel: WarrantiesViewModel?
     
+    
     static let identifier = "CustomCollectionViewCell"
-    var category: Category? 
+    
      let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "éléctroniques"
         return label
     }()
+    
+    var category: Category? {
+        didSet {
+            refreshCategoryData()
+        }
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -38,6 +45,10 @@ class TopCategoriesCell: UICollectionViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         titleLabel.frame = CGRect(x: 0, y: 0, width: contentView.frame.size.width, height: contentView.frame.size.height)
+    }
+    
+    func refreshCategoryData() {
+        titleLabel.text = category?.name
     }
     
     func configureCell() {

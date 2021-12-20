@@ -331,13 +331,11 @@
 		9763049B275A6BBF00688DDB /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				97961EAE276B75300003883C /* Warranties Cells */,
 				9769C951276A062D00BAC736 /* WarrantyModel */,
-				9769C952276A299100BAC736 /* Storage Service.swift */,
 				976304A1275A6DAE00688DDB /* WarrantiesViewController.swift */,
 				976304BF276365F700688DDB /* WarrantiesViewModel.swift */,
 				9769C958276A52AA00BAC736 /* NewWarranty */,
-				976304B1275A6F3F00688DDB /* TopCategoriesCell.swift */,
-				976304C1276393CF00688DDB /* WarrantiesCell.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -354,6 +352,7 @@
 		976304AB275A6ED700688DDB /* Storage */ = {
 			isa = PBXGroup;
 			children = (
+				9769C952276A299100BAC736 /* Storage Service.swift */,
 			);
 			path = Storage;
 			sourceTree = "<group>";
@@ -369,10 +368,19 @@
 		9769C958276A52AA00BAC736 /* NewWarranty */ = {
 			isa = PBXGroup;
 			children = (
-				9769C956276A429900BAC736 /* NewWarrantyViewModel.swift */,
 				976304B9275F80B900688DDB /* NewWarrantyViewController.swift */,
+				9769C956276A429900BAC736 /* NewWarrantyViewModel.swift */,
 			);
 			path = NewWarranty;
+			sourceTree = "<group>";
+		};
+		97961EAE276B75300003883C /* Warranties Cells */ = {
+			isa = PBXGroup;
+			children = (
+				976304B1275A6F3F00688DDB /* TopCategoriesCell.swift */,
+				976304C1276393CF00688DDB /* WarrantiesCell.swift */,
+			);
+			path = "Warranties Cells";
 			sourceTree = "<group>";
 		};
 		97E03BD6276763A600EFEE79 /* Coordinators */ = {

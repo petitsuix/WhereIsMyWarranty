@@ -11,26 +11,41 @@ enum State<Data> { // To execute particular actions according to the situation
     case loading
     case empty
     case error
-    case showData(Data)
+    case showData
 }
 
 class WarrantiesViewController: UIViewController {
     
+    
+    // MARK: - Properties
+    
     var viewModel: WarrantiesViewModel?
     
-    weak var coordinator: AppCoordinator?
-    var warranties: [Warranty] = []
-    var categories: [Category] = []
-    var storageService = StorageService()
+    // MARK: - Private properties
     
-    private var viewState2: State<Void> = .loading {
+    private weak var coordinator: AppCoordinator?
+    private var warranties: [Warranty] = []
+    private var categories: [Category] = []
+    private var storageService = StorageService()
+    private var categoriesCollectionView: UICollectionView!
+    private var warrantiesCollectionView: UICollectionView!
+    
+    private let navBarAppearance = UINavigationBarAppearance()
+    private let addWarrantyButton = UIButton()
+    private let addCategoryButton = UIButton()
+    private let categoriesStackView = UIStackView()
+    private let bottomBorder = UIView()
+    
+    // MARK: - Computed properties
+    
+    private var viewState: State<Void> = .loading {
         didSet {
-            // resetState() // Hides tableview, stops activity indicator animation
+            resetViewState() // Hides tableview, stops activity indicator animation
             switch viewState {
             case .loading :
                 print("loading")
             case .empty :
-                displayNoWarrantiesView()
+                // displayNoWarrantiesView()
                 print("empty")
             case .error :
                 alert("Oops...", "Something went wrong, please try again.")
@@ -38,53 +53,17 @@ class WarrantiesViewController: UIViewController {
             case .showData :
                 //self.warranties = warranties
                 warrantiesCollectionView.reloadData()
+                categoriesCollectionView.reloadData()
                 warrantiesCollectionView.isHidden = false
             }
         }
     }
     
-    private func resetViewState() {
-        
-    }
-    private var viewState: State<[Warranty]> = .loading {
-        didSet {
-            // resetState() // Hides tableview, stops activity indicator animation
-            switch viewState {
-            case .loading :
-                print("loading")
-            case .empty :
-                displayNoWarrantiesView()
-                print("empty")
-            case .error :
-                alert("Oops...", "Something went wrong, please try again.")
-                print("error : fell into the .error case of viewState")
-            case .showData(let warranties) :
-                self.warranties = warranties
-                warrantiesCollectionView.reloadData()
-                warrantiesCollectionView.isHidden = false
-            }
-        }
-    }
-    
-    private var categoriesCollectionView: UICollectionView!
-    private var warrantiesCollectionView: UICollectionView!
-    
-    let navBarAppearance = UINavigationBarAppearance()
-    let addWarrantyButton = UIButton()
-    let addCategoryButton = UIButton()
-    let categoriesStackView = UIStackView()
-    let bottomBorder = UIView()
+    // MARK: - View life cycle methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = Strings.warrantiesTitle
-        view.backgroundColor = .white
-        configureNavigationBar()
-        configureCategoriesStackView()
-        configureBottomBorder()
-        configureWarrantiesCollectionView()
-        configureAddWarrantyButton()
-        activateConstraints()
+        setupView()
         do {
             for warranty in warranties {
                 try storageService.saveWarranty(warranty)
@@ -93,6 +72,7 @@ class WarrantiesViewController: UIViewController {
         catch { print(error) }
         viewModel?.fetchWarranties()
         viewModel?.fetchCategories()
+        // MARK: ICI, appeler une boucle deleteWarranty pour tout supprimer
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -100,13 +80,60 @@ class WarrantiesViewController: UIViewController {
         fetchWarrantiesFromDatabase()
     }
     
-    func configureNavigationBar() {
+    // MARK: - Methods
+    
+    
+    
+    // MARK: - Private methods
+    
+    private func fetchWarrantiesFromDatabase() {
+        do {
+            warranties = try storageService.loadWarranties()
+            if warranties.isEmpty {
+                viewState = .empty
+            } else {
+                viewState = .showData
+            }
+        } catch { print("erreur : \(error)"); alert("Can't load data", "Something went wrong, please try again later")}
+    }
+    
+    private func resetViewState() {
+        warrantiesCollectionView.isHidden = true
+    }
+    
+    // MARK: - objc methods
+    @objc func addWarrantyButtonAction() {
+        viewModel?.showNewWarrantyScreen()
+        // coordinator?.showNewWarrantiesScreenFor(category: "MA SUPER CATEGORY")
+    }
+}
+// MARK: - View Configuration
+
+extension WarrantiesViewController {
+    private func setupView() {
+        // Ici
+        // creation des lable
+        // configuration des view
+        // config stack view
+        
+        // nalayoutconstraint ....
+        self.title = Strings.warrantiesTitle
+        view.backgroundColor = .white
+        configureNavigationBar()
+        configureCategoriesStackView()
+        configureBottomBorder()
+        configureWarrantiesCollectionView()
+        configureAddWarrantyButton()
+        activateConstraints()
+    }
+    
+    private func configureNavigationBar() {
         navBarAppearance.backgroundColor = #colorLiteral(red: 0.9285728335, green: 0.7623301148, blue: 0.6474828124, alpha: 1)
         navigationController?.navigationBar.standardAppearance = navBarAppearance
         navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
     }
     
-    func configureCategoriesStackView() {
+    private func configureCategoriesStackView() {
         categoriesStackView.translatesAutoresizingMaskIntoConstraints = false
         categoriesStackView.backgroundColor = .white
         categoriesStackView.spacing = 5.5
@@ -115,7 +142,7 @@ class WarrantiesViewController: UIViewController {
         configureCategoriesCollectionView()
     }
     
-    func configureBottomBorder() {
+    private func configureBottomBorder() {
         bottomBorder.translatesAutoresizingMaskIntoConstraints = false
         bottomBorder.backgroundColor = #colorLiteral(red: 0.2539245784, green: 0.3356729746, blue: 0.3600735664, alpha: 1)
         view.addSubview(bottomBorder)
@@ -130,10 +157,10 @@ class WarrantiesViewController: UIViewController {
         noResultTextView.isEditable = false
         noResultTextView.translatesAutoresizingMaskIntoConstraints = false
         noResultTextView.adjustsFontForContentSizeCategory = true
-        view.insertSubview(noResultTextView, at: 0)
+        view.addSubview(noResultTextView)
     }
     
-    func configureAddCategoryButton() {
+    private func configureAddCategoryButton() {
         addCategoryButton.translatesAutoresizingMaskIntoConstraints = false
         addCategoryButton.backgroundColor = .white
         addCategoryButton.setImage(UIImage(systemName: "plus.circle.fill", withConfiguration: UIImage.SymbolConfiguration(pointSize: 38, weight: .light, scale: .small)), for: .normal)
@@ -141,7 +168,7 @@ class WarrantiesViewController: UIViewController {
         categoriesStackView.addArrangedSubview(addCategoryButton)
     }
     
-    func configureCategoriesCollectionView() {
+    private func configureCategoriesCollectionView() {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.itemSize = CGSize(width: view.frame.size.width/5, height: view.frame.size.width/13.5)
@@ -154,7 +181,7 @@ class WarrantiesViewController: UIViewController {
         categoriesStackView.addArrangedSubview(categoriesCollectionView)
     }
     
-    func configureWarrantiesCollectionView() {
+    private func configureWarrantiesCollectionView() {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.itemSize = CGSize(width: view.frame.size.width-16, height: view.frame.size.width/3.3)
@@ -168,7 +195,7 @@ class WarrantiesViewController: UIViewController {
         view.addSubview(warrantiesCollectionView)
     }
     
-    func configureAddWarrantyButton() {
+    private func configureAddWarrantyButton() {
         addWarrantyButton.translatesAutoresizingMaskIntoConstraints = false
         addWarrantyButton.setImage(UIImage(systemName: "plus.circle.fill", withConfiguration: UIImage.SymbolConfiguration(pointSize: 38, weight: .light, scale: .small)), for: .normal)
         addWarrantyButton.tintColor = MWColor.bluegrey
@@ -176,86 +203,62 @@ class WarrantiesViewController: UIViewController {
         addWarrantyButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         addWarrantyButton.addTarget(self, action: #selector(addWarrantyButtonAction), for: .touchUpInside)
     }
-    // MARK: - private / actions / delegate /
-    @objc func addWarrantyButtonAction() {
-        viewModel?.showNewWarrantyScreen()
-        // coordinator?.showNewWarrantiesScreenFor(category: "MA SUPER CATEGORY")
-    }
     
-    func fetchWarrantiesFromDatabase() {
-        do {
-            warranties = try storageService.loadWarranties()
-            if warranties.isEmpty {
-                viewState = .empty // Displays "no results found" view
-            } else {
-                viewState = .showData(warranties) // bouger en bas
-            }
-        } catch { print("erreur : \(error)"); alert("Can't load data", "Something went wrong, please try again later")}
+    private func activateConstraints() {
+        NSLayoutConstraint.activate([
+            // FIXME: view.safeAreaLayoutGuide.topAnchor ??? Comment fixer une stackview à une navigationbar ?
+            categoriesStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
+            categoriesStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 6),
+            categoriesStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
+            categoriesStackView.heightAnchor.constraint(equalToConstant: 60),
+            
+            addWarrantyButton.bottomAnchor.constraint(equalToSystemSpacingBelow: view.safeAreaLayoutGuide.bottomAnchor, multiplier: 0),
+            addWarrantyButton.heightAnchor.constraint(equalToConstant: 50),
+            addWarrantyButton.widthAnchor.constraint(equalToConstant: 50),
+            
+            bottomBorder.heightAnchor.constraint(equalToConstant: 0.4),
+            bottomBorder.leadingAnchor.constraint(equalToSystemSpacingAfter: view.leadingAnchor, multiplier: 0),
+            bottomBorder.trailingAnchor.constraint(equalToSystemSpacingAfter: view.trailingAnchor, multiplier: 0),
+            bottomBorder.topAnchor.constraint(equalToSystemSpacingBelow: categoriesStackView.bottomAnchor, multiplier: 0),
+            
+            warrantiesCollectionView.topAnchor.constraint(equalTo: bottomBorder.bottomAnchor, constant: 14),
+            warrantiesCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
+            warrantiesCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
+            warrantiesCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0)
+        ])
     }
+}
 
-func activateConstraints() {
-    NSLayoutConstraint.activate([
-        // FIXME: view.safeAreaLayoutGuide.topAnchor ??? Comment fixer une stackview à une navigationbar ?
-        categoriesStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
-        categoriesStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 6),
-        categoriesStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
-        categoriesStackView.heightAnchor.constraint(equalToConstant: 60),
-        
-        addWarrantyButton.bottomAnchor.constraint(equalToSystemSpacingBelow: view.safeAreaLayoutGuide.bottomAnchor, multiplier: 0),
-        addWarrantyButton.heightAnchor.constraint(equalToConstant: 50),
-        addWarrantyButton.widthAnchor.constraint(equalToConstant: 50),
-        
-        bottomBorder.heightAnchor.constraint(equalToConstant: 0.4),
-        bottomBorder.leadingAnchor.constraint(equalToSystemSpacingAfter: view.leadingAnchor, multiplier: 0),
-        bottomBorder.trailingAnchor.constraint(equalToSystemSpacingAfter: view.trailingAnchor, multiplier: 0),
-        bottomBorder.topAnchor.constraint(equalToSystemSpacingBelow: categoriesStackView.bottomAnchor, multiplier: 0),
-        
-        warrantiesCollectionView.topAnchor.constraint(equalTo: bottomBorder.bottomAnchor, constant: 14),
-        warrantiesCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
-        warrantiesCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
-        warrantiesCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0)
-    ])
-}
-}
-// MARK: - View Configuration
-extension WarrantiesViewController {
-    private func setupView() {
-        // Ici
-        // creation des lable
-        // configuration des view
-        // config stack view
-        
-        // nalayoutconstraint ....
-    }
-}
+// MARK: - CollectionViews configuration
 
 extension WarrantiesViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // return user.categories.count
-        if collectionView == self.categoriesCollectionView {
-            return warranties.count ?? 0 // On devrait pouvoir retourner user.categories.count
+        if collectionView == categoriesCollectionView {
+            return categories.count // On devrait pouvoir retourner user.categories.count
+        } else {
+            return warranties.count
         }
-        return warranties.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-       // var cell = UICollectionViewCell() // mettre ma cellule à moi
+        // var cell = UICollectionViewCell() // mettre ma cellule à moi
         
         if collectionView == self.categoriesCollectionView {
-          let categoryCell = collectionView.dequeueReusableCell(withReuseIdentifier: TopCategoriesCell.identifier, for: indexPath) as! TopCategoriesCell
-       //     categoryCell.category = categories[indexPath.row]
+            let categoryCell = collectionView.dequeueReusableCell(withReuseIdentifier: TopCategoriesCell.identifier, for: indexPath) as! TopCategoriesCell
+            categoryCell.category = categories[indexPath.row]
             return categoryCell
-          //  print(viewModel?.categories[indexPath.row] as Any)
+            //  print(viewModel?.categories[indexPath.row] as Any)
         } else {
-           let warrantyCell = collectionView.dequeueReusableCell(withReuseIdentifier: WarrantiesCell.identifier, for: indexPath) as! WarrantiesCell
+            let warrantyCell = collectionView.dequeueReusableCell(withReuseIdentifier: WarrantiesCell.identifier, for: indexPath) as! WarrantiesCell
             warrantyCell.warranty = warranties[indexPath.row]
-
-           // cell = warranties[indexPath.row].name
+            
+            // cell = warranties[indexPath.row].name
             print(warranties[indexPath.row].name)
             return warrantyCell
         }
-      //  return cell
+        //  return cell
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -286,7 +289,12 @@ extension WarrantiesViewController: UICollectionViewDataSource, UICollectionView
 
 extension WarrantiesViewController {
     func refreshWith(warranties: [String]) {
-        warrantiesCollectionView.reloadData() // pas de reloaddata ici
+        if warranties.isEmpty {
+            viewState = .empty // Displays "no results found" view
+        } else {
+            viewState = .showData
+        }
+        // pas de reloaddata ici
         //viewState = .showData(warranties)
     }
     
