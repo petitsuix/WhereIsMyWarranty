@@ -9,6 +9,8 @@ import UIKit
 
 class WarrantiesCell: UICollectionViewCell {
     
+    // MARK: - Properties
+    
     static let identifier = "WarrantiesCollectionViewCell"
     
     private var warrantyProductImageView = UIImageView()
@@ -25,6 +27,8 @@ class WarrantiesCell: UICollectionViewCell {
             refreshWarrantyData()
         }
     }
+    
+    // MARK: - Methods
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -62,7 +66,6 @@ class WarrantiesCell: UICollectionViewCell {
         
         sellersNameAndLocation.text = "Apple Store" + ", " + "Lyon"
         remainingTime.text = "178 jours restants"
-        warrantyEnd.text = "Garanti jusqu'au 14 avril 2022"
         warrantyCellInfo.addArrangedSubview(warrantyName)
         warrantyCellInfo.addArrangedSubview(sellersNameAndLocation)
         warrantyCellInfo.addArrangedSubview(remainingTime)
@@ -72,8 +75,14 @@ class WarrantiesCell: UICollectionViewCell {
     }
     
     func refreshWarrantyData() {
+        let formatter1 = DateFormatter()
+        formatter1.dateStyle = .short
+        guard let warrantyStart = warranty?.warrantyStart else { return }
         warrantyName.text = warranty?.name
+        warrantyEnd.text = formatter1.string(from: warrantyStart)
     }
+    
+    // MARK: - Constraints setup
     
     func activateConstraints() {
         NSLayoutConstraint.activate([

@@ -9,9 +9,6 @@ import UIKit
 
 class TopCategoriesCell: UICollectionViewCell {
     
-    var viewModel: WarrantiesViewModel?
-    
-    
     static let identifier = "CustomCollectionViewCell"
     
      let titleLabel: UILabel = {

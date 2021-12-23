@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19574" systemVersion="21A559" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="YES" userDefinedModelVersionIdentifier="">
-    <entity name="CategoryEntity" representedClassName="CategoryEntity" syncable="YES" codeGenerationType="class">
+    <entity name="Category" representedClassName="Category" syncable="YES" codeGenerationType="class">
         <attribute name="activateNotifications" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="attribute" optional="YES" attributeType="Binary"/>
         <attribute name="name" optional="YES" attributeType="String"/>
     </entity>
-    <entity name="WarrantyEntity" representedClassName="WarrantyEntity" syncable="YES" codeGenerationType="class">
+    <entity name="Warranty" representedClassName="Warranty" syncable="YES" codeGenerationType="class">
         <attribute name="category" optional="YES" attributeType="String"/>
         <attribute name="currency" optional="YES" attributeType="String"/>
         <attribute name="invoicePhoto" optional="YES" attributeType="Binary"/>
@@ -25,7 +25,7 @@
         <attribute name="warrantyStart" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
     </entity>
     <elements>
-        <element name="CategoryEntity" positionX="-63" positionY="-18" width="128" height="74"/>
-        <element name="WarrantyEntity" positionX="-54" positionY="18" width="128" height="284"/>
+        <element name="Category" positionX="-63" positionY="-18" width="128" height="74"/>
+        <element name="Warranty" positionX="-54" positionY="18" width="128" height="284"/>
     </elements>
 </model>

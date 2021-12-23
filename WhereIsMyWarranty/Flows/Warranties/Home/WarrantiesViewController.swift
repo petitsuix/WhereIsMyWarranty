@@ -24,9 +24,9 @@ class WarrantiesViewController: UIViewController {
     // MARK: - Private properties
     
     private weak var coordinator: AppCoordinator?
-    private var warranties: [Warranty] = []
+   // private var warranties: [Warranty] = []
+    
     private var categories: [Category] = []
-    private var storageService = StorageService()
     private var categoriesCollectionView: UICollectionView!
     private var warrantiesCollectionView: UICollectionView!
     
@@ -46,7 +46,7 @@ class WarrantiesViewController: UIViewController {
                 print("loading")
             case .empty :
                 // displayNoWarrantiesView()
-                print("empty")
+                print("fell into the .empty case of viewState. That means the collectionView is empty.")
             case .error :
                 alert("Oops...", "Something went wrong, please try again.")
                 print("error : fell into the .error case of viewState")
@@ -55,6 +55,7 @@ class WarrantiesViewController: UIViewController {
                 warrantiesCollectionView.reloadData()
                 categoriesCollectionView.reloadData()
                 warrantiesCollectionView.isHidden = false
+                categoriesCollectionView.isHidden = false
             }
         }
     }
@@ -64,42 +65,26 @@ class WarrantiesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
-        do {
-            for warranty in warranties {
-                try storageService.saveWarranty(warranty)
-            }
-        }
-        catch { print(error) }
-        viewModel?.fetchWarranties()
-        viewModel?.fetchCategories()
-        // MARK: ICI, appeler une boucle deleteWarranty pour tout supprimer
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        fetchWarrantiesFromDatabase()
+        viewModel?.fetchWarrantiesFromDatabase()
+        viewState = .showData
     }
     
     // MARK: - Methods
     
-    
+    func cellTapped(warranty: Warranty) {
+        viewModel?.showWarrantyDetailsScreen(warranty: warranty)
+    }
     
     // MARK: - Private methods
-    
-    private func fetchWarrantiesFromDatabase() {
-        do {
-            warranties = try storageService.loadWarranties()
-            if warranties.isEmpty {
-                viewState = .empty
-            } else {
-                viewState = .showData
-            }
-        } catch { print("erreur : \(error)"); alert("Can't load data", "Something went wrong, please try again later")}
-    }
     
     private func resetViewState() {
         warrantiesCollectionView.isHidden = true
     }
+    
     
     // MARK: - objc methods
     @objc func addWarrantyButtonAction() {
@@ -177,7 +162,7 @@ extension WarrantiesViewController {
         categoriesCollectionView.register(TopCategoriesCell.self, forCellWithReuseIdentifier: TopCategoriesCell.identifier)
         categoriesCollectionView.dataSource = self
         categoriesCollectionView.delegate = self
-        categoriesCollectionView.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height/6.5)
+        categoriesCollectionView.backgroundColor = .red
         categoriesStackView.addArrangedSubview(categoriesCollectionView)
     }
     
@@ -191,7 +176,7 @@ extension WarrantiesViewController {
         warrantiesCollectionView.register(WarrantiesCell.self, forCellWithReuseIdentifier: WarrantiesCell.identifier)
         warrantiesCollectionView.dataSource = self
         warrantiesCollectionView.delegate = self
-        warrantiesCollectionView.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height)
+        warrantiesCollectionView.backgroundColor = .yellow
         view.addSubview(warrantiesCollectionView)
     }
     
@@ -238,24 +223,27 @@ extension WarrantiesViewController: UICollectionViewDataSource, UICollectionView
         if collectionView == categoriesCollectionView {
             return categories.count // On devrait pouvoir retourner user.categories.count
         } else {
-            return warranties.count
+            return viewModel?.warranties.count ?? 0
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         // var cell = UICollectionViewCell() // mettre ma cellule à moi
         
-        if collectionView == self.categoriesCollectionView {
+        if collectionView == categoriesCollectionView {
             let categoryCell = collectionView.dequeueReusableCell(withReuseIdentifier: TopCategoriesCell.identifier, for: indexPath) as! TopCategoriesCell
-            categoryCell.category = categories[indexPath.row]
+            categoryCell.category = viewModel?.categories[indexPath.row]
             return categoryCell
             //  print(viewModel?.categories[indexPath.row] as Any)
         } else {
-            let warrantyCell = collectionView.dequeueReusableCell(withReuseIdentifier: WarrantiesCell.identifier, for: indexPath) as! WarrantiesCell
-            warrantyCell.warranty = warranties[indexPath.row]
+            guard let warrantyCell = collectionView.dequeueReusableCell(withReuseIdentifier: WarrantiesCell.identifier, for: indexPath) as? WarrantiesCell else {
+                assertionFailure("The dequeue collection view cell was of an unknown type!")
+                return UICollectionViewCell()
+            }
+            //let warrantyCell = collectionView.dequeueReusableCell(withReuseIdentifier: WarrantiesCell.identifier, for: indexPath) as! WarrantiesCell
+            warrantyCell.warranty = viewModel?.warranties[indexPath.row]
             
             // cell = warranties[indexPath.row].name
-            print(warranties[indexPath.row].name)
             return warrantyCell
         }
         //  return cell
@@ -266,8 +254,9 @@ extension WarrantiesViewController: UICollectionViewDataSource, UICollectionView
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
         print("selected item nbr \(indexPath.row)")
+        guard let selectedWarranty = viewModel?.warranties[indexPath.row] else { return }
+        cellTapped(warranty: selectedWarranty)
         //  let selectedCategory = categories[indexPath.row]
         
         // displayWarrantiesFor(selectedCategory)
@@ -288,9 +277,9 @@ extension WarrantiesViewController: UICollectionViewDataSource, UICollectionView
 // MARK: - Viewmodel delegate
 
 extension WarrantiesViewController {
-    func refreshWith(warranties: [String]) {
+    func refreshWith(warranties: [Warranty]) {
         if warranties.isEmpty {
-            viewState = .empty // Displays "no results found" view
+         //   viewState = .empty // Displays "no results found" view
         } else {
             viewState = .showData
         }
@@ -298,7 +287,22 @@ extension WarrantiesViewController {
         //viewState = .showData(warranties)
     }
     
-    func refreshWith(categories: [String]) {
+    func refreshWith(categories: [Category]) {
         categoriesCollectionView.reloadData()
     }
+    
+    func didFinishLoadingWarranties() {
+        warrantiesCollectionView.reloadData()
+    }
+    
+    func didFinishLoadingWarranties2() {
+        if viewModel?.warranties.isEmpty == true {
+            viewState = .empty
+        } else {
+            
+            viewState = .showData
+        }
+    }
+    
+   
 }

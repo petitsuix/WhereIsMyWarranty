@@ -7,13 +7,13 @@
 
 import Foundation
 
-struct Category {
-    
-    var name = "Catégorie"
-   // var icon = String()
-    
-    var areNotificationsEnabled = true
-    
-    func deleteCategory() {}
-    
-}
+//struct Category {
+//    
+//    var name = "Catégorie"
+//   // var icon = String()
+//    
+//    var areNotificationsEnabled = true
+//    
+//    func deleteCategory() {}
+//    
+//}

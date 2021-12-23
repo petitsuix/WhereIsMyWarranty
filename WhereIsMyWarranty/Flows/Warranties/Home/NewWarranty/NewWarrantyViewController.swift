@@ -12,7 +12,6 @@ class NewWarrantyViewController: UIViewController {
     // MARK: - Properties
     
     let navBarAppearance = UINavigationBarAppearance()
-    
     var category: String?
     
     // #1 Parent StackView
@@ -75,21 +74,20 @@ class NewWarrantyViewController: UIViewController {
     // MARK: - objc methods
     
     @objc func saveWarranty() {
-        guard nameField.text != "" else { return alert("le champ est vide", "remplir le champ nom") }
-        guard let name = nameField.text else { return print("warrantyNameField has no value") }
-        var date = Date()
-        date = startDate.date
-        // guard let date = warrantyStartDatePicker.date else { return print("warrantyStartDatePicker has no value") }
-        let warrantyTest = Warranty(name: name, warrantyStart: date, warrantyEnd: nil, lifetimeWarranty: false, invoicePhoto: nil, price: nil, paymentMethod: nil, model: nil, serialNumber: nil, currency: nil, productPhoto: nil, sellersName: nil, sellersLocation: nil, sellersWebsite: nil, sellersContact: nil, category: nil)
-        warranties.append(warrantyTest)
-        do {
-            try storageService.saveWarranty(warrantyTest)
-        }
-        catch {
-            print(error)
-        }
-        viewModel?.goBack()
+        viewModel?.saveWarranty()
     }
+    
+    @objc func nameTextfieldDidChange(textfield: UITextField) { // comment le controller communique avec le viewmodel
+        viewModel?.name = textfield.text
+    }
+}
+
+extension NewWarrantyViewController { // comment le viewmodel communique avec le viewcontroller
+    
+    func canSaveStatusDidChange(canSave: Bool) { // pour checker que les champs soient pas vides ?
+        saveButton.isEnabled = canSave
+    }
+    
 }
 
 // MARK: - View configuration
@@ -98,17 +96,13 @@ extension NewWarrantyViewController {
     
     func setupView() {
         view.backgroundColor = .white
-        configureNavigationBar()
-        parentStackView.backgroundColor = .green
-        parentStackView.axis = .vertical
-        parentStackView.translatesAutoresizingMaskIntoConstraints = false
-        parentStackView.alignment = .leading
-       // parentStackView.distribution = .fillEqually
+        
+        configureParentStackView()
         
         nameTitle.text = "Titre"
         nameTitle.textAlignment = .center
         nameTitle.translatesAutoresizingMaskIntoConstraints = false
-        
+        nameField.addTarget(self, action: #selector(nameTextfieldDidChange), for: .editingChanged)
         nameField.translatesAutoresizingMaskIntoConstraints = false
         nameField.backgroundColor = .lightGray
         
@@ -133,10 +127,18 @@ extension NewWarrantyViewController {
         activateConstraints()
     }
     
-    func configureNavigationBar() {
-        navBarAppearance.backgroundColor = #colorLiteral(red: 0.9285728335, green: 0.7623301148, blue: 0.6474828124, alpha: 1)
-        navigationController?.navigationBar.standardAppearance = navBarAppearance
-        navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
+    func configureParentStackView() {
+        parentStackView.backgroundColor = .green
+        parentStackView.axis = .vertical
+        parentStackView.translatesAutoresizingMaskIntoConstraints = false
+        parentStackView.alignment = .leading
+       // parentStackView.distribution = .fillEqually
+        parentStackView.addArrangedSubview(nameAndStartDateStackView)
+        parentStackView.addArrangedSubview(customLengthStackView)
+        parentStackView.addArrangedSubview(endDateStackView)
+    }
+    
+    func configureNameAndStartDateStackView() {
     }
     
     func activateConstraints() {

@@ -44,6 +44,8 @@
 		97E03BD32767638700EFEE79 /* WarrantiesCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E03BD22767638700EFEE79 /* WarrantiesCoordinator.swift */; };
 		97E03BD52767639800EFEE79 /* SettingsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E03BD42767639800EFEE79 /* SettingsCoordinator.swift */; };
 		97E03BDB2767A6EE00EFEE79 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E03BDA2767A6EE00EFEE79 /* SettingsViewModel.swift */; };
+		97F1D3052773448D00D0C52C /* WarrantyDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F1D3042773448D00D0C52C /* WarrantyDetailsViewController.swift */; };
+		97F1D307277345F400D0C52C /* WarrantyDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F1D306277345F400D0C52C /* WarrantyDetailsViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -127,6 +129,8 @@
 		97E03BD22767638700EFEE79 /* WarrantiesCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarrantiesCoordinator.swift; sourceTree = "<group>"; };
 		97E03BD42767639800EFEE79 /* SettingsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCoordinator.swift; sourceTree = "<group>"; };
 		97E03BDA2767A6EE00EFEE79 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
+		97F1D3042773448D00D0C52C /* WarrantyDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarrantyDetailsViewController.swift; sourceTree = "<group>"; };
+		97F1D306277345F400D0C52C /* WarrantyDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarrantyDetailsViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -331,11 +335,12 @@
 		9763049B275A6BBF00688DDB /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				97961EAE276B75300003883C /* Warranties Cells */,
 				9769C951276A062D00BAC736 /* WarrantyModel */,
 				976304A1275A6DAE00688DDB /* WarrantiesViewController.swift */,
 				976304BF276365F700688DDB /* WarrantiesViewModel.swift */,
+				97961EAE276B75300003883C /* Warranties Cells */,
 				9769C958276A52AA00BAC736 /* NewWarranty */,
+				97F1D3032773446B00D0C52C /* WarrantyDetails */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -417,6 +422,15 @@
 				976304B5275E38A300688DDB /* Coordinator.swift */,
 			);
 			path = "Coordinator Protocol";
+			sourceTree = "<group>";
+		};
+		97F1D3032773446B00D0C52C /* WarrantyDetails */ = {
+			isa = PBXGroup;
+			children = (
+				97F1D3042773448D00D0C52C /* WarrantyDetailsViewController.swift */,
+				97F1D306277345F400D0C52C /* WarrantyDetailsViewModel.swift */,
+			);
+			path = WarrantyDetails;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -587,6 +601,7 @@
 				9763044B275A68B200688DDB /* ViewController.swift in Sources */,
 				976304B8275E396300688DDB /* AppCoordinator.swift in Sources */,
 				97630447275A68B200688DDB /* AppDelegate.swift in Sources */,
+				97F1D307277345F400D0C52C /* WarrantyDetailsViewModel.swift in Sources */,
 				976304BA275F80B900688DDB /* NewWarrantyViewController.swift in Sources */,
 				976304A4275A6EB100688DDB /* Strings.swift in Sources */,
 				976304A9275A6ECC00688DDB /* MWImages.swift in Sources */,
@@ -607,6 +622,7 @@
 				9769C9502769F4B800BAC736 /* Warranty.swift in Sources */,
 				97630451275A68B200688DDB /* WhereIsMyWarranty.xcdatamodeld in Sources */,
 				97E03BDB2767A6EE00EFEE79 /* SettingsViewModel.swift in Sources */,
+				97F1D3052773448D00D0C52C /* WarrantyDetailsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

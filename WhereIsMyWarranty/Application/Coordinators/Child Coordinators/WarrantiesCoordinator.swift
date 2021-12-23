@@ -12,10 +12,11 @@ class WarrantiesCoordinator: Coordinator {
     
     public var navigationController: UINavigationController
 
- //   private let storageService: StorageService
+    private let storageService: StorageService
     
     init() {
         self.navigationController = UINavigationController()
+        self.storageService = StorageService()
     }
 
     public var rootViewController: UIViewController {
@@ -29,7 +30,7 @@ class WarrantiesCoordinator: Coordinator {
     
     func showWarrantiesScreen() {
         let warrantiesVC = WarrantiesViewController()
-        let warrantiesViewModel = WarrantiesViewModel(coordinator: self/*, storageService: storageService*/)
+        let warrantiesViewModel = WarrantiesViewModel(coordinator: self, storageService: storageService)
         warrantiesViewModel.viewDelegate = warrantiesVC
         warrantiesVC.viewModel = warrantiesViewModel
         navigationController.setViewControllers([warrantiesVC], animated: false)
@@ -37,13 +38,22 @@ class WarrantiesCoordinator: Coordinator {
     
     func showAddNewWarrantyScreen() {
         let newWarrantyViewController = NewWarrantyViewController()
-        let newWarrantyViewModel = NewWarrantyViewModel(coordinator: self)
-        newWarrantyViewModel.viewDelegate = newWarrantyViewController
-        newWarrantyViewController.viewModel = newWarrantyViewModel
+        let viewModel = NewWarrantyViewModel(coordinator: self, storageService: storageService)
+        viewModel.viewDelegate = newWarrantyViewController
+        newWarrantyViewController.viewModel = viewModel
         navigationController.pushViewController(newWarrantyViewController, animated: true)
         }
     
-    func goBack() {
+    func showWarrantyDetailsScreen(warranty: Warranty) {
+        let warrantyDetailsViewController = WarrantyDetailsViewController()
+        let warrantyDetailsViewModel = WarrantyDetailsViewModel(coordinator: self)
+        warrantyDetailsViewModel.viewDelegate = warrantyDetailsViewController
+        warrantyDetailsViewController.viewModel = warrantyDetailsViewModel
+        warrantyDetailsViewController.warranty = warranty
+        navigationController.pushViewController(warrantyDetailsViewController, animated: true)
+    }
+    
+    func backToHome() {
         navigationController.popToRootViewController(animated: true)
     }
     // func showAddNewWarrantiesScreenFor(category: String) {

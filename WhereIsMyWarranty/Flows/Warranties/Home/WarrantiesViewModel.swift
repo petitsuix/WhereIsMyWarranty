@@ -12,18 +12,19 @@ class WarrantiesViewModel: NSObject {
 
     //private let webservice: Websercice ...
     private let coordinator: WarrantiesCoordinator
-    init(coordinator: WarrantiesCoordinator/*, storageService: StorageService*/) {
+    private let storageService: StorageService
+    init(coordinator: WarrantiesCoordinator, storageService: StorageService) {
         self.coordinator = coordinator
-        
+        self.storageService = storageService
     }
     
-    var warranties: [String] = [] {
+    var warranties: [Warranty] = [] {
         didSet {
             viewDelegate?.refreshWith(warranties: warranties)
         }
     }
     
-    var categories: [String] = [] {
+    var categories: [Category] = [] {
         didSet {
             viewDelegate?.refreshWith(categories: categories)
         }
@@ -33,14 +34,20 @@ class WarrantiesViewModel: NSObject {
         coordinator.showAddNewWarrantyScreen()
     }
     
-    func fetchWarranties() {
-        // appel reseau
-        // response
-        // warratnesiappelreseau = warranties
-        warranties = ["war1", "war2","war3"]
+    func showWarrantyDetailsScreen(warranty: Warranty) {
+        coordinator.showWarrantyDetailsScreen(warranty: warranty)
+    }
+    
+    func fetchWarrantiesFromDatabase() {
+        do {
+            warranties = try storageService.viewContext.fetch(Warranty.fetchRequest())
+        }
+        catch {
+            print(error)
+        }
     }
     
     func fetchCategories() {
-        categories = ["Electroménager", "Pro", "Informatique"]
+       // categories = ["Electroménager", "Pro", "Informatique"]
     }
 }
