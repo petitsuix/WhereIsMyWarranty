@@ -26,7 +26,7 @@ class WarrantiesViewModel: NSObject {
     
     var categories: [Category] = [] {
         didSet {
-            viewDelegate?.refreshWith(categories: categories)
+            viewDelegate?.refreshWith()
         }
     }
     
@@ -38,16 +38,41 @@ class WarrantiesViewModel: NSObject {
         coordinator.showWarrantyDetailsScreen(warranty: warranty)
     }
     
+    @objc func showAddCategoryAlert() {
+       
+    }
+    
+//    func fetchWarrantiesFromDatabase() {
+//        do {
+//            warranties = try storageService.viewContext.fetch(Warranty.fetchRequest())
+//        }
+//        catch {
+//            print(error)
+//        }
+//    }
+    
     func fetchWarrantiesFromDatabase() {
         do {
-            warranties = try storageService.viewContext.fetch(Warranty.fetchRequest())
+            warranties = try storageService.loadWarranties()
         }
         catch {
             print(error)
         }
     }
     
-    func fetchCategories() {
+    func saveCategory(categoryToSave: String) {
+        let newCategory = Category(context: storageService.viewContext)
+        newCategory.name = categoryToSave
+        storageService.save()
+    }
+    
+    func fetchCategoriesFromDatabase() {
+        do {
+            categories = try storageService.loadCategories()
+        }
+        catch {
+            print(error)
+        }
        // categories = ["Electroménager", "Pro", "Informatique"]
     }
 }

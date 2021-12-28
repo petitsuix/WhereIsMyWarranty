@@ -24,7 +24,7 @@ class WarrantiesViewController: UIViewController {
     // MARK: - Private properties
     
     private weak var coordinator: AppCoordinator?
-   // private var warranties: [Warranty] = []
+    // private var warranties: [Warranty] = []
     
     private var categories: [Category] = []
     private var categoriesCollectionView: UICollectionView!
@@ -69,14 +69,18 @@ class WarrantiesViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        viewModel?.fetchCategoriesFromDatabase()
         viewModel?.fetchWarrantiesFromDatabase()
         viewState = .showData
     }
     
     // MARK: - Methods
     
-    func cellTapped(warranty: Warranty) {
+    func warrantyCellTapped(warranty: Warranty) {
         viewModel?.showWarrantyDetailsScreen(warranty: warranty)
+    }
+    
+    func categoryCellTapped(category: Category) {
     }
     
     // MARK: - Private methods
@@ -90,6 +94,10 @@ class WarrantiesViewController: UIViewController {
     @objc func addWarrantyButtonAction() {
         viewModel?.showNewWarrantyScreen()
         // coordinator?.showNewWarrantiesScreenFor(category: "MA SUPER CATEGORY")
+    }
+    
+    @objc func addCategoryButtonAction() {
+        viewModel?.showAddCategoryAlert()
     }
 }
 // MARK: - View Configuration
@@ -118,15 +126,6 @@ extension WarrantiesViewController {
         navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
     }
     
-    private func configureCategoriesStackView() {
-        categoriesStackView.translatesAutoresizingMaskIntoConstraints = false
-        categoriesStackView.backgroundColor = .white
-        categoriesStackView.spacing = 5.5
-        view.addSubview(categoriesStackView)
-        configureAddCategoryButton()
-        configureCategoriesCollectionView()
-    }
-    
     private func configureBottomBorder() {
         bottomBorder.translatesAutoresizingMaskIntoConstraints = false
         bottomBorder.backgroundColor = #colorLiteral(red: 0.2539245784, green: 0.3356729746, blue: 0.3600735664, alpha: 1)
@@ -145,12 +144,42 @@ extension WarrantiesViewController {
         view.addSubview(noResultTextView)
     }
     
+    // MARK: categoriesCollectionView configuration
+    
+    private func configureCategoriesStackView() {
+        categoriesStackView.translatesAutoresizingMaskIntoConstraints = false
+        categoriesStackView.backgroundColor = .white
+        categoriesStackView.spacing = 5.5
+        view.addSubview(categoriesStackView)
+        configureAddCategoryButton()
+        configureCategoriesCollectionView()
+    }
+    
     private func configureAddCategoryButton() {
         addCategoryButton.translatesAutoresizingMaskIntoConstraints = false
         addCategoryButton.backgroundColor = .white
         addCategoryButton.setImage(UIImage(systemName: "plus.circle.fill", withConfiguration: UIImage.SymbolConfiguration(pointSize: 38, weight: .light, scale: .small)), for: .normal)
         addCategoryButton.tintColor = #colorLiteral(red: 0.2539245784, green: 0.3356729746, blue: 0.3600735664, alpha: 1)
         categoriesStackView.addArrangedSubview(addCategoryButton)
+        addCategoryButton.addTarget(self, action: #selector(showAlert), for: .touchUpInside)
+    }
+    
+    // showAlert is the alert displayed upon touching the "+" button.
+    @objc func showAlert() {
+        let alert = UIAlertController(title: "Nouvelle categorie", message: "Donnez lui un nom", preferredStyle: .alert)
+        let saveAction = UIAlertAction(title: "ajouter", style: .default) { [unowned self] action in
+            guard let textfield = alert.textFields?.first, let categoryToSave = textfield.text else { return }
+            viewModel?.saveCategory(categoryToSave: categoryToSave)
+            // FIXME: Comment refresh la collection view après le completion
+          //  categories.append(alert.textFields?.first.text)
+            categoriesCollectionView.reloadData()
+        }
+        let cancelAction = UIAlertAction(title: "annuler", style: .cancel)
+        alert.addTextField()
+        alert.addAction(saveAction)
+        alert.addAction(cancelAction)
+        
+        present(alert, animated: true)
     }
     
     private func configureCategoriesCollectionView() {
@@ -162,9 +191,11 @@ extension WarrantiesViewController {
         categoriesCollectionView.register(TopCategoriesCell.self, forCellWithReuseIdentifier: TopCategoriesCell.identifier)
         categoriesCollectionView.dataSource = self
         categoriesCollectionView.delegate = self
-        categoriesCollectionView.backgroundColor = .red
+        categoriesCollectionView.backgroundColor = .white
         categoriesStackView.addArrangedSubview(categoriesCollectionView)
     }
+    
+    // MARK: warrantiesCollectionView configuration
     
     private func configureWarrantiesCollectionView() {
         let layout = UICollectionViewFlowLayout()
@@ -188,6 +219,8 @@ extension WarrantiesViewController {
         addWarrantyButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         addWarrantyButton.addTarget(self, action: #selector(addWarrantyButtonAction), for: .touchUpInside)
     }
+    
+    // MARK: Constraints
     
     private func activateConstraints() {
         NSLayoutConstraint.activate([
@@ -221,32 +254,28 @@ extension WarrantiesViewController: UICollectionViewDataSource, UICollectionView
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // return user.categories.count
         if collectionView == categoriesCollectionView {
-            return categories.count // On devrait pouvoir retourner user.categories.count
+            return viewModel?.categories.count ?? 1 // On devrait pouvoir retourner user.categories.count
         } else {
-            return viewModel?.warranties.count ?? 0
+            return viewModel?.warranties.count ?? 1
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        // var cell = UICollectionViewCell() // mettre ma cellule à moi
-        
         if collectionView == categoriesCollectionView {
-            let categoryCell = collectionView.dequeueReusableCell(withReuseIdentifier: TopCategoriesCell.identifier, for: indexPath) as! TopCategoriesCell
+            guard let categoryCell = collectionView.dequeueReusableCell(withReuseIdentifier: TopCategoriesCell.identifier, for: indexPath) as? TopCategoriesCell else {
+                assertionFailure("The dequeue collection view cell was of an unknown type!")
+                return UICollectionViewCell()
+            }
             categoryCell.category = viewModel?.categories[indexPath.row]
             return categoryCell
-            //  print(viewModel?.categories[indexPath.row] as Any)
         } else {
             guard let warrantyCell = collectionView.dequeueReusableCell(withReuseIdentifier: WarrantiesCell.identifier, for: indexPath) as? WarrantiesCell else {
                 assertionFailure("The dequeue collection view cell was of an unknown type!")
                 return UICollectionViewCell()
             }
-            //let warrantyCell = collectionView.dequeueReusableCell(withReuseIdentifier: WarrantiesCell.identifier, for: indexPath) as! WarrantiesCell
             warrantyCell.warranty = viewModel?.warranties[indexPath.row]
-            
-            // cell = warranties[indexPath.row].name
             return warrantyCell
         }
-        //  return cell
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -255,10 +284,16 @@ extension WarrantiesViewController: UICollectionViewDataSource, UICollectionView
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("selected item nbr \(indexPath.row)")
+        if collectionView == warrantiesCollectionView {
         guard let selectedWarranty = viewModel?.warranties[indexPath.row] else { return }
-        cellTapped(warranty: selectedWarranty)
-        //  let selectedCategory = categories[indexPath.row]
+            warrantyCellTapped(warranty: selectedWarranty) }
+        else {
+        //  storageService.selectedWarranty = viewModel.warranties[indexPath.row]
         
+        guard let selectedCategory = viewModel?.categories[indexPath.row] else { return }
+        
+        categoryCellTapped(category: selectedCategory)
+        }
         // displayWarrantiesFor(selectedCategory)
     }
     
@@ -279,7 +314,7 @@ extension WarrantiesViewController: UICollectionViewDataSource, UICollectionView
 extension WarrantiesViewController {
     func refreshWith(warranties: [Warranty]) {
         if warranties.isEmpty {
-         //   viewState = .empty // Displays "no results found" view
+            //   viewState = .empty // Displays "no results found" view
         } else {
             viewState = .showData
         }
@@ -287,8 +322,8 @@ extension WarrantiesViewController {
         //viewState = .showData(warranties)
     }
     
-    func refreshWith(categories: [Category]) {
-        categoriesCollectionView.reloadData()
+    func refreshWith() {
+        viewState = .showData
     }
     
     func didFinishLoadingWarranties() {
@@ -303,6 +338,4 @@ extension WarrantiesViewController {
             viewState = .showData
         }
     }
-    
-   
 }

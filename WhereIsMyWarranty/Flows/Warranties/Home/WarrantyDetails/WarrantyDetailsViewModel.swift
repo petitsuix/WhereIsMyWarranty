@@ -11,10 +11,16 @@ class WarrantyDetailsViewModel {
     
     weak var viewDelegate: WarrantyDetailsViewController?
     private let coordinator: WarrantiesCoordinator
-    var warranty: Warranty?
+    private let storageService: StorageService
     
-    init(coordinator: WarrantiesCoordinator/*, storageService: StorageService*/) {
+    init(coordinator: WarrantiesCoordinator, storageService: StorageService) {
         self.coordinator = coordinator
-        
+        self.storageService = storageService
+    }
+    
+    var warranty: Warranty? {
+        didSet {
+            
+        }
     }
 }

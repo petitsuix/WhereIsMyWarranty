@@ -19,7 +19,25 @@ class StorageService {
         self.viewContext = persistentContainer.viewContext
     }
     
-    func loadWarranties() {}
+    func loadWarranties() throws -> [Warranty] {
+        var warranties = [Warranty]()
+        do {
+            warranties = try viewContext.fetch(Warranty.fetchRequest())
+        }
+        catch { throw error }
+        return warranties
+    }
+    
+    func loadCategories() throws -> [Category] {
+        var categories = [Category]()
+        do {
+            categories = try viewContext.fetch(Category.fetchRequest())
+        }
+        catch {
+            print(error)
+        }
+        return categories
+    }
     
     func save() {
         if viewContext.hasChanges {

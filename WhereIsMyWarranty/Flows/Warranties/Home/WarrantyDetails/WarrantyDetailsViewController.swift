@@ -40,12 +40,12 @@ class WarrantyDetailsViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.viewModel?.warranty = warranty
         setupView()
     }
     
-    
-    
+    func refreshWith(warranty: Warranty) {
+        self.warranty = viewModel?.warranty
+    }
 }
 
 extension WarrantyDetailsViewController {
@@ -83,9 +83,10 @@ extension WarrantyDetailsViewController {
         topStackView.axis = .vertical
         productName.backgroundColor = .lightGray
         productName.text = warranty?.name
-       // topStackView.addArrangedSubview(productImageView)
+        
+        topStackView.addArrangedSubview(productImageView)
         topStackView.addArrangedSubview(productName)
-        // topStackView.addArrangedSubview(warrantyStatus)
+        topStackView.addArrangedSubview(warrantyStatus)
     }
     
     private func configureProductInfoStackView() {

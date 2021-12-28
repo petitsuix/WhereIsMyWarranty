@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		971AE69A277B382D00C970E3 /* TextWithStepperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 971AE699277B382D00C970E3 /* TextWithStepperView.swift */; };
 		97630447275A68B200688DDB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97630446275A68B200688DDB /* AppDelegate.swift */; };
 		97630449275A68B200688DDB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97630448275A68B200688DDB /* SceneDelegate.swift */; };
 		9763044B275A68B200688DDB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9763044A275A68B200688DDB /* ViewController.swift */; };
@@ -87,6 +88,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		971AE699277B382D00C970E3 /* TextWithStepperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextWithStepperView.swift; sourceTree = "<group>"; };
 		97630443275A68B200688DDB /* WhereIsMyWarranty.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WhereIsMyWarranty.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		97630446275A68B200688DDB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		97630448275A68B200688DDB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -338,7 +340,7 @@
 				9769C951276A062D00BAC736 /* WarrantyModel */,
 				976304A1275A6DAE00688DDB /* WarrantiesViewController.swift */,
 				976304BF276365F700688DDB /* WarrantiesViewModel.swift */,
-				97961EAE276B75300003883C /* Warranties Cells */,
+				97961EAE276B75300003883C /* Cells */,
 				9769C958276A52AA00BAC736 /* NewWarranty */,
 				97F1D3032773446B00D0C52C /* WarrantyDetails */,
 			);
@@ -375,17 +377,18 @@
 			children = (
 				976304B9275F80B900688DDB /* NewWarrantyViewController.swift */,
 				9769C956276A429900BAC736 /* NewWarrantyViewModel.swift */,
+				971AE699277B382D00C970E3 /* TextWithStepperView.swift */,
 			);
 			path = NewWarranty;
 			sourceTree = "<group>";
 		};
-		97961EAE276B75300003883C /* Warranties Cells */ = {
+		97961EAE276B75300003883C /* Cells */ = {
 			isa = PBXGroup;
 			children = (
 				976304B1275A6F3F00688DDB /* TopCategoriesCell.swift */,
 				976304C1276393CF00688DDB /* WarrantiesCell.swift */,
 			);
-			path = "Warranties Cells";
+			path = Cells;
 			sourceTree = "<group>";
 		};
 		97E03BD6276763A600EFEE79 /* Coordinators */ = {
@@ -597,6 +600,7 @@
 				97E03BD52767639800EFEE79 /* SettingsCoordinator.swift in Sources */,
 				9769C953276A299100BAC736 /* Storage Service.swift in Sources */,
 				976304B6275E38A300688DDB /* Coordinator.swift in Sources */,
+				971AE69A277B382D00C970E3 /* TextWithStepperView.swift in Sources */,
 				976304BE2762454D00688DDB /* MWAppearance.swift in Sources */,
 				9763044B275A68B200688DDB /* ViewController.swift in Sources */,
 				976304B8275E396300688DDB /* AppCoordinator.swift in Sources */,

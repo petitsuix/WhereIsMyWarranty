@@ -46,7 +46,7 @@ class WarrantiesCoordinator: Coordinator {
     
     func showWarrantyDetailsScreen(warranty: Warranty) {
         let warrantyDetailsViewController = WarrantyDetailsViewController()
-        let warrantyDetailsViewModel = WarrantyDetailsViewModel(coordinator: self)
+        let warrantyDetailsViewModel = WarrantyDetailsViewModel(coordinator: self, storageService: storageService)
         warrantyDetailsViewModel.viewDelegate = warrantyDetailsViewController
         warrantyDetailsViewController.viewModel = warrantyDetailsViewModel
         warrantyDetailsViewController.warranty = warranty
