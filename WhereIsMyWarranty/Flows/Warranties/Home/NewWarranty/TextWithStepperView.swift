@@ -7,7 +7,6 @@
 
 import UIKit
 
-
 class TextWithStepperView: UIView {
     
     // MARK: - Properties
@@ -20,9 +19,7 @@ class TextWithStepperView: UIView {
     
     var stepper = UIStepper()
     
-//    var minusButton = UIButton()
     var timeUnitAmount = UILabel()
-//    var plusButton = UIButton()
     
     
     // MARK: - Methods
@@ -32,12 +29,8 @@ class TextWithStepperView: UIView {
         configureStepperStackView()
         configureTimeUnitTitle()
         configureStepper()
-        self.addSubview(stackView)
+        addSubview(stackView)
         activateConstraints()
-        
-       // configureMinusButton()
-       // configureTimeUnitAmount()
-       // configurePlusButton()
     }
     
     func configureStackView() {
@@ -45,9 +38,6 @@ class TextWithStepperView: UIView {
         stackView.axis = .horizontal
         stackView.addArrangedSubview(timeUnitTitle)
         stackView.addArrangedSubview(stepperStackView)
-//        stackView.addArrangedSubview(minusButton)
-//        stackView.addArrangedSubview(timeUnitAmount)
-//        stackView.addArrangedSubview(plusButton)
     }
     
     func configureTimeUnitTitle() {
@@ -56,9 +46,11 @@ class TextWithStepperView: UIView {
     
     func configureStepperStackView() {
         stepperStackView.axis = .horizontal
-        stepperStackView.spacing = 8
+        stepperStackView.spacing = 24
         stepperStackView.translatesAutoresizingMaskIntoConstraints = false
+        
         timeUnitAmount.text = "0"
+        
         timeUnitAmount.translatesAutoresizingMaskIntoConstraints = false
         stepperStackView.addArrangedSubview(stepper)
         stepperStackView.addArrangedSubview(timeUnitAmount)
@@ -66,6 +58,8 @@ class TextWithStepperView: UIView {
     
     func configureStepper() {
         stepper.translatesAutoresizingMaskIntoConstraints = false
+        stepper.value = 1
+        stepper.minimumValue = 0
        // stepper.setDecrementImage(<#T##image: UIImage?##UIImage?#>, for: <#T##UIControl.State#>)
        // stepper.setIncrementImage(<#T##image: UIImage?##UIImage?#>, for: <#T##UIControl.State#>)
     }
@@ -77,10 +71,10 @@ class TextWithStepperView: UIView {
 
     func activateConstraints() {
         NSLayoutConstraint.activate([
-            stackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 0),
-            stackView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 0),
-            stackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 0),
-            stackView.topAnchor.constraint(equalTo: self.topAnchor, constant: 0)
+            stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0),
+            stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0),
+            stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0),
+            stackView.topAnchor.constraint(equalTo: topAnchor, constant: 0)
         ])
     }
     

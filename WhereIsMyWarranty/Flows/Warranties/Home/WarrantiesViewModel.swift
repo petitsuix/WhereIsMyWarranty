@@ -26,7 +26,7 @@ class WarrantiesViewModel: NSObject {
     
     var categories: [Category] = [] {
         didSet {
-            viewDelegate?.refreshWith()
+            viewDelegate?.refresh()
         }
     }
     

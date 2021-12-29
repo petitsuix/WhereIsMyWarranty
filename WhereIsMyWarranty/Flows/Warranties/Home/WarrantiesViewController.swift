@@ -128,7 +128,7 @@ extension WarrantiesViewController {
     
     private func configureBottomBorder() {
         bottomBorder.translatesAutoresizingMaskIntoConstraints = false
-        bottomBorder.backgroundColor = #colorLiteral(red: 0.2539245784, green: 0.3356729746, blue: 0.3600735664, alpha: 1)
+        bottomBorder.backgroundColor = MWColor.bluegrey
         view.addSubview(bottomBorder)
     }
     
@@ -159,7 +159,7 @@ extension WarrantiesViewController {
         addCategoryButton.translatesAutoresizingMaskIntoConstraints = false
         addCategoryButton.backgroundColor = .white
         addCategoryButton.setImage(UIImage(systemName: "plus.circle.fill", withConfiguration: UIImage.SymbolConfiguration(pointSize: 38, weight: .light, scale: .small)), for: .normal)
-        addCategoryButton.tintColor = #colorLiteral(red: 0.2539245784, green: 0.3356729746, blue: 0.3600735664, alpha: 1)
+        addCategoryButton.tintColor = MWColor.bluegrey
         categoriesStackView.addArrangedSubview(addCategoryButton)
         addCategoryButton.addTarget(self, action: #selector(showAlert), for: .touchUpInside)
     }
@@ -171,8 +171,8 @@ extension WarrantiesViewController {
             guard let textfield = alert.textFields?.first, let categoryToSave = textfield.text else { return }
             viewModel?.saveCategory(categoryToSave: categoryToSave)
             // FIXME: Comment refresh la collection view après le completion
-          //  categories.append(alert.textFields?.first.text)
-            categoriesCollectionView.reloadData()
+            viewModel?.fetchCategoriesFromDatabase()
+            refresh()
         }
         let cancelAction = UIAlertAction(title: "annuler", style: .cancel)
         alert.addTextField()
@@ -185,7 +185,8 @@ extension WarrantiesViewController {
     private func configureCategoriesCollectionView() {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        layout.itemSize = CGSize(width: view.frame.size.width/5, height: view.frame.size.width/13.5)
+       // layout.itemSize = CGSize(width: view.frame.size.width/5, height: view.frame.size.width/13.5)
+        layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
         categoriesCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout) // self.view.frame c'est pareil ?
         categoriesCollectionView.translatesAutoresizingMaskIntoConstraints = false
         categoriesCollectionView.register(TopCategoriesCell.self, forCellWithReuseIdentifier: TopCategoriesCell.identifier)
@@ -202,7 +203,7 @@ extension WarrantiesViewController {
         layout.scrollDirection = .vertical
         layout.itemSize = CGSize(width: view.frame.size.width-16, height: view.frame.size.width/3.3)
         layout.minimumLineSpacing = 24
-        warrantiesCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        warrantiesCollectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: layout)
         warrantiesCollectionView.translatesAutoresizingMaskIntoConstraints = false
         warrantiesCollectionView.register(WarrantiesCell.self, forCellWithReuseIdentifier: WarrantiesCell.identifier)
         warrantiesCollectionView.dataSource = self
@@ -225,6 +226,8 @@ extension WarrantiesViewController {
     private func activateConstraints() {
         NSLayoutConstraint.activate([
             // FIXME: view.safeAreaLayoutGuide.topAnchor ??? Comment fixer une stackview à une navigationbar ?
+            categoriesCollectionView.heightAnchor.constraint(equalToConstant: 60),
+            
             categoriesStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
             categoriesStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 6),
             categoriesStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
@@ -322,7 +325,7 @@ extension WarrantiesViewController {
         //viewState = .showData(warranties)
     }
     
-    func refreshWith() {
+    func refresh() {
         viewState = .showData
     }
     

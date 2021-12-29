@@ -27,7 +27,7 @@
 		976304A4275A6EB100688DDB /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976304A3275A6EB100688DDB /* Strings.swift */; };
 		976304A8275A6ECC00688DDB /* MWColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976304A5275A6ECC00688DDB /* MWColor.swift */; };
 		976304A9275A6ECC00688DDB /* MWImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976304A6275A6ECC00688DDB /* MWImages.swift */; };
-		976304AA275A6ECC00688DDB /* NWFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976304A7275A6ECC00688DDB /* NWFont.swift */; };
+		976304AA275A6ECC00688DDB /* MWFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976304A7275A6ECC00688DDB /* MWFont.swift */; };
 		976304B0275A6F3A00688DDB /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976304AF275A6F3A00688DDB /* Category.swift */; };
 		976304B2275A6F4000688DDB /* TopCategoriesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976304B1275A6F3F00688DDB /* TopCategoriesCell.swift */; };
 		976304B4275A6F4E00688DDB /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976304B3275A6F4E00688DDB /* SettingsViewController.swift */; };
@@ -45,6 +45,7 @@
 		97E03BD32767638700EFEE79 /* WarrantiesCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E03BD22767638700EFEE79 /* WarrantiesCoordinator.swift */; };
 		97E03BD52767639800EFEE79 /* SettingsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E03BD42767639800EFEE79 /* SettingsCoordinator.swift */; };
 		97E03BDB2767A6EE00EFEE79 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E03BDA2767A6EE00EFEE79 /* SettingsViewModel.swift */; };
+		97ECFC22277CAB8A00CA973D /* WarrantyDetailsSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97ECFC21277CAB8A00CA973D /* WarrantyDetailsSectionView.swift */; };
 		97F1D3052773448D00D0C52C /* WarrantyDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F1D3042773448D00D0C52C /* WarrantyDetailsViewController.swift */; };
 		97F1D307277345F400D0C52C /* WarrantyDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F1D306277345F400D0C52C /* WarrantyDetailsViewModel.swift */; };
 /* End PBXBuildFile section */
@@ -113,7 +114,7 @@
 		976304A3275A6EB100688DDB /* Strings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		976304A5275A6ECC00688DDB /* MWColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MWColor.swift; sourceTree = "<group>"; };
 		976304A6275A6ECC00688DDB /* MWImages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MWImages.swift; sourceTree = "<group>"; };
-		976304A7275A6ECC00688DDB /* NWFont.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NWFont.swift; sourceTree = "<group>"; };
+		976304A7275A6ECC00688DDB /* MWFont.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MWFont.swift; sourceTree = "<group>"; };
 		976304AF275A6F3A00688DDB /* Category.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		976304B1275A6F3F00688DDB /* TopCategoriesCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopCategoriesCell.swift; sourceTree = "<group>"; };
 		976304B3275A6F4E00688DDB /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
@@ -131,6 +132,7 @@
 		97E03BD22767638700EFEE79 /* WarrantiesCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarrantiesCoordinator.swift; sourceTree = "<group>"; };
 		97E03BD42767639800EFEE79 /* SettingsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCoordinator.swift; sourceTree = "<group>"; };
 		97E03BDA2767A6EE00EFEE79 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
+		97ECFC21277CAB8A00CA973D /* WarrantyDetailsSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarrantyDetailsSectionView.swift; sourceTree = "<group>"; };
 		97F1D3042773448D00D0C52C /* WarrantyDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarrantyDetailsViewController.swift; sourceTree = "<group>"; };
 		97F1D306277345F400D0C52C /* WarrantyDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarrantyDetailsViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -284,7 +286,7 @@
 			children = (
 				976304A5275A6ECC00688DDB /* MWColor.swift */,
 				976304A6275A6ECC00688DDB /* MWImages.swift */,
-				976304A7275A6ECC00688DDB /* NWFont.swift */,
+				976304A7275A6ECC00688DDB /* MWFont.swift */,
 				976304BD2762454D00688DDB /* MWAppearance.swift */,
 			);
 			path = Styles;
@@ -432,6 +434,7 @@
 			children = (
 				97F1D3042773448D00D0C52C /* WarrantyDetailsViewController.swift */,
 				97F1D306277345F400D0C52C /* WarrantyDetailsViewModel.swift */,
+				97ECFC21277CAB8A00CA973D /* WarrantyDetailsSectionView.swift */,
 			);
 			path = WarrantyDetails;
 			sourceTree = "<group>";
@@ -613,11 +616,12 @@
 				976304C2276393CF00688DDB /* WarrantiesCell.swift in Sources */,
 				9769C957276A429900BAC736 /* NewWarrantyViewModel.swift in Sources */,
 				976304C0276365F700688DDB /* WarrantiesViewModel.swift in Sources */,
+				97ECFC22277CAB8A00CA973D /* WarrantyDetailsSectionView.swift in Sources */,
 				976304A8275A6ECC00688DDB /* MWColor.swift in Sources */,
 				9763049E275A6C1E00688DDB /* CornerRadius.swift in Sources */,
 				976304B4275A6F4E00688DDB /* SettingsViewController.swift in Sources */,
 				976304A2275A6DAE00688DDB /* WarrantiesViewController.swift in Sources */,
-				976304AA275A6ECC00688DDB /* NWFont.swift in Sources */,
+				976304AA275A6ECC00688DDB /* MWFont.swift in Sources */,
 				9769C955276A32C600BAC736 /* Alert.swift in Sources */,
 				97E03BD32767638700EFEE79 /* WarrantiesCoordinator.swift in Sources */,
 				976304B0275A6F3A00688DDB /* Category.swift in Sources */,

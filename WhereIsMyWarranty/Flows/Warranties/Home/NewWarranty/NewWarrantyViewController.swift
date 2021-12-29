@@ -14,38 +14,33 @@ class NewWarrantyViewController: UIViewController {
     let navBarAppearance = UINavigationBarAppearance()
     var category: String?
     
-    // #1 Parent StackView
+    // 1
     var parentStackView = UIStackView()
     
-    // #1.1 nameAndStartDateStackView
+    // 1.1
     let nameAndStartDateStackView = UIStackView()
-    // #1.1.1 nameStackView
+    // 1.1.1
     let nameStackView = UIStackView()
     let nameTitle = UILabel()
     var nameField = UITextField()
-    // #1.1.2 startDateStackView
+    // 1.1.2
     let startDateStackView = UIStackView()
     let startDateTitle = UILabel()
     var startDate = UIDatePicker()
     
-    // #1.2 validityLengthStackView
+    // 1.2
     let customLengthStackView = UIStackView()
     let validityLengthTitle = UILabel()
-    // #1.2.1 lifetimeWarrantyStackView
+    // 1.2.1
     let lifetimeWarrantyStackView = UIStackView()
     let lifetimeWarrantyTitle = UILabel()
     let lifetimeWarrantySwitch = UISwitch()
-    
-    // #1.2.2 yearsStackView
     let yearsView = TextWithStepperView()
-    // #1.2.3 monthsStackView
     let monthsView = TextWithStepperView()
-   // let monthsStackView = UIStackView()
-    // #1.2.4 weeksStackView
     let weeksView = TextWithStepperView()
-    // let weeksStackView = UIStackView()
     
-    // #1.3 endDateStackView
+    
+    // 1.3 endDate
     let endDate = UILabel()
     
     
@@ -111,8 +106,6 @@ extension NewWarrantyViewController {
     }
     
     func configureParentStackView() {
-        parentStackView.backgroundColor = .green
-        parentStackView.distribution = .fillProportionally
         parentStackView.axis = .vertical
         parentStackView.spacing = 40
         parentStackView.translatesAutoresizingMaskIntoConstraints = false
@@ -124,7 +117,7 @@ extension NewWarrantyViewController {
     
     func configureNameAndStartDateStackView() {
         nameAndStartDateStackView.axis = .vertical
-      //  nameAndStartDateStackView.spacing = 40
+        nameAndStartDateStackView.spacing = 40
         nameAndStartDateStackView.translatesAutoresizingMaskIntoConstraints = false
         nameAndStartDateStackView.addArrangedSubview(nameStackView)
         nameAndStartDateStackView.addArrangedSubview(startDateStackView)
@@ -132,6 +125,7 @@ extension NewWarrantyViewController {
     
     func configureNameStackView() {
         nameStackView.axis = .vertical
+        nameStackView.spacing = 8
         nameStackView.translatesAutoresizingMaskIntoConstraints = false
         nameTitle.text = "Titre"
         nameTitle.textAlignment = .left
@@ -145,12 +139,11 @@ extension NewWarrantyViewController {
     func configureStartDateStackView() {
         startDateStackView.axis = .vertical
         startDateStackView.alignment = .leading
+        startDateStackView.spacing = 8
         startDateStackView.translatesAutoresizingMaskIntoConstraints = false
         startDateTitle.text = "Date de début de garantie"
         startDateTitle.textAlignment = .left
         startDateTitle.translatesAutoresizingMaskIntoConstraints = false
-        startDateStackView.backgroundColor = .yellow
-        startDate.backgroundColor = .red
         startDate.translatesAutoresizingMaskIntoConstraints = false
         startDateStackView.addArrangedSubview(startDateTitle)
         startDateStackView.addArrangedSubview(startDate)
@@ -166,7 +159,6 @@ extension NewWarrantyViewController {
         customLengthStackView.translatesAutoresizingMaskIntoConstraints = false
         
         validityLengthTitle.text = "Durée de validité"
-        validityLengthTitle.backgroundColor = .blue
         validityLengthTitle.translatesAutoresizingMaskIntoConstraints = false
         
         yearsView.timeUnitTitle.text = "années"
@@ -212,10 +204,10 @@ extension NewWarrantyViewController {
     
     func activateConstraints() {
         NSLayoutConstraint.activate([
-            parentStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8),
-            parentStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
-            parentStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
-            parentStackView.bottomAnchor.constraint(equalTo: saveButton.topAnchor, constant: -24),
+            parentStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 24),
+            parentStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
+            parentStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
+        //    parentStackView.bottomAnchor.constraint(equalTo: saveButton.topAnchor, constant: -24),
             
             yearsView.heightAnchor.constraint(equalTo: lifetimeWarrantyStackView.heightAnchor),
             monthsView.heightAnchor.constraint(equalTo: lifetimeWarrantyStackView.heightAnchor),

@@ -11,6 +11,7 @@ class TopCategoriesCell: UICollectionViewCell {
     
     static let identifier = "CustomCollectionViewCell"
     
+    // FIXME: 
      let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "éléctroniques"
@@ -26,22 +27,25 @@ class TopCategoriesCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         contentView.backgroundColor = .white
-        contentView.layer.borderColor = #colorLiteral(red: 0.2539245784, green: 0.3356729746, blue: 0.3600735664, alpha: 1)
+        contentView.layer.borderColor = MWColor.bluegrey.cgColor
         contentView.layer.borderWidth = 1
-        titleLabel.textColor = #colorLiteral(red: 0.2539245784, green: 0.3356729746, blue: 0.3600735664, alpha: 1)
+        titleLabel.textColor = MWColor.bluegrey
         titleLabel.textAlignment = .center
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
         roundingCellCorners(radius: 15)
+        backgroundColor = .orange
         contentView.addSubview(titleLabel)
-        
+        activateConstraints()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // FIXME: a degager
     override func layoutSubviews() {
         super.layoutSubviews()
-        titleLabel.frame = CGRect(x: 0, y: 0, width: contentView.frame.size.width, height: contentView.frame.size.height)
+      //  titleLabel.frame = CGRect(x: 0, y: 0, width: contentView.frame.size.width, height: contentView.frame.size.height)
     }
     
     func refreshCategoryData() {
@@ -57,7 +61,10 @@ class TopCategoriesCell: UICollectionViewCell {
     
     func activateConstraints() {
         NSLayoutConstraint.activate([
-            
+            titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 0),
+            titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 0),
+            titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 0),
+            titleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 0)
         ])
     }
     

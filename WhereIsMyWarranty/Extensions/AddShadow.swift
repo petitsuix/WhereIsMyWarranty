@@ -18,3 +18,15 @@ extension UICollectionViewCell {
         self.layer.masksToBounds = false
     }
 }
+
+extension UILabel {
+    
+    // ⬇︎ Adds a black shadow to any UIImageView content
+    func addShadow() {
+        self.layer.shadowColor = UIColor.black.cgColor
+        self.layer.shadowOffset = CGSize(width: 0, height: 3)
+        self.layer.shadowRadius = 3.0
+        self.layer.shadowOpacity = 0.3
+        self.layer.masksToBounds = false
+    }
+}
