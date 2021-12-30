@@ -39,18 +39,19 @@ class NewWarrantyViewController: UIViewController {
     let monthsView = TextWithStepperView()
     let weeksView = TextWithStepperView()
     
-    
     // 1.3 endDate
     let endDate = UILabel()
-    
-    
- //   let textWithStepperView: TextWithStepperView
+    var endDateValue: String = ""
+
     var saveButton = UIButton()
     
     var warranties: [Warranty] = []
     var viewModel: NewWarrantyViewModel?
     var storageService = StorageService()
     
+    
+    
+    var endDateText = "Produit sous garantie jusqu'au :\n"
     
     // MARK: - View life cycle methods
     
@@ -69,8 +70,8 @@ class NewWarrantyViewController: UIViewController {
     
     // MARK: - objc methods
     
-    @objc func saveWarranty() {
-        viewModel?.saveWarranty()
+    @objc func nextStep() {
+        viewModel?.nextStep()
     }
     
     @objc func nameTextfieldDidChange(textfield: UITextField) { // comment le controller communique avec le viewmodel
@@ -107,7 +108,7 @@ extension NewWarrantyViewController {
     
     func configureParentStackView() {
         parentStackView.axis = .vertical
-        parentStackView.spacing = 40
+        parentStackView.spacing = 56
         parentStackView.translatesAutoresizingMaskIntoConstraints = false
         configureEndDate()
         parentStackView.addArrangedSubview(nameAndStartDateStackView)
@@ -117,7 +118,7 @@ extension NewWarrantyViewController {
     
     func configureNameAndStartDateStackView() {
         nameAndStartDateStackView.axis = .vertical
-        nameAndStartDateStackView.spacing = 40
+        nameAndStartDateStackView.spacing = 56
         nameAndStartDateStackView.translatesAutoresizingMaskIntoConstraints = false
         nameAndStartDateStackView.addArrangedSubview(nameStackView)
         nameAndStartDateStackView.addArrangedSubview(startDateStackView)
@@ -125,12 +126,16 @@ extension NewWarrantyViewController {
     
     func configureNameStackView() {
         nameStackView.axis = .vertical
-        nameStackView.spacing = 8
+        nameStackView.spacing = 16
         nameStackView.translatesAutoresizingMaskIntoConstraints = false
-        nameTitle.text = "Titre"
+        
+        nameTitle.text = "Nom du produit"
+        nameTitle.font = UIFont.boldSystemFont(ofSize: 30)
         nameTitle.textAlignment = .left
         nameTitle.translatesAutoresizingMaskIntoConstraints = false
+        
         nameField.addTarget(self, action: #selector(nameTextfieldDidChange), for: .editingChanged)
+        nameField.setBottomBorder()
         nameField.translatesAutoresizingMaskIntoConstraints = false
         nameStackView.addArrangedSubview(nameTitle)
         nameStackView.addArrangedSubview(nameField)
@@ -139,12 +144,17 @@ extension NewWarrantyViewController {
     func configureStartDateStackView() {
         startDateStackView.axis = .vertical
         startDateStackView.alignment = .leading
-        startDateStackView.spacing = 8
+        startDateStackView.spacing = 16
         startDateStackView.translatesAutoresizingMaskIntoConstraints = false
         startDateTitle.text = "Date de début de garantie"
+        startDateTitle.font = UIFont.boldSystemFont(ofSize: 16)
         startDateTitle.textAlignment = .left
         startDateTitle.translatesAutoresizingMaskIntoConstraints = false
+        
+        startDate.datePickerMode = .date
+        startDate.addTarget(self, action: #selector(updateEndDateValue), for: .editingDidEnd)
         startDate.translatesAutoresizingMaskIntoConstraints = false
+        
         startDateStackView.addArrangedSubview(startDateTitle)
         startDateStackView.addArrangedSubview(startDate)
     }
@@ -159,6 +169,7 @@ extension NewWarrantyViewController {
         customLengthStackView.translatesAutoresizingMaskIntoConstraints = false
         
         validityLengthTitle.text = "Durée de validité"
+        validityLengthTitle.font = UIFont.boldSystemFont(ofSize: 16)
         validityLengthTitle.translatesAutoresizingMaskIntoConstraints = false
         
         yearsView.timeUnitTitle.text = "années"
@@ -179,10 +190,19 @@ extension NewWarrantyViewController {
         customLengthStackView.addArrangedSubview(weeksView)
     }
     
+    @objc func updateEndDateValue() {
+        let formatter1 = DateFormatter()
+        formatter1.dateStyle = .short
+        endDateValue = formatter1.string(from: startDate.date)
+        print("\(endDateValue)")
+        endDate.text = endDateText + endDateValue
+        
+    }
+    
     func configureLifetimeWarrantyStackView() {
         lifetimeWarrantyStackView.axis = .horizontal
         lifetimeWarrantyStackView.translatesAutoresizingMaskIntoConstraints = false
-        lifetimeWarrantyTitle.text = "garantie à vie"
+        lifetimeWarrantyTitle.text = "garanti à vie"
         lifetimeWarrantyTitle.translatesAutoresizingMaskIntoConstraints = false
         lifetimeWarrantySwitch.translatesAutoresizingMaskIntoConstraints = false
         lifetimeWarrantyStackView.addArrangedSubview(lifetimeWarrantyTitle)
@@ -192,14 +212,17 @@ extension NewWarrantyViewController {
     func configureEndDate() {
         endDate.textAlignment = .center
         endDate.translatesAutoresizingMaskIntoConstraints = false
-        endDate.text = "Produit sous garantie jusqu'au\n\(startDate)"
+        endDate.text = endDateText
+        endDate.numberOfLines = 2
     }
     
     func configureSaveButton() {
-        saveButton.backgroundColor = .orange
-        saveButton.translatesAutoresizingMaskIntoConstraints = false
-        saveButton.addTarget(self, action: #selector(saveWarranty), for: .touchUpInside)
+        saveButton.backgroundColor = MWColor.paleOrange
+        saveButton.roundingViewCorners(radius: 8)
+        saveButton.setTitle("Suivant", for: .normal)
+        saveButton.addTarget(self, action: #selector(nextStep), for: .touchUpInside)
         saveButton.isUserInteractionEnabled = true
+        saveButton.translatesAutoresizingMaskIntoConstraints = false
     }
     
     func activateConstraints() {
@@ -213,10 +236,12 @@ extension NewWarrantyViewController {
             monthsView.heightAnchor.constraint(equalTo: lifetimeWarrantyStackView.heightAnchor),
             weeksView.heightAnchor.constraint(equalTo: lifetimeWarrantyStackView.heightAnchor),
             
+            endDate.heightAnchor.constraint(equalToConstant: 60),
+            
             saveButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            saveButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -24),
-            saveButton.heightAnchor.constraint(equalToConstant: 50),
-            saveButton.widthAnchor.constraint(equalToConstant: 80)
+            saveButton.topAnchor.constraint(equalTo: endDate.bottomAnchor, constant: 48),
+            saveButton.heightAnchor.constraint(equalToConstant: 55),
+            saveButton.widthAnchor.constraint(equalToConstant: 170)
         ])
     }
 }

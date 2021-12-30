@@ -21,6 +21,12 @@ class TextWithStepperView: UIView {
     
     var timeUnitAmount = UILabel()
     
+    // MARK: - objc methods
+    
+    @objc func updateTimeUnitAmount(_ sender: UIStepper) {
+        print("UIStepper is now \(Int(sender.value))")
+        timeUnitAmount.text = String(sender.value.shortDigitsIn(0))
+    }
     
     // MARK: - Methods
     
@@ -58,15 +64,16 @@ class TextWithStepperView: UIView {
     
     func configureStepper() {
         stepper.translatesAutoresizingMaskIntoConstraints = false
-        stepper.value = 1
+        stepper.value = 0
         stepper.minimumValue = 0
-       // stepper.setDecrementImage(<#T##image: UIImage?##UIImage?#>, for: <#T##UIControl.State#>)
-       // stepper.setIncrementImage(<#T##image: UIImage?##UIImage?#>, for: <#T##UIControl.State#>)
+        stepper.maximumValue = 99
+        stepper.addTarget(self, action: #selector(updateTimeUnitAmount(_:)), for: .valueChanged)
+//        stepper.setDecrementImage(UIImage(systemName: "minus.circle.fill"), for: .normal)
+//        stepper.setIncrementImage(UIImage(systemName: "plus.circle.fill"), for: .normal)
     }
     
     func configureTimeUnitAmount() {
         timeUnitAmount.translatesAutoresizingMaskIntoConstraints = false
-        timeUnitAmount.text = String(stepper.value)
     }
 
     func activateConstraints() {
@@ -74,20 +81,9 @@ class TextWithStepperView: UIView {
             stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0),
             stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0),
             stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0),
-            stackView.topAnchor.constraint(equalTo: topAnchor, constant: 0)
+            stackView.topAnchor.constraint(equalTo: topAnchor, constant: 0),
+            
+            timeUnitAmount.widthAnchor.constraint(equalToConstant: 25)
         ])
     }
-    
-    
-//    func configureMinusButton() {
-//        minusButton.translatesAutoresizingMaskIntoConstraints = false
-//    }
-    
-//    func configureTimeUnitAmount() {
-//        timeUnitAmount.translatesAutoresizingMaskIntoConstraints = false
-//    }
-//
-//    func configurePlusButton() {
-//        plusButton.translatesAutoresizingMaskIntoConstraints = false
-//    }
 }

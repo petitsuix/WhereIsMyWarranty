@@ -111,6 +111,7 @@ extension WarrantiesViewController {
         
         // nalayoutconstraint ....
         self.title = Strings.warrantiesTitle
+        
         view.backgroundColor = .white
         configureNavigationBar()
         configureCategoriesStackView()

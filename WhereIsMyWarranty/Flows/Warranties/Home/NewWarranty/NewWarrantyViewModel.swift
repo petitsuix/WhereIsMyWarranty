@@ -33,6 +33,10 @@ class NewWarrantyViewModel: NSObject {
         coordinator.backToHome() // ne pas passer entre controleurs
     }
     
+    func nextStep() {
+        coordinator.showNextStepNewWarrantyScreen()
+    }
+    
     func saveWarranty() {
         let newWarranty = Warranty(context: storageService.viewContext)
         newWarranty.name = viewDelegate?.nameField.text

@@ -41,8 +41,18 @@ class WarrantiesCoordinator: Coordinator {
         let viewModel = NewWarrantyViewModel(coordinator: self, storageService: storageService)
         viewModel.viewDelegate = newWarrantyViewController
         newWarrantyViewController.viewModel = viewModel
-        navigationController.pushViewController(newWarrantyViewController, animated: true)
+        newWarrantyViewController.modalPresentationStyle = .popover
+        newWarrantyViewController.modalTransitionStyle = .coverVertical
+        navigationController.present(newWarrantyViewController, animated: true, completion: nil)
         }
+    
+    func showNextStepNewWarrantyScreen() {
+        let navController = UINavigationController()
+        let newWarrantyStepTwoViewController = NewWarrantyStepTwoViewController()
+        
+        navController.present(newWarrantyStepTwoViewController, animated: true, completion: nil)
+        print("coucou")
+    }
     
     func showWarrantyDetailsScreen(warranty: Warranty) {
         let warrantyDetailsViewController = WarrantyDetailsViewController()
@@ -56,6 +66,8 @@ class WarrantiesCoordinator: Coordinator {
     func backToHome() {
         navigationController.popToRootViewController(animated: true)
     }
+    
+    
     // func showAddNewWarrantiesScreenFor(category: String) {
     //        let newWarrantiesVC = NewWarrantyViewController()
     //
