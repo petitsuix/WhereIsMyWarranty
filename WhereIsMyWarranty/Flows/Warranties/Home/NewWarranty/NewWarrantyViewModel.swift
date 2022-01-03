@@ -16,7 +16,7 @@ class NewWarrantyViewModel: NSObject {
     var name: String? {
         didSet {
             guard oldValue != name else { return }
-            viewDelegate?.canSaveStatusDidChange(canSave: canSaveWarranty)
+            viewDelegate?.canGoToNextStep(canSave: canSaveWarranty)
         }
     }
     
@@ -38,6 +38,7 @@ class NewWarrantyViewModel: NSObject {
     }
     
     func saveWarranty() {
+        print("je suis dans saveWarranty")
         let newWarranty = Warranty(context: storageService.viewContext)
         newWarranty.name = viewDelegate?.nameField.text
         newWarranty.warrantyStart = viewDelegate?.startDate.date

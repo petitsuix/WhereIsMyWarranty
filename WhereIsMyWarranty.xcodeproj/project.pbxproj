@@ -49,6 +49,8 @@
 		97ECFC24277DD93600CA973D /* BottomBorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97ECFC23277DD93600CA973D /* BottomBorder.swift */; };
 		97ECFC26277E014600CA973D /* TruncateDecimals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97ECFC25277E014600CA973D /* TruncateDecimals.swift */; };
 		97ECFC28277E235600CA973D /* NewWarrantyStepTwoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97ECFC27277E235600CA973D /* NewWarrantyStepTwoViewController.swift */; };
+		97ECFC2A27834E9500CA973D /* arrangeButtonsImageAndText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97ECFC2927834E9500CA973D /* arrangeButtonsImageAndText.swift */; };
+		97ECFC2C27835F3500CA973D /* NewWarrantyStepTwoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97ECFC2B27835F3500CA973D /* NewWarrantyStepTwoViewModel.swift */; };
 		97F1D3052773448D00D0C52C /* WarrantyDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F1D3042773448D00D0C52C /* WarrantyDetailsViewController.swift */; };
 		97F1D307277345F400D0C52C /* WarrantyDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F1D306277345F400D0C52C /* WarrantyDetailsViewModel.swift */; };
 /* End PBXBuildFile section */
@@ -139,6 +141,8 @@
 		97ECFC23277DD93600CA973D /* BottomBorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomBorder.swift; sourceTree = "<group>"; };
 		97ECFC25277E014600CA973D /* TruncateDecimals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TruncateDecimals.swift; sourceTree = "<group>"; };
 		97ECFC27277E235600CA973D /* NewWarrantyStepTwoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWarrantyStepTwoViewController.swift; sourceTree = "<group>"; };
+		97ECFC2927834E9500CA973D /* arrangeButtonsImageAndText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = arrangeButtonsImageAndText.swift; sourceTree = "<group>"; };
+		97ECFC2B27835F3500CA973D /* NewWarrantyStepTwoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWarrantyStepTwoViewModel.swift; sourceTree = "<group>"; };
 		97F1D3042773448D00D0C52C /* WarrantyDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarrantyDetailsViewController.swift; sourceTree = "<group>"; };
 		97F1D306277345F400D0C52C /* WarrantyDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarrantyDetailsViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -331,6 +335,7 @@
 				976304C32763A73D00688DDB /* AddShadow.swift */,
 				97ECFC23277DD93600CA973D /* BottomBorder.swift */,
 				97ECFC25277E014600CA973D /* TruncateDecimals.swift */,
+				97ECFC2927834E9500CA973D /* arrangeButtonsImageAndText.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -389,6 +394,7 @@
 				9769C956276A429900BAC736 /* NewWarrantyViewModel.swift */,
 				971AE699277B382D00C970E3 /* TextWithStepperView.swift */,
 				97ECFC27277E235600CA973D /* NewWarrantyStepTwoViewController.swift */,
+				97ECFC2B27835F3500CA973D /* NewWarrantyStepTwoViewModel.swift */,
 			);
 			path = NewWarranty;
 			sourceTree = "<group>";
@@ -624,6 +630,7 @@
 				97ECFC28277E235600CA973D /* NewWarrantyStepTwoViewController.swift in Sources */,
 				976304A9275A6ECC00688DDB /* MWImages.swift in Sources */,
 				976304B2275A6F4000688DDB /* TopCategoriesCell.swift in Sources */,
+				97ECFC2A27834E9500CA973D /* arrangeButtonsImageAndText.swift in Sources */,
 				976304C2276393CF00688DDB /* WarrantiesCell.swift in Sources */,
 				9769C957276A429900BAC736 /* NewWarrantyViewModel.swift in Sources */,
 				97ECFC26277E014600CA973D /* TruncateDecimals.swift in Sources */,
@@ -640,6 +647,7 @@
 				976304C42763A73D00688DDB /* AddShadow.swift in Sources */,
 				97630449275A68B200688DDB /* SceneDelegate.swift in Sources */,
 				9769C9502769F4B800BAC736 /* Warranty.swift in Sources */,
+				97ECFC2C27835F3500CA973D /* NewWarrantyStepTwoViewModel.swift in Sources */,
 				97630451275A68B200688DDB /* WhereIsMyWarranty.xcdatamodeld in Sources */,
 				97E03BDB2767A6EE00EFEE79 /* SettingsViewModel.swift in Sources */,
 				97F1D3052773448D00D0C52C /* WarrantyDetailsViewController.swift in Sources */,

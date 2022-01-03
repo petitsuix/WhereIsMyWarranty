@@ -11,12 +11,16 @@ import UIKit
 class WarrantiesCoordinator: Coordinator {
     
     public var navigationController: UINavigationController
-
+    
+    private let modalNavigationController: UINavigationController
     private let storageService: StorageService
+    private let newWarrantyViewController = NewWarrantyViewController()
+
     
     init() {
         self.navigationController = UINavigationController()
         self.storageService = StorageService()
+        self.modalNavigationController = UINavigationController(rootViewController: newWarrantyViewController)
     }
 
     public var rootViewController: UIViewController {
@@ -37,20 +41,24 @@ class WarrantiesCoordinator: Coordinator {
     }
     
     func showAddNewWarrantyScreen() {
-        let newWarrantyViewController = NewWarrantyViewController()
+      //  let secondStepVC = NewWarrantyStepTwoViewController()
+        
+       // let modalNavigationController = UINavigationController(rootViewController: newWarrantyViewController)
         let viewModel = NewWarrantyViewModel(coordinator: self, storageService: storageService)
         viewModel.viewDelegate = newWarrantyViewController
         newWarrantyViewController.viewModel = viewModel
         newWarrantyViewController.modalPresentationStyle = .popover
         newWarrantyViewController.modalTransitionStyle = .coverVertical
-        navigationController.present(newWarrantyViewController, animated: true, completion: nil)
+        navigationController.present(modalNavigationController, animated: true, completion: nil)
+       // modalNavigationController.pushViewController(secondStepVC, animated: true) // MARK: - CA MARCHE COMME CA, il faut maintenant reussir à
         }
     
     func showNextStepNewWarrantyScreen() {
-        let navController = UINavigationController()
-        let newWarrantyStepTwoViewController = NewWarrantyStepTwoViewController()
         
-        navController.present(newWarrantyStepTwoViewController, animated: true, completion: nil)
+        let newWarrantyStepTwoViewController = NewWarrantyStepTwoViewController()
+        newWarrantyStepTwoViewController.modalPresentationStyle = .popover
+        newWarrantyStepTwoViewController.modalTransitionStyle = .coverVertical
+        modalNavigationController.pushViewController(newWarrantyStepTwoViewController, animated: true)
         print("coucou")
     }
     

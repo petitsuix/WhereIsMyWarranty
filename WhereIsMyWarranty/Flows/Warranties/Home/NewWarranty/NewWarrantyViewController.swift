@@ -43,12 +43,10 @@ class NewWarrantyViewController: UIViewController {
     let endDate = UILabel()
     var endDateValue: String = ""
 
-    var saveButton = UIButton()
+    var nextStepButton = UIButton()
     
     var warranties: [Warranty] = []
     var viewModel: NewWarrantyViewModel?
-    var storageService = StorageService()
-    
     
     
     var endDateText = "Produit sous garantie jusqu'au :\n"
@@ -62,6 +60,7 @@ class NewWarrantyViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        navigationController?.isNavigationBarHidden = true
         print("Category : \(category ?? "Missing")")
     }
     
@@ -77,12 +76,21 @@ class NewWarrantyViewController: UIViewController {
     @objc func nameTextfieldDidChange(textfield: UITextField) { // comment le controller communique avec le viewmodel
         viewModel?.name = textfield.text
     }
+    
+    @objc func updateEndDateValue() {
+        let formatter1 = DateFormatter()
+        formatter1.dateStyle = .short
+        endDateValue = formatter1.string(from: startDate.date)
+        print("\(endDateValue)")
+        endDate.text = endDateText + endDateValue
+        
+    }
 }
 
 extension NewWarrantyViewController { // comment le viewmodel communique avec le viewcontroller
     
-    func canSaveStatusDidChange(canSave: Bool) { // pour checker que les champs soient pas vides ?
-        saveButton.isEnabled = canSave
+    func canGoToNextStep(canSave: Bool) { // pour checker que les champs soient pas vides ?
+        nextStepButton.isEnabled = canSave
     }
     
 }
@@ -93,7 +101,6 @@ extension NewWarrantyViewController {
     
     func setupView() {
         view.backgroundColor = .white
-        
         configureParentStackView()
         configureNameAndStartDateStackView()
         configureNameStackView()
@@ -102,7 +109,7 @@ extension NewWarrantyViewController {
         
         configureSaveButton()
         view.addSubview(parentStackView)
-        view.addSubview(saveButton)
+        view.addSubview(nextStepButton)
         activateConstraints()
     }
     
@@ -190,15 +197,6 @@ extension NewWarrantyViewController {
         customLengthStackView.addArrangedSubview(weeksView)
     }
     
-    @objc func updateEndDateValue() {
-        let formatter1 = DateFormatter()
-        formatter1.dateStyle = .short
-        endDateValue = formatter1.string(from: startDate.date)
-        print("\(endDateValue)")
-        endDate.text = endDateText + endDateValue
-        
-    }
-    
     func configureLifetimeWarrantyStackView() {
         lifetimeWarrantyStackView.axis = .horizontal
         lifetimeWarrantyStackView.translatesAutoresizingMaskIntoConstraints = false
@@ -217,12 +215,12 @@ extension NewWarrantyViewController {
     }
     
     func configureSaveButton() {
-        saveButton.backgroundColor = MWColor.paleOrange
-        saveButton.roundingViewCorners(radius: 8)
-        saveButton.setTitle("Suivant", for: .normal)
-        saveButton.addTarget(self, action: #selector(nextStep), for: .touchUpInside)
-        saveButton.isUserInteractionEnabled = true
-        saveButton.translatesAutoresizingMaskIntoConstraints = false
+        nextStepButton.backgroundColor = MWColor.paleOrange
+        nextStepButton.roundingViewCorners(radius: 8)
+        nextStepButton.setTitle("Suivant", for: .normal)
+        nextStepButton.addTarget(self, action: #selector(nextStep), for: .touchUpInside)
+        nextStepButton.isUserInteractionEnabled = true
+        nextStepButton.translatesAutoresizingMaskIntoConstraints = false
     }
     
     func activateConstraints() {
@@ -238,10 +236,10 @@ extension NewWarrantyViewController {
             
             endDate.heightAnchor.constraint(equalToConstant: 60),
             
-            saveButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            saveButton.topAnchor.constraint(equalTo: endDate.bottomAnchor, constant: 48),
-            saveButton.heightAnchor.constraint(equalToConstant: 55),
-            saveButton.widthAnchor.constraint(equalToConstant: 170)
+            nextStepButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            nextStepButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -48),
+            nextStepButton.heightAnchor.constraint(equalToConstant: 55),
+            nextStepButton.widthAnchor.constraint(equalToConstant: 170)
         ])
     }
 }
