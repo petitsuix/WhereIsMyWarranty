@@ -66,7 +66,7 @@ extension WarrantyDetailsViewController {
         parentStackView.axis = .vertical
         parentStackView.spacing = 24
         parentStackView.translatesAutoresizingMaskIntoConstraints = false
-        
+
         configureTopStackView()
         configureNotesStackView()
         configureProductAndSellerInfoViews()
@@ -74,7 +74,7 @@ extension WarrantyDetailsViewController {
         
         parentStackView.addArrangedSubview(topStackView)
         parentStackView.addArrangedSubview(productInfo)
-        parentStackView.addArrangedSubview(sellersInfo)
+        // parentStackView.addArrangedSubview(sellersInfo)
         parentStackView.addArrangedSubview(notesStackView)
         view.addSubview(parentStackView)
     }
@@ -107,19 +107,20 @@ extension WarrantyDetailsViewController {
     }
     
     private func configureProductNameLabel() {
-        productName.backgroundColor = .lightGray
         productName.text = warranty?.name
         productName.font = UIFont.boldSystemFont(ofSize: 15)
         productName.translatesAutoresizingMaskIntoConstraints = false
     }
     
     private func configureWarrantyStatus() {
-        warrantyStatus.backgroundColor = .green
-        warrantyStatus.translatesAutoresizingMaskIntoConstraints = false
+        let formatter1 = DateFormatter()
+        formatter1.dateStyle = .short
         warrantyStatus.roundingViewCorners(radius: 5)
-        warrantyStatus.addShadow()
         guard let text = warranty?.warrantyStart else { return }
-        warrantyStatus.text = "Couvert jusqu'au\n\(text)"
+        warrantyStatus.text = "Couvert jusqu'au\n\(formatter1.string(from: text))"
+        warrantyStatus.textAlignment = .center
+        warrantyStatus.numberOfLines = 2
+        warrantyStatus.translatesAutoresizingMaskIntoConstraints = false
     }
     
     // MARK: Middle "Product and seller info views"
@@ -146,28 +147,34 @@ extension WarrantyDetailsViewController {
     
     private func configureNotesStackView() {
         notesSectionTitle.font.withSize(15)
+        notesSectionTitle.textColor = .black
+        notesSectionTitle.text = "Notes"
         notesSectionTitle.translatesAutoresizingMaskIntoConstraints = false
         
-        notes.backgroundColor = .lightGray
+        notes.layer.borderWidth = 0.5
+        notes.layer.borderColor = MWColor.bluegrey.cgColor
+        notes.roundingViewCorners(radius: 6)
         notes.translatesAutoresizingMaskIntoConstraints = false
         
         notesStackView.translatesAutoresizingMaskIntoConstraints = false
+        notesStackView.axis = .vertical
         notesStackView.spacing = 8
+        
         notesStackView.addArrangedSubview(notesSectionTitle)
         notesStackView.addArrangedSubview(notes)
     }
     
     private func activateConstraints() {
         NSLayoutConstraint.activate([
-            parentStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
-            parentStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
-            parentStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
-            parentStackView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0),
+           // parentStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            parentStackView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            parentStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
+            parentStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
             
             productImageView.heightAnchor.constraint(equalToConstant: 110),
             productImageView.widthAnchor.constraint(equalToConstant: 110),
             
-            notes.heightAnchor.constraint(equalToConstant: 80)
+            notes.heightAnchor.constraint(equalToConstant: 140)
         ])
     }
 }

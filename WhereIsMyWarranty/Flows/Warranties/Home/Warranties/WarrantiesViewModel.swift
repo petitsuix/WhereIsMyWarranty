@@ -8,15 +8,12 @@
 import UIKit
 
 class WarrantiesViewModel: NSObject {
+    
+    // MARK: - Properties
+    
     weak var viewDelegate: WarrantiesViewController?
-
-    //private let webservice: Websercice ...
     private let coordinator: WarrantiesCoordinator
     private let storageService: StorageService
-    init(coordinator: WarrantiesCoordinator, storageService: StorageService) {
-        self.coordinator = coordinator
-        self.storageService = storageService
-    }
     
     var warranties: [Warranty] = [] {
         didSet {
@@ -30,6 +27,19 @@ class WarrantiesViewModel: NSObject {
         }
     }
     
+    // MARK: - objc methods
+    
+    @objc func showAddCategoryAlert() {
+       
+    }
+    
+    // MARK: - Methods
+    
+    init(coordinator: WarrantiesCoordinator, storageService: StorageService) {
+        self.coordinator = coordinator
+        self.storageService = storageService
+    }
+    
     func showNewWarrantyScreen() {
         coordinator.showAddNewWarrantyScreen()
     }
@@ -37,19 +47,6 @@ class WarrantiesViewModel: NSObject {
     func showWarrantyDetailsScreen(warranty: Warranty) {
         coordinator.showWarrantyDetailsScreen(warranty: warranty)
     }
-    
-    @objc func showAddCategoryAlert() {
-       
-    }
-    
-//    func fetchWarrantiesFromDatabase() {
-//        do {
-//            warranties = try storageService.viewContext.fetch(Warranty.fetchRequest())
-//        }
-//        catch {
-//            print(error)
-//        }
-//    }
     
     func fetchWarrantiesFromDatabase() {
         do {

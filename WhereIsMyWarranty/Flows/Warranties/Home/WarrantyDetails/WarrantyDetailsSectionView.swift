@@ -55,10 +55,10 @@ class WarrantyDetailsSectionView: UIView {
     
     private func activateConstraints() {
         NSLayoutConstraint.activate([
-            stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0),
-            stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0),
-            stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0),
-            stackView.topAnchor.constraint(equalTo: topAnchor, constant: 0)
+//            stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0),
+//            stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0),
+//            stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0),
+//            stackView.topAnchor.constraint(equalTo: topAnchor, constant: 0)
         ])
     }
 }
