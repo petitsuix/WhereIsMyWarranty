@@ -8,6 +8,8 @@
 import UIKit
 
 class NewWarrantyStepTwoViewController: UIViewController {
+    
+    // MARK: - Properties
 
     let parentStackView = UIStackView()
     let addAFileTitleLabel = UILabel()
@@ -17,6 +19,8 @@ class NewWarrantyStepTwoViewController: UIViewController {
     
     var viewModel: NewWarrantyViewModel?
     
+    // MARK: - View life cycle methods
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
@@ -24,16 +28,23 @@ class NewWarrantyStepTwoViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
-    @objc func saveWarranty() {
-        viewModel?.saveWarranty()
-        print("dans le ViewVontroller")
-        viewModel?.backToHome()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.isNavigationBarHidden = false
     }
     
+    // MARK: - objc methods
+    
+    @objc func saveWarranty() {
+        print("dans le ViewVontroller")
+        viewModel?.saveWarranty()
+    }
+    
+    // MARK: - Methods
+    
     func setupView() {
-        navigationController?.isNavigationBarHidden = false
         view.backgroundColor = .white
-        
+    
         parentStackView.translatesAutoresizingMaskIntoConstraints = false
         parentStackView.axis = .vertical
         parentStackView.spacing = 40
@@ -58,6 +69,8 @@ class NewWarrantyStepTwoViewController: UIViewController {
         
         selectImageButton.setTitleColor(.label, for: .normal)
         selectImageButton.tintColor = MWColor.paleOrange
+        selectImageButton.addTarget(self, action: #selector(chooseAndDisplayImage), for: .touchUpInside)
+        
         
         saveButton.backgroundColor = MWColor.paleOrange
         saveButton.roundingViewCorners(radius: 8)
@@ -74,6 +87,62 @@ class NewWarrantyStepTwoViewController: UIViewController {
         activateConstraints()
     }
     
+    @objc func chooseAndDisplayImage() {
+        setupAlert()
+     }
+    
+    func setupAlert() {
+        let alert = UIAlertController(title: "Choose Image", message: nil, preferredStyle: .actionSheet)
+                alert.addAction(UIAlertAction(title: "Camera", style: .default, handler: { _ in
+                    self.openCamera()
+                }))
+                alert.addAction(UIAlertAction(title: "Gallery", style: .default, handler: { _ in
+                    self.openPhotoGallery()
+                }))
+                alert.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
+
+                self.present(alert, animated: true, completion: nil)
+    }
+    
+    func openPhotoGallery() {
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerController.SourceType.photoLibrary){
+                let imagePicker = UIImagePickerController()
+                imagePicker.delegate = self
+                imagePicker.allowsEditing = true
+                imagePicker.sourceType = UIImagePickerController.SourceType.photoLibrary
+                self.present(imagePicker, animated: true, completion: nil)
+            }
+            else
+            {
+                let alert  = UIAlertController(title: "Warning", message: "You don't have permission to access gallery.", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+            }
+    }
+    
+    func openCamera() {
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerController.SourceType.camera) {
+                let imagePicker = UIImagePickerController()
+                imagePicker.delegate = self
+                imagePicker.sourceType = UIImagePickerController.SourceType.camera
+                imagePicker.allowsEditing = false
+                self.present(imagePicker, animated: true, completion: nil)
+            }
+            else
+            {
+                let alert  = UIAlertController(title: "Warning", message: "You don't have camera", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+            }
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        let selectedImage = info[.originalImage] as? UIImage
+        imageView.image = selectedImage
+        imageView.contentMode = .redraw
+        picker.dismiss(animated: true, completion: nil)
+    }
+    
     func colorTests() {
         parentStackView.backgroundColor = .green
         addAFileTitleLabel.backgroundColor = .red
@@ -88,8 +157,6 @@ class NewWarrantyStepTwoViewController: UIViewController {
             parentStackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -80),
             
             imageView.heightAnchor.constraint(equalToConstant: 320),
-           // imageView.widthAnchor.constraint(equalToConstant: 120)
-          //  parentStackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0)
             
             saveButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             saveButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -48),
@@ -111,4 +178,8 @@ class NewWarrantyStepTwoViewController: UIViewController {
     }
     */
 
+}
+
+extension NewWarrantyStepTwoViewController: UIImagePickerControllerDelegate & UINavigationControllerDelegate {
+    
 }

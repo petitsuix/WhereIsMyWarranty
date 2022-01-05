@@ -9,9 +9,12 @@ import Foundation
 
 class NewWarrantyViewModel: NSObject {
     
+    // MARK: - Properties
+    
     weak var viewDelegate: NewWarrantyViewController?
-    private let coordinator: WarrantiesCoordinator
-    private let storageService: StorageService
+    weak var stepTwoViewDelegate: NewWarrantyStepTwoViewController?
+    let coordinator: WarrantiesCoordinator
+    let storageService: StorageService
     
     var name: String? {
         didSet {
@@ -24,25 +27,30 @@ class NewWarrantyViewModel: NSObject {
         return name?.isEmpty == false
     }
     
+    // MARK: - Methods
+    
     init(coordinator: WarrantiesCoordinator, storageService: StorageService) {
         self.coordinator = coordinator
         self.storageService = storageService
     }
     
     func backToHome() {
-        coordinator.backToHome() // ne pas passer entre controleurs
+        coordinator.backToHome()// ne pas passer entre controleurs
     }
     
     func nextStep() {
         coordinator.showNextStepNewWarrantyScreen()
     }
     
+    // FIXME: pour que ce soit clean, peut être rajouter un loading icon sur le button
     func saveWarranty() {
         print("je suis dans saveWarranty")
         let newWarranty = Warranty(context: storageService.viewContext)
         newWarranty.name = viewDelegate?.nameField.text
         newWarranty.warrantyStart = viewDelegate?.startDate.date
+       // newWarranty.invoicePhoto = stepTwoViewDelegate?.imageView
         storageService.save()
         backToHome()
     }
+    
 }

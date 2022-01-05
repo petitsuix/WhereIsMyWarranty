@@ -28,6 +28,8 @@ class WarrantyDetailsViewController: UIViewController {
     let notesSectionTitle = UILabel()
     let notes = UITextView()
     
+    let deleteWarrantyButton = UIButton()
+    
     // MARK: - View life cycle methods
     
     override func viewDidLoad() {
@@ -71,11 +73,13 @@ extension WarrantyDetailsViewController {
         configureNotesStackView()
         configureProductAndSellerInfoViews()
         configureNotesStackView()
+        configureDeleteWarrantyButton()
         
         parentStackView.addArrangedSubview(topStackView)
         parentStackView.addArrangedSubview(productInfo)
         // parentStackView.addArrangedSubview(sellersInfo)
         parentStackView.addArrangedSubview(notesStackView)
+        parentStackView.addArrangedSubview(deleteWarrantyButton)
         view.addSubview(parentStackView)
     }
     
@@ -162,6 +166,14 @@ extension WarrantyDetailsViewController {
         
         notesStackView.addArrangedSubview(notesSectionTitle)
         notesStackView.addArrangedSubview(notes)
+    }
+    
+    private func configureDeleteWarrantyButton() {
+        deleteWarrantyButton.titleLabel?.text = "Supprimer la garantie"
+        deleteWarrantyButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
+        deleteWarrantyButton.titleLabel?.textColor = .red
+        deleteWarrantyButton.backgroundColor = .yellow
+        deleteWarrantyButton.translatesAutoresizingMaskIntoConstraints = false
     }
     
     private func activateConstraints() {

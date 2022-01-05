@@ -64,6 +64,8 @@ class WarrantiesViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let notificationName = NSNotification.Name(rawValue: "warranties list updated")
+        NotificationCenter.default.addObserver(self, selector: #selector(warrantiesUpdated), name: notificationName, object: nil)
         setupView()
     }
     
@@ -91,6 +93,12 @@ class WarrantiesViewController: UIViewController {
     
     
     // MARK: - objc methods
+    
+    @objc func warrantiesUpdated() {
+        viewModel?.fetchWarrantiesFromDatabase()
+        viewState = .showData
+    }
+    
     @objc func addWarrantyButtonAction() {
         viewModel?.showNewWarrantyScreen()
         // coordinator?.showNewWarrantiesScreenFor(category: "MA SUPER CATEGORY")

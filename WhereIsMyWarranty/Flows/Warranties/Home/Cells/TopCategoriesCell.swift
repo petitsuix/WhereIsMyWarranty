@@ -9,6 +9,8 @@ import UIKit
 
 class TopCategoriesCell: UICollectionViewCell {
     
+    // MARK: - Properties
+    
     static let identifier = "CustomCollectionViewCell"
     
     // FIXME: 
@@ -23,6 +25,8 @@ class TopCategoriesCell: UICollectionViewCell {
             refreshCategoryData()
         }
     }
+    
+    // MARK: - Methods
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -40,12 +44,6 @@ class TopCategoriesCell: UICollectionViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    // FIXME: a degager
-    override func layoutSubviews() {
-        super.layoutSubviews()
-      //  titleLabel.frame = CGRect(x: 0, y: 0, width: contentView.frame.size.width, height: contentView.frame.size.height)
     }
     
     func refreshCategoryData() {
@@ -66,6 +64,11 @@ class TopCategoriesCell: UICollectionViewCell {
             titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 0),
             titleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 0)
         ])
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        titleLabel.text = nil
     }
     
 }

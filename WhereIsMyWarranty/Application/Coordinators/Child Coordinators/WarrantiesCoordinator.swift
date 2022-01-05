@@ -10,27 +10,29 @@ import UIKit
 
 class WarrantiesCoordinator: Coordinator {
     
-    public var navigationController: UINavigationController
+    // MARK: - Properties
     
+    public var navigationController: UINavigationController
+    public var rootViewController: UIViewController {
+        return navigationController
+    }
+    var newWarrantyViewModel: NewWarrantyViewModel?
     private let modalNavigationController: UINavigationController
     private let storageService: StorageService
     private let newWarrantyViewController = NewWarrantyViewController()
-
+    private let newWarrantyStepTwoViewController = NewWarrantyStepTwoViewController()
+    
+    // MARK: - Methods
     
     init() {
         self.navigationController = UINavigationController()
         self.storageService = StorageService()
         self.modalNavigationController = UINavigationController(rootViewController: newWarrantyViewController)
     }
-
-    public var rootViewController: UIViewController {
-        return navigationController
-    }
     
     func start() {
         showWarrantiesScreen()
     }
-    
     
     func showWarrantiesScreen() {
         let warrantiesVC = WarrantiesViewController()
@@ -40,26 +42,31 @@ class WarrantiesCoordinator: Coordinator {
         navigationController.setViewControllers([warrantiesVC], animated: false)
     }
     
+    //    func showAddNewWarrantyScreen() {
+    //        let viewModel = NewWarrantyViewModel(coordinator: self, storageService: storageService)
+    //        viewModel.viewDelegate = newWarrantyViewController
+    //        newWarrantyViewController.viewModel = viewModel
+    //        newWarrantyViewController.modalPresentationStyle = .popover
+    //        newWarrantyViewController.modalTransitionStyle = .coverVertical
+    //        navigationController.present(modalNavigationController, animated: true, completion: nil)
+    //    }
+    
     func showAddNewWarrantyScreen() {
-      //  let secondStepVC = NewWarrantyStepTwoViewController()
-        
-       // let modalNavigationController = UINavigationController(rootViewController: newWarrantyViewController)
+//        let newWarrantyVC = NewWarrantyViewController()
         let viewModel = NewWarrantyViewModel(coordinator: self, storageService: storageService)
         viewModel.viewDelegate = newWarrantyViewController
-        newWarrantyViewController.viewModel = viewModel
+        self.newWarrantyViewModel = viewModel
+        newWarrantyViewController.viewModel = newWarrantyViewModel
         newWarrantyViewController.modalPresentationStyle = .popover
         newWarrantyViewController.modalTransitionStyle = .coverVertical
         navigationController.present(modalNavigationController, animated: true, completion: nil)
-       // modalNavigationController.pushViewController(secondStepVC, animated: true) // MARK: - CA MARCHE COMME CA, il faut maintenant reussir à
-        }
+    }
     
     func showNextStepNewWarrantyScreen() {
-        
-        let newWarrantyStepTwoViewController = NewWarrantyStepTwoViewController()
-        newWarrantyStepTwoViewController.modalPresentationStyle = .popover
-        newWarrantyStepTwoViewController.modalTransitionStyle = .coverVertical
+        let viewModel = NewWarrantyViewModel(coordinator: self, storageService: storageService)
+        viewModel.viewDelegate = newWarrantyViewController
+        newWarrantyStepTwoViewController.viewModel = newWarrantyViewModel
         modalNavigationController.pushViewController(newWarrantyStepTwoViewController, animated: true)
-        print("coucou")
     }
     
     func showWarrantyDetailsScreen(warranty: Warranty) {
@@ -70,19 +77,18 @@ class WarrantiesCoordinator: Coordinator {
         warrantyDetailsViewController.warranty = warranty
         navigationController.pushViewController(warrantyDetailsViewController, animated: true)
     }
-    
-    func backToHome() {
-        navigationController.popToRootViewController(animated: true)
+    // FIXME: 
+    func backToHome() { // renommer en "warrantySaved"?
+        navigationController.dismiss(animated: true, completion: nil) // repasser viewModel à nil
+        notifyWarrantiesListUpdated()
+//        navigationController.dismiss(animated: true) {
+//            self.showWarrantiesScreen()
+//        }
     }
     
-    
-    // func showAddNewWarrantiesScreenFor(category: String) {
-    //        let newWarrantiesVC = NewWarrantyViewController()
-    //
-    //        newWarrantiesVC.coordinator = self
-    //        newWarrantiesVC.category = category
-    //
-    //        tabBarController.pushViewController(newWarrantiesVC, animated: true)
-    //
-    //   }
+    func notifyWarrantiesListUpdated() {
+        let notificationName = NSNotification.Name(rawValue: "warranties list updated")
+        let notification = Notification(name: notificationName)
+        NotificationCenter.default.post(notification)
+    }
 }

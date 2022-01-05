@@ -11,7 +11,6 @@ class NewWarrantyViewController: UIViewController {
     
     // MARK: - Properties
     
-    let navBarAppearance = UINavigationBarAppearance()
     var category: String?
     
     // 1
@@ -71,6 +70,7 @@ class NewWarrantyViewController: UIViewController {
     
     @objc func nextStep() {
         viewModel?.nextStep()
+        print("going through 'nextStep objc method in NewWarrantyViewController'")
     }
     
     @objc func nameTextfieldDidChange(textfield: UITextField) { // comment le controller communique avec le viewmodel
@@ -87,7 +87,7 @@ class NewWarrantyViewController: UIViewController {
     }
 }
 
-extension NewWarrantyViewController { // comment le viewmodel communique avec le viewcontroller
+extension NewWarrantyViewController {
     
     func canGoToNextStep(canSave: Bool) { // pour checker que les champs soient pas vides ?
         nextStepButton.isEnabled = canSave
@@ -107,7 +107,7 @@ extension NewWarrantyViewController {
         configureStartDateStackView()
         configureCustomLengthStackView()
         
-        configureSaveButton()
+        configureNextStepButton()
         view.addSubview(parentStackView)
         view.addSubview(nextStepButton)
         activateConstraints()
@@ -214,7 +214,7 @@ extension NewWarrantyViewController {
         endDate.numberOfLines = 2
     }
     
-    func configureSaveButton() {
+    func configureNextStepButton() {
         nextStepButton.backgroundColor = MWColor.paleOrange
         nextStepButton.roundingViewCorners(radius: 8)
         nextStepButton.setTitle("Suivant", for: .normal)

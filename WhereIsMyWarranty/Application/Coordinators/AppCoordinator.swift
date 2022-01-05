@@ -10,6 +10,8 @@ import UIKit
 
 class AppCoordinator: NSObject, Coordinator, UITabBarControllerDelegate {
     
+    // MARK: - Properties
+    
     var navigationController: UINavigationController
     
     var rootViewController: UIViewController {
@@ -18,6 +20,9 @@ class AppCoordinator: NSObject, Coordinator, UITabBarControllerDelegate {
     
     var tabBarController: UITabBarController
     
+    var coordinators: [Coordinator] {
+        return [warrantiesCoordinator, settingsCoordinator]
+    }
     let warrantiesCoordinator: WarrantiesCoordinator
     let settingsCoordinator: SettingsCoordinator
     let window: UIWindow
@@ -33,10 +38,12 @@ class AppCoordinator: NSObject, Coordinator, UITabBarControllerDelegate {
     }
      */
     
+    // MARK: - Initializer
+    
     init(window: UIWindow) {
         self.window = window
         tabBarController = UITabBarController()
-        warrantiesCoordinator = WarrantiesCoordinator() //WarrantiesCoordinator(storageservice : stor)
+        warrantiesCoordinator = WarrantiesCoordinator()
         settingsCoordinator = SettingsCoordinator()
         navigationController = UINavigationController()
         
@@ -45,13 +52,8 @@ class AppCoordinator: NSObject, Coordinator, UITabBarControllerDelegate {
         let warrantiesViewController = warrantiesCoordinator.rootViewController
         warrantiesViewController.tabBarItem = UITabBarItem(title: "Garanties", image: UIImage(systemName: "newspaper"), selectedImage: UIImage(systemName: "newspaper.fill"))
         
-     //   warrantiesViewController.tabBarController?.target(forAction: Selector, withSender: <#T##Any?#>)
-        
         let settingsViewController = settingsCoordinator.rootViewController
         settingsViewController.tabBarItem = UITabBarItem(title: "Réglages", image: UIImage(systemName: "gearshape"), selectedImage: UIImage(systemName: "gearshape.fill"))
-        
-        
-        
         
         tabBarControllers.append(warrantiesViewController)
         tabBarControllers.append(settingsViewController)
@@ -59,42 +61,16 @@ class AppCoordinator: NSObject, Coordinator, UITabBarControllerDelegate {
         tabBarController.viewControllers = tabBarControllers
         tabBarController.tabBar.isTranslucent = false
         tabBarController.tabBar.backgroundColor = MWColor.paleOrange
-        //  tabBarController.delegate = self
     }
     
-    var coordinators: [Coordinator] {
-        return [warrantiesCoordinator, settingsCoordinator]
-    }
-    
-    //    func handleNotification() {
-    //        switch
-    //        showNewWarrantiesScreenFor(category: <#T##String#>)
-    //    }
+    // MARK: - Methods
+
     func start() {
         print("ok")
         startWarrantiesFlow()
         window.rootViewController = tabBarController
         window.makeKeyAndVisible()
-        // est-ce que l'utilisateur est venu d'un lien ?
-        // envoyer une notification ?
-        //startWarrantiesHomeFlow()
-        //window.makeKeyAndVisible()
-        //        if Bool.random() {
-        //            showWarrantiesScreen()
-        //        } else {
-        //            showNewWarrantiesScreenFor(category: "TEST RANDOM")
-        //        }
     }
-    
-    //    func showNewWarrantiesScreenFor(category: String) {
-    //        let newWarrantiesVC = NewWarrantyViewController()
-    //
-    //        newWarrantiesVC.coordinator = self
-    //        newWarrantiesVC.category = category
-    //
-    //        tabBarController.pushViewController(newWarrantiesVC, animated: true)
-    //
-    //    }
     
     private func startWarrantiesFlow() {
         warrantiesCoordinator.start()
