@@ -14,9 +14,7 @@ class WarrantiesCell: UICollectionViewCell {
     static let identifier = "WarrantiesCollectionViewCell"
     
     private var warrantyProductImageView = UIImageView()
-    private var warrantyInfoStackView = UIStackView()
-    
-    private var warrantyCellInfo = UIStackView()
+    private var infoStackView = UIStackView()
     private var warrantyName = UILabel()
     private var sellersNameAndLocation = UILabel()
     private var warrantyEnd = UILabel()
@@ -46,6 +44,7 @@ class WarrantiesCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // Overriding layoutSubviews if autoresizing and constraint-based behaviors of subviews do not offer the behavior we want.
     override func layoutSubviews() {
         super.layoutSubviews()
     }
@@ -60,18 +59,27 @@ class WarrantiesCell: UICollectionViewCell {
     }
     
     func configureWarrantyCellInfoStackView() {
-        warrantyCellInfo.axis = .vertical
-        warrantyCellInfo.translatesAutoresizingMaskIntoConstraints = false
-        warrantyCellInfo.spacing = 8
+        infoStackView.axis = .vertical
+        infoStackView.translatesAutoresizingMaskIntoConstraints = false
+        infoStackView.spacing = 8
+        
+        warrantyName.font = UIFont.boldSystemFont(ofSize: 18.5)
+        warrantyName.translatesAutoresizingMaskIntoConstraints = false
         
         sellersNameAndLocation.text = "Apple Store" + ", " + "Lyon"
-        remainingTime.text = "178 jours restants"
-        warrantyCellInfo.addArrangedSubview(warrantyName)
-        warrantyCellInfo.addArrangedSubview(sellersNameAndLocation)
-        warrantyCellInfo.addArrangedSubview(remainingTime)
-        warrantyCellInfo.addArrangedSubview(warrantyEnd)
+        sellersNameAndLocation.translatesAutoresizingMaskIntoConstraints = false
         
-        contentView.addSubview(warrantyCellInfo)
+        remainingTime.text = "178 jours restants"
+        remainingTime.translatesAutoresizingMaskIntoConstraints = false
+        
+        warrantyEnd.translatesAutoresizingMaskIntoConstraints = false
+        
+        infoStackView.addArrangedSubview(warrantyName)
+       // infoStackView.addArrangedSubview(sellersNameAndLocation)
+        infoStackView.addArrangedSubview(remainingTime)
+        infoStackView.addArrangedSubview(warrantyEnd)
+        
+        contentView.addSubview(infoStackView)
     }
     
     func refreshWarrantyData() {
@@ -91,10 +99,12 @@ class WarrantiesCell: UICollectionViewCell {
             warrantyProductImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 0),
             warrantyProductImageView.widthAnchor.constraint(equalTo: warrantyProductImageView.heightAnchor),
             
-            warrantyCellInfo.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 4),
-            warrantyCellInfo.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
-            warrantyCellInfo.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -4),
-            warrantyCellInfo.leadingAnchor.constraint(equalTo: warrantyProductImageView.trailingAnchor, constant: 8)
+            infoStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 4),
+            infoStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
+          //  infoStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
+            infoStackView.leadingAnchor.constraint(equalTo: warrantyProductImageView.trailingAnchor, constant: 8),
+            
+            warrantyName.heightAnchor.constraint(equalToConstant: 40)
         ])
     }
     

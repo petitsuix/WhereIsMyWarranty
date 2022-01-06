@@ -47,7 +47,7 @@ class NewWarrantyViewModel: NSObject {
         print("je suis dans saveWarranty")
         let newWarranty = Warranty(context: storageService.viewContext)
         newWarranty.name = viewDelegate?.nameField.text
-        newWarranty.warrantyStart = viewDelegate?.startDate.date
+        newWarranty.warrantyStart = viewDelegate?.startDatePicker.date
        // newWarranty.invoicePhoto = stepTwoViewDelegate?.imageView
         storageService.save()
         backToHome()

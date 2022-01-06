@@ -16,6 +16,7 @@ extension UICollectionViewCell {
         self.layer.shadowRadius = 3.0
         self.layer.shadowOpacity = 0.3
         self.layer.masksToBounds = false
+        self.layer.shadowPath = UIBezierPath(rect: self.bounds).cgPath
     }
 }
 
@@ -28,5 +29,6 @@ extension UILabel {
         self.layer.shadowRadius = 3.0
         self.layer.shadowOpacity = 0.3
         self.layer.masksToBounds = false
+        self.layer.shadowPath = UIBezierPath(rect: self.bounds).cgPath
     }
 }

@@ -25,7 +25,8 @@ class NewWarrantyViewController: UIViewController {
     // 1.1.2
     let startDateStackView = UIStackView()
     let startDateTitle = UILabel()
-    var startDate = UIDatePicker()
+    var startDatePicker = UIDatePicker()
+    var startDateValue: String = ""
     
     // 1.2
     let customLengthStackView = UIStackView()
@@ -39,16 +40,16 @@ class NewWarrantyViewController: UIViewController {
     let weeksView = TextWithStepperView()
     
     // 1.3 endDate
-    let endDate = UILabel()
+    let endDateLabel = UILabel()
     var endDateValue: String = ""
-
+    
     var nextStepButton = UIButton()
     
     var warranties: [Warranty] = []
     var viewModel: NewWarrantyViewModel?
     
     
-    var endDateText = "Produit sous garantie jusqu'au :\n"
+    var endDateDefaultText = "Produit sous garantie jusqu'au :\n"
     
     // MARK: - View life cycle methods
     
@@ -77,13 +78,37 @@ class NewWarrantyViewController: UIViewController {
         viewModel?.name = textfield.text
     }
     
-    @objc func updateEndDateValue() {
+    @objc func updateStartDateValue() {
         let formatter1 = DateFormatter()
-        formatter1.dateStyle = .short
-        endDateValue = formatter1.string(from: startDate.date)
-        print("\(endDateValue)")
-        endDate.text = endDateText + endDateValue
-        
+        formatter1.dateStyle = .full
+        startDateValue = "\(startDatePicker.date)"
+    }
+    
+    @objc func updateDays() {
+        let formatter1 = DateFormatter()
+        formatter1.dateStyle = .full
+        guard let newDate = startDatePicker.calendar.date(byAdding: .day, value: Int(weeksView.stepper.value * 7), to: Date()) else { return }
+        let newDateStringFormat = formatter1.string(from: newDate)
+        endDateLabel.text = endDateDefaultText + newDateStringFormat
+        // today = startDate.date
+    }
+    
+    @objc func updateMonths() {
+        let formatter1 = DateFormatter()
+        formatter1.dateStyle = .full
+        guard let newDate = startDatePicker.calendar.date(byAdding: .month, value: Int(monthsView.stepper.value), to: Date()) else { return }
+        let newDateStringFormat = formatter1.string(from: newDate)
+        endDateLabel.text = endDateDefaultText + newDateStringFormat
+        // today = startDate.date
+    }
+    
+    @objc func updateYears() {
+        let formatter1 = DateFormatter()
+        formatter1.dateStyle = .full
+        guard let newDate = startDatePicker.calendar.date(byAdding: .year, value: Int(yearsView.stepper.value), to: Date()) else { return }
+        let newDateStringFormat = formatter1.string(from: newDate)
+        endDateLabel.text = endDateDefaultText + newDateStringFormat
+        // today = startDate.date
     }
 }
 
@@ -120,7 +145,7 @@ extension NewWarrantyViewController {
         configureEndDate()
         parentStackView.addArrangedSubview(nameAndStartDateStackView)
         parentStackView.addArrangedSubview(customLengthStackView)
-        parentStackView.addArrangedSubview(endDate)
+        parentStackView.addArrangedSubview(endDateLabel)
     }
     
     func configureNameAndStartDateStackView() {
@@ -143,6 +168,7 @@ extension NewWarrantyViewController {
         
         nameField.addTarget(self, action: #selector(nameTextfieldDidChange), for: .editingChanged)
         nameField.setBottomBorder()
+        nameField.addDoneToolbar()
         nameField.translatesAutoresizingMaskIntoConstraints = false
         nameStackView.addArrangedSubview(nameTitle)
         nameStackView.addArrangedSubview(nameField)
@@ -158,12 +184,12 @@ extension NewWarrantyViewController {
         startDateTitle.textAlignment = .left
         startDateTitle.translatesAutoresizingMaskIntoConstraints = false
         
-        startDate.datePickerMode = .date
-        startDate.addTarget(self, action: #selector(updateEndDateValue), for: .editingDidEnd)
-        startDate.translatesAutoresizingMaskIntoConstraints = false
+        startDatePicker.datePickerMode = .date
+        startDatePicker.addTarget(self, action: #selector(updateStartDateValue), for: .editingDidEnd)
+        startDatePicker.translatesAutoresizingMaskIntoConstraints = false
         
         startDateStackView.addArrangedSubview(startDateTitle)
-        startDateStackView.addArrangedSubview(startDate)
+        startDateStackView.addArrangedSubview(startDatePicker)
     }
     
     func configureCustomLengthStackView() {
@@ -180,12 +206,15 @@ extension NewWarrantyViewController {
         validityLengthTitle.translatesAutoresizingMaskIntoConstraints = false
         
         yearsView.timeUnitTitle.text = "années"
+        yearsView.stepper.addTarget(self, action: #selector(updateYears), for: .touchUpInside)
         yearsView.translatesAutoresizingMaskIntoConstraints = false
         
         monthsView.timeUnitTitle.text = "mois"
+        monthsView.stepper.addTarget(self, action: #selector(updateMonths), for: .touchUpInside)
         monthsView.translatesAutoresizingMaskIntoConstraints = false
         
         weeksView.timeUnitTitle.text = "semaines"
+        weeksView.stepper.addTarget(self, action: #selector(updateDays), for: .touchUpInside)
         weeksView.translatesAutoresizingMaskIntoConstraints = false
         
         configureLifetimeWarrantyStackView()
@@ -208,10 +237,10 @@ extension NewWarrantyViewController {
     }
     
     func configureEndDate() {
-        endDate.textAlignment = .center
-        endDate.translatesAutoresizingMaskIntoConstraints = false
-        endDate.text = endDateText
-        endDate.numberOfLines = 2
+        endDateLabel.textAlignment = .center
+        endDateLabel.translatesAutoresizingMaskIntoConstraints = false
+        endDateLabel.text = endDateDefaultText
+        endDateLabel.numberOfLines = 2
     }
     
     func configureNextStepButton() {
@@ -228,13 +257,13 @@ extension NewWarrantyViewController {
             parentStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 24),
             parentStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
             parentStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
-        //    parentStackView.bottomAnchor.constraint(equalTo: saveButton.topAnchor, constant: -24),
+            //    parentStackView.bottomAnchor.constraint(equalTo: saveButton.topAnchor, constant: -24),
             
             yearsView.heightAnchor.constraint(equalTo: lifetimeWarrantyStackView.heightAnchor),
             monthsView.heightAnchor.constraint(equalTo: lifetimeWarrantyStackView.heightAnchor),
             weeksView.heightAnchor.constraint(equalTo: lifetimeWarrantyStackView.heightAnchor),
             
-            endDate.heightAnchor.constraint(equalToConstant: 60),
+            endDateLabel.heightAnchor.constraint(equalToConstant: 60),
             
             nextStepButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             nextStepButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -48),

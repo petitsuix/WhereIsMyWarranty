@@ -217,7 +217,6 @@ extension WarrantiesViewController {
         warrantiesCollectionView.register(WarrantiesCell.self, forCellWithReuseIdentifier: WarrantiesCell.identifier)
         warrantiesCollectionView.dataSource = self
         warrantiesCollectionView.delegate = self
-        warrantiesCollectionView.backgroundColor = .yellow
         view.addSubview(warrantiesCollectionView)
     }
     
