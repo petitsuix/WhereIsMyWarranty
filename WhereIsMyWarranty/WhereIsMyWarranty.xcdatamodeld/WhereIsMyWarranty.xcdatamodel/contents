@@ -8,7 +8,7 @@
     <entity name="Warranty" representedClassName="Warranty" syncable="YES" codeGenerationType="class">
         <attribute name="category" optional="YES" attributeType="String"/>
         <attribute name="currency" optional="YES" attributeType="String"/>
-        <attribute name="invoicePhoto" optional="YES" attributeType="Binary"/>
+        <attribute name="invoicePhoto" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES"/>
         <attribute name="lifetimeWarranty" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="model" optional="YES" attributeType="String"/>
         <attribute name="name" optional="YES" attributeType="String"/>

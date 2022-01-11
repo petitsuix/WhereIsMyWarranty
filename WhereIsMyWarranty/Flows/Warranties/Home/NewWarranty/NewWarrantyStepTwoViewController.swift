@@ -10,7 +10,7 @@ import UIKit
 class NewWarrantyStepTwoViewController: UIViewController {
     
     // MARK: - Properties
-
+    
     let parentStackView = UIStackView()
     let addAFileTitleLabel = UILabel()
     let imageView = UIImageView()
@@ -24,7 +24,7 @@ class NewWarrantyStepTwoViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
-       // colorTests()
+        // colorTests()
         // Do any additional setup after loading the view.
     }
     
@@ -40,11 +40,15 @@ class NewWarrantyStepTwoViewController: UIViewController {
         viewModel?.saveWarranty()
     }
     
+    @objc func chooseAndDisplayImage() {
+        setupAlert()
+    }
+    
     // MARK: - Methods
     
     func setupView() {
         view.backgroundColor = .white
-    
+        
         parentStackView.translatesAutoresizingMaskIntoConstraints = false
         parentStackView.axis = .vertical
         parentStackView.spacing = 40
@@ -87,54 +91,47 @@ class NewWarrantyStepTwoViewController: UIViewController {
         activateConstraints()
     }
     
-    @objc func chooseAndDisplayImage() {
-        setupAlert()
-     }
-    
     func setupAlert() {
         let alert = UIAlertController(title: "Choose Image", message: nil, preferredStyle: .actionSheet)
-                alert.addAction(UIAlertAction(title: "Camera", style: .default, handler: { _ in
-                    self.openCamera()
-                }))
-                alert.addAction(UIAlertAction(title: "Gallery", style: .default, handler: { _ in
-                    self.openPhotoGallery()
-                }))
-                alert.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
-
-                self.present(alert, animated: true, completion: nil)
+        alert.addAction(UIAlertAction(title: "Camera", style: .default, handler: { _ in
+            self.openCamera()
+        }))
+        alert.addAction(UIAlertAction(title: "Gallery", style: .default, handler: { _ in
+            self.openPhotoGallery()
+        }))
+        alert.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
     
     func openPhotoGallery() {
         if UIImagePickerController.isSourceTypeAvailable(UIImagePickerController.SourceType.photoLibrary){
-                let imagePicker = UIImagePickerController()
-                imagePicker.delegate = self
-                imagePicker.allowsEditing = true
-                imagePicker.sourceType = UIImagePickerController.SourceType.photoLibrary
-                self.present(imagePicker, animated: true, completion: nil)
-            }
-            else
-            {
-                let alert  = UIAlertController(title: "Warning", message: "You don't have permission to access gallery.", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                self.present(alert, animated: true, completion: nil)
-            }
+            let imagePicker = UIImagePickerController()
+            imagePicker.delegate = self
+            imagePicker.allowsEditing = true
+            imagePicker.sourceType = UIImagePickerController.SourceType.photoLibrary
+            self.present(imagePicker, animated: true, completion: nil)
+        } else {
+            let alert  = UIAlertController(title: "Warning", message: "You don't have permission to access gallery.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
     }
     
     func openCamera() {
         if UIImagePickerController.isSourceTypeAvailable(UIImagePickerController.SourceType.camera) {
-                let imagePicker = UIImagePickerController()
-                imagePicker.delegate = self
-                imagePicker.sourceType = UIImagePickerController.SourceType.camera
-                imagePicker.allowsEditing = false
-                self.present(imagePicker, animated: true, completion: nil)
-            }
-            else
-            {
-                let alert  = UIAlertController(title: "Warning", message: "You don't have camera", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                self.present(alert, animated: true, completion: nil)
-            }
+            let imagePicker = UIImagePickerController()
+            imagePicker.delegate = self
+            imagePicker.sourceType = UIImagePickerController.SourceType.camera
+            imagePicker.allowsEditing = false
+            self.present(imagePicker, animated: true, completion: nil)
+        } else {
+            let alert  = UIAlertController(title: "Warning", message: "There is no camera", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
     }
+    
+    // MARK: - Image Picker Configuration
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         let selectedImage = info[.originalImage] as? UIImage
@@ -167,17 +164,17 @@ class NewWarrantyStepTwoViewController: UIViewController {
     
     
     
-
+    
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destination.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }
 
 extension NewWarrantyStepTwoViewController: UIImagePickerControllerDelegate & UINavigationControllerDelegate {

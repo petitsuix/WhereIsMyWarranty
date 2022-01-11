@@ -49,6 +49,12 @@ class StorageService {
     }
     
     func deleteWarranty(_ object: NSManagedObject) throws {
-        viewContext.delete(object)
+        do {
+            viewContext.delete(object)
+            try viewContext.save()
+        }
+        catch {
+            throw error
+        }
     }
 }

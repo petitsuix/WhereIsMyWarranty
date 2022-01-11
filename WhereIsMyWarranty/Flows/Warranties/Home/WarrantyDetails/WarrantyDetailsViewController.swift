@@ -12,7 +12,6 @@ class WarrantyDetailsViewController: UIViewController {
     // MARK: - Properties
     
     var viewModel: WarrantyDetailsViewModel?
-    var warranty: Warranty? // a virer, tout se choppe depuis le viewmodel
     
     let parentStackView = UIStackView()
     
@@ -43,8 +42,8 @@ class WarrantyDetailsViewController: UIViewController {
     
     // MARK: - Methods
     
-    func refreshWith(warranty: Warranty) {
-        self.warranty = viewModel?.warranty
+    @objc func deleteWarranty() {
+        viewModel?.deleteWarranty()
     }
 }
 
@@ -101,9 +100,8 @@ extension WarrantyDetailsViewController {
     }
     
     private func configureProductImageView() {
-        let image = UIImage(named: "Launchscreen")
-        // let image = warranty?.productImage
-        productImageView.image = image
+        guard let image = viewModel?.warranty.invoicePhoto else { return }
+        productImageView.image = UIImage(data: image)
         productImageView.roundingViewCorners(radius: 15)
         productImageView.layer.borderWidth = 2
         productImageView.layer.borderColor = MWColor.bluegrey.cgColor
@@ -111,7 +109,7 @@ extension WarrantyDetailsViewController {
     }
     
     private func configureProductNameLabel() {
-        productName.text = warranty?.name
+        productName.text = viewModel?.warranty.name
         productName.font = UIFont.boldSystemFont(ofSize: 15)
         productName.translatesAutoresizingMaskIntoConstraints = false
     }
@@ -120,7 +118,7 @@ extension WarrantyDetailsViewController {
         let formatter1 = DateFormatter()
         formatter1.dateStyle = .short
         warrantyStatus.roundingViewCorners(radius: 5)
-        guard let text = warranty?.warrantyStart else { return }
+        guard let text = viewModel?.warranty.warrantyStart else { return }
         warrantyStatus.text = "Couvert jusqu'au\n\(formatter1.string(from: text))"
         warrantyStatus.textAlignment = .center
         warrantyStatus.numberOfLines = 2
@@ -169,24 +167,27 @@ extension WarrantyDetailsViewController {
     }
     
     private func configureDeleteWarrantyButton() {
-        deleteWarrantyButton.titleLabel?.text = "Supprimer la garantie"
+        deleteWarrantyButton.setTitle("Supprimer la garantie", for: .normal)
         deleteWarrantyButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
-        deleteWarrantyButton.titleLabel?.textColor = .red
-        deleteWarrantyButton.backgroundColor = .yellow
+        deleteWarrantyButton.setTitleColor(.white, for: .normal)
+        deleteWarrantyButton.backgroundColor = .red
+        deleteWarrantyButton.roundingViewCorners(radius: 8)
+        deleteWarrantyButton.addTarget(self, action: #selector(deleteWarranty), for: .touchUpInside)
         deleteWarrantyButton.translatesAutoresizingMaskIntoConstraints = false
     }
     
     private func activateConstraints() {
         NSLayoutConstraint.activate([
-           // parentStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            parentStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             parentStackView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            parentStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
-            parentStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
+          //  parentStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
+          //  parentStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
             
             productImageView.heightAnchor.constraint(equalToConstant: 110),
             productImageView.widthAnchor.constraint(equalToConstant: 110),
             
-            notes.heightAnchor.constraint(equalToConstant: 140)
+            notes.heightAnchor.constraint(equalToConstant: 140),
+            notes.widthAnchor.constraint(equalToConstant: 250)
         ])
     }
 }

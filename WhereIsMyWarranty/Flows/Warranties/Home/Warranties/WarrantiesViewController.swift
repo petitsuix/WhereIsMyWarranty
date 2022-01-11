@@ -31,7 +31,7 @@ class WarrantiesViewController: UIViewController {
     private var warrantiesCollectionView: UICollectionView!
     
     private let navBarAppearance = UINavigationBarAppearance()
-    private let addWarrantyButton = UIButton()
+    private let newWarrantyButton = UIButton()
     private let addCategoryButton = UIButton()
     private let categoriesStackView = UIStackView()
     private let bottomBorder = UIView()
@@ -99,7 +99,7 @@ class WarrantiesViewController: UIViewController {
         viewState = .showData
     }
     
-    @objc func addWarrantyButtonAction() {
+    @objc func newWarrantyButtonAction() {
         viewModel?.showNewWarrantyScreen()
         // coordinator?.showNewWarrantiesScreenFor(category: "MA SUPER CATEGORY")
     }
@@ -221,12 +221,12 @@ extension WarrantiesViewController {
     }
     
     private func configureAddWarrantyButton() {
-        addWarrantyButton.translatesAutoresizingMaskIntoConstraints = false
-        addWarrantyButton.setImage(UIImage(systemName: "plus.circle.fill", withConfiguration: UIImage.SymbolConfiguration(pointSize: 38, weight: .light, scale: .small)), for: .normal)
-        addWarrantyButton.tintColor = MWColor.bluegrey
-        view.addSubview(addWarrantyButton)
-        addWarrantyButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        addWarrantyButton.addTarget(self, action: #selector(addWarrantyButtonAction), for: .touchUpInside)
+        newWarrantyButton.translatesAutoresizingMaskIntoConstraints = false
+        newWarrantyButton.setImage(UIImage(systemName: "plus.circle.fill", withConfiguration: UIImage.SymbolConfiguration(pointSize: 38, weight: .light, scale: .small)), for: .normal)
+        newWarrantyButton.tintColor = MWColor.bluegrey
+        view.addSubview(newWarrantyButton)
+        newWarrantyButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        newWarrantyButton.addTarget(self, action: #selector(newWarrantyButtonAction), for: .touchUpInside)
     }
     
     // MARK: Constraints
@@ -241,9 +241,9 @@ extension WarrantiesViewController {
             categoriesStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
             categoriesStackView.heightAnchor.constraint(equalToConstant: 60),
             
-            addWarrantyButton.bottomAnchor.constraint(equalToSystemSpacingBelow: view.safeAreaLayoutGuide.bottomAnchor, multiplier: 0),
-            addWarrantyButton.heightAnchor.constraint(equalToConstant: 50),
-            addWarrantyButton.widthAnchor.constraint(equalToConstant: 50),
+            newWarrantyButton.bottomAnchor.constraint(equalToSystemSpacingBelow: view.safeAreaLayoutGuide.bottomAnchor, multiplier: 0),
+            newWarrantyButton.heightAnchor.constraint(equalToConstant: 50),
+            newWarrantyButton.widthAnchor.constraint(equalToConstant: 50),
             
             bottomBorder.heightAnchor.constraint(equalToConstant: 0.4),
             bottomBorder.leadingAnchor.constraint(equalToSystemSpacingAfter: view.leadingAnchor, multiplier: 0),

@@ -17,7 +17,15 @@ class TextWithStepperView: UIView {
     var timeUnitTitle = UILabel()
     var timeUnitType = String()
     
-    var stepper = UIStepper()
+    var stepper = UIStepper() {
+        didSet {
+            didIncrementStepper = stepper.value > oldValue.value ? true : false
+        
+        }
+    }
+    
+    var didIncrementStepper: Bool = false
+    
     
     var timeUnitAmount = UILabel()
     

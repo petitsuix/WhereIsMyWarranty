@@ -13,14 +13,27 @@ class WarrantyDetailsViewModel {
     private let coordinator: WarrantiesCoordinator
     private let storageService: StorageService
     
-    init(coordinator: WarrantiesCoordinator, storageService: StorageService) {
+    init(coordinator: WarrantiesCoordinator, storageService: StorageService, warranty: Warranty) {
         self.coordinator = coordinator
         self.storageService = storageService
+        self.warranty = warranty
     }
     
-    var warranty: Warranty? {
-        didSet {
-            
+    var warranty: Warranty
+    
+    func deleteWarranty() {
+        do {
+           try storageService.deleteWarranty(warranty)
         }
+        catch {
+            print(error)
+        }
+        
     }
+    
+//    var warranty: Warranty? {
+//        didSet {
+//            
+//        }
+//    }
 }

@@ -34,8 +34,15 @@ class NewWarrantyViewModel: NSObject {
         self.storageService = storageService
     }
     
-    func backToHome() {
-        coordinator.backToHome()// ne pas passer entre controleurs
+    func notifyWarrantiesListUpdated() {
+        let notificationName = NSNotification.Name(rawValue: "warranties list updated")
+        let notification = Notification(name: notificationName)
+        NotificationCenter.default.post(notification)
+    }
+    
+    func warrantySaved() {
+        coordinator.warrantySaved()// ne pas passer entre controleurs
+        
     }
     
     func nextStep() {
@@ -47,10 +54,11 @@ class NewWarrantyViewModel: NSObject {
         print("je suis dans saveWarranty")
         let newWarranty = Warranty(context: storageService.viewContext)
         newWarranty.name = viewDelegate?.nameField.text
-        newWarranty.warrantyStart = viewDelegate?.startDatePicker.date
-       // newWarranty.invoicePhoto = stepTwoViewDelegate?.imageView
+        newWarranty.warrantyStart = viewDelegate?.datePicker.date
+        
+        let imageAsData = stepTwoViewDelegate?.imageView.image?.pngData()
+        newWarranty.invoicePhoto = imageAsData
         storageService.save()
-        backToHome()
+        warrantySaved()
     }
-    
 }
