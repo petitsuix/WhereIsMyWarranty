@@ -7,11 +7,11 @@
 
 import UIKit
 
-class NewWarrantyViewController: UIViewController {
+class NewWarrantyProductInfoViewController: UIViewController {
     
     // MARK: - Properties
     
-    var category: String?
+    // var category: String?
     
     // 1
     var parentStackView = UIStackView()
@@ -43,24 +43,22 @@ class NewWarrantyViewController: UIViewController {
     let endDateLabel = UILabel()
     
     
-   
+    
     
     var nextStepButton = UIButton()
     
-   // var warranties: [Warranty] = []
+    // var warranties: [Warranty] = []
     var viewModel: NewWarrantyViewModel?
     
     
     var endDateDefaultText = "Produit sous garantie jusqu'au :\n"
     var newDate: Date?
-    var endDateCalendar: Calendar?
     
     // MARK: - View life cycle methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
-        endDateCalendar = datePicker.calendar
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -83,73 +81,107 @@ class NewWarrantyViewController: UIViewController {
     }
     
     // Si on veut recalculer a partir d'une nouvelle date du picker sans que ça remette à zéro les steppers. Et donc se baser sur la nouvelle date du picker avec les memes valeurs de steppers.
-  /*  @objc func updateStartDateValue() {
-        startDateCalendar = datePicker.calendar
-        updateDays()
-        updateMonths()
-        updateYears()
-    } */
-    
     @objc func updateStartDateValue() {
-        weeksView.stepper.value = 0
-        weeksView.timeUnitAmount.text = "0"
-        monthsView.stepper.value = 0
-        monthsView.timeUnitAmount.text = "0"
-        yearsView.stepper.value = 0
-        yearsView.timeUnitAmount.text = "0"
-        endDateLabel.text = endDateDefaultText
-        endDateCalendar = datePicker.calendar
+        newDate = datePicker.date
+        if weeksView.timeUnitAmount.text != "0" {
+            updateDaysAfterDatePickerChanged()
+        }
+        if monthsView.timeUnitAmount.text != "0" {
+            updateMonthsAfterDatePickerChanged()
+        }
+        if yearsView.timeUnitAmount.text != "0" {
+            updateYearsAfterDatePickerChanged()
+        }
     }
+    
+    func updateDaysAfterDatePickerChanged() {
+       let formatter1 = DateFormatter()
+       formatter1.dateStyle = .full
+        guard let timeUnitAmount = weeksView.timeUnitAmount.text else { return }
+        guard let timeUnitAmountAsInt = Int(timeUnitAmount) else { return }
+        newDate = newDate?.adding(.day, value: timeUnitAmountAsInt * 7)
+       // newDate = endDateCalendar?.date(byAdding: .day, value: Int(weeksView.stepper.value * 7), to: datePicker.date)
+       guard let safeNewDate = newDate else { return }
+       endDateLabel.text = endDateDefaultText + formatter1.string(from: safeNewDate)
+       newDate = safeNewDate
+   }
+    
+    func updateMonthsAfterDatePickerChanged() {
+       let formatter1 = DateFormatter()
+       formatter1.dateStyle = .full
+        guard let timeUnitAmount = monthsView.timeUnitAmount.text else { return }
+        guard let timeUnitAmountAsInt = Int(timeUnitAmount) else { return }
+        newDate = newDate?.adding(.month, value: timeUnitAmountAsInt)
+       // newDate = endDateCalendar?.date(byAdding: .day, value: Int(weeksView.stepper.value * 7), to: datePicker.date)
+       guard let safeNewDate = newDate else { return }
+       endDateLabel.text = endDateDefaultText + formatter1.string(from: safeNewDate)
+       newDate = safeNewDate
+   }
+    
+    func updateYearsAfterDatePickerChanged() {
+       let formatter1 = DateFormatter()
+       formatter1.dateStyle = .full
+        guard let timeUnitAmount = yearsView.timeUnitAmount.text else { return }
+        guard let timeUnitAmountAsInt = Int(timeUnitAmount) else { return }
+        newDate = newDate?.adding(.year, value: timeUnitAmountAsInt)
+       // newDate = endDateCalendar?.date(byAdding: .day, value: Int(weeksView.stepper.value * 7), to: datePicker.date)
+       guard let safeNewDate = newDate else { return }
+       endDateLabel.text = endDateDefaultText + formatter1.string(from: safeNewDate)
+       newDate = safeNewDate
+   }
+    
+    //    @objc func updateStartDateValue() {
+    //        weeksView.stepper.value = 0
+    //        weeksView.timeUnitAmount.text = "0"
+    //        monthsView.stepper.value = 0
+    //        monthsView.timeUnitAmount.text = "0"
+    //        yearsView.stepper.value = 0
+    //        yearsView.timeUnitAmount.text = "0"
+    //        endDateLabel.text = endDateDefaultText
+    //        startDateCalendar = datePicker.calendar
+    //    }
     
     @objc func updateDays() {
         if newDate == nil {
-             newDate = datePicker.date
+            newDate = datePicker.date
         }
         let formatter1 = DateFormatter()
         formatter1.dateStyle = .full
-        newDate = newDate?.adding(.day, value: Int(weeksView.stepper.value * 7))
+        
+        newDate = newDate?.adding(.day, value: (weeksView.didIncrementStepper ? 7 : -7))
         // newDate = endDateCalendar?.date(byAdding: .day, value: Int(weeksView.stepper.value * 7), to: datePicker.date)
         guard let safeNewDate = newDate else { return }
-        
         endDateLabel.text = endDateDefaultText + formatter1.string(from: safeNewDate)
         newDate = safeNewDate
     }
     
     @objc func updateMonths() {
         if newDate == nil {
-             newDate = datePicker.date
+            newDate = datePicker.date
         }
         let formatter1 = DateFormatter()
         formatter1.dateStyle = .full
-        
-        newDate = newDate?.adding(.month, value: Int(monthsView.stepper.value))
+        newDate = newDate?.adding(.month, value: (monthsView.didIncrementStepper ? 1 : -1))
         guard let safeNewDate = newDate else { return }
-        
         endDateLabel.text = endDateDefaultText + formatter1.string(from: safeNewDate)
         newDate = safeNewDate
     }
     
-    var didIncrement: Bool {
-        didSet {
-    }
     @objc func updateYears() {
         if newDate == nil {
-             newDate = datePicker.date
+            newDate = datePicker.date
         }
         let formatter1 = DateFormatter()
         formatter1.dateStyle = .full
-        
-        let value = yearsView.stepper.value
-        
-        newDate = newDate?.adding(.year, value: Int(yearsView.stepper.value))
+        newDate = newDate?.adding(.year, value: (yearsView.didIncrementStepper ? 1 : -1))
         guard let safeNewDate = newDate else { return }
-        
         endDateLabel.text = endDateDefaultText + formatter1.string(from: safeNewDate)
         newDate = safeNewDate
     }
 }
 
-extension NewWarrantyViewController {
+
+extension NewWarrantyProductInfoViewController {
     
     func canGoToNextStep(canSave: Bool) { // pour checker que les champs soient pas vides ?
         nextStepButton.isEnabled = canSave
@@ -159,7 +191,7 @@ extension NewWarrantyViewController {
 
 // MARK: - View configuration
 
-extension NewWarrantyViewController {
+extension NewWarrantyProductInfoViewController {
     
     func setupView() {
         view.backgroundColor = .white
@@ -243,15 +275,17 @@ extension NewWarrantyViewController {
         validityLengthTitle.translatesAutoresizingMaskIntoConstraints = false
         
         yearsView.timeUnitTitle.text = "années"
-        yearsView.stepper.addTarget(self, action: #selector(stepperChanged), for: .valueChanged)
+        yearsView.stepper.addTarget(self, action: #selector(updateYears), for: .valueChanged)
+        //  yearsView.stepper.addTarget(self, action: #selector(updateYears), for: .valueChanged)
+        
         yearsView.translatesAutoresizingMaskIntoConstraints = false
         
         monthsView.timeUnitTitle.text = "mois"
-        monthsView.stepper.addTarget(self, action: #selector(updateMonths), for: .touchUpInside)
+        monthsView.stepper.addTarget(self, action: #selector(updateMonths), for: .valueChanged)
         monthsView.translatesAutoresizingMaskIntoConstraints = false
         
         weeksView.timeUnitTitle.text = "semaines"
-        weeksView.stepper.addTarget(self, action: #selector(updateDays), for: .touchUpInside)
+        weeksView.stepper.addTarget(self, action: #selector(updateDays), for: .valueChanged)
         weeksView.translatesAutoresizingMaskIntoConstraints = false
         
         configureLifetimeWarrantyStackView()
@@ -263,10 +297,9 @@ extension NewWarrantyViewController {
         customLengthStackView.addArrangedSubview(weeksView)
     }
     
-    @objc
-    func stepperChanged(_ stepper: UIStepper) {
-        print(stepper.value)
-    }
+    //    @objc func stepperChanged(_ stepper: UIStepper) {
+    //        print(stepper.value)
+    //    }
     
     func configureLifetimeWarrantyStackView() {
         lifetimeWarrantyStackView.axis = .horizontal
@@ -314,6 +347,7 @@ extension NewWarrantyViewController {
         ])
     }
 }
+
 
 extension Date {
     var calendar: Calendar {

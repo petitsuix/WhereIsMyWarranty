@@ -17,15 +17,15 @@ class TextWithStepperView: UIView {
     var timeUnitTitle = UILabel()
     var timeUnitType = String()
     
-    var stepper = UIStepper() {
-        didSet {
-            didIncrementStepper = stepper.value > oldValue.value ? true : false
-        
-        }
-    }
+    var stepper = UIStepper()
     
     var didIncrementStepper: Bool = false
     
+    private var stepperValue: Double = 0 {
+        didSet {
+            didIncrementStepper = stepperValue > oldValue ? true : false
+        }
+    }
     
     var timeUnitAmount = UILabel()
     
@@ -34,6 +34,7 @@ class TextWithStepperView: UIView {
     @objc func updateTimeUnitAmount(_ sender: UIStepper) {
         print("UIStepper is now \(Int(sender.value))")
         timeUnitAmount.text = String(sender.value.shortDigitsIn(0))
+        stepperValue = sender.value
     }
     
     // MARK: - Methods

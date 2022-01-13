@@ -31,8 +31,8 @@ class WarrantiesCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         contentView.backgroundColor = .white
-        contentView.layer.borderColor = #colorLiteral(red: 0.9529626966, green: 0.7530050874, blue: 0.6343111992, alpha: 1)
-        contentView.layer.borderWidth = 3
+        contentView.layer.borderColor = MWColor.bluegrey.cgColor
+        contentView.layer.borderWidth = 1.7
         roundingCellCorners(radius: 10)
         addShadow()
         configureImageView()
@@ -50,8 +50,8 @@ class WarrantiesCell: UICollectionViewCell {
     }
     
     func configureImageView() {
-        let image = UIImage(named: "Launchscreen")
-        warrantyProductImageView.image = image
+//        let image = UIImage(named: "Launchscreen")
+//        warrantyProductImageView.image = image
         warrantyProductImageView.translatesAutoresizingMaskIntoConstraints = false
         warrantyProductImageView.roundingViewCorners(radius: 10)
         warrantyProductImageView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMinXMaxYCorner] // to round specific corners (top left and bottom left)
@@ -63,13 +63,12 @@ class WarrantiesCell: UICollectionViewCell {
         infoStackView.translatesAutoresizingMaskIntoConstraints = false
         infoStackView.spacing = 8
         
-        warrantyName.font = UIFont.boldSystemFont(ofSize: 18.5)
+        warrantyName.font = UIFont.boldSystemFont(ofSize: 20)
         warrantyName.translatesAutoresizingMaskIntoConstraints = false
         
         sellersNameAndLocation.text = "Apple Store" + ", " + "Lyon"
         sellersNameAndLocation.translatesAutoresizingMaskIntoConstraints = false
         
-        remainingTime.text = "178 jours restants"
         remainingTime.translatesAutoresizingMaskIntoConstraints = false
         
         warrantyEnd.translatesAutoresizingMaskIntoConstraints = false
@@ -85,24 +84,41 @@ class WarrantiesCell: UICollectionViewCell {
     func refreshWarrantyData() {
         let formatter1 = DateFormatter()
         formatter1.dateStyle = .short
-        guard let warrantyStart = warranty?.warrantyStart else { return }
         warrantyName.text = warranty?.name
-        warrantyEnd.text = formatter1.string(from: warrantyStart)
+        guard let warrantyEndDate = warranty?.warrantyEnd else { return }
+        warrantyEnd.text = "Garanti jusqu'au \(formatter1.string(from: warrantyEndDate))"
+        guard let invoicePhoto = warranty?.invoicePhoto else { return }
+        warrantyProductImageView.image = UIImage(data: invoicePhoto)
+        remainingTime.text = getRemainingTimeFromEndDate() + " jours restants"
+    }
+    
+    func getRemainingTimeFromEndDate() -> String {
+        let calendar = NSCalendar.current
+
+        // Replace the hour (time) of both dates with 00:00
+        guard let warrantyEnd = warranty?.warrantyEnd else { return "000" }
+        let date1 = calendar.startOfDay(for: Date())
+        let date2 = calendar.startOfDay(for: warrantyEnd)
+
+        let components = calendar.dateComponents([.day], from: date1, to: date2)
+        guard let remainingDays = components.day else { return "000" }
+        return String("\(remainingDays)")
+      //  remainingTime.text = components
     }
     
     // MARK: - Constraints setup
     
     func activateConstraints() {
         NSLayoutConstraint.activate([
-            warrantyProductImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 0),
-            warrantyProductImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 0),
-            warrantyProductImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 0),
+            warrantyProductImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0),
+            warrantyProductImageView.topAnchor.constraint(equalTo: topAnchor, constant: 0),
+            warrantyProductImageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0),
             warrantyProductImageView.widthAnchor.constraint(equalTo: warrantyProductImageView.heightAnchor),
             
             infoStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 4),
             infoStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
           //  infoStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
-            infoStackView.leadingAnchor.constraint(equalTo: warrantyProductImageView.trailingAnchor, constant: 8),
+            infoStackView.leadingAnchor.constraint(equalTo: warrantyProductImageView.trailingAnchor, constant: 16),
             
             warrantyName.heightAnchor.constraint(equalToConstant: 40)
         ])

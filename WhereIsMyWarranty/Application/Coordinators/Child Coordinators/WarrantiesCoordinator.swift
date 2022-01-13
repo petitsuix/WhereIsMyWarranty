@@ -49,7 +49,7 @@ class WarrantiesCoordinator: Coordinator {
     //    }
     
     func showAddNewWarrantyScreen() {
-        let newWarrantyViewController = NewWarrantyViewController()
+        let newWarrantyViewController = NewWarrantyProductInfoViewController()
         let viewModel = NewWarrantyViewModel(coordinator: self, storageService: storageService)
         viewModel.viewDelegate = newWarrantyViewController
         self.newWarrantyViewModel = viewModel
@@ -62,7 +62,7 @@ class WarrantiesCoordinator: Coordinator {
     }
     
     func showNextStepNewWarrantyScreen() {
-        let newWarrantyStepTwoViewController = NewWarrantyStepTwoViewController()
+        let newWarrantyStepTwoViewController = NewWarrantyPhotoViewController()
         self.newWarrantyViewModel?.stepTwoViewDelegate = newWarrantyStepTwoViewController
         newWarrantyStepTwoViewController.viewModel = newWarrantyViewModel
         modalNavigationController.pushViewController(newWarrantyStepTwoViewController, animated: true)

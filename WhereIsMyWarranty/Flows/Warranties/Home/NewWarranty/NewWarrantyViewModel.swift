@@ -11,8 +11,8 @@ class NewWarrantyViewModel: NSObject {
     
     // MARK: - Properties
     
-    weak var viewDelegate: NewWarrantyViewController?
-    weak var stepTwoViewDelegate: NewWarrantyStepTwoViewController?
+    weak var viewDelegate: NewWarrantyProductInfoViewController?
+    weak var stepTwoViewDelegate: NewWarrantyPhotoViewController?
     let coordinator: WarrantiesCoordinator
     let storageService: StorageService
     
@@ -55,7 +55,7 @@ class NewWarrantyViewModel: NSObject {
         let newWarranty = Warranty(context: storageService.viewContext)
         newWarranty.name = viewDelegate?.nameField.text
         newWarranty.warrantyStart = viewDelegate?.datePicker.date
-        
+        newWarranty.warrantyEnd = viewDelegate?.newDate
         let imageAsData = stepTwoViewDelegate?.imageView.image?.pngData()
         newWarranty.invoicePhoto = imageAsData
         storageService.save()

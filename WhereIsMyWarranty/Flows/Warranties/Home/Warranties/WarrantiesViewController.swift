@@ -308,6 +308,11 @@ extension WarrantiesViewController: UICollectionViewDataSource, UICollectionView
         // displayWarrantiesFor(selectedCategory)
     }
     
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+//
+//        return CGSize(width: view.frame.size.width-50, height: .)
+//     }
+//
     /* func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
      let categoryCell = TopCategoriesCell()
      if collectionView == categoriesCollectionView {

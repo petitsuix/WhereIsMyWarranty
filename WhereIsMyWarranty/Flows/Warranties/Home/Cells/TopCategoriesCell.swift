@@ -37,7 +37,6 @@ class TopCategoriesCell: UICollectionViewCell {
         titleLabel.textAlignment = .center
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         roundingCellCorners(radius: 15)
-        backgroundColor = .orange
         contentView.addSubview(titleLabel)
         activateConstraints()
     }

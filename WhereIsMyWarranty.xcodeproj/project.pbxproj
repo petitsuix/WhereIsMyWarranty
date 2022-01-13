@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		970D86A3278F30FD00216ED7 /* ResizeImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 970D86A2278F30FD00216ED7 /* ResizeImage.swift */; };
 		971AE69A277B382D00C970E3 /* TextWithStepperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 971AE699277B382D00C970E3 /* TextWithStepperView.swift */; };
 		97630447275A68B200688DDB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97630446275A68B200688DDB /* AppDelegate.swift */; };
 		97630449275A68B200688DDB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97630448275A68B200688DDB /* SceneDelegate.swift */; };
@@ -31,7 +32,7 @@
 		976304B4275A6F4E00688DDB /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976304B3275A6F4E00688DDB /* SettingsViewController.swift */; };
 		976304B6275E38A300688DDB /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976304B5275E38A300688DDB /* Coordinator.swift */; };
 		976304B8275E396300688DDB /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976304B7275E396300688DDB /* AppCoordinator.swift */; };
-		976304BA275F80B900688DDB /* NewWarrantyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976304B9275F80B900688DDB /* NewWarrantyViewController.swift */; };
+		976304BA275F80B900688DDB /* NewWarrantyProductInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976304B9275F80B900688DDB /* NewWarrantyProductInfoViewController.swift */; };
 		976304BE2762454D00688DDB /* MWAppearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976304BD2762454D00688DDB /* MWAppearance.swift */; };
 		976304C0276365F700688DDB /* WarrantiesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976304BF276365F700688DDB /* WarrantiesViewModel.swift */; };
 		976304C2276393CF00688DDB /* WarrantiesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976304C1276393CF00688DDB /* WarrantiesCell.swift */; };
@@ -46,7 +47,7 @@
 		97ECFC22277CAB8A00CA973D /* WarrantyDetailsSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97ECFC21277CAB8A00CA973D /* WarrantyDetailsSectionView.swift */; };
 		97ECFC24277DD93600CA973D /* BottomBorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97ECFC23277DD93600CA973D /* BottomBorder.swift */; };
 		97ECFC26277E014600CA973D /* TruncateDecimals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97ECFC25277E014600CA973D /* TruncateDecimals.swift */; };
-		97ECFC28277E235600CA973D /* NewWarrantyStepTwoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97ECFC27277E235600CA973D /* NewWarrantyStepTwoViewController.swift */; };
+		97ECFC28277E235600CA973D /* NewWarrantyPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97ECFC27277E235600CA973D /* NewWarrantyPhotoViewController.swift */; };
 		97ECFC2A27834E9500CA973D /* arrangeButtonsImageAndText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97ECFC2927834E9500CA973D /* arrangeButtonsImageAndText.swift */; };
 		97ECFC3127870C4100CA973D /* AddDoneButtonToKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97ECFC3027870C4100CA973D /* AddDoneButtonToKeyboard.swift */; };
 		97F1D3052773448D00D0C52C /* WarrantyDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F1D3042773448D00D0C52C /* WarrantyDetailsViewController.swift */; };
@@ -92,6 +93,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		970D86A2278F30FD00216ED7 /* ResizeImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResizeImage.swift; sourceTree = "<group>"; };
 		971AE699277B382D00C970E3 /* TextWithStepperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextWithStepperView.swift; sourceTree = "<group>"; };
 		97630443275A68B200688DDB /* WhereIsMyWarranty.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WhereIsMyWarranty.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		97630446275A68B200688DDB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -121,7 +123,7 @@
 		976304B3275A6F4E00688DDB /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		976304B5275E38A300688DDB /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		976304B7275E396300688DDB /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
-		976304B9275F80B900688DDB /* NewWarrantyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWarrantyViewController.swift; sourceTree = "<group>"; };
+		976304B9275F80B900688DDB /* NewWarrantyProductInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWarrantyProductInfoViewController.swift; sourceTree = "<group>"; };
 		976304BD2762454D00688DDB /* MWAppearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWAppearance.swift; sourceTree = "<group>"; };
 		976304BF276365F700688DDB /* WarrantiesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarrantiesViewModel.swift; sourceTree = "<group>"; };
 		976304C1276393CF00688DDB /* WarrantiesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarrantiesCell.swift; sourceTree = "<group>"; };
@@ -136,7 +138,7 @@
 		97ECFC21277CAB8A00CA973D /* WarrantyDetailsSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarrantyDetailsSectionView.swift; sourceTree = "<group>"; };
 		97ECFC23277DD93600CA973D /* BottomBorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomBorder.swift; sourceTree = "<group>"; };
 		97ECFC25277E014600CA973D /* TruncateDecimals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TruncateDecimals.swift; sourceTree = "<group>"; };
-		97ECFC27277E235600CA973D /* NewWarrantyStepTwoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWarrantyStepTwoViewController.swift; sourceTree = "<group>"; };
+		97ECFC27277E235600CA973D /* NewWarrantyPhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWarrantyPhotoViewController.swift; sourceTree = "<group>"; };
 		97ECFC2927834E9500CA973D /* arrangeButtonsImageAndText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = arrangeButtonsImageAndText.swift; sourceTree = "<group>"; };
 		97ECFC3027870C4100CA973D /* AddDoneButtonToKeyboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddDoneButtonToKeyboard.swift; sourceTree = "<group>"; };
 		97F1D3042773448D00D0C52C /* WarrantyDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarrantyDetailsViewController.swift; sourceTree = "<group>"; };
@@ -323,6 +325,7 @@
 				97ECFC25277E014600CA973D /* TruncateDecimals.swift */,
 				97ECFC2927834E9500CA973D /* arrangeButtonsImageAndText.swift */,
 				97ECFC3027870C4100CA973D /* AddDoneButtonToKeyboard.swift */,
+				970D86A2278F30FD00216ED7 /* ResizeImage.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -376,10 +379,10 @@
 		9769C958276A52AA00BAC736 /* NewWarranty */ = {
 			isa = PBXGroup;
 			children = (
-				976304B9275F80B900688DDB /* NewWarrantyViewController.swift */,
+				976304B9275F80B900688DDB /* NewWarrantyProductInfoViewController.swift */,
 				9769C956276A429900BAC736 /* NewWarrantyViewModel.swift */,
 				971AE699277B382D00C970E3 /* TextWithStepperView.swift */,
-				97ECFC27277E235600CA973D /* NewWarrantyStepTwoViewController.swift */,
+				97ECFC27277E235600CA973D /* NewWarrantyPhotoViewController.swift */,
 			);
 			path = NewWarranty;
 			sourceTree = "<group>";
@@ -618,9 +621,9 @@
 				976304B8275E396300688DDB /* AppCoordinator.swift in Sources */,
 				97630447275A68B200688DDB /* AppDelegate.swift in Sources */,
 				97F1D307277345F400D0C52C /* WarrantyDetailsViewModel.swift in Sources */,
-				976304BA275F80B900688DDB /* NewWarrantyViewController.swift in Sources */,
+				976304BA275F80B900688DDB /* NewWarrantyProductInfoViewController.swift in Sources */,
 				976304A4275A6EB100688DDB /* Strings.swift in Sources */,
-				97ECFC28277E235600CA973D /* NewWarrantyStepTwoViewController.swift in Sources */,
+				97ECFC28277E235600CA973D /* NewWarrantyPhotoViewController.swift in Sources */,
 				976304A9275A6ECC00688DDB /* MWImages.swift in Sources */,
 				976304B2275A6F4000688DDB /* TopCategoriesCell.swift in Sources */,
 				97ECFC2A27834E9500CA973D /* arrangeButtonsImageAndText.swift in Sources */,
@@ -633,6 +636,7 @@
 				976304A8275A6ECC00688DDB /* MWColor.swift in Sources */,
 				9763049E275A6C1E00688DDB /* CornerRadius.swift in Sources */,
 				976304B4275A6F4E00688DDB /* SettingsViewController.swift in Sources */,
+				970D86A3278F30FD00216ED7 /* ResizeImage.swift in Sources */,
 				976304A2275A6DAE00688DDB /* WarrantiesViewController.swift in Sources */,
 				976304AA275A6ECC00688DDB /* MWFont.swift in Sources */,
 				9769C955276A32C600BAC736 /* Alert.swift in Sources */,
@@ -838,6 +842,7 @@
 				DEVELOPMENT_TEAM = T4959W6459;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = WhereIsMyWarranty/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "$(PRODUCT_NAME) camera use";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -866,6 +871,7 @@
 				DEVELOPMENT_TEAM = T4959W6459;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = WhereIsMyWarranty/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "$(PRODUCT_NAME) camera use";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";

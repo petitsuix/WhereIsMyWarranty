@@ -7,7 +7,7 @@
 
 import UIKit
 
-class NewWarrantyStepTwoViewController: UIViewController {
+class NewWarrantyPhotoViewController: UIViewController {
     
     // MARK: - Properties
     
@@ -62,6 +62,8 @@ class NewWarrantyStepTwoViewController: UIViewController {
         
         imageView.layer.borderWidth = 1
         imageView.layer.borderColor = UIColor.label.cgColor
+        imageView.contentMode = .scaleAspectFill
+        imageView.layer.masksToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
         
         
@@ -111,7 +113,7 @@ class NewWarrantyStepTwoViewController: UIViewController {
             imagePicker.sourceType = UIImagePickerController.SourceType.photoLibrary
             self.present(imagePicker, animated: true, completion: nil)
         } else {
-            let alert  = UIAlertController(title: "Warning", message: "You don't have permission to access gallery.", preferredStyle: .alert)
+            let alert  = UIAlertController(title: "Oups...", message: "Impossible d'accéder à la galerie", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
             self.present(alert, animated: true, completion: nil)
         }
@@ -125,7 +127,7 @@ class NewWarrantyStepTwoViewController: UIViewController {
             imagePicker.allowsEditing = false
             self.present(imagePicker, animated: true, completion: nil)
         } else {
-            let alert  = UIAlertController(title: "Warning", message: "There is no camera", preferredStyle: .alert)
+            let alert  = UIAlertController(title: "Oups...", message: "Aucune caméra détectée !", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
             self.present(alert, animated: true, completion: nil)
         }
@@ -135,8 +137,7 @@ class NewWarrantyStepTwoViewController: UIViewController {
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         let selectedImage = info[.originalImage] as? UIImage
-        imageView.image = selectedImage
-        imageView.contentMode = .redraw
+        imageView.image = selectedImage?.resized(to: CGSize(width: 250, height: 320))
         picker.dismiss(animated: true, completion: nil)
     }
     
@@ -150,9 +151,9 @@ class NewWarrantyStepTwoViewController: UIViewController {
     func activateConstraints() {
         NSLayoutConstraint.activate([
             parentStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 32),
-            parentStackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 80),
-            parentStackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -80),
+            parentStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             
+            imageView.widthAnchor.constraint(equalToConstant: 250),
             imageView.heightAnchor.constraint(equalToConstant: 320),
             
             saveButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -177,6 +178,6 @@ class NewWarrantyStepTwoViewController: UIViewController {
     
 }
 
-extension NewWarrantyStepTwoViewController: UIImagePickerControllerDelegate & UINavigationControllerDelegate {
+extension NewWarrantyPhotoViewController: UIImagePickerControllerDelegate & UINavigationControllerDelegate {
     
 }
