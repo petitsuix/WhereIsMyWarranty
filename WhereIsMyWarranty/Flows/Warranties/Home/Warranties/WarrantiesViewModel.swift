@@ -41,7 +41,7 @@ class WarrantiesViewModel: NSObject {
     }
     
     func showNewWarrantyScreen() {
-        coordinator.showAddNewWarrantyScreen()
+        coordinator.showNewWarrantyProductInfoScreen()
     }
     
     func showWarrantyDetailsScreen(warranty: Warranty) {

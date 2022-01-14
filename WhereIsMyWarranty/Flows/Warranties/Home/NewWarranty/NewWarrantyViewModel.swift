@@ -23,6 +23,10 @@ class NewWarrantyViewModel: NSObject {
         }
     }
     
+    var startDate: Date?
+    var endDate: Date?
+    var invoicePhoto: Data?
+    
     var canSaveWarranty: Bool {
         return name?.isEmpty == false
     }
@@ -46,18 +50,16 @@ class NewWarrantyViewModel: NSObject {
     }
     
     func nextStep() {
-        coordinator.showNextStepNewWarrantyScreen()
+        coordinator.showNewWarrantyPhotoScreen()
     }
     
     // FIXME: pour que ce soit clean, peut être rajouter un loading icon sur le button
     func saveWarranty() {
-        print("je suis dans saveWarranty")
         let newWarranty = Warranty(context: storageService.viewContext)
-        newWarranty.name = viewDelegate?.nameField.text
-        newWarranty.warrantyStart = viewDelegate?.datePicker.date
-        newWarranty.warrantyEnd = viewDelegate?.newDate
-        let imageAsData = stepTwoViewDelegate?.imageView.image?.pngData()
-        newWarranty.invoicePhoto = imageAsData
+        newWarranty.name = name
+        newWarranty.warrantyStart = startDate
+        newWarranty.warrantyEnd = endDate
+        newWarranty.invoicePhoto = invoicePhoto
         storageService.save()
         warrantySaved()
     }

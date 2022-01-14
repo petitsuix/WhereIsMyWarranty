@@ -28,7 +28,10 @@ class WarrantyDetailsViewModel {
         catch {
             print(error)
         }
-        
+    }
+    
+    func editWarranty() {
+        coordinator.showEditWarrantyProductInfoScreen(warranty: warranty)
     }
     
 //    var warranty: Warranty? {

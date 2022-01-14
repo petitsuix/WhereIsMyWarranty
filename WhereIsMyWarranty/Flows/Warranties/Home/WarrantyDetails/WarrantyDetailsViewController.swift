@@ -27,6 +27,7 @@ class WarrantyDetailsViewController: UIViewController {
     let notesSectionTitle = UILabel()
     let notes = UITextView()
     
+    let editWarrantyButton = UIButton()
     let deleteWarrantyButton = UIButton()
     
     // MARK: - View life cycle methods
@@ -44,6 +45,10 @@ class WarrantyDetailsViewController: UIViewController {
     
     @objc func deleteWarranty() {
         viewModel?.deleteWarranty()
+    }
+    
+    @objc func editWarranty() {
+        viewModel?.editWarranty()
     }
 }
 
@@ -72,12 +77,14 @@ extension WarrantyDetailsViewController {
         configureNotesStackView()
         configureProductAndSellerInfoViews()
         configureNotesStackView()
+        configureEditWarrantyButton()
         configureDeleteWarrantyButton()
         
         parentStackView.addArrangedSubview(topStackView)
         parentStackView.addArrangedSubview(productInfo)
         // parentStackView.addArrangedSubview(sellersInfo)
         parentStackView.addArrangedSubview(notesStackView)
+        parentStackView.addArrangedSubview(editWarrantyButton)
         parentStackView.addArrangedSubview(deleteWarrantyButton)
         view.addSubview(parentStackView)
     }
@@ -102,23 +109,23 @@ extension WarrantyDetailsViewController {
     private func configureProductImageView() {
         guard let image = viewModel?.warranty.invoicePhoto else { return }
         productImageView.image = UIImage(data: image)
-        productImageView.roundingViewCorners(radius: 15)
-        productImageView.layer.borderWidth = 2
+        productImageView.roundingViewCorners(radius: 64)
+        productImageView.layer.borderWidth = 1.5
         productImageView.layer.borderColor = MWColor.bluegrey.cgColor
         productImageView.translatesAutoresizingMaskIntoConstraints = false
     }
     
     private func configureProductNameLabel() {
         productName.text = viewModel?.warranty.name
-        productName.font = UIFont.boldSystemFont(ofSize: 15)
+        productName.font = UIFont.boldSystemFont(ofSize: 20)
         productName.translatesAutoresizingMaskIntoConstraints = false
     }
     
     private func configureWarrantyStatus() {
         let formatter1 = DateFormatter()
-        formatter1.dateStyle = .short
+        formatter1.dateStyle = .full
         warrantyStatus.roundingViewCorners(radius: 5)
-        guard let text = viewModel?.warranty.warrantyStart else { return }
+        guard let text = viewModel?.warranty.warrantyEnd else { return }
         warrantyStatus.text = "Couvert jusqu'au\n\(formatter1.string(from: text))"
         warrantyStatus.textAlignment = .center
         warrantyStatus.numberOfLines = 2
@@ -166,6 +173,16 @@ extension WarrantyDetailsViewController {
         notesStackView.addArrangedSubview(notes)
     }
     
+    private func configureEditWarrantyButton() {
+        editWarrantyButton.setTitle("Modifier", for: .normal)
+        editWarrantyButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
+        editWarrantyButton.setTitleColor(.white, for: .normal)
+        editWarrantyButton.backgroundColor = MWColor.bluegrey
+        editWarrantyButton.roundingViewCorners(radius: 8)
+        editWarrantyButton.addTarget(self, action: #selector(editWarranty), for: .touchUpInside)
+        editWarrantyButton.translatesAutoresizingMaskIntoConstraints = false
+    }
+    
     private func configureDeleteWarrantyButton() {
         deleteWarrantyButton.setTitle("Supprimer la garantie", for: .normal)
         deleteWarrantyButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
@@ -183,8 +200,8 @@ extension WarrantyDetailsViewController {
           //  parentStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
           //  parentStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
             
-            productImageView.heightAnchor.constraint(equalToConstant: 110),
-            productImageView.widthAnchor.constraint(equalToConstant: 110),
+            productImageView.heightAnchor.constraint(equalToConstant: 130),
+            productImageView.widthAnchor.constraint(equalToConstant: 130),
             
             notes.heightAnchor.constraint(equalToConstant: 140),
             notes.widthAnchor.constraint(equalToConstant: 250)

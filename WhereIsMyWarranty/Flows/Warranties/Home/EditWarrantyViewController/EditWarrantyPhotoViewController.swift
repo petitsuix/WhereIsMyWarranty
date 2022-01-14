@@ -1,14 +1,14 @@
 //
-//  NewWarrantyStepTwoViewController.swift
+//  EditWarrantyPhotoViewController.swift
 //  WhereIsMyWarranty
 //
-//  Created by Richardier on 30/12/2021.
+//  Created by Richardier on 14/01/2022.
 //
 
 import UIKit
 
-class NewWarrantyPhotoViewController: UIViewController {
-    
+class EditWarrantyPhotoViewController: UIViewController {
+
     // MARK: - Properties
     
     let parentStackView = UIStackView()
@@ -183,6 +183,6 @@ class NewWarrantyPhotoViewController: UIViewController {
     
 }
 
-extension NewWarrantyPhotoViewController: UIImagePickerControllerDelegate & UINavigationControllerDelegate {
+extension EditWarrantyPhotoViewController: UIImagePickerControllerDelegate & UINavigationControllerDelegate {
     
 }

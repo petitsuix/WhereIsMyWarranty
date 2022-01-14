@@ -130,7 +130,7 @@ extension WarrantiesViewController {
     }
     
     private func configureNavigationBar() {
-        navBarAppearance.backgroundColor = #colorLiteral(red: 0.9285728335, green: 0.7623301148, blue: 0.6474828124, alpha: 1)
+        navBarAppearance.backgroundColor = MWColor.paleOrange
         navigationController?.navigationBar.standardAppearance = navBarAppearance
         navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
     }
@@ -221,12 +221,11 @@ extension WarrantiesViewController {
     }
     
     private func configureAddWarrantyButton() {
-        newWarrantyButton.translatesAutoresizingMaskIntoConstraints = false
         newWarrantyButton.setImage(UIImage(systemName: "plus.circle.fill", withConfiguration: UIImage.SymbolConfiguration(pointSize: 38, weight: .light, scale: .small)), for: .normal)
         newWarrantyButton.tintColor = MWColor.bluegrey
-        view.addSubview(newWarrantyButton)
-        newWarrantyButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         newWarrantyButton.addTarget(self, action: #selector(newWarrantyButtonAction), for: .touchUpInside)
+        newWarrantyButton.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(newWarrantyButton)
     }
     
     // MARK: Constraints
@@ -244,6 +243,7 @@ extension WarrantiesViewController {
             newWarrantyButton.bottomAnchor.constraint(equalToSystemSpacingBelow: view.safeAreaLayoutGuide.bottomAnchor, multiplier: 0),
             newWarrantyButton.heightAnchor.constraint(equalToConstant: 50),
             newWarrantyButton.widthAnchor.constraint(equalToConstant: 50),
+            newWarrantyButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             
             bottomBorder.heightAnchor.constraint(equalToConstant: 0.4),
             bottomBorder.leadingAnchor.constraint(equalToSystemSpacingAfter: view.leadingAnchor, multiplier: 0),

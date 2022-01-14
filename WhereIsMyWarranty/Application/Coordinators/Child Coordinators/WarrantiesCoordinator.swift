@@ -17,6 +17,7 @@ class WarrantiesCoordinator: Coordinator {
         return navigationController
     }
     var newWarrantyViewModel: NewWarrantyViewModel?
+    var editWarrantyViewModel: EditWarrantyViewModel?
     private var modalNavigationController: UINavigationController = UINavigationController()
     private let storageService: StorageService
     
@@ -48,7 +49,24 @@ class WarrantiesCoordinator: Coordinator {
     //        navigationController.present(modalNavigationController, animated: true, completion: nil)
     //    }
     
-    func showAddNewWarrantyScreen() {
+    func showEditWarrantyProductInfoScreen(warranty: Warranty) {
+        let editWarrantyProductInfoViewController = EditWarrantyProductInfoViewController()
+        let viewModel = EditWarrantyViewModel(coordinator: self, storageService: storageService, warranty: warranty)
+        viewModel.productInfoViewDelegate = editWarrantyProductInfoViewController
+        self.editWarrantyViewModel = viewModel
+        editWarrantyProductInfoViewController.viewModel = editWarrantyViewModel
+        editWarrantyProductInfoViewController.modalPresentationStyle = .popover
+        editWarrantyProductInfoViewController.modalTransitionStyle = .coverVertical
+        modalNavigationController = UINavigationController(rootViewController: editWarrantyProductInfoViewController)
+        navigationController.present(modalNavigationController, animated: true, completion: nil)
+    }
+    
+    func showEditWarrantyPhotoScreen() {
+        
+    }
+
+    
+    func showNewWarrantyProductInfoScreen() {
         let newWarrantyViewController = NewWarrantyProductInfoViewController()
         let viewModel = NewWarrantyViewModel(coordinator: self, storageService: storageService)
         viewModel.viewDelegate = newWarrantyViewController
@@ -61,7 +79,7 @@ class WarrantiesCoordinator: Coordinator {
 
     }
     
-    func showNextStepNewWarrantyScreen() {
+    func showNewWarrantyPhotoScreen() {
         let newWarrantyStepTwoViewController = NewWarrantyPhotoViewController()
         self.newWarrantyViewModel?.stepTwoViewDelegate = newWarrantyStepTwoViewController
         newWarrantyStepTwoViewController.viewModel = newWarrantyViewModel

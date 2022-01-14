@@ -1,14 +1,14 @@
 //
-//  NewWarrantyViewController.swift
+//  EditWarrantyViewController.swift
 //  WhereIsMyWarranty
 //
-//  Created by Richardier on 07/12/2021.
+//  Created by Richardier on 14/01/2022.
 //
 
 import UIKit
 
-class NewWarrantyProductInfoViewController: UIViewController {
-    
+class EditWarrantyProductInfoViewController: UIViewController {
+
     // MARK: - Properties
     
     // 1
@@ -42,7 +42,7 @@ class NewWarrantyProductInfoViewController: UIViewController {
     
     var nextStepButton = UIButton()
     
-    var viewModel: NewWarrantyViewModel?
+    var viewModel: EditWarrantyViewModel?
     
     
     var endDateDefaultText = "Produit sous garantie jusqu'au :\n"
@@ -179,7 +179,7 @@ class NewWarrantyProductInfoViewController: UIViewController {
     }
 }
 
-extension NewWarrantyProductInfoViewController {
+extension EditWarrantyProductInfoViewController {
     
     func canGoToNextStep(canSave: Bool) { // pour checker que les champs soient pas vides ?
         nextStepButton.isEnabled = canSave
@@ -188,7 +188,7 @@ extension NewWarrantyProductInfoViewController {
 
 // MARK: - View configuration
 
-extension NewWarrantyProductInfoViewController {
+extension EditWarrantyProductInfoViewController {
     
     func setupView() {
         view.backgroundColor = .white
@@ -231,6 +231,7 @@ extension NewWarrantyProductInfoViewController {
         nameTitle.textAlignment = .left
         nameTitle.translatesAutoresizingMaskIntoConstraints = false
         
+        nameField.text = viewModel?.warranty.name
         nameField.addTarget(self, action: #selector(nameTextfieldDidChange), for: .editingChanged)
         nameField.setBottomBorder()
         nameField.addDoneToolbar()
@@ -249,6 +250,8 @@ extension NewWarrantyProductInfoViewController {
         startDateTitle.textAlignment = .left
         startDateTitle.translatesAutoresizingMaskIntoConstraints = false
         
+        guard let warrantyStart = viewModel?.warranty.warrantyStart else { return }
+        datePicker.date = warrantyStart
         datePicker.datePickerMode = .date
         datePicker.addTarget(self, action: #selector(updateStartDateValue), for: .editingDidEnd)
         datePicker.translatesAutoresizingMaskIntoConstraints = false
@@ -271,6 +274,8 @@ extension NewWarrantyProductInfoViewController {
         validityLengthTitle.translatesAutoresizingMaskIntoConstraints = false
         
         yearsView.timeUnitTitle.text = "années"
+        // FIXME: IL VA FALLOIR SAUVEGARDER LES VALEURS DES STEPPERS DANS CORE DATA POUR RESSORTIR LA BONNE DATE DE FIN DE GARANTIE DANS EDIT :
+        yearsView.timeUnitAmount.text = viewModel?.warranty.
         yearsView.stepper.addTarget(self, action: #selector(updateYears), for: .valueChanged)
         yearsView.translatesAutoresizingMaskIntoConstraints = false
         
