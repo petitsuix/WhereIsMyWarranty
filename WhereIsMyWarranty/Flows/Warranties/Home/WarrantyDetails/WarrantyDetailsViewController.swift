@@ -34,6 +34,8 @@ class WarrantyDetailsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let notificationName = NSNotification.Name(rawValue: "warranty updated")
+        NotificationCenter.default.addObserver(self, selector: #selector(warrantyUpdated), name: notificationName, object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -42,6 +44,11 @@ class WarrantyDetailsViewController: UIViewController {
     }
     
     // MARK: - Methods
+    
+    @objc func warrantyUpdated() {
+        // FIXME: peut être au lieu de re-setup la view just pour refresh le controller, juste mettre à jour les textifields ?
+        setupView()
+    }
     
     @objc func deleteWarranty() {
         viewModel?.deleteWarranty()
@@ -83,7 +90,7 @@ extension WarrantyDetailsViewController {
         parentStackView.addArrangedSubview(topStackView)
         parentStackView.addArrangedSubview(productInfo)
         // parentStackView.addArrangedSubview(sellersInfo)
-        parentStackView.addArrangedSubview(notesStackView)
+        // parentStackView.addArrangedSubview(notesStackView)
         parentStackView.addArrangedSubview(editWarrantyButton)
         parentStackView.addArrangedSubview(deleteWarrantyButton)
         view.addSubview(parentStackView)

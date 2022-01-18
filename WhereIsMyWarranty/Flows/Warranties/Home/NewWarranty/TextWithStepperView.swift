@@ -17,7 +17,23 @@ class TextWithStepperView: UIView {
     var timeUnitTitle = UILabel()
     var timeUnitType = String()
     
+    var stepperAmount: Double = 0 {
+        didSet {
+            stepper.value = stepperAmount
+            stepperValue = stepperAmount
+        }
+    }
+    
+   // var stepperAction nice to have 
+    
+    // private
     var stepper = UIStepper()
+    
+    var slider = UISlider()
+    
+    func addTarget(_ target: Any?, action: Selector) {
+        stepper.addTarget(target, action: action, for: .valueChanged)
+    }
     
     var didIncrementStepper: Bool = false
     

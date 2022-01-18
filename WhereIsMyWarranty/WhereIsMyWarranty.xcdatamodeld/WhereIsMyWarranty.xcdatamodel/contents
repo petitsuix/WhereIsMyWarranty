@@ -11,6 +11,7 @@
         <attribute name="invoicePhoto" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES"/>
         <attribute name="lifetimeWarranty" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="model" optional="YES" attributeType="String"/>
+        <attribute name="monthsStepperValue" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="notes" optional="YES" attributeType="String"/>
         <attribute name="paymentMethod" optional="YES" attributeType="String"/>
@@ -23,9 +24,11 @@
         <attribute name="serialNumber" optional="YES" attributeType="String"/>
         <attribute name="warrantyEnd" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="warrantyStart" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="weeksStepperValue" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="yearsStepperValue" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
     </entity>
     <elements>
         <element name="Category" positionX="-63" positionY="-18" width="128" height="74"/>
-        <element name="Warranty" positionX="-54" positionY="18" width="128" height="284"/>
+        <element name="Warranty" positionX="-54" positionY="18" width="128" height="329"/>
     </elements>
 </model>

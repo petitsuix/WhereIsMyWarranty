@@ -53,6 +53,7 @@ class EditWarrantyProductInfoViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
+        updateStartDateValue()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -62,6 +63,10 @@ class EditWarrantyProductInfoViewController: UIViewController {
     
     // MARK: - Methods
     
+    func nameDidChange() {
+        viewModel?.name = nameField.text
+    }
+    
     func startDateDidChange() {
         viewModel?.startDate = datePicker.date
     }
@@ -70,12 +75,19 @@ class EditWarrantyProductInfoViewController: UIViewController {
         viewModel?.endDate = updatedDate
     }
     
+    func stepperValuesDidChange() {
+        viewModel?.yearsStepperValue = Int(yearsView.stepper.value)
+        viewModel?.monthsStepperValue = Int(monthsView.stepper.value)
+        viewModel?.weeksStepperValue = Int(weeksView.stepper.value)
+    }
+    
     // MARK: - objc methods
     
     @objc func nameTextfieldDidChange(textfield: UITextField) { // comment le controller communique avec le viewmodel
         viewModel?.name = textfield.text
     }
     
+    // In case the user changes the initial warranty start date in the date-picker, calling those 3 methods above will ensure that the endDate is re-calculated according to the stepper values that he already gave, if any.
     @objc func updateStartDateValue() {
         updatedDate = datePicker.date
         if weeksView.timeUnitAmount.text != "0" {
@@ -90,46 +102,16 @@ class EditWarrantyProductInfoViewController: UIViewController {
     }
     
     @objc func nextStep() {
+//        nameDidChange()
         startDateDidChange() // Calling this method here, only at the end when moving to nextStep. Not in start datePicker's action "updateStartDateValue", because it may never be called if the user doesn't interract with start datePicker.
+        stepperValuesDidChange()
         endDateDidChange()
         viewModel?.nextStep()
     }
     
     
     
-    func updateDaysAfterDatePickerChanged() {
-       let formatter1 = DateFormatter()
-       formatter1.dateStyle = .full
-        guard let timeUnitAmount = weeksView.timeUnitAmount.text else { return }
-        guard let timeUnitAmountAsInt = Int(timeUnitAmount) else { return }
-        updatedDate = updatedDate?.adding(.day, value: timeUnitAmountAsInt * 7)
-       // newDate = endDateCalendar?.date(byAdding: .day, value: Int(weeksView.stepper.value * 7), to: datePicker.date)
-       guard let safeNewDate = updatedDate else { return }
-       endDateLabel.text = endDateDefaultText + formatter1.string(from: safeNewDate)
-        updatedDate = safeNewDate
-   }
     
-    func updateMonthsAfterDatePickerChanged() {
-       let formatter1 = DateFormatter()
-       formatter1.dateStyle = .full
-        guard let timeUnitAmount = monthsView.timeUnitAmount.text else { return }
-        guard let timeUnitAmountAsInt = Int(timeUnitAmount) else { return }
-        updatedDate = updatedDate?.adding(.month, value: timeUnitAmountAsInt)
-       guard let safeNewDate = updatedDate else { return }
-       endDateLabel.text = endDateDefaultText + formatter1.string(from: safeNewDate)
-        updatedDate = safeNewDate
-   }
-    
-    func updateYearsAfterDatePickerChanged() {
-       let formatter1 = DateFormatter()
-       formatter1.dateStyle = .full
-        guard let timeUnitAmount = yearsView.timeUnitAmount.text else { return }
-        guard let timeUnitAmountAsInt = Int(timeUnitAmount) else { return }
-        updatedDate = updatedDate?.adding(.year, value: timeUnitAmountAsInt)
-       guard let safeNewDate = updatedDate else { return }
-       endDateLabel.text = endDateDefaultText + formatter1.string(from: safeNewDate)
-        updatedDate = safeNewDate
-   }
     
     //    @objc func updateStartDateValue() {
     //        weeksView.stepper.value = 0
@@ -142,7 +124,7 @@ class EditWarrantyProductInfoViewController: UIViewController {
     //        startDateCalendar = datePicker.calendar
     //    }
     
-    @objc func updateDays() {
+    @objc func updateWeeks() {
         if updatedDate == nil {
             updatedDate = datePicker.date
         }
@@ -177,6 +159,42 @@ class EditWarrantyProductInfoViewController: UIViewController {
         endDateLabel.text = endDateDefaultText + formatter1.string(from: safeNewDate)
         updatedDate = safeNewDate
     }
+    
+    // MARK: - Methods
+    
+    func updateDaysAfterDatePickerChanged() {
+       let formatter1 = DateFormatter()
+       formatter1.dateStyle = .full
+        guard let timeUnitAmount = weeksView.timeUnitAmount.text else { return }
+        guard let timeUnitAmountAsInt = Int(timeUnitAmount) else { return }
+        updatedDate = updatedDate?.adding(.day, value: timeUnitAmountAsInt * 7)
+       // newDate = endDateCalendar?.date(byAdding: .day, value: Int(weeksView.stepper.value * 7), to: datePicker.date)
+       guard let safeNewDate = updatedDate else { return }
+       endDateLabel.text = endDateDefaultText + formatter1.string(from: safeNewDate)
+        updatedDate = safeNewDate
+   }
+    
+    func updateMonthsAfterDatePickerChanged() {
+       let formatter1 = DateFormatter()
+       formatter1.dateStyle = .full
+        guard let timeUnitAmount = monthsView.timeUnitAmount.text else { return }
+        guard let timeUnitAmountAsInt = Int(timeUnitAmount) else { return }
+        updatedDate = updatedDate?.adding(.month, value: timeUnitAmountAsInt)
+       guard let safeNewDate = updatedDate else { return }
+       endDateLabel.text = endDateDefaultText + formatter1.string(from: safeNewDate)
+        updatedDate = safeNewDate
+   }
+    
+    func updateYearsAfterDatePickerChanged() {
+       let formatter1 = DateFormatter()
+       formatter1.dateStyle = .full
+        guard let timeUnitAmount = yearsView.timeUnitAmount.text else { return }
+        guard let timeUnitAmountAsInt = Int(timeUnitAmount) else { return }
+        updatedDate = updatedDate?.adding(.year, value: timeUnitAmountAsInt)
+       guard let safeNewDate = updatedDate else { return }
+       endDateLabel.text = endDateDefaultText + formatter1.string(from: safeNewDate)
+        updatedDate = safeNewDate
+   }
 }
 
 extension EditWarrantyProductInfoViewController {
@@ -273,18 +291,25 @@ extension EditWarrantyProductInfoViewController {
         validityLengthTitle.font = UIFont.boldSystemFont(ofSize: 16)
         validityLengthTitle.translatesAutoresizingMaskIntoConstraints = false
         
+        guard let yearsStepperValue = viewModel?.getYearsStepperValue() else { return }
         yearsView.timeUnitTitle.text = "années"
-        // FIXME: IL VA FALLOIR SAUVEGARDER LES VALEURS DES STEPPERS DANS CORE DATA POUR RESSORTIR LA BONNE DATE DE FIN DE GARANTIE DANS EDIT :
-        yearsView.timeUnitAmount.text = viewModel?.warranty.
-        yearsView.stepper.addTarget(self, action: #selector(updateYears), for: .valueChanged)
+        yearsView.stepperAmount = yearsStepperValue
+        yearsView.timeUnitAmount.text = "\(Int(yearsStepperValue))"
+        yearsView.addTarget(self, action: #selector(updateYears))
         yearsView.translatesAutoresizingMaskIntoConstraints = false
         
+        guard let monthsStepperValue = viewModel?.getMonthsStepperValue() else { return }
         monthsView.timeUnitTitle.text = "mois"
-        monthsView.stepper.addTarget(self, action: #selector(updateMonths), for: .valueChanged)
+        monthsView.stepperAmount = monthsStepperValue
+        monthsView.timeUnitAmount.text = "\(Int(monthsStepperValue))"
+        monthsView.addTarget(self, action: #selector(updateMonths))
         monthsView.translatesAutoresizingMaskIntoConstraints = false
         
+        guard let weeksStepperValue = viewModel?.getWeeksStepperValue() else { return }
         weeksView.timeUnitTitle.text = "semaines"
-        weeksView.stepper.addTarget(self, action: #selector(updateDays), for: .valueChanged)
+        weeksView.stepperAmount = weeksStepperValue
+        weeksView.timeUnitAmount.text = "\(Int(weeksStepperValue))"
+        weeksView.addTarget(self, action: #selector(updateWeeks))
         weeksView.translatesAutoresizingMaskIntoConstraints = false
         
         configureLifetimeWarrantyStackView()

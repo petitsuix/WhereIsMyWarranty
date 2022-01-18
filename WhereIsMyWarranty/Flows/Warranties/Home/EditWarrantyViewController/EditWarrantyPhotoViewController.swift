@@ -17,7 +17,7 @@ class EditWarrantyPhotoViewController: UIViewController {
     let selectImageButton = UIButton()
     let saveButton = UIButton()
     
-    var viewModel: NewWarrantyViewModel?
+    var viewModel: EditWarrantyViewModel?
     
     // MARK: - View life cycle methods
     
@@ -38,7 +38,7 @@ class EditWarrantyPhotoViewController: UIViewController {
     @objc func saveWarranty() {
         print("dans le ViewVontroller")
         invoicePhotoDidChange()
-        viewModel?.saveWarranty()
+        viewModel?.saveEditedWarranty()
     }
     
     @objc func chooseAndDisplayImage() {
@@ -68,6 +68,8 @@ class EditWarrantyPhotoViewController: UIViewController {
         imageView.layer.borderWidth = 1
         imageView.layer.borderColor = UIColor.label.cgColor
         imageView.contentMode = .scaleAspectFill
+        guard let invoicePhoto = viewModel?.warranty.invoicePhoto else { return }
+        imageView.image = UIImage(data: invoicePhoto)
         imageView.layer.masksToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
         

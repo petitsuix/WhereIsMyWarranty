@@ -62,7 +62,10 @@ class WarrantiesCoordinator: Coordinator {
     }
     
     func showEditWarrantyPhotoScreen() {
-        
+        let editWarrantyPhotoScreen = EditWarrantyPhotoViewController()
+        self.editWarrantyViewModel?.invoicePhotoViewDelegate = editWarrantyPhotoScreen
+        editWarrantyPhotoScreen.viewModel = editWarrantyViewModel
+        modalNavigationController.pushViewController(editWarrantyPhotoScreen, animated: true)
     }
 
     
@@ -101,5 +104,13 @@ class WarrantiesCoordinator: Coordinator {
             self.newWarrantyViewModel = nil
         }
         newWarrantyViewModel?.notifyWarrantiesListUpdated() // j'ai bien fait de déclarer notifyWarrantiesListUpdated dans le viewModel ?
+    }
+    
+    func editedWarrantySaved() {
+       // navigationController.dismiss(animated: true, completion: nil) // repasser viewModel à nil
+        modalNavigationController.dismiss(animated: true) {
+            self.editWarrantyViewModel = nil
+        }
+        editWarrantyViewModel?.notifyWarrantyUpdated() // j'ai bien fait de déclarer notifyWarrantiesListUpdated dans le viewModel ?
     }
 }
