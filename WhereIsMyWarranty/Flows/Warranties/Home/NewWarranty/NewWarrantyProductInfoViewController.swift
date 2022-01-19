@@ -298,11 +298,11 @@ extension NewWarrantyProductInfoViewController {
         parentStackView.addArrangedSubview(nameAndStartDateStackView)
         parentStackView.addArrangedSubview(customLengthStackView)
         parentStackView.addArrangedSubview(endDateLabel)
-        parentStackView.addArrangedSubview(nextStepButton)
-        parentStackView.setCustomSpacing(50, after: customLengthStackView)
-        parentStackView.setCustomSpacing(40, after: endDateLabel)
+      //  parentStackView.setCustomSpacing(50, after: customLengthStackView)
+      //  parentStackView.setCustomSpacing(40, after: endDateLabel)
         
         view.addSubview(parentStackView)
+        view.addSubview(nextStepButton)
         //view.addSubview(nextStepButton)
         
        
@@ -311,22 +311,18 @@ extension NewWarrantyProductInfoViewController {
             parentStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 24),
             parentStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
             parentStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
-            view.safeAreaLayoutGuide.bottomAnchor.constraint(equalToSystemSpacingBelow: parentStackView.bottomAnchor, multiplier: 6),
+            //    parentStackView.bottomAnchor.constraint(equalTo: saveButton.topAnchor, constant: -24),
             
+            yearsView.heightAnchor.constraint(equalTo: lifetimeWarrantyStackView.heightAnchor),
+            monthsView.heightAnchor.constraint(equalTo: lifetimeWarrantyStackView.heightAnchor),
+            weeksView.heightAnchor.constraint(equalTo: lifetimeWarrantyStackView.heightAnchor),
             
-            //yearsView.heightAnchor.constraint(equalTo: lifetimeWarrantyStackView.heightAnchor),
-           // monthsView.heightAnchor.constraint(equalTo: lifetimeWarrantyStackView.heightAnchor),
-           // weeksView.heightAnchor.constraint(equalTo: lifetimeWarrantyStackView.heightAnchor),
+            endDateLabel.heightAnchor.constraint(equalToConstant: 60),
             
-            //endDateLabel.heightAnchor.constraint(equalToConstant: 60),
-           
-            //nextStepButton.topAnchor.constraint(greaterThanOrEqualToSystemSpacingBelow: <#T##NSLayoutYAxisAnchor#>, multiplier: <#T##CGFloat#>)
-            //nextStepButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-           // nextStepButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -48),
-           // nextStepButton.heightAnchor.constraint(equalToConstant: 55),
-           // nextStepButton.widthAnchor.constraint(equalToConstant: 170)
-            // uistackviewextension
-            // uiviewextension fadeout
+            nextStepButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            nextStepButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -48),
+            nextStepButton.heightAnchor.constraint(equalToConstant: 55),
+            nextStepButton.widthAnchor.constraint(equalToConstant: 170)
         ])
     }
     

@@ -136,6 +136,7 @@
 		9769C954276A32C600BAC736 /* Alert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		9769C956276A429900BAC736 /* NewWarrantyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWarrantyViewModel.swift; sourceTree = "<group>"; };
 		97999EFA2796E2E200C8184C /* StartOfDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartOfDay.swift; sourceTree = "<group>"; };
+		97999EFC27982AA800C8184C /* WhereIsMyWarranty.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WhereIsMyWarranty.entitlements; sourceTree = "<group>"; };
 		97E03BD22767638700EFEE79 /* WarrantiesCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarrantiesCoordinator.swift; sourceTree = "<group>"; };
 		97E03BD42767639800EFEE79 /* SettingsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCoordinator.swift; sourceTree = "<group>"; };
 		97E03BDA2767A6EE00EFEE79 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
@@ -213,6 +214,7 @@
 		97630445275A68B200688DDB /* WhereIsMyWarranty */ = {
 			isa = PBXGroup;
 			children = (
+				97999EFC27982AA800C8184C /* WhereIsMyWarranty.entitlements */,
 				97630492275A6AB300688DDB /* Application */,
 				97630493275A6ABC00688DDB /* Flows */,
 				97630494275A6AC200688DDB /* Service */,
@@ -853,6 +855,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = WhereIsMyWarranty/WhereIsMyWarranty.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = T4959W6459;
@@ -882,6 +885,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = WhereIsMyWarranty/WhereIsMyWarranty.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = T4959W6459;

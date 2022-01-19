@@ -46,7 +46,7 @@ class WarrantyDetailsViewController: UIViewController {
     // MARK: - Methods
     
     @objc func warrantyUpdated() {
-        // FIXME: peut être au lieu de re-setup la view just pour refresh le controller, juste mettre à jour les textifields ?
+        // FIXME: peut être au lieu de re-setup la view just pour refresh le controller, juste mettre à jour les textfields ?
         setupView()
     }
     
@@ -78,6 +78,8 @@ extension WarrantyDetailsViewController {
     private func configureParentStackView() {
         parentStackView.axis = .vertical
         parentStackView.spacing = 24
+        parentStackView.alignment = .center
+        parentStackView.distribution = .fill
         parentStackView.translatesAutoresizingMaskIntoConstraints = false
 
         configureTopStackView()
@@ -181,7 +183,7 @@ extension WarrantyDetailsViewController {
     }
     
     private func configureEditWarrantyButton() {
-        editWarrantyButton.setTitle("Modifier", for: .normal)
+        editWarrantyButton.setTitle(" Modifier ", for: .normal)
         editWarrantyButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
         editWarrantyButton.setTitleColor(.white, for: .normal)
         editWarrantyButton.backgroundColor = MWColor.bluegrey
@@ -191,7 +193,7 @@ extension WarrantyDetailsViewController {
     }
     
     private func configureDeleteWarrantyButton() {
-        deleteWarrantyButton.setTitle("Supprimer la garantie", for: .normal)
+        deleteWarrantyButton.setTitle(" Supprimer la garantie ", for: .normal)
         deleteWarrantyButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
         deleteWarrantyButton.setTitleColor(.white, for: .normal)
         deleteWarrantyButton.backgroundColor = .red
@@ -202,10 +204,10 @@ extension WarrantyDetailsViewController {
     
     private func activateConstraints() {
         NSLayoutConstraint.activate([
-            parentStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+           // parentStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 48),
             parentStackView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-          //  parentStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
-          //  parentStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
+            parentStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
+            parentStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
             
             productImageView.heightAnchor.constraint(equalToConstant: 130),
             productImageView.widthAnchor.constraint(equalToConstant: 130),

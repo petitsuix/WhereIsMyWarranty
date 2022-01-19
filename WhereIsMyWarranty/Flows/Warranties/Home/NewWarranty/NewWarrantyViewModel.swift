@@ -58,14 +58,14 @@ class NewWarrantyViewModel: NSObject {
     
     // FIXME: pour que ce soit clean, peut être rajouter un loading icon sur le button
     func saveWarranty() {
-        let warranty = Warranty(context: storageService.viewContext)
-        warranty.name = name
-        warranty.warrantyStart = startDate
-        warranty.warrantyEnd = endDate
-        warranty.invoicePhoto = invoicePhoto
-        warranty.yearsStepperValue = Int16(yearsStepperValue ?? 0)
-        warranty.monthsStepperValue = Int16(monthsStepperValue ?? 0)
-        warranty.weeksStepperValue = Int16(weeksStepperValue ?? 0)
+        let newWarranty = Warranty(context: storageService.viewContext)
+        newWarranty.name = name
+        newWarranty.warrantyStart = startDate
+        newWarranty.warrantyEnd = endDate
+        newWarranty.invoicePhoto = invoicePhoto
+        newWarranty.yearsStepperValue = Int16(yearsStepperValue ?? 0)
+        newWarranty.monthsStepperValue = Int16(monthsStepperValue ?? 0)
+        newWarranty.weeksStepperValue = Int16(weeksStepperValue ?? 0)
         storageService.save()
         warrantySaved()
     }

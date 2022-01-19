@@ -102,7 +102,7 @@ class EditWarrantyProductInfoViewController: UIViewController {
     }
     
     @objc func nextStep() {
-//        nameDidChange()
+        nameDidChange()
         startDateDidChange() // Calling this method here, only at the end when moving to nextStep. Not in start datePicker's action "updateStartDateValue", because it may never be called if the user doesn't interract with start datePicker.
         stepperValuesDidChange()
         endDateDidChange()
@@ -320,10 +320,6 @@ extension EditWarrantyProductInfoViewController {
         customLengthStackView.addArrangedSubview(monthsView)
         customLengthStackView.addArrangedSubview(weeksView)
     }
-    
-    //    @objc func stepperChanged(_ stepper: UIStepper) {
-    //        print(stepper.value)
-    //    }
     
     func configureLifetimeWarrantyStackView() {
         lifetimeWarrantyStackView.axis = .horizontal
