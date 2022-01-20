@@ -27,6 +27,7 @@ class EditWarrantyViewModel {
     }
     
     var startDate: Date?
+    var isLifetimeWarranty: Bool?
     var endDate: Date?
     var invoicePhoto: Data?
     var yearsStepperValue: Int?
@@ -73,6 +74,7 @@ class EditWarrantyViewModel {
        // let newWarranty = Warranty(context: storageService.viewContext)
         warranty.name = name
         warranty.warrantyStart = startDate
+        warranty.lifetimeWarranty = isLifetimeWarranty ?? false
         warranty.warrantyEnd = endDate
         warranty.invoicePhoto = invoicePhoto
         storageService.save()

@@ -16,6 +16,7 @@ class NewWarrantyViewModel: NSObject {
     let coordinator: WarrantiesCoordinator
     let storageService: StorageService
     
+    
     var name: String? {
         didSet {
             guard oldValue != name else { return }
@@ -25,10 +26,8 @@ class NewWarrantyViewModel: NSObject {
     
     var startDate: Date?
     var endDate: Date?
+    var isLifetimeWarranty: Bool = false
     var invoicePhoto: Data?
-    var yearsStepperValue: Int?
-    var monthsStepperValue: Int?
-    var weeksStepperValue: Int?
     
     var canSaveWarranty: Bool {
         return name?.isEmpty == false
@@ -49,7 +48,6 @@ class NewWarrantyViewModel: NSObject {
     
     func warrantySaved() {
         coordinator.warrantySaved()// ne pas passer entre controleurs
-        
     }
     
     func nextStep() {
@@ -62,10 +60,8 @@ class NewWarrantyViewModel: NSObject {
         newWarranty.name = name
         newWarranty.warrantyStart = startDate
         newWarranty.warrantyEnd = endDate
+        newWarranty.lifetimeWarranty = isLifetimeWarranty
         newWarranty.invoicePhoto = invoicePhoto
-        newWarranty.yearsStepperValue = Int16(yearsStepperValue ?? 0)
-        newWarranty.monthsStepperValue = Int16(monthsStepperValue ?? 0)
-        newWarranty.weeksStepperValue = Int16(weeksStepperValue ?? 0)
         storageService.save()
         warrantySaved()
     }

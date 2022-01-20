@@ -223,6 +223,7 @@ extension WarrantiesViewController {
     private func configureAddWarrantyButton() {
         newWarrantyButton.setImage(UIImage(systemName: "plus.circle.fill", withConfiguration: UIImage.SymbolConfiguration(pointSize: 50, weight: .light, scale: .small)), for: .normal)
         newWarrantyButton.tintColor = MWColor.bluegrey
+        newWarrantyButton.isOpaque = true
         newWarrantyButton.addTarget(self, action: #selector(newWarrantyButtonAction), for: .touchUpInside)
         newWarrantyButton.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(newWarrantyButton)
@@ -232,7 +233,6 @@ extension WarrantiesViewController {
     
     private func activateConstraints() {
         NSLayoutConstraint.activate([
-            // FIXME: view.safeAreaLayoutGuide.topAnchor ??? Comment fixer une stackview à une navigationbar ?
             categoriesCollectionView.heightAnchor.constraint(equalToConstant: 60),
             
             categoriesStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
