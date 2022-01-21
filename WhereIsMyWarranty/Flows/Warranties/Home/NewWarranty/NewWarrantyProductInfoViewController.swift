@@ -108,7 +108,7 @@ class NewWarrantyProductInfoViewController: UIViewController {
         startDateDidChange() // Calling this method here, only at the end when moving to nextStep. Not in start datePicker's action "updateStartDateValue", because it may never be called if the user doesn't interract with start datePicker.
         lifetimeWarrantyDidChange()
         endDateDidChange()
-        viewModel?.nextStep()
+        viewModel?.goToAddProductPhotoScreen()
     }
     
     @objc func updateWeeksWithStepper() {

@@ -82,7 +82,7 @@ class WarrantiesCoordinator: Coordinator {
 
     }
     
-    func showNewWarrantyPhotoScreen() {
+    func showNewWarrantyInvoicePhotoScreen() {
         let newWarrantyStepTwoViewController = NewWarrantyPhotoViewController()
         self.newWarrantyViewModel?.stepTwoViewDelegate = newWarrantyStepTwoViewController
         newWarrantyStepTwoViewController.viewModel = newWarrantyViewModel

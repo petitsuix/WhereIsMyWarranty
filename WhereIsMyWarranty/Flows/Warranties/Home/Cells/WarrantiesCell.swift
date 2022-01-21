@@ -50,8 +50,6 @@ class WarrantiesCell: UICollectionViewCell {
     }
     
     func configureImageView() {
-//        let image = UIImage(named: "Launchscreen")
-//        warrantyProductImageView.image = image
         warrantyProductImageView.translatesAutoresizingMaskIntoConstraints = false
         warrantyProductImageView.roundingViewCorners(radius: 10)
         warrantyProductImageView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMinXMaxYCorner] // to round specific corners (top left and bottom left)
@@ -74,7 +72,7 @@ class WarrantiesCell: UICollectionViewCell {
         warrantyEnd.translatesAutoresizingMaskIntoConstraints = false
         
         infoStackView.addArrangedSubview(warrantyName)
-       // infoStackView.addArrangedSubview(sellersNameAndLocation)
+        // infoStackView.addArrangedSubview(sellersNameAndLocation)
         infoStackView.addArrangedSubview(remainingTime)
         infoStackView.addArrangedSubview(warrantyEnd)
         
@@ -82,28 +80,34 @@ class WarrantiesCell: UICollectionViewCell {
     }
     
     func refreshWarrantyData() {
+        guard let invoicePhoto = warranty?.invoicePhoto else { return }
+        warrantyProductImageView.image = UIImage(data: invoicePhoto)
+        
         let formatter1 = DateFormatter()
         formatter1.dateStyle = .short
         warrantyName.text = warranty?.name
-        guard let warrantyEndDate = warranty?.warrantyEnd else { return }
-        warrantyEnd.text = "Garanti jusqu'au \(formatter1.string(from: warrantyEndDate))"
-        guard let invoicePhoto = warranty?.invoicePhoto else { return }
-        warrantyProductImageView.image = UIImage(data: invoicePhoto)
-        remainingTime.text = getRemainingTimeFromEndDate() + " jours restants"
+        
+        if warranty?.lifetimeWarranty == false {
+            warrantyEnd.isHidden = false
+            guard let warrantyEndDate = warranty?.warrantyEnd else { return }
+            warrantyEnd.text = "Garanti jusqu'au \(formatter1.string(from: warrantyEndDate))"
+            remainingTime.text = getRemainingTimeFromEndDate() + " jours restants"
+        } else {
+            warrantyEnd.isHidden = true
+            remainingTime.text = Strings.lifetimeWarrantyDefaultText
+        }
     }
     
     func getRemainingTimeFromEndDate() -> String {
         let calendar = NSCalendar.current
-
-        // Replace the hour (time) of both dates with 00:00
+        
         guard let warrantyEnd = warranty?.warrantyEnd else { return "000" }
         let date1 = calendar.startOfDay(for: Date())
         let date2 = calendar.startOfDay(for: warrantyEnd)
-
+        
         let components = calendar.dateComponents([.day], from: date1, to: date2)
         guard let remainingDays = components.day else { return "000" }
         return String("\(remainingDays)")
-      //  remainingTime.text = components
     }
     
     // MARK: - Constraints setup
@@ -117,7 +121,6 @@ class WarrantiesCell: UICollectionViewCell {
             
             infoStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 4),
             infoStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
-          //  infoStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
             infoStackView.leadingAnchor.constraint(equalTo: warrantyProductImageView.trailingAnchor, constant: 16),
             
             warrantyName.heightAnchor.constraint(equalToConstant: 40)

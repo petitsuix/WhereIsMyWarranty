@@ -134,11 +134,15 @@ extension WarrantyDetailsViewController {
         let formatter1 = DateFormatter()
         formatter1.dateStyle = .full
         warrantyStatus.roundingViewCorners(radius: 5)
-        guard let text = viewModel?.warranty.warrantyEnd else { return }
-        warrantyStatus.text = "Couvert jusqu'au\n\(formatter1.string(from: text))"
         warrantyStatus.textAlignment = .center
         warrantyStatus.numberOfLines = 2
         warrantyStatus.translatesAutoresizingMaskIntoConstraints = false
+        if viewModel?.warranty.lifetimeWarranty == false {
+        guard let text = viewModel?.warranty.warrantyEnd else { return }
+        warrantyStatus.text = "Couvert jusqu'au\n\(formatter1.string(from: text))"
+        } else {
+            warrantyStatus.text = Strings.lifetimeWarrantyDefaultText
+        }
     }
     
     // MARK: Middle "Product and seller info views"

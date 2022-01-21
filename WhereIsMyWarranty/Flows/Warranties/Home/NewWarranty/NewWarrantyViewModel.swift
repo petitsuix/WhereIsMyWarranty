@@ -26,7 +26,7 @@ class NewWarrantyViewModel: NSObject {
     
     var startDate: Date?
     var endDate: Date?
-    var isLifetimeWarranty: Bool = false
+    var isLifetimeWarranty: Bool?
     var invoicePhoto: Data?
     
     var canSaveWarranty: Bool {
@@ -50,8 +50,8 @@ class NewWarrantyViewModel: NSObject {
         coordinator.warrantySaved()// ne pas passer entre controleurs
     }
     
-    func nextStep() {
-        coordinator.showNewWarrantyPhotoScreen()
+    func goToAddProductPhotoScreen() {
+        coordinator.showNewWarrantyInvoicePhotoScreen()
     }
     
     // FIXME: pour que ce soit clean, peut être rajouter un loading icon sur le button
@@ -60,6 +60,7 @@ class NewWarrantyViewModel: NSObject {
         newWarranty.name = name
         newWarranty.warrantyStart = startDate
         newWarranty.warrantyEnd = endDate
+        guard let isLifetimeWarranty = isLifetimeWarranty else { return }
         newWarranty.lifetimeWarranty = isLifetimeWarranty
         newWarranty.invoicePhoto = invoicePhoto
         storageService.save()
