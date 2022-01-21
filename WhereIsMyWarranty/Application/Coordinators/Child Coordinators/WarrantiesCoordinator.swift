@@ -72,7 +72,7 @@ class WarrantiesCoordinator: Coordinator {
     func showNewWarrantyProductInfoScreen() {
         let newWarrantyViewController = NewWarrantyProductInfoViewController()
         let viewModel = NewWarrantyViewModel(coordinator: self, storageService: storageService)
-        viewModel.viewDelegate = newWarrantyViewController
+        viewModel.newWarrantyProductInfoViewDelegate = newWarrantyViewController
         self.newWarrantyViewModel = viewModel
         newWarrantyViewController.viewModel = newWarrantyViewModel
         newWarrantyViewController.modalPresentationStyle = .popover
@@ -82,11 +82,20 @@ class WarrantiesCoordinator: Coordinator {
 
     }
     
+    func showNewWarrantyProductPhotoScreen() {
+        let newWarrantyPhotoViewController = NewWarrantyPhotoViewController()
+        self.newWarrantyViewModel?.newWarrantyPhotoViewDelegate = newWarrantyPhotoViewController
+        newWarrantyPhotoViewController.viewModel = newWarrantyViewModel
+        newWarrantyPhotoViewController.photoMode = .productPhoto
+        modalNavigationController.pushViewController(newWarrantyPhotoViewController, animated: true)
+    }
+    
     func showNewWarrantyInvoicePhotoScreen() {
-        let newWarrantyStepTwoViewController = NewWarrantyPhotoViewController()
-        self.newWarrantyViewModel?.stepTwoViewDelegate = newWarrantyStepTwoViewController
-        newWarrantyStepTwoViewController.viewModel = newWarrantyViewModel
-        modalNavigationController.pushViewController(newWarrantyStepTwoViewController, animated: true)
+        let newWarrantyPhotoViewController = NewWarrantyPhotoViewController()
+        self.newWarrantyViewModel?.newWarrantyPhotoViewDelegate = newWarrantyPhotoViewController
+        newWarrantyPhotoViewController.viewModel = newWarrantyViewModel
+        newWarrantyPhotoViewController.photoMode = .invoicePhoto
+        modalNavigationController.pushViewController(newWarrantyPhotoViewController, animated: true)
     }
     
     func showWarrantyDetailsScreen(warranty: Warranty) {

@@ -11,8 +11,8 @@ class NewWarrantyViewModel: NSObject {
     
     // MARK: - Properties
     
-    weak var viewDelegate: NewWarrantyProductInfoViewController?
-    weak var stepTwoViewDelegate: NewWarrantyPhotoViewController?
+    weak var newWarrantyProductInfoViewDelegate: NewWarrantyProductInfoViewController?
+    weak var newWarrantyPhotoViewDelegate: NewWarrantyPhotoViewController?
     let coordinator: WarrantiesCoordinator
     let storageService: StorageService
     
@@ -20,13 +20,14 @@ class NewWarrantyViewModel: NSObject {
     var name: String? {
         didSet {
             guard oldValue != name else { return }
-            viewDelegate?.canGoToNextStep(canSave: canSaveWarranty)
+            newWarrantyProductInfoViewDelegate?.canGoToNextStep(canSave: canSaveWarranty)
         }
     }
     
     var startDate: Date?
     var endDate: Date?
     var isLifetimeWarranty: Bool?
+    var productPhoto: Data?
     var invoicePhoto: Data?
     
     var canSaveWarranty: Bool {
@@ -51,6 +52,10 @@ class NewWarrantyViewModel: NSObject {
     }
     
     func goToAddProductPhotoScreen() {
+        coordinator.showNewWarrantyProductPhotoScreen()
+    }
+    
+    func goToAddInvoicePhotoScreen() {
         coordinator.showNewWarrantyInvoicePhotoScreen()
     }
     
@@ -63,6 +68,7 @@ class NewWarrantyViewModel: NSObject {
         guard let isLifetimeWarranty = isLifetimeWarranty else { return }
         newWarranty.lifetimeWarranty = isLifetimeWarranty
         newWarranty.invoicePhoto = invoicePhoto
+        newWarranty.productPhoto = productPhoto
         storageService.save()
         warrantySaved()
     }

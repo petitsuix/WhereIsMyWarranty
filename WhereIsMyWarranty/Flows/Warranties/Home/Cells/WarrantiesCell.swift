@@ -80,7 +80,7 @@ class WarrantiesCell: UICollectionViewCell {
     }
     
     func refreshWarrantyData() {
-        guard let invoicePhoto = warranty?.invoicePhoto else { return }
+        guard let invoicePhoto = warranty?.productPhoto else { return }
         warrantyProductImageView.image = UIImage(data: invoicePhoto)
         
         let formatter1 = DateFormatter()
@@ -126,5 +126,4 @@ class WarrantiesCell: UICollectionViewCell {
             warrantyName.heightAnchor.constraint(equalToConstant: 40)
         ])
     }
-    
 }

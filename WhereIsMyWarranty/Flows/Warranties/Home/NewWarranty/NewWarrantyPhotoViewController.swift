@@ -7,6 +7,11 @@
 
 import UIKit
 
+enum PhotoMode {
+    case productPhoto
+    case invoicePhoto
+}
+
 class NewWarrantyPhotoViewController: UIViewController {
     
     // MARK: - Properties
@@ -15,8 +20,9 @@ class NewWarrantyPhotoViewController: UIViewController {
     let addAFileTitleLabel = UILabel()
     let imageView = UIImageView()
     let selectImageButton = UIButton()
-    let saveButton = UIButton()
+    let endCurrentScreenButton = UIButton()
     
+    var photoMode: PhotoMode = .productPhoto
     var viewModel: NewWarrantyViewModel?
     
     // MARK: - View life cycle methods
@@ -24,6 +30,8 @@ class NewWarrantyPhotoViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
+        configurationForProductPhotoViewController()
+        configurationForInvoicePhotoViewController()
         // colorTests()
         // Do any additional setup after loading the view.
     }
@@ -35,9 +43,14 @@ class NewWarrantyPhotoViewController: UIViewController {
     
     // MARK: - objc methods
     
+    @objc func goToAddInvoicePhotoScreen() {
+        photoDidChange()
+        viewModel?.goToAddInvoicePhotoScreen()
+    }
+    
     @objc func saveWarranty() {
         print("dans le ViewVontroller")
-        invoicePhotoDidChange()
+        photoDidChange()
         viewModel?.saveWarranty()
     }
     
@@ -45,11 +58,31 @@ class NewWarrantyPhotoViewController: UIViewController {
         setupAlert()
     }
     
-    func invoicePhotoDidChange() {
-        viewModel?.invoicePhoto = imageView.image?.pngData()
+    // MARK: - Methods
+    
+    func photoDidChange() {
+        if photoMode == .invoicePhoto {
+            viewModel?.invoicePhoto = imageView.image?.pngData()
+        } else {
+            viewModel?.productPhoto = imageView.image?.pngData()
+        }
     }
     
-    // MARK: - Methods
+    private func configurationForProductPhotoViewController() {
+        if photoMode == .productPhoto {
+            addAFileTitleLabel.text = "Photo produit"
+            endCurrentScreenButton.setTitle("Suivant", for: .normal)
+            endCurrentScreenButton.addTarget(self, action: #selector(goToAddInvoicePhotoScreen), for: .touchUpInside)
+        }
+    }
+    
+    private func configurationForInvoicePhotoViewController() {
+        if photoMode == .invoicePhoto {
+            addAFileTitleLabel.text = "Ajouter une facture"
+            endCurrentScreenButton.setTitle("Enregistrer", for: .normal)
+            endCurrentScreenButton.addTarget(self, action: #selector(saveWarranty), for: .touchUpInside)
+        }
+    }
     
     func setupView() {
         view.backgroundColor = .white
@@ -62,7 +95,8 @@ class NewWarrantyPhotoViewController: UIViewController {
         addAFileTitleLabel.textColor = .black
         addAFileTitleLabel.font = UIFont.boldSystemFont(ofSize: 26)
         addAFileTitleLabel.textAlignment = .center
-        addAFileTitleLabel.text = "Ajouter un fichier"
+        addAFileTitleLabel.numberOfLines = 0
+       // addAFileTitleLabel.text = "Ajouter un fichier"
         addAFileTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         
         imageView.layer.borderWidth = 1
@@ -83,18 +117,18 @@ class NewWarrantyPhotoViewController: UIViewController {
         selectImageButton.addTarget(self, action: #selector(chooseAndDisplayImage), for: .touchUpInside)
         
         
-        saveButton.backgroundColor = MWColor.paleOrange
-        saveButton.roundingViewCorners(radius: 8)
-        saveButton.setTitle("Enregistrer", for: .normal)
-        saveButton.addTarget(self, action: #selector(saveWarranty), for: .touchUpInside)
-        saveButton.isUserInteractionEnabled = true
-        saveButton.translatesAutoresizingMaskIntoConstraints = false
+        endCurrentScreenButton.backgroundColor = MWColor.paleOrange
+        endCurrentScreenButton.roundingViewCorners(radius: 8)
+       // endCurrentScreenButton.setTitle("Enregistrer", for: .normal)
+       // endCurrentScreenButton.addTarget(self, action: #selector(saveWarranty), for: .touchUpInside)
+        endCurrentScreenButton.isUserInteractionEnabled = true
+        endCurrentScreenButton.translatesAutoresizingMaskIntoConstraints = false
         
         parentStackView.addArrangedSubview(addAFileTitleLabel)
         parentStackView.addArrangedSubview(imageView)
         parentStackView.addArrangedSubview(selectImageButton)
         
-        view.addSubview(saveButton)
+        view.addSubview(endCurrentScreenButton)
         activateConstraints()
     }
     
@@ -146,13 +180,6 @@ class NewWarrantyPhotoViewController: UIViewController {
         picker.dismiss(animated: true, completion: nil)
     }
     
-    func colorTests() {
-        parentStackView.backgroundColor = .green
-        addAFileTitleLabel.backgroundColor = .red
-        imageView.backgroundColor = .yellow
-        selectImageButton.backgroundColor = .orange
-    }
-    
     func activateConstraints() {
         NSLayoutConstraint.activate([
             parentStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 32),
@@ -161,15 +188,12 @@ class NewWarrantyPhotoViewController: UIViewController {
             imageView.widthAnchor.constraint(equalToConstant: 250),
             imageView.heightAnchor.constraint(equalToConstant: 320),
             
-            saveButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            saveButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -48),
-            saveButton.heightAnchor.constraint(equalToConstant: 55),
-            saveButton.widthAnchor.constraint(equalToConstant: 170)
+            endCurrentScreenButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            endCurrentScreenButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -48),
+            endCurrentScreenButton.heightAnchor.constraint(equalToConstant: 55),
+            endCurrentScreenButton.widthAnchor.constraint(equalToConstant: 170)
         ])
     }
-    
-    
-    
     
     /*
      // MARK: - Navigation
@@ -184,5 +208,4 @@ class NewWarrantyPhotoViewController: UIViewController {
 }
 
 extension NewWarrantyPhotoViewController: UIImagePickerControllerDelegate & UINavigationControllerDelegate {
-    
 }

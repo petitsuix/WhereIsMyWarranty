@@ -20,6 +20,10 @@ class WarrantyDetailsViewController: UIViewController {
     let productName = UILabel()
     let warrantyStatus = UILabel()
     
+    let invoicePhotoStackView = UIStackView()
+    let invoicePhotoTitle = UILabel()
+    let invoiceImageView = UIImageView()
+    
     let productInfo = WarrantyDetailsSectionView()
     let sellersInfo = WarrantyDetailsSectionView()
     
@@ -71,66 +75,18 @@ extension WarrantyDetailsViewController {
         // nalayoutconstraint ....
         self.title = Strings.warrantiesTitle
         view.backgroundColor = .white
-        configureParentStackView()
-        activateConstraints()
-    }
-    
-    private func configureParentStackView() {
-        parentStackView.axis = .vertical
-        parentStackView.spacing = 24
-        parentStackView.alignment = .center
-        parentStackView.distribution = .fill
-        parentStackView.translatesAutoresizingMaskIntoConstraints = false
-
-        configureTopStackView()
-        configureNotesStackView()
-        configureProductAndSellerInfoViews()
-        configureNotesStackView()
-        configureEditWarrantyButton()
-        configureDeleteWarrantyButton()
         
-        parentStackView.addArrangedSubview(topStackView)
-        parentStackView.addArrangedSubview(productInfo)
-        // parentStackView.addArrangedSubview(sellersInfo)
-        // parentStackView.addArrangedSubview(notesStackView)
-        parentStackView.addArrangedSubview(editWarrantyButton)
-        parentStackView.addArrangedSubview(deleteWarrantyButton)
-        view.addSubview(parentStackView)
-    }
-    
-    // MARK: Top stackView
-    
-    private func configureTopStackView() {
-        topStackView.axis = .vertical
-        topStackView.spacing = 24
-        topStackView.alignment = .center
-        topStackView.translatesAutoresizingMaskIntoConstraints = false
-        
-        configureProductImageView()
-        configureProductNameLabel()
-        configureWarrantyStatus()
-        
-        topStackView.addArrangedSubview(productImageView)
-        topStackView.addArrangedSubview(productName)
-        topStackView.addArrangedSubview(warrantyStatus)
-    }
-    
-    private func configureProductImageView() {
-        guard let image = viewModel?.warranty.invoicePhoto else { return }
+        guard let image = viewModel?.warranty.productPhoto else { return }
         productImageView.image = UIImage(data: image)
         productImageView.roundingViewCorners(radius: 64)
         productImageView.layer.borderWidth = 1.5
         productImageView.layer.borderColor = MWColor.bluegrey.cgColor
         productImageView.translatesAutoresizingMaskIntoConstraints = false
-    }
-    
-    private func configureProductNameLabel() {
+        
         productName.text = viewModel?.warranty.name
         productName.font = UIFont.boldSystemFont(ofSize: 20)
         productName.translatesAutoresizingMaskIntoConstraints = false
-    }
-    
-    private func configureWarrantyStatus() {
+        
         let formatter1 = DateFormatter()
         formatter1.dateStyle = .full
         warrantyStatus.roundingViewCorners(radius: 5)
@@ -138,11 +94,82 @@ extension WarrantyDetailsViewController {
         warrantyStatus.numberOfLines = 2
         warrantyStatus.translatesAutoresizingMaskIntoConstraints = false
         if viewModel?.warranty.lifetimeWarranty == false {
-        guard let text = viewModel?.warranty.warrantyEnd else { return }
-        warrantyStatus.text = "Couvert jusqu'au\n\(formatter1.string(from: text))"
+            guard let text = viewModel?.warranty.warrantyEnd else { return }
+            warrantyStatus.text = "Couvert jusqu'au\n\(formatter1.string(from: text))"
         } else {
             warrantyStatus.text = Strings.lifetimeWarrantyDefaultText
         }
+        
+        topStackView.axis = .vertical
+        topStackView.spacing = 20
+        topStackView.alignment = .center
+        topStackView.translatesAutoresizingMaskIntoConstraints = false
+        
+        topStackView.addArrangedSubview(productImageView)
+        topStackView.addArrangedSubview(productName)
+        topStackView.addArrangedSubview(warrantyStatus)
+        
+        invoicePhotoTitle.text = "Facture"
+        invoicePhotoTitle.font = UIFont.boldSystemFont(ofSize: 12)
+        
+        guard let invoicePhotoAsData = viewModel?.warranty.invoicePhoto else { return }
+        invoiceImageView.image = UIImage(data: invoicePhotoAsData)
+        
+        invoicePhotoStackView.axis = .vertical
+        invoicePhotoStackView.spacing = 4
+        invoicePhotoStackView.alignment = .leading
+        invoicePhotoStackView.addArrangedSubview(invoicePhotoTitle)
+        invoicePhotoStackView.addArrangedSubview(invoiceImageView)
+        
+        
+        editWarrantyButton.setTitle(" Modifier ", for: .normal)
+        editWarrantyButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
+        editWarrantyButton.setTitleColor(.white, for: .normal)
+        editWarrantyButton.backgroundColor = MWColor.bluegrey
+        editWarrantyButton.roundingViewCorners(radius: 8)
+        editWarrantyButton.addTarget(self, action: #selector(editWarranty), for: .touchUpInside)
+        editWarrantyButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        deleteWarrantyButton.setTitle(" Supprimer la garantie ", for: .normal)
+        deleteWarrantyButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
+        deleteWarrantyButton.setTitleColor(.white, for: .normal)
+        deleteWarrantyButton.backgroundColor = .red
+        deleteWarrantyButton.roundingViewCorners(radius: 8)
+        deleteWarrantyButton.addTarget(self, action: #selector(deleteWarranty), for: .touchUpInside)
+        deleteWarrantyButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        parentStackView.axis = .vertical
+        parentStackView.spacing = 24
+        parentStackView.alignment = .center
+        parentStackView.distribution = .fill
+        parentStackView.translatesAutoresizingMaskIntoConstraints = false
+        
+        parentStackView.addArrangedSubview(topStackView)
+        parentStackView.addArrangedSubview(productInfo)
+        parentStackView.addArrangedSubview(invoicePhotoStackView)
+        // parentStackView.addArrangedSubview(sellersInfo)
+        // parentStackView.addArrangedSubview(notesStackView)
+        parentStackView.addArrangedSubview(editWarrantyButton)
+        parentStackView.addArrangedSubview(deleteWarrantyButton)
+        view.addSubview(parentStackView)
+        
+        NSLayoutConstraint.activate([
+            // parentStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 48),
+            parentStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 24),
+            parentStackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -24),
+            parentStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
+            parentStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
+            
+            productImageView.heightAnchor.constraint(equalToConstant: 130),
+            productImageView.widthAnchor.constraint(equalToConstant: 130),
+            
+            invoiceImageView.heightAnchor.constraint(equalToConstant: 130),
+            invoiceImageView.widthAnchor.constraint(equalToConstant: 130),
+            
+            
+            notes.heightAnchor.constraint(equalToConstant: 140),
+            notes.widthAnchor.constraint(equalToConstant: 250)
+        ])
     }
     
     // MARK: Middle "Product and seller info views"
@@ -184,40 +211,5 @@ extension WarrantyDetailsViewController {
         
         notesStackView.addArrangedSubview(notesSectionTitle)
         notesStackView.addArrangedSubview(notes)
-    }
-    
-    private func configureEditWarrantyButton() {
-        editWarrantyButton.setTitle(" Modifier ", for: .normal)
-        editWarrantyButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
-        editWarrantyButton.setTitleColor(.white, for: .normal)
-        editWarrantyButton.backgroundColor = MWColor.bluegrey
-        editWarrantyButton.roundingViewCorners(radius: 8)
-        editWarrantyButton.addTarget(self, action: #selector(editWarranty), for: .touchUpInside)
-        editWarrantyButton.translatesAutoresizingMaskIntoConstraints = false
-    }
-    
-    private func configureDeleteWarrantyButton() {
-        deleteWarrantyButton.setTitle(" Supprimer la garantie ", for: .normal)
-        deleteWarrantyButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
-        deleteWarrantyButton.setTitleColor(.white, for: .normal)
-        deleteWarrantyButton.backgroundColor = .red
-        deleteWarrantyButton.roundingViewCorners(radius: 8)
-        deleteWarrantyButton.addTarget(self, action: #selector(deleteWarranty), for: .touchUpInside)
-        deleteWarrantyButton.translatesAutoresizingMaskIntoConstraints = false
-    }
-    
-    private func activateConstraints() {
-        NSLayoutConstraint.activate([
-           // parentStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 48),
-            parentStackView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            parentStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
-            parentStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
-            
-            productImageView.heightAnchor.constraint(equalToConstant: 130),
-            productImageView.widthAnchor.constraint(equalToConstant: 130),
-            
-            notes.heightAnchor.constraint(equalToConstant: 140),
-            notes.widthAnchor.constraint(equalToConstant: 250)
-        ])
     }
 }
