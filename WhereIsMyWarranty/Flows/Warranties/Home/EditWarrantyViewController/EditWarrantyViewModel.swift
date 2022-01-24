@@ -29,6 +29,7 @@ class EditWarrantyViewModel {
     var startDate: Date?
     var isLifetimeWarranty: Bool?
     var endDate: Date?
+    var productPhoto: Data?
     var invoicePhoto: Data?
     var yearsStepperValue: Int?
     //{
@@ -61,13 +62,16 @@ class EditWarrantyViewModel {
         coordinator.showEditWarrantyProductInfoScreen(warranty: warranty)
     }
 
-    func nextStep() {
-        coordinator.showEditWarrantyPhotoScreen()
+    func goToEditProductPhotoScreen() {
+        coordinator.showEditWarrantyProductPhotoScreen()
+    }
+    
+    func goToAddInvoicePhotoScreen() {
+        coordinator.showEditWarrantyInvoicePhotoScreen()
     }
     
     func warrantySaved() {
         coordinator.editedWarrantySaved()// ne pas passer entre controleurs
-        
     }
     
     func saveEditedWarranty() {
@@ -76,6 +80,7 @@ class EditWarrantyViewModel {
         warranty.warrantyStart = startDate
         warranty.lifetimeWarranty = isLifetimeWarranty ?? false
         warranty.warrantyEnd = endDate
+        warranty.productPhoto = productPhoto
         warranty.invoicePhoto = invoicePhoto
         storageService.save()
         warrantySaved()

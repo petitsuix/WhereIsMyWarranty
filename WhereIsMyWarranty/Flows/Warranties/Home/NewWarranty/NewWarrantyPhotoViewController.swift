@@ -7,7 +7,7 @@
 
 import UIKit
 
-enum PhotoMode {
+public enum PhotoMode {
     case productPhoto
     case invoicePhoto
 }

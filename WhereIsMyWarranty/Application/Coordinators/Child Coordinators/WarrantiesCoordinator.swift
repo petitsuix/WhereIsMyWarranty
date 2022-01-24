@@ -10,14 +10,17 @@ import UIKit
 
 class WarrantiesCoordinator: Coordinator {
     
-    // MARK: - Properties
+    // MARK: - Public properties
     
     public var navigationController: UINavigationController
     public var rootViewController: UIViewController {
         return navigationController
     }
-    var newWarrantyViewModel: NewWarrantyViewModel?
-    var editWarrantyViewModel: EditWarrantyViewModel?
+    
+    // MARK: - Private properties
+    
+    private var newWarrantyViewModel: NewWarrantyViewModel?
+    private var editWarrantyViewModel: EditWarrantyViewModel?
     private var modalNavigationController: UINavigationController = UINavigationController()
     private let storageService: StorageService
     
@@ -61,13 +64,22 @@ class WarrantiesCoordinator: Coordinator {
         navigationController.present(modalNavigationController, animated: true, completion: nil)
     }
     
-    func showEditWarrantyPhotoScreen() {
+    func showEditWarrantyProductPhotoScreen() {
         let editWarrantyPhotoScreen = EditWarrantyPhotoViewController()
         self.editWarrantyViewModel?.invoicePhotoViewDelegate = editWarrantyPhotoScreen
         editWarrantyPhotoScreen.viewModel = editWarrantyViewModel
+        editWarrantyPhotoScreen.photoMode = .productPhoto
         modalNavigationController.pushViewController(editWarrantyPhotoScreen, animated: true)
     }
-
+    
+    func showEditWarrantyInvoicePhotoScreen() {
+        let editWarrantyPhotoScreen = EditWarrantyPhotoViewController()
+        self.editWarrantyViewModel?.invoicePhotoViewDelegate = editWarrantyPhotoScreen
+        editWarrantyPhotoScreen.viewModel = editWarrantyViewModel
+        editWarrantyPhotoScreen.photoMode = .invoicePhoto
+        modalNavigationController.pushViewController(editWarrantyPhotoScreen, animated: true)
+    }
+    
     
     func showNewWarrantyProductInfoScreen() {
         let newWarrantyViewController = NewWarrantyProductInfoViewController()
@@ -79,7 +91,7 @@ class WarrantiesCoordinator: Coordinator {
         newWarrantyViewController.modalTransitionStyle = .coverVertical
         modalNavigationController = UINavigationController(rootViewController: newWarrantyViewController)
         navigationController.present(modalNavigationController, animated: true, completion: nil)
-
+        
     }
     
     func showNewWarrantyProductPhotoScreen() {
@@ -106,9 +118,9 @@ class WarrantiesCoordinator: Coordinator {
         // warrantyDetailsViewController.warranty = warranty
         navigationController.pushViewController(warrantyDetailsViewController, animated: true)
     }
-
+    
     func warrantySaved() {
-       // navigationController.dismiss(animated: true, completion: nil) // repasser viewModel à nil
+        // navigationController.dismiss(animated: true, completion: nil) // repasser viewModel à nil
         modalNavigationController.dismiss(animated: true) {
             self.newWarrantyViewModel = nil
         }
@@ -116,7 +128,7 @@ class WarrantiesCoordinator: Coordinator {
     }
     
     func editedWarrantySaved() {
-       // navigationController.dismiss(animated: true, completion: nil) // repasser viewModel à nil
+        // navigationController.dismiss(animated: true, completion: nil) // repasser viewModel à nil
         modalNavigationController.dismiss(animated: true) {
             self.editWarrantyViewModel = nil
         }

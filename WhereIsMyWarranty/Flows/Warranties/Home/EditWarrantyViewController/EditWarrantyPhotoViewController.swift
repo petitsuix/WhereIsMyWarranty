@@ -15,8 +15,9 @@ class EditWarrantyPhotoViewController: UIViewController {
     let addAFileTitleLabel = UILabel()
     let imageView = UIImageView()
     let selectImageButton = UIButton()
-    let saveButton = UIButton()
+    let endCurrentScreenButton = UIButton()
     
+    var photoMode: PhotoMode = .productPhoto
     var viewModel: EditWarrantyViewModel?
     
     // MARK: - View life cycle methods
@@ -24,6 +25,8 @@ class EditWarrantyPhotoViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
+        configurationForProductPhotoViewController()
+        configurationForInvoicePhotoViewController()
         // colorTests()
         // Do any additional setup after loading the view.
     }
@@ -35,18 +38,19 @@ class EditWarrantyPhotoViewController: UIViewController {
     
     // MARK: - objc methods
     
+    @objc func goToEditInvoicePhotoScreen() {
+        photoDidChange()
+        viewModel?.goToAddInvoicePhotoScreen()
+    }
+    
     @objc func saveWarranty() {
         print("dans le ViewVontroller")
-        invoicePhotoDidChange()
+        photoDidChange()
         viewModel?.saveEditedWarranty()
     }
     
     @objc func chooseAndDisplayImage() {
         setupAlert()
-    }
-    
-    func invoicePhotoDidChange() {
-        viewModel?.invoicePhoto = imageView.image?.pngData()
     }
     
     // MARK: - Methods
@@ -85,19 +89,47 @@ class EditWarrantyPhotoViewController: UIViewController {
         selectImageButton.addTarget(self, action: #selector(chooseAndDisplayImage), for: .touchUpInside)
         
         
-        saveButton.backgroundColor = MWColor.paleOrange
-        saveButton.roundingViewCorners(radius: 8)
-        saveButton.setTitle("Enregistrer", for: .normal)
-        saveButton.addTarget(self, action: #selector(saveWarranty), for: .touchUpInside)
-        saveButton.isUserInteractionEnabled = true
-        saveButton.translatesAutoresizingMaskIntoConstraints = false
+        endCurrentScreenButton.backgroundColor = MWColor.paleOrange
+        endCurrentScreenButton.roundingViewCorners(radius: 8)
+        endCurrentScreenButton.setTitle("Enregistrer", for: .normal)
+       // endCurrentScreenButton.addTarget(self, action: #selector(saveWarranty), for: .touchUpInside)
+        endCurrentScreenButton.isUserInteractionEnabled = true
+        endCurrentScreenButton.translatesAutoresizingMaskIntoConstraints = false
         
         parentStackView.addArrangedSubview(addAFileTitleLabel)
         parentStackView.addArrangedSubview(imageView)
         parentStackView.addArrangedSubview(selectImageButton)
         
-        view.addSubview(saveButton)
+        view.addSubview(endCurrentScreenButton)
         activateConstraints()
+    }
+    
+    func photoDidChange() {
+        if photoMode == .invoicePhoto {
+            viewModel?.invoicePhoto = imageView.image?.pngData()
+        } else {
+            viewModel?.productPhoto = imageView.image?.pngData()
+        }
+    }
+    
+    private func configurationForProductPhotoViewController() {
+        if photoMode == .productPhoto {
+            addAFileTitleLabel.text = "Photo produit"
+            endCurrentScreenButton.setTitle("Suivant", for: .normal)
+            endCurrentScreenButton.addTarget(self, action: #selector(goToEditInvoicePhotoScreen), for: .touchUpInside)
+            guard let productPhoto = viewModel?.warranty.productPhoto else { return }
+            imageView.image = UIImage(data: productPhoto)
+        }
+    }
+    
+    private func configurationForInvoicePhotoViewController() {
+        if photoMode == .invoicePhoto {
+            addAFileTitleLabel.text = "Ajouter une facture"
+            endCurrentScreenButton.setTitle("Enregistrer", for: .normal)
+            endCurrentScreenButton.addTarget(self, action: #selector(saveWarranty), for: .touchUpInside)
+            guard let invoicePhoto = viewModel?.warranty.invoicePhoto else { return }
+            imageView.image = UIImage(data: invoicePhoto)
+        }
     }
     
     func setupAlert() {
@@ -163,10 +195,10 @@ class EditWarrantyPhotoViewController: UIViewController {
             imageView.widthAnchor.constraint(equalToConstant: 250),
             imageView.heightAnchor.constraint(equalToConstant: 320),
             
-            saveButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            saveButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -48),
-            saveButton.heightAnchor.constraint(equalToConstant: 55),
-            saveButton.widthAnchor.constraint(equalToConstant: 170)
+            endCurrentScreenButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            endCurrentScreenButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -48),
+            endCurrentScreenButton.heightAnchor.constraint(equalToConstant: 55),
+            endCurrentScreenButton.widthAnchor.constraint(equalToConstant: 170)
         ])
     }
     

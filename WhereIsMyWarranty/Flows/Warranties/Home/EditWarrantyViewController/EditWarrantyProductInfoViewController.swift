@@ -149,11 +149,11 @@ class EditWarrantyProductInfoViewController: UIViewController {
         updatedDate = safeNewDate
     }
     
-    @objc func nextStep() {
+    @objc func goToAddProductPhotoScreen() {
         nameDidChange()
         startDateDidChange() // Calling this method here, only at the end when moving to nextStep. Not in start datePicker's action "updateStartDateValue", because it may never be called if the user doesn't interract with start datePicker.
         endDateDidChange()
-        viewModel?.nextStep()
+        viewModel?.goToEditProductPhotoScreen()
     }
     
     // MARK: - Methods
@@ -474,7 +474,7 @@ extension EditWarrantyProductInfoViewController {
         nextStepButton.backgroundColor = MWColor.paleOrange
         nextStepButton.roundingViewCorners(radius: 8)
         nextStepButton.setTitle("Suivant", for: .normal)
-        nextStepButton.addTarget(self, action: #selector(nextStep), for: .touchUpInside)
+        nextStepButton.addTarget(self, action: #selector(goToAddProductPhotoScreen), for: .touchUpInside)
         nextStepButton.isUserInteractionEnabled = true
         nextStepButton.translatesAutoresizingMaskIntoConstraints = false
         
