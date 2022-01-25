@@ -75,7 +75,6 @@ class EditWarrantyViewModel {
     }
     
     func saveEditedWarranty() {
-       // let newWarranty = Warranty(context: storageService.viewContext)
         warranty.name = name
         warranty.warrantyStart = startDate
         warranty.lifetimeWarranty = isLifetimeWarranty ?? false

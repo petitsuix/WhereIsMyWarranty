@@ -96,6 +96,9 @@ class EditWarrantyProductInfoViewController: UIViewController {
         if yearsView.timeUnitAmount.text != "0" {
             updateYears()
         }
+        if lifetimeWarrantySwitch.isOn {
+            endDateLabel.text = Strings.lifetimeWarrantyDefaultText
+        }
     }
     
     @objc func updateWeeksWithStepper() {
@@ -210,11 +213,12 @@ class EditWarrantyProductInfoViewController: UIViewController {
         }
         let formatter1 = DateFormatter()
         formatter1.dateStyle = .full
-        guard let safeNewDate = updatedDate else { return }
-        if weeksView.timeUnitAmount.text == "0" && monthsView.timeUnitAmount.text == "0" && yearsView.timeUnitAmount.text == "0" {
-            endDateLabel.text = Strings.endDateDefaultText
-        } else {
-            endDateLabel.text = Strings.endDateDefaultText + formatter1.string(from: safeNewDate)
+        if let safeNewDate = updatedDate {
+            if weeksView.timeUnitAmount.text == "0" && monthsView.timeUnitAmount.text == "0" && yearsView.timeUnitAmount.text == "0" {
+                endDateLabel.text = Strings.endDateDefaultText
+            } else {
+                endDateLabel.text = Strings.endDateDefaultText + formatter1.string(from: safeNewDate)
+            }
         }
     }
 }
@@ -271,22 +275,25 @@ extension EditWarrantyProductInfoViewController {
         weeksView.configureView()
         yearsView.configureView()
         
-        guard let yearsStepperValue = viewModel?.getYearsStepperValue() else { return }
+        if let yearsStepperValue = viewModel?.getYearsStepperValue() {
+            yearsView.stepperAmount = yearsStepperValue
+            yearsView.timeUnitAmount.text = "\(Int(yearsStepperValue))"
+        }
         yearsView.timeUnitTitle.text = "années"
-        yearsView.stepperAmount = yearsStepperValue
-        yearsView.timeUnitAmount.text = "\(Int(yearsStepperValue))"
         yearsView.addTarget(self, action: #selector(updateYearsWithStepper))
         
-        guard let monthsStepperValue = viewModel?.getMonthsStepperValue() else { return }
+        if let monthsStepperValue = viewModel?.getMonthsStepperValue() {
+            monthsView.stepperAmount = monthsStepperValue
+            monthsView.timeUnitAmount.text = "\(Int(monthsStepperValue))"
+        }
         monthsView.timeUnitTitle.text = "mois"
-        monthsView.stepperAmount = monthsStepperValue
-        monthsView.timeUnitAmount.text = "\(Int(monthsStepperValue))"
         monthsView.addTarget(self, action: #selector(updateMonthsWithStepper))
         
-        guard let weeksStepperValue = viewModel?.getWeeksStepperValue() else { return }
+        if let weeksStepperValue = viewModel?.getWeeksStepperValue() {
+            weeksView.stepperAmount = weeksStepperValue
+            weeksView.timeUnitAmount.text = "\(Int(weeksStepperValue))"
+        }
         weeksView.timeUnitTitle.text = "semaines"
-        weeksView.stepperAmount = weeksStepperValue
-        weeksView.timeUnitAmount.text = "\(Int(weeksStepperValue))"
         weeksView.addTarget(self, action: #selector(updateWeeksWithStepper))
         
         lifetimeWarrantyStackView.axis = .horizontal

@@ -8,7 +8,7 @@
 import UIKit
 
 class EditWarrantyPhotoViewController: UIViewController {
-
+    
     // MARK: - Properties
     
     let parentStackView = UIStackView()
@@ -72,8 +72,9 @@ class EditWarrantyPhotoViewController: UIViewController {
         imageView.layer.borderWidth = 1
         imageView.layer.borderColor = UIColor.label.cgColor
         imageView.contentMode = .scaleAspectFill
-        guard let invoicePhoto = viewModel?.warranty.invoicePhoto else { return }
-        imageView.image = UIImage(data: invoicePhoto)
+        if let invoicePhoto = viewModel?.warranty.invoicePhoto {
+            imageView.image = UIImage(data: invoicePhoto)
+        }
         imageView.layer.masksToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -92,7 +93,7 @@ class EditWarrantyPhotoViewController: UIViewController {
         endCurrentScreenButton.backgroundColor = MWColor.paleOrange
         endCurrentScreenButton.roundingViewCorners(radius: 8)
         endCurrentScreenButton.setTitle("Enregistrer", for: .normal)
-       // endCurrentScreenButton.addTarget(self, action: #selector(saveWarranty), for: .touchUpInside)
+        // endCurrentScreenButton.addTarget(self, action: #selector(saveWarranty), for: .touchUpInside)
         endCurrentScreenButton.isUserInteractionEnabled = true
         endCurrentScreenButton.translatesAutoresizingMaskIntoConstraints = false
         
@@ -117,8 +118,9 @@ class EditWarrantyPhotoViewController: UIViewController {
             addAFileTitleLabel.text = "Photo produit"
             endCurrentScreenButton.setTitle("Suivant", for: .normal)
             endCurrentScreenButton.addTarget(self, action: #selector(goToEditInvoicePhotoScreen), for: .touchUpInside)
-            guard let productPhoto = viewModel?.warranty.productPhoto else { return }
-            imageView.image = UIImage(data: productPhoto)
+            if let productPhoto = viewModel?.warranty.productPhoto {
+                imageView.image = UIImage(data: productPhoto)
+            }
         }
     }
     
@@ -127,8 +129,9 @@ class EditWarrantyPhotoViewController: UIViewController {
             addAFileTitleLabel.text = "Ajouter une facture"
             endCurrentScreenButton.setTitle("Enregistrer", for: .normal)
             endCurrentScreenButton.addTarget(self, action: #selector(saveWarranty), for: .touchUpInside)
-            guard let invoicePhoto = viewModel?.warranty.invoicePhoto else { return }
-            imageView.image = UIImage(data: invoicePhoto)
+            if let invoicePhoto = viewModel?.warranty.invoicePhoto {
+                imageView.image = UIImage(data: invoicePhoto)
+            }
         }
     }
     

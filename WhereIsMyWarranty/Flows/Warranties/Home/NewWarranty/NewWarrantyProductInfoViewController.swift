@@ -102,6 +102,9 @@ class NewWarrantyProductInfoViewController: UIViewController {
         if yearsView.timeUnitAmount.text != "0" {
             updateYears()
         }
+        if lifetimeWarrantySwitch.isOn {
+            endDateLabel.text = Strings.lifetimeWarrantyDefaultText
+        }
     }
     
     @objc func goToAddProductPhotoScreen() {
@@ -118,9 +121,10 @@ class NewWarrantyProductInfoViewController: UIViewController {
         let formatter1 = DateFormatter()
         formatter1.dateStyle = .full
         updatedDate = updatedDate?.adding(.day, value: (weeksView.didIncrementStepper ? 7 : -7))
-        guard let safeNewDate = updatedDate else { return }
-        endDateLabel.text = Strings.endDateDefaultText + formatter1.string(from: safeNewDate)
-        updatedDate = safeNewDate
+        if let safeNewDate = updatedDate {
+            endDateLabel.text = Strings.endDateDefaultText + formatter1.string(from: safeNewDate)
+            updatedDate = safeNewDate
+        }
     }
     
     @objc func updateMonthsWithStepper() {
@@ -130,9 +134,10 @@ class NewWarrantyProductInfoViewController: UIViewController {
         let formatter1 = DateFormatter()
         formatter1.dateStyle = .full
         updatedDate = updatedDate?.adding(.month, value: (monthsView.didIncrementStepper ? 1 : -1))
-        guard let safeNewDate = updatedDate else { return }
-        endDateLabel.text = Strings.endDateDefaultText + formatter1.string(from: safeNewDate)
-        updatedDate = safeNewDate
+        if let safeNewDate = updatedDate {
+            endDateLabel.text = Strings.endDateDefaultText + formatter1.string(from: safeNewDate)
+            updatedDate = safeNewDate
+        }
     }
     
     @objc func updateYearsWithStepper() {
@@ -142,9 +147,10 @@ class NewWarrantyProductInfoViewController: UIViewController {
         let formatter1 = DateFormatter()
         formatter1.dateStyle = .full
         updatedDate = updatedDate?.adding(.year, value: (yearsView.didIncrementStepper ? 1 : -1))
-        guard let safeNewDate = updatedDate else { return }
-        endDateLabel.text = Strings.endDateDefaultText + formatter1.string(from: safeNewDate)
-        updatedDate = safeNewDate
+        if let safeNewDate = updatedDate {
+            endDateLabel.text = Strings.endDateDefaultText + formatter1.string(from: safeNewDate)
+            updatedDate = safeNewDate
+        }
     }
     
     // MARK: - Methods
@@ -152,35 +158,43 @@ class NewWarrantyProductInfoViewController: UIViewController {
     func updateWeeks() {
         let formatter1 = DateFormatter()
         formatter1.dateStyle = .full
-        guard let timeUnitAmount = weeksView.timeUnitAmount.text else { return }
-        guard let timeUnitAmountAsInt = Int(timeUnitAmount) else { return }
-        updatedDate = updatedDate?.adding(.day, value: timeUnitAmountAsInt * 7)
-        // newDate = endDateCalendar?.date(byAdding: .day, value: Int(weeksView.stepper.value * 7), to: datePicker.date)
-        guard let safeNewDate = updatedDate else { return }
-        endDateLabel.text = Strings.endDateDefaultText + formatter1.string(from: safeNewDate)
-        updatedDate = safeNewDate
+        if let timeUnitAmount = weeksView.timeUnitAmount.text {
+            if let timeUnitAmountAsInt = Int(timeUnitAmount) {
+                updatedDate = updatedDate?.adding(.day, value: timeUnitAmountAsInt * 7)
+            }
+        }
+        if let safeNewDate = updatedDate {
+            endDateLabel.text = Strings.endDateDefaultText + formatter1.string(from: safeNewDate)
+            updatedDate = safeNewDate
+        }
     }
     
     func updateMonths() {
         let formatter1 = DateFormatter()
         formatter1.dateStyle = .full
-        guard let timeUnitAmount = monthsView.timeUnitAmount.text else { return }
-        guard let timeUnitAmountAsInt = Int(timeUnitAmount) else { return }
-        updatedDate = updatedDate?.adding(.month, value: timeUnitAmountAsInt)
-        guard let safeNewDate = updatedDate else { return }
-        endDateLabel.text = Strings.endDateDefaultText + formatter1.string(from: safeNewDate)
-        updatedDate = safeNewDate
+        if let timeUnitAmount = monthsView.timeUnitAmount.text {
+            if let timeUnitAmountAsInt = Int(timeUnitAmount) {
+                updatedDate = updatedDate?.adding(.month, value: timeUnitAmountAsInt)
+            }
+        }
+        if let safeNewDate = updatedDate {
+            endDateLabel.text = Strings.endDateDefaultText + formatter1.string(from: safeNewDate)
+            updatedDate = safeNewDate
+        }
     }
     
     func updateYears() {
         let formatter1 = DateFormatter()
         formatter1.dateStyle = .full
-        guard let timeUnitAmount = yearsView.timeUnitAmount.text else { return }
-        guard let timeUnitAmountAsInt = Int(timeUnitAmount) else { return }
-        updatedDate = updatedDate?.adding(.year, value: timeUnitAmountAsInt)
-        guard let safeNewDate = updatedDate else { return }
-        endDateLabel.text = Strings.endDateDefaultText + formatter1.string(from: safeNewDate)
-        updatedDate = safeNewDate
+        if let timeUnitAmount = yearsView.timeUnitAmount.text {
+            if let timeUnitAmountAsInt = Int(timeUnitAmount) {
+                updatedDate = updatedDate?.adding(.year, value: timeUnitAmountAsInt)
+            }
+        }
+        if let safeNewDate = updatedDate {
+            endDateLabel.text = Strings.endDateDefaultText + formatter1.string(from: safeNewDate)
+            updatedDate = safeNewDate
+        }
     }
     
     func updateDateAfterTurningSwitchOff() {
@@ -189,11 +203,12 @@ class NewWarrantyProductInfoViewController: UIViewController {
         }
         let formatter1 = DateFormatter()
         formatter1.dateStyle = .full
-        guard let safeNewDate = updatedDate else { return }
-        if weeksView.timeUnitAmount.text == "0" && monthsView.timeUnitAmount.text == "0" && yearsView.timeUnitAmount.text == "0" {
-            endDateLabel.text = Strings.endDateDefaultText
-        } else {
-            endDateLabel.text = Strings.endDateDefaultText + formatter1.string(from: safeNewDate)
+        if let safeNewDate = updatedDate {
+            if weeksView.timeUnitAmount.text == "0" && monthsView.timeUnitAmount.text == "0" && yearsView.timeUnitAmount.text == "0" {
+                endDateLabel.text = Strings.endDateDefaultText
+            } else {
+                endDateLabel.text = Strings.endDateDefaultText + formatter1.string(from: safeNewDate)
+            }
         }
     }
 }
@@ -301,7 +316,7 @@ extension NewWarrantyProductInfoViewController {
             parentStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 24),
             parentStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
             parentStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
-
+            
             endDateLabel.heightAnchor.constraint(equalToConstant: 60),
             
             nextStepButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),

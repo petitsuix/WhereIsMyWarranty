@@ -65,8 +65,7 @@ class NewWarrantyViewModel: NSObject {
         newWarranty.name = name
         newWarranty.warrantyStart = startDate
         newWarranty.warrantyEnd = endDate
-        guard let isLifetimeWarranty = isLifetimeWarranty else { return }
-        newWarranty.lifetimeWarranty = isLifetimeWarranty
+        newWarranty.lifetimeWarranty = isLifetimeWarranty ?? false
         newWarranty.invoicePhoto = invoicePhoto
         newWarranty.productPhoto = productPhoto
         storageService.save()
