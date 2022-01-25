@@ -13,18 +13,20 @@ class WarrantiesCell: UICollectionViewCell {
     
     static let identifier = "WarrantiesCollectionViewCell"
     
+    var warranty: Warranty? {
+        didSet {
+            refreshWarrantyData()
+        }
+    }
+    
+    // MARK: - Private properties
+    
     private var warrantyProductImageView = UIImageView()
     private var infoStackView = UIStackView()
     private var warrantyName = UILabel()
     private var sellersNameAndLocation = UILabel()
     private var warrantyEnd = UILabel()
     private var remainingTime = UILabel()
-    
-    var warranty: Warranty? {
-        didSet {
-            refreshWarrantyData()
-        }
-    }
     
     // MARK: - Methods
     
@@ -49,14 +51,16 @@ class WarrantiesCell: UICollectionViewCell {
         super.layoutSubviews()
     }
     
-    func configureImageView() {
+    // MARK: - Private Methods
+    
+    private func configureImageView() {
         warrantyProductImageView.translatesAutoresizingMaskIntoConstraints = false
         warrantyProductImageView.roundingViewCorners(radius: 10)
         warrantyProductImageView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMinXMaxYCorner] // to round specific corners (top left and bottom left)
         contentView.addSubview(warrantyProductImageView)
     }
     
-    func configureWarrantyCellInfoStackView() {
+    private func configureWarrantyCellInfoStackView() {
         infoStackView.axis = .vertical
         infoStackView.translatesAutoresizingMaskIntoConstraints = false
         infoStackView.spacing = 8
@@ -79,7 +83,7 @@ class WarrantiesCell: UICollectionViewCell {
         contentView.addSubview(infoStackView)
     }
     
-    func refreshWarrantyData() {
+    private func refreshWarrantyData() {
         guard let invoicePhoto = warranty?.productPhoto else { return }
         warrantyProductImageView.image = UIImage(data: invoicePhoto)
         
@@ -98,7 +102,7 @@ class WarrantiesCell: UICollectionViewCell {
         }
     }
     
-    func getRemainingTimeFromEndDate() -> String {
+    private func getRemainingTimeFromEndDate() -> String {
         let calendar = NSCalendar.current
         
         guard let warrantyEnd = warranty?.warrantyEnd else { return "000" }
@@ -112,7 +116,7 @@ class WarrantiesCell: UICollectionViewCell {
     
     // MARK: - Constraints setup
     
-    func activateConstraints() {
+    private func activateConstraints() {
         NSLayoutConstraint.activate([
             warrantyProductImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0),
             warrantyProductImageView.topAnchor.constraint(equalTo: topAnchor, constant: 0),

@@ -36,8 +36,8 @@ class WarrantiesCoordinator: Coordinator {
     }
     
     func showWarrantiesScreen() {
-        let warrantiesVC = WarrantiesViewController()
-        let warrantiesViewModel = WarrantiesViewModel(coordinator: self, storageService: storageService)
+        let warrantiesVC = HomeWarrantiesListViewController()
+        let warrantiesViewModel = HomeWarrantiesListViewModel(coordinator: self, storageService: storageService)
         warrantiesViewModel.viewDelegate = warrantiesVC
         warrantiesVC.viewModel = warrantiesViewModel
         navigationController.setViewControllers([warrantiesVC], animated: false)

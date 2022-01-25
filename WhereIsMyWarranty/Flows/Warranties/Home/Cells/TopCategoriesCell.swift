@@ -14,7 +14,7 @@ class TopCategoriesCell: UICollectionViewCell {
     static let identifier = "CustomCollectionViewCell"
     
     // FIXME: 
-     let titleLabel: UILabel = {
+    let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "éléctroniques"
         return label

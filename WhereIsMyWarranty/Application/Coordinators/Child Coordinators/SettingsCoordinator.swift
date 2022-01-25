@@ -29,7 +29,9 @@ class SettingsCoordinator: Coordinator {
         showSettingsScreen()
     }
     
-    func showSettingsScreen() {
+    // MARK: - Private methods
+    
+   private func showSettingsScreen() {
         let settingsVC = SettingsViewController()
         // let settingsViewModel = SettingsViewModel(coordinator: self)
         navigationController.setViewControllers([settingsVC], animated: false)

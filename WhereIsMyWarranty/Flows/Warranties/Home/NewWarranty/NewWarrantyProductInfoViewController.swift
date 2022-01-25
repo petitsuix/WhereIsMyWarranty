@@ -94,7 +94,7 @@ class NewWarrantyProductInfoViewController: UIViewController {
     @objc func updateTimeIntervals() {
         updatedDate = datePicker.date
         if weeksView.timeUnitAmount.text != "0" {
-            updateDays()
+            updateWeeks()
         }
         if monthsView.timeUnitAmount.text != "0" {
             updateMonths()
@@ -149,7 +149,7 @@ class NewWarrantyProductInfoViewController: UIViewController {
     
     // MARK: - Methods
     
-    func updateDays() {
+    func updateWeeks() {
         let formatter1 = DateFormatter()
         formatter1.dateStyle = .full
         guard let timeUnitAmount = weeksView.timeUnitAmount.text else { return }

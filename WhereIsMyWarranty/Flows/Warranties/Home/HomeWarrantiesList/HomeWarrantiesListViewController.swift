@@ -14,12 +14,12 @@ enum State<Data> { // To execute particular actions according to the situation
     case showData
 }
 
-class WarrantiesViewController: UIViewController {
+class HomeWarrantiesListViewController: UIViewController {
     
     
     // MARK: - Properties
     
-    var viewModel: WarrantiesViewModel?
+    var viewModel: HomeWarrantiesListViewModel?
     
     // MARK: - Private properties
     
@@ -76,22 +76,6 @@ class WarrantiesViewController: UIViewController {
         viewState = .showData
     }
     
-    // MARK: - Methods
-    
-    func warrantyCellTapped(warranty: Warranty) {
-        viewModel?.showWarrantyDetailsScreen(warranty: warranty)
-    }
-    
-    func categoryCellTapped(category: Category) {
-    }
-    
-    // MARK: - Private methods
-    
-    private func resetViewState() {
-        warrantiesCollectionView.isHidden = true
-    }
-    
-    
     // MARK: - objc methods
     
     @objc func warrantiesUpdated() {
@@ -107,73 +91,7 @@ class WarrantiesViewController: UIViewController {
     @objc func addCategoryButtonAction() {
         viewModel?.showAddCategoryAlert()
     }
-}
-// MARK: - View Configuration
-
-extension WarrantiesViewController {
-    private func setupView() {
-        // Ici
-        // creation des lable
-        // configuration des view
-        // config stack view
-        
-        // nalayoutconstraint ....
-        self.title = Strings.warrantiesTitle
-        
-        view.backgroundColor = .white
-        configureNavigationBar()
-        configureCategoriesStackView()
-        configureBottomBorder()
-        configureWarrantiesCollectionView()
-        configureAddWarrantyButton()
-        activateConstraints()
-    }
     
-    private func configureNavigationBar() {
-        navBarAppearance.backgroundColor = MWColor.paleOrange
-        navigationController?.navigationBar.standardAppearance = navBarAppearance
-        navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
-    }
-    
-    private func configureBottomBorder() {
-        bottomBorder.translatesAutoresizingMaskIntoConstraints = false
-        bottomBorder.backgroundColor = MWColor.bluegrey
-        view.addSubview(bottomBorder)
-    }
-    
-    private func displayNoWarrantiesView() {
-        let noResultTextView = UITextView.init(frame: self.view.frame)
-        noResultTextView.text = "\n\n\n\n\nOops, nothing to show here !"
-        noResultTextView.font = UIFont.preferredFont(forTextStyle: .subheadline)
-        noResultTextView.textColor = .systemGray
-        noResultTextView.textAlignment = .center
-        noResultTextView.isEditable = false
-        noResultTextView.translatesAutoresizingMaskIntoConstraints = false
-        noResultTextView.adjustsFontForContentSizeCategory = true
-        view.addSubview(noResultTextView)
-    }
-    
-    // MARK: categoriesCollectionView configuration
-    
-    private func configureCategoriesStackView() {
-        categoriesStackView.translatesAutoresizingMaskIntoConstraints = false
-        categoriesStackView.backgroundColor = .white
-        categoriesStackView.spacing = 5.5
-        view.addSubview(categoriesStackView)
-        configureAddCategoryButton()
-        configureCategoriesCollectionView()
-    }
-    
-    private func configureAddCategoryButton() {
-        addCategoryButton.translatesAutoresizingMaskIntoConstraints = false
-        addCategoryButton.backgroundColor = .white
-        addCategoryButton.setImage(UIImage(systemName: "plus.circle.fill", withConfiguration: UIImage.SymbolConfiguration(pointSize: 38, weight: .light, scale: .small)), for: .normal)
-        addCategoryButton.tintColor = MWColor.bluegrey
-        categoriesStackView.addArrangedSubview(addCategoryButton)
-        addCategoryButton.addTarget(self, action: #selector(showAlert), for: .touchUpInside)
-    }
-    
-    // showAlert is the alert displayed upon touching the "+" button.
     @objc func showAlert() {
         let alert = UIAlertController(title: "Nouvelle categorie", message: "Donnez lui un nom", preferredStyle: .alert)
         let saveAction = UIAlertAction(title: "ajouter", style: .default) { [unowned self] action in
@@ -191,46 +109,91 @@ extension WarrantiesViewController {
         present(alert, animated: true)
     }
     
-    private func configureCategoriesCollectionView() {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-       // layout.itemSize = CGSize(width: view.frame.size.width/5, height: view.frame.size.width/13.5)
-        layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
-        categoriesCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout) // self.view.frame c'est pareil ?
+    // MARK: - Methods
+    
+    func warrantyCellTapped(warranty: Warranty) {
+        viewModel?.showWarrantyDetailsScreen(warranty: warranty)
+    }
+    
+    func categoryCellTapped(category: Category) {
+    }
+    
+    // MARK: - Private methods
+    
+    private func resetViewState() {
+        warrantiesCollectionView.isHidden = true
+    }
+    
+    private func displayNoWarrantiesView() {
+        let noResultTextView = UITextView.init(frame: self.view.frame)
+        noResultTextView.text = "\n\n\n\n\nOops, nothing to show here !"
+        noResultTextView.font = UIFont.preferredFont(forTextStyle: .subheadline)
+        noResultTextView.textColor = .systemGray
+        noResultTextView.textAlignment = .center
+        noResultTextView.isEditable = false
+        noResultTextView.translatesAutoresizingMaskIntoConstraints = false
+        noResultTextView.adjustsFontForContentSizeCategory = true
+        view.addSubview(noResultTextView)
+    }
+}
+
+// MARK: - View Configuration
+
+extension HomeWarrantiesListViewController {
+    private func setupView() {
+        self.title = Strings.warrantiesTitle
+        view.backgroundColor = .white
+        
+        navBarAppearance.backgroundColor = MWColor.paleOrange
+        navigationController?.navigationBar.standardAppearance = navBarAppearance
+        navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
+        
+        addCategoryButton.translatesAutoresizingMaskIntoConstraints = false
+        addCategoryButton.backgroundColor = .white
+        addCategoryButton.setImage(UIImage(systemName: "plus.circle.fill", withConfiguration: UIImage.SymbolConfiguration(pointSize: 38, weight: .light, scale: .small)), for: .normal)
+        addCategoryButton.tintColor = MWColor.bluegrey
+        categoriesStackView.addArrangedSubview(addCategoryButton)
+        addCategoryButton.addTarget(self, action: #selector(showAlert), for: .touchUpInside)
+        
+        categoriesStackView.translatesAutoresizingMaskIntoConstraints = false
+        categoriesStackView.backgroundColor = .white
+        categoriesStackView.spacing = 5.5
+        
+        bottomBorder.translatesAutoresizingMaskIntoConstraints = false
+        bottomBorder.backgroundColor = MWColor.bluegrey
+        
+        let categoriesLayout = UICollectionViewFlowLayout()
+        categoriesLayout.scrollDirection = .horizontal
+        // layout.itemSize = CGSize(width: view.frame.size.width/5, height: view.frame.size.width/13.5)
+        categoriesLayout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
+        categoriesCollectionView = UICollectionView(frame: .zero, collectionViewLayout: categoriesLayout) // self.view.frame c'est pareil ?
         categoriesCollectionView.translatesAutoresizingMaskIntoConstraints = false
         categoriesCollectionView.register(TopCategoriesCell.self, forCellWithReuseIdentifier: TopCategoriesCell.identifier)
         categoriesCollectionView.dataSource = self
         categoriesCollectionView.delegate = self
         categoriesCollectionView.backgroundColor = .white
         categoriesStackView.addArrangedSubview(categoriesCollectionView)
-    }
-    
-    // MARK: warrantiesCollectionView configuration
-    
-    private func configureWarrantiesCollectionView() {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
-        layout.itemSize = CGSize(width: view.frame.size.width-16, height: view.frame.size.width/3.3)
-        layout.minimumLineSpacing = 24
-        warrantiesCollectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: layout)
+        
+        let warrantiesLayout = UICollectionViewFlowLayout()
+        warrantiesLayout.scrollDirection = .vertical
+        warrantiesLayout.itemSize = CGSize(width: view.frame.size.width-16, height: view.frame.size.width/3.3)
+        warrantiesLayout.minimumLineSpacing = 24
+        warrantiesCollectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: warrantiesLayout)
         warrantiesCollectionView.translatesAutoresizingMaskIntoConstraints = false
         warrantiesCollectionView.register(WarrantiesCell.self, forCellWithReuseIdentifier: WarrantiesCell.identifier)
         warrantiesCollectionView.dataSource = self
         warrantiesCollectionView.delegate = self
-        view.addSubview(warrantiesCollectionView)
-    }
-    
-    private func configureAddWarrantyButton() {
+        
         newWarrantyButton.setImage(UIImage(systemName: "plus.circle.fill", withConfiguration: UIImage.SymbolConfiguration(pointSize: 50, weight: .light, scale: .small)), for: .normal)
         newWarrantyButton.tintColor = MWColor.bluegrey
         newWarrantyButton.addTarget(self, action: #selector(newWarrantyButtonAction), for: .touchUpInside)
         newWarrantyButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        view.addSubview(categoriesStackView)
+        view.addSubview(bottomBorder)
+        view.addSubview(warrantiesCollectionView)
         view.addSubview(newWarrantyButton)
-    }
-    
-    // MARK: Constraints
-    
-    private func activateConstraints() {
+        
         NSLayoutConstraint.activate([
             categoriesCollectionView.heightAnchor.constraint(equalToConstant: 60),
             
@@ -259,7 +222,7 @@ extension WarrantiesViewController {
 
 // MARK: - CollectionViews configuration
 
-extension WarrantiesViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+extension HomeWarrantiesListViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // return user.categories.count
@@ -295,38 +258,22 @@ extension WarrantiesViewController: UICollectionViewDataSource, UICollectionView
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("selected item nbr \(indexPath.row)")
         if collectionView == warrantiesCollectionView {
-        guard let selectedWarranty = viewModel?.warranties[indexPath.row] else { return }
+            guard let selectedWarranty = viewModel?.warranties[indexPath.row] else { return }
             warrantyCellTapped(warranty: selectedWarranty) }
         else {
-        //  storageService.selectedWarranty = viewModel.warranties[indexPath.row]
-        
-        guard let selectedCategory = viewModel?.categories[indexPath.row] else { return }
-        
-        categoryCellTapped(category: selectedCategory)
+            //  storageService.selectedWarranty = viewModel.warranties[indexPath.row]
+            
+            guard let selectedCategory = viewModel?.categories[indexPath.row] else { return }
+            
+            categoryCellTapped(category: selectedCategory)
         }
         // displayWarrantiesFor(selectedCategory)
     }
-    
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//
-//        return CGSize(width: view.frame.size.width-50, height: .)
-//     }
-//
-    /* func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-     let categoryCell = TopCategoriesCell()
-     if collectionView == categoriesCollectionView {
-     return categoryCell.titleLabel.frame.size
-     } else {
-     return CGSize(width: view.frame.size.width-16, height: view.frame.size.width/3.3)
-     }
-     } */
-    
-    
 }
 
 // MARK: - Viewmodel delegate
 
-extension WarrantiesViewController {
+extension HomeWarrantiesListViewController {
     func refreshWith(warranties: [Warranty]) {
         if warranties.isEmpty {
             //   viewState = .empty // Displays "no results found" view

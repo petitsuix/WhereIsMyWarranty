@@ -7,13 +7,12 @@
 
 import UIKit
 
-class WarrantiesViewModel: NSObject {
+class HomeWarrantiesListViewModel {
     
     // MARK: - Properties
     
-    weak var viewDelegate: WarrantiesViewController?
-    private let coordinator: WarrantiesCoordinator
-    private let storageService: StorageService
+    weak var viewDelegate: HomeWarrantiesListViewController?
+    
     
     var warranties: [Warranty] = [] {
         didSet {
@@ -27,10 +26,15 @@ class WarrantiesViewModel: NSObject {
         }
     }
     
+    // MARK: - Private properties
+    
+    private let coordinator: WarrantiesCoordinator
+    private let storageService: StorageService
+    
     // MARK: - objc methods
     
     @objc func showAddCategoryAlert() {
-       
+        
     }
     
     // MARK: - Methods
@@ -70,6 +74,6 @@ class WarrantiesViewModel: NSObject {
         catch {
             print(error)
         }
-       // categories = ["Electroménager", "Pro", "Informatique"]
+        // categories = ["Electroménager", "Pro", "Informatique"]
     }
 }
