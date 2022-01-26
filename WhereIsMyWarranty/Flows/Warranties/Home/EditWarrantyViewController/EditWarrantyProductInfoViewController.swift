@@ -68,8 +68,11 @@ class EditWarrantyProductInfoViewController: UIViewController {
     // MARK: - objc methods
     
     @objc func nameTextfieldDidChange(textfield: UITextField) { // comment le controller communique avec le viewmodel
+        // FIXME: 
         viewModel?.name = textfield.text
     }
+    
+    
     
     @objc func switchAction() {
         UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseInOut, animations: {

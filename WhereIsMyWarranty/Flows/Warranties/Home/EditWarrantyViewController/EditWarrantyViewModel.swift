@@ -25,7 +25,6 @@ class EditWarrantyViewModel {
             productInfoViewDelegate?.canGoToNextStep(canSave: canSaveWarranty)
         }
     }
-    
     var startDate: Date?
     var isLifetimeWarranty: Bool?
     var endDate: Date?
@@ -56,10 +55,6 @@ class EditWarrantyViewModel {
         let notificationName = NSNotification.Name(rawValue: "warranty updated")
         let notification = Notification(name: notificationName)
         NotificationCenter.default.post(notification)
-    }
-    
-    func showEditWarrantyProductInfoScreen(warranty: Warranty) {
-        coordinator.showEditWarrantyProductInfoScreen(warranty: warranty)
     }
 
     func goToEditProductPhotoScreen() {

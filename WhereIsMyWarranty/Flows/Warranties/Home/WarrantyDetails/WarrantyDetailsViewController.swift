@@ -45,7 +45,6 @@ class WarrantyDetailsViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupView()
-        //  viewModel?.deleteWarranty()
     }
     
     // MARK: - @objc methods
