@@ -93,8 +93,9 @@ class WarrantiesCell: UICollectionViewCell {
         
         if warranty?.lifetimeWarranty == false {
             warrantyEnd.isHidden = false
-            guard let warrantyEndDate = warranty?.warrantyEnd else { return }
-            warrantyEnd.text = "Garanti jusqu'au \(formatter1.string(from: warrantyEndDate))"
+            if let warrantyEndDate = warranty?.warrantyEnd {
+                warrantyEnd.text = "Garanti jusqu'au \(formatter1.string(from: warrantyEndDate))"
+            }
             remainingTime.text = getRemainingTimeFromEndDate() + " jours restants"
         } else {
             warrantyEnd.isHidden = true
