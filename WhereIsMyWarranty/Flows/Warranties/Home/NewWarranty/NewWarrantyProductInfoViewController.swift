@@ -12,18 +12,18 @@ class NewWarrantyProductInfoViewController: UIViewController {
     // MARK: - Properties
     
     // 1
-    var parentStackView = UIStackView()
+    let parentStackView = UIStackView()
     
     // 1.1
     let nameAndStartDateStackView = UIStackView()
     // 1.1.1
     var nameStackView = UIStackView()
     let nameTitle = UILabel()
-    var nameField = UITextField()
+    let nameField = UITextField()
     // 1.1.2
     let startDateStackView = UIStackView()
     let startDateTitle = UILabel()
-    var datePicker = UIDatePicker()
+    let datePicker = UIDatePicker()
     
     
     // 1.2
@@ -39,7 +39,7 @@ class NewWarrantyProductInfoViewController: UIViewController {
     
     
     let endDateLabel = UILabel()
-    var nextStepButton = UIButton()
+    let nextStepButton = UIButton()
     
     var updatedDate: Date?
     
@@ -55,20 +55,6 @@ class NewWarrantyProductInfoViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.isNavigationBarHidden = true
-    }
-    
-    // MARK: - Methods
-    
-    func startDateDidChange() {
-        viewModel?.startDate = datePicker.date
-    }
-    
-    func lifetimeWarrantyDidChange() {
-        viewModel?.isLifetimeWarranty = (lifetimeWarrantySwitch.isOn ? true : false)
-    }
-    
-    func endDateDidChange() {
-        viewModel?.endDate = updatedDate
     }
     
     // MARK: - objc methods
@@ -108,9 +94,9 @@ class NewWarrantyProductInfoViewController: UIViewController {
     }
     
     @objc func goToAddProductPhotoScreen() {
-        startDateDidChange() // Calling this method here, only at the end when moving to nextStep. Not in start datePicker's action "updateStartDateValue", because it may never be called if the user doesn't interract with start datePicker.
-        lifetimeWarrantyDidChange()
-        endDateDidChange()
+        viewModel?.startDate = datePicker.date
+        viewModel?.isLifetimeWarranty = (lifetimeWarrantySwitch.isOn ? true : false)
+        viewModel?.endDate = updatedDate
         viewModel?.goToAddProductPhotoScreen()
     }
     
@@ -121,9 +107,9 @@ class NewWarrantyProductInfoViewController: UIViewController {
         let formatter1 = DateFormatter()
         formatter1.dateStyle = .full
         updatedDate = updatedDate?.adding(.day, value: (weeksView.didIncrementStepper ? 7 : -7))
-        if let safeNewDate = updatedDate {
-            endDateLabel.text = Strings.endDateDefaultText + formatter1.string(from: safeNewDate)
-            updatedDate = safeNewDate
+        if let updatedDate = updatedDate {
+            endDateLabel.text = Strings.endDateDefaultText + formatter1.string(from: updatedDate)
+            self.updatedDate = updatedDate
         }
     }
     
@@ -134,9 +120,9 @@ class NewWarrantyProductInfoViewController: UIViewController {
         let formatter1 = DateFormatter()
         formatter1.dateStyle = .full
         updatedDate = updatedDate?.adding(.month, value: (monthsView.didIncrementStepper ? 1 : -1))
-        if let safeNewDate = updatedDate {
-            endDateLabel.text = Strings.endDateDefaultText + formatter1.string(from: safeNewDate)
-            updatedDate = safeNewDate
+        if let updatedDate = updatedDate {
+            endDateLabel.text = Strings.endDateDefaultText + formatter1.string(from: updatedDate)
+            self.updatedDate = updatedDate
         }
     }
     
@@ -147,15 +133,15 @@ class NewWarrantyProductInfoViewController: UIViewController {
         let formatter1 = DateFormatter()
         formatter1.dateStyle = .full
         updatedDate = updatedDate?.adding(.year, value: (yearsView.didIncrementStepper ? 1 : -1))
-        if let safeNewDate = updatedDate {
-            endDateLabel.text = Strings.endDateDefaultText + formatter1.string(from: safeNewDate)
-            updatedDate = safeNewDate
+        if let updatedDate = updatedDate {
+            endDateLabel.text = Strings.endDateDefaultText + formatter1.string(from: updatedDate)
+            self.updatedDate = updatedDate
         }
     }
     
     // MARK: - Methods
     
-    func updateWeeks() {
+   private func updateWeeks() {
         let formatter1 = DateFormatter()
         formatter1.dateStyle = .full
         if let timeUnitAmount = weeksView.timeUnitAmount.text {
@@ -163,13 +149,13 @@ class NewWarrantyProductInfoViewController: UIViewController {
                 updatedDate = updatedDate?.adding(.day, value: timeUnitAmountAsInt * 7)
             }
         }
-        if let safeNewDate = updatedDate {
-            endDateLabel.text = Strings.endDateDefaultText + formatter1.string(from: safeNewDate)
-            updatedDate = safeNewDate
+        if let updatedDate = updatedDate {
+            endDateLabel.text = Strings.endDateDefaultText + formatter1.string(from: updatedDate)
+            self.updatedDate = updatedDate
         }
     }
     
-    func updateMonths() {
+    private func updateMonths() {
         let formatter1 = DateFormatter()
         formatter1.dateStyle = .full
         if let timeUnitAmount = monthsView.timeUnitAmount.text {
@@ -177,13 +163,13 @@ class NewWarrantyProductInfoViewController: UIViewController {
                 updatedDate = updatedDate?.adding(.month, value: timeUnitAmountAsInt)
             }
         }
-        if let safeNewDate = updatedDate {
-            endDateLabel.text = Strings.endDateDefaultText + formatter1.string(from: safeNewDate)
-            updatedDate = safeNewDate
+        if let updatedDate = updatedDate {
+            endDateLabel.text = Strings.endDateDefaultText + formatter1.string(from: updatedDate)
+            self.updatedDate = updatedDate
         }
     }
     
-    func updateYears() {
+    private func updateYears() {
         let formatter1 = DateFormatter()
         formatter1.dateStyle = .full
         if let timeUnitAmount = yearsView.timeUnitAmount.text {
@@ -191,23 +177,23 @@ class NewWarrantyProductInfoViewController: UIViewController {
                 updatedDate = updatedDate?.adding(.year, value: timeUnitAmountAsInt)
             }
         }
-        if let safeNewDate = updatedDate {
-            endDateLabel.text = Strings.endDateDefaultText + formatter1.string(from: safeNewDate)
-            updatedDate = safeNewDate
+        if let updatedDate = updatedDate {
+            endDateLabel.text = Strings.endDateDefaultText + formatter1.string(from: updatedDate)
+            self.updatedDate = updatedDate
         }
     }
     
-    func updateDateAfterTurningSwitchOff() {
+    private func updateDateAfterTurningSwitchOff() {
         if updatedDate == nil {
             updatedDate = datePicker.date
         }
         let formatter1 = DateFormatter()
         formatter1.dateStyle = .full
-        if let safeNewDate = updatedDate {
+        if let updatedDate = updatedDate {
             if weeksView.timeUnitAmount.text == "0" && monthsView.timeUnitAmount.text == "0" && yearsView.timeUnitAmount.text == "0" {
                 endDateLabel.text = Strings.endDateDefaultText
             } else {
-                endDateLabel.text = Strings.endDateDefaultText + formatter1.string(from: safeNewDate)
+                endDateLabel.text = Strings.endDateDefaultText + formatter1.string(from: updatedDate)
             }
         }
     }
@@ -225,7 +211,7 @@ extension NewWarrantyProductInfoViewController {
 
 extension NewWarrantyProductInfoViewController {
     
-    func setupView() {
+    private func setupView() {
         view.backgroundColor = .white
         
         nameTitle.text = "Nom du produit"

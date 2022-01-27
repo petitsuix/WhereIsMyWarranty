@@ -19,12 +19,25 @@ class EditWarrantyViewModel {
     
     var warranty: Warranty
     
-    var name: String? {
-        didSet {
-            guard oldValue != name else { return }
-            productInfoViewDelegate?.canGoToNextStep(canSave: canSaveWarranty)
-        }
+    private var hasNameChanged: Bool {
+        name != warranty.name
     }
+    var canSave: Bool {
+        return hasNameChanged
+    }
+    
+    var name: String? //{
+//        didSet {
+//            if oldValue != name {
+//                
+//            }
+//        }
+//    }
+//    
+    var canSaveWarranty: Bool {
+        return name?.isEmpty == false /// if name?.isEmpty == false, then canSaveWarranty == true
+    }
+    
     var startDate: Date?
     var isLifetimeWarranty: Bool?
     var endDate: Date?
@@ -39,16 +52,13 @@ class EditWarrantyViewModel {
     var monthsStepperValue: Int?
     var weeksStepperValue: Int?
     
-    var canSaveWarranty: Bool {
-        return name?.isEmpty == false
-    }
-    
     // MARK: - Methods
     
     init(coordinator: WarrantiesCoordinator, storageService: StorageService, warranty: Warranty) {
         self.coordinator = coordinator
         self.storageService = storageService
         self.warranty = warranty
+        self.name = warranty.name
     }
     
     func notifyWarrantyUpdated() {
@@ -70,7 +80,9 @@ class EditWarrantyViewModel {
     }
     
     func saveEditedWarranty() {
-        warranty.name = name
+        if hasNameChanged {
+            warranty.name = name
+        }
         warranty.warrantyStart = startDate
         warranty.lifetimeWarranty = isLifetimeWarranty ?? false
         warranty.warrantyEnd = endDate

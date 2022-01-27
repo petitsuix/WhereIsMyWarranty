@@ -16,11 +16,12 @@ class NewWarrantyViewModel: NSObject {
     let coordinator: WarrantiesCoordinator
     let storageService: StorageService
     
-    
     var name: String? {
         didSet {
             guard oldValue != name else { return }
             newWarrantyProductInfoViewDelegate?.canGoToNextStep(canSave: canSaveWarranty)
+            print(oldValue)
+            print(name)
         }
     }
     

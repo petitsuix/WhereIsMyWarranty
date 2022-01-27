@@ -47,7 +47,6 @@ class EditWarrantyProductInfoViewController: UIViewController {
     private var nextStepButton = UIButton()
     
     
-    private var lifeTimeWarrantyDefaultText = "Produit garanti à vie !"
     private var updatedDate: Date?
     
     // MARK: - View life cycle methods
@@ -55,6 +54,7 @@ class EditWarrantyProductInfoViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
+        setupData()
         if viewModel?.warranty.lifetimeWarranty == false {
             updateTimeIntervals()
         }
@@ -68,23 +68,11 @@ class EditWarrantyProductInfoViewController: UIViewController {
     // MARK: - objc methods
     
     @objc func nameTextfieldDidChange(textfield: UITextField) { // comment le controller communique avec le viewmodel
-        // FIXME: 
         viewModel?.name = textfield.text
     }
     
-    
-    
-    @objc func switchAction() {
-        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseInOut, animations: {
-            self.yearsView.isHidden.toggle()
-            self.monthsView.isHidden.toggle()
-            self.weeksView.isHidden.toggle()
-        }, completion: nil)
-        if lifetimeWarrantySwitch.isOn {
-            endDateLabel.text = Strings.lifetimeWarrantyDefaultText
-        } else {
-            updateDateAfterTurningSwitchOff()
-        }
+    @objc func startDateDidChange(datePicker: UIDatePicker) {
+        viewModel?.startDate = datePicker.date
     }
     
     // In case the user changes the initial warranty start date in the date-picker, calling those 3 methods above will ensure that the endDate is re-calculated according to the stepper values that he already gave, if any.
@@ -104,6 +92,19 @@ class EditWarrantyProductInfoViewController: UIViewController {
         }
     }
     
+    @objc func switchAction() {
+        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseInOut, animations: {
+            self.yearsView.isHidden.toggle()
+            self.monthsView.isHidden.toggle()
+            self.weeksView.isHidden.toggle()
+        }, completion: nil)
+        if lifetimeWarrantySwitch.isOn {
+            endDateLabel.text = Strings.lifetimeWarrantyDefaultText
+        } else {
+            updateDateAfterTurningSwitchOff()
+        }
+    }
+    
     @objc func updateWeeksWithStepper() {
         if updatedDate == nil {
             updatedDate = datePicker.date
@@ -111,9 +112,9 @@ class EditWarrantyProductInfoViewController: UIViewController {
         let formatter1 = DateFormatter()
         formatter1.dateStyle = .full
         updatedDate = updatedDate?.adding(.day, value: (weeksView.didIncrementStepper ? 7 : -7))
-        if let safeNewDate = updatedDate {
-            endDateLabel.text = Strings.endDateDefaultText + formatter1.string(from: safeNewDate)
-            updatedDate = safeNewDate
+        if let updatedDate = updatedDate {
+            endDateLabel.text = Strings.endDateDefaultText + formatter1.string(from: updatedDate)
+            self.updatedDate = updatedDate
         }
     }
     
@@ -124,9 +125,9 @@ class EditWarrantyProductInfoViewController: UIViewController {
         let formatter1 = DateFormatter()
         formatter1.dateStyle = .full
         updatedDate = updatedDate?.adding(.month, value: (monthsView.didIncrementStepper ? 1 : -1))
-        if let safeNewDate = updatedDate {
-            endDateLabel.text = Strings.endDateDefaultText + formatter1.string(from: safeNewDate)
-            updatedDate = safeNewDate
+        if let updatedDate = updatedDate {
+            endDateLabel.text = Strings.endDateDefaultText + formatter1.string(from: updatedDate)
+            self.updatedDate = updatedDate
         }
     }
     
@@ -137,36 +138,26 @@ class EditWarrantyProductInfoViewController: UIViewController {
         let formatter1 = DateFormatter()
         formatter1.dateStyle = .full
         updatedDate = updatedDate?.adding(.year, value: (yearsView.didIncrementStepper ? 1 : -1))
-        if let safeNewDate = updatedDate {
-            endDateLabel.text = Strings.endDateDefaultText + formatter1.string(from: safeNewDate)
-            updatedDate = safeNewDate
+        if let updatedDate = updatedDate {
+            endDateLabel.text = Strings.endDateDefaultText + formatter1.string(from: updatedDate)
+            self.updatedDate = updatedDate
         }
     }
     
     @objc func goToAddProductPhotoScreen() {
-        nameDidChange()
-        startDateDidChange() // Calling this method here, only at the end when moving to nextStep. Not in start datePicker's action "updateStartDateValue", because it may never be called if the user doesn't interract with start datePicker.
-        endDateDidChange()
+        //        if viewModel?.name?.isEmpty == true {
+        //            alert("Son petit nom ?", "Il faut au moins un nom pour pouvoir continuer")
+        //        }
+        if viewModel?.canSaveWarranty == false {
+            alert("Son petit nom ?", "Il faut au moins un nom pour pouvoir continuer")
+        }
+        viewModel?.startDate = datePicker.date
+        viewModel?.isLifetimeWarranty = (lifetimeWarrantySwitch.isOn ? true : false)
+        viewModel?.endDate = updatedDate
         viewModel?.goToEditProductPhotoScreen()
     }
     
     // MARK: - Private methods
-    
-    private func nameDidChange() {
-        viewModel?.name = nameField.text
-    }
-    
-    private func startDateDidChange() {
-        viewModel?.startDate = datePicker.date
-    }
-    
-    private func isLifetimeWarranty() {
-        viewModel?.isLifetimeWarranty = (lifetimeWarrantySwitch.isOn ? true : false)
-    }
-    
-    private func endDateDidChange() {
-        viewModel?.endDate = updatedDate
-    }
     
     private func updateWeeks() {
         let formatter1 = DateFormatter()
@@ -176,9 +167,9 @@ class EditWarrantyProductInfoViewController: UIViewController {
                 updatedDate = updatedDate?.adding(.day, value: timeUnitAmountAsInt * 7)
             }
         }
-        if let safeNewDate = updatedDate {
-            endDateLabel.text = Strings.endDateDefaultText + formatter1.string(from: safeNewDate)
-            updatedDate = safeNewDate
+        if let updatedDate = updatedDate {
+            endDateLabel.text = Strings.endDateDefaultText + formatter1.string(from: updatedDate)
+            self.updatedDate = updatedDate
         }
     }
     
@@ -190,9 +181,9 @@ class EditWarrantyProductInfoViewController: UIViewController {
                 updatedDate = updatedDate?.adding(.month, value: timeUnitAmountAsInt)
             }
         }
-        if let safeNewDate = updatedDate {
-            endDateLabel.text = Strings.endDateDefaultText + formatter1.string(from: safeNewDate)
-            updatedDate = safeNewDate
+        if let updatedDate = updatedDate {
+            endDateLabel.text = Strings.endDateDefaultText + formatter1.string(from: updatedDate)
+            self.updatedDate = updatedDate
         }
     }
     
@@ -204,36 +195,24 @@ class EditWarrantyProductInfoViewController: UIViewController {
                 updatedDate = updatedDate?.adding(.year, value: timeUnitAmountAsInt)
             }
         }
-        if let safeNewDate = updatedDate {
-            endDateLabel.text = Strings.endDateDefaultText + formatter1.string(from: safeNewDate)
-            updatedDate = safeNewDate
+        if let updatedDate = updatedDate {
+            endDateLabel.text = Strings.endDateDefaultText + formatter1.string(from: updatedDate)
+            self.updatedDate = updatedDate
         }
     }
     
     private func updateDateAfterTurningSwitchOff() {
-        if updatedDate == nil {
-            updatedDate = datePicker.date
-        }
         let formatter1 = DateFormatter()
         formatter1.dateStyle = .full
-        if let safeNewDate = updatedDate {
-            if weeksView.timeUnitAmount.text == "0" && monthsView.timeUnitAmount.text == "0" && yearsView.timeUnitAmount.text == "0" {
-                endDateLabel.text = Strings.endDateDefaultText
-            } else {
-                endDateLabel.text = Strings.endDateDefaultText + formatter1.string(from: safeNewDate)
-            }
+        if weeksView.timeUnitAmount.text == "0" && monthsView.timeUnitAmount.text == "0" && yearsView.timeUnitAmount.text == "0" {
+            endDateLabel.text = Strings.endDateDefaultText
+        } else {
+            updateTimeIntervals()
         }
     }
 }
 
 // MARK: - Extensions
-
-extension EditWarrantyProductInfoViewController {
-    
-    func canGoToNextStep(canSave: Bool) { // pour checker que les champs soient pas vides ?
-        nextStepButton.isEnabled = canSave
-    }
-}
 
 extension EditWarrantyProductInfoViewController {
     
@@ -244,7 +223,6 @@ extension EditWarrantyProductInfoViewController {
         nameTitle.font = UIFont.boldSystemFont(ofSize: 30)
         nameTitle.textAlignment = .natural
         
-        nameField.text = viewModel?.warranty.name
         nameField.addTarget(self, action: #selector(nameTextfieldDidChange), for: .editingChanged)
         nameField.setBottomBorder()
         nameField.addDoneToolbar()
@@ -278,33 +256,17 @@ extension EditWarrantyProductInfoViewController {
         weeksView.configureView()
         yearsView.configureView()
         
-        if let yearsStepperValue = viewModel?.getYearsStepperValue() {
-            yearsView.stepperAmount = yearsStepperValue
-            yearsView.timeUnitAmount.text = "\(Int(yearsStepperValue))"
-        }
         yearsView.timeUnitTitle.text = "années"
         yearsView.addTarget(self, action: #selector(updateYearsWithStepper))
         
-        if let monthsStepperValue = viewModel?.getMonthsStepperValue() {
-            monthsView.stepperAmount = monthsStepperValue
-            monthsView.timeUnitAmount.text = "\(Int(monthsStepperValue))"
-        }
         monthsView.timeUnitTitle.text = "mois"
         monthsView.addTarget(self, action: #selector(updateMonthsWithStepper))
         
-        if let weeksStepperValue = viewModel?.getWeeksStepperValue() {
-            weeksView.stepperAmount = weeksStepperValue
-            weeksView.timeUnitAmount.text = "\(Int(weeksStepperValue))"
-        }
         weeksView.timeUnitTitle.text = "semaines"
         weeksView.addTarget(self, action: #selector(updateWeeksWithStepper))
         
         lifetimeWarrantyStackView.axis = .horizontal
         lifetimeWarrantyTitle.text = "garanti à vie"
-        if viewModel?.warranty.lifetimeWarranty == true {
-            lifetimeWarrantySwitch.setOn(true, animated: false)
-            switchAction()
-        }
         lifetimeWarrantySwitch.addTarget(self, action: #selector(switchAction), for: .valueChanged)
         lifetimeWarrantyStackView.addArrangedSubview(lifetimeWarrantyTitle)
         lifetimeWarrantyStackView.addArrangedSubview(lifetimeWarrantySwitch)
@@ -318,10 +280,8 @@ extension EditWarrantyProductInfoViewController {
         customLengthStackView.addArrangedSubview(weeksView)
         
         endDateLabel.textAlignment = .center
-        //  endDateLabel.text = Strings.endDateDefaultText
         endDateLabel.numberOfLines = 2
         
-        // contentStackView
         parentStackView.axis = .vertical
         parentStackView.spacing = 56
         parentStackView.translatesAutoresizingMaskIntoConstraints = false
@@ -353,5 +313,28 @@ extension EditWarrantyProductInfoViewController {
             nextStepButton.heightAnchor.constraint(equalToConstant: 55),
             nextStepButton.widthAnchor.constraint(equalToConstant: 170)
         ])
+    }
+    
+    func setupData() {
+        nameField.text = viewModel?.warranty.name
+        if let startDate = viewModel?.warranty.warrantyStart {
+            datePicker.date = startDate
+        }
+        if let yearsStepperValue = viewModel?.getYearsStepperValue() {
+            yearsView.stepperAmount = yearsStepperValue
+            yearsView.timeUnitAmount.text = "\(Int(yearsStepperValue))"
+        }
+        if let monthsStepperValue = viewModel?.getMonthsStepperValue() {
+            monthsView.stepperAmount = monthsStepperValue
+            monthsView.timeUnitAmount.text = "\(Int(monthsStepperValue))"
+        }
+        if let weeksStepperValue = viewModel?.getWeeksStepperValue() {
+            weeksView.stepperAmount = weeksStepperValue
+            weeksView.timeUnitAmount.text = "\(Int(weeksStepperValue))"
+        }
+        if viewModel?.warranty.lifetimeWarranty == true {
+            lifetimeWarrantySwitch.setOn(true, animated: false)
+            switchAction()
+        }
     }
 }
