@@ -108,7 +108,7 @@ class NewWarrantyProductInfoViewController: UIViewController {
         formatter1.dateStyle = .full
         updatedDate = updatedDate?.adding(.day, value: (weeksView.didIncrementStepper ? 7 : -7))
         if let updatedDate = updatedDate {
-            endDateLabel.text = Strings.endDateDefaultText + formatter1.string(from: updatedDate)
+            endDateLabel.text = Strings.productCoveredUntil + formatter1.string(from: updatedDate)
             self.updatedDate = updatedDate
         }
     }
@@ -121,7 +121,7 @@ class NewWarrantyProductInfoViewController: UIViewController {
         formatter1.dateStyle = .full
         updatedDate = updatedDate?.adding(.month, value: (monthsView.didIncrementStepper ? 1 : -1))
         if let updatedDate = updatedDate {
-            endDateLabel.text = Strings.endDateDefaultText + formatter1.string(from: updatedDate)
+            endDateLabel.text = Strings.productCoveredUntil + formatter1.string(from: updatedDate)
             self.updatedDate = updatedDate
         }
     }
@@ -134,7 +134,7 @@ class NewWarrantyProductInfoViewController: UIViewController {
         formatter1.dateStyle = .full
         updatedDate = updatedDate?.adding(.year, value: (yearsView.didIncrementStepper ? 1 : -1))
         if let updatedDate = updatedDate {
-            endDateLabel.text = Strings.endDateDefaultText + formatter1.string(from: updatedDate)
+            endDateLabel.text = Strings.productCoveredUntil + formatter1.string(from: updatedDate)
             self.updatedDate = updatedDate
         }
     }
@@ -150,7 +150,7 @@ class NewWarrantyProductInfoViewController: UIViewController {
             }
         }
         if let updatedDate = updatedDate {
-            endDateLabel.text = Strings.endDateDefaultText + formatter1.string(from: updatedDate)
+            endDateLabel.text = Strings.productCoveredUntil + formatter1.string(from: updatedDate)
             self.updatedDate = updatedDate
         }
     }
@@ -164,7 +164,7 @@ class NewWarrantyProductInfoViewController: UIViewController {
             }
         }
         if let updatedDate = updatedDate {
-            endDateLabel.text = Strings.endDateDefaultText + formatter1.string(from: updatedDate)
+            endDateLabel.text = Strings.productCoveredUntil + formatter1.string(from: updatedDate)
             self.updatedDate = updatedDate
         }
     }
@@ -178,7 +178,7 @@ class NewWarrantyProductInfoViewController: UIViewController {
             }
         }
         if let updatedDate = updatedDate {
-            endDateLabel.text = Strings.endDateDefaultText + formatter1.string(from: updatedDate)
+            endDateLabel.text = Strings.productCoveredUntil + formatter1.string(from: updatedDate)
             self.updatedDate = updatedDate
         }
     }
@@ -191,9 +191,9 @@ class NewWarrantyProductInfoViewController: UIViewController {
         formatter1.dateStyle = .full
         if let updatedDate = updatedDate {
             if weeksView.timeUnitAmount.text == "0" && monthsView.timeUnitAmount.text == "0" && yearsView.timeUnitAmount.text == "0" {
-                endDateLabel.text = Strings.endDateDefaultText
+                endDateLabel.text = Strings.productCoveredUntil
             } else {
-                endDateLabel.text = Strings.endDateDefaultText + formatter1.string(from: updatedDate)
+                endDateLabel.text = Strings.productCoveredUntil + formatter1.string(from: updatedDate)
             }
         }
     }
@@ -275,7 +275,7 @@ extension NewWarrantyProductInfoViewController {
         customLengthStackView.addArrangedSubview(weeksView)
         
         endDateLabel.textAlignment = .center
-        endDateLabel.text = Strings.endDateDefaultText
+        endDateLabel.text = Strings.productCoveredUntil
         endDateLabel.numberOfLines = 2
         
         // contentStackView

@@ -17,10 +17,14 @@ class WarrantyDetailsViewController: UIViewController {
     
     private let parentStackView = UIStackView()
     
-    private let topStackView = UIStackView()
+    private let topParentStackView = UIStackView()
+    private let topRightStackView = UIStackView()
     private let productImageView = UIImageView()
     private let productName = UILabel()
-    private let warrantyStatus = UILabel()
+    private let warrantyStatusView = UIView()
+    private let warrantyStatusLabel = UILabel()
+    
+    private let bottomBorder = UITextField()
     
     private  let invoicePhotoStackView = UIStackView()
     private let invoicePhotoTitle = UILabel()
@@ -38,13 +42,14 @@ class WarrantyDetailsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let notificationName = NSNotification.Name(rawValue: "warranty updated")
+        let notificationName = NSNotification.Name(rawValue: Strings.warrantyUpdatedNotif)
         NotificationCenter.default.addObserver(self, selector: #selector(warrantyUpdated), name: notificationName, object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupView()
+        setupData()
     }
     
     // MARK: - @objc methods
@@ -52,6 +57,7 @@ class WarrantyDetailsViewController: UIViewController {
     @objc func warrantyUpdated() {
         // FIXME: peut être au lieu de re-setup la view juste pour refresh le controller, juste mettre à jour les textfields ?
         setupView()
+        setupData()
     }
     
     @objc func deleteWarranty() {
@@ -60,6 +66,20 @@ class WarrantyDetailsViewController: UIViewController {
     
     @objc func editWarranty() {
         viewModel?.editWarranty()
+    }
+    
+    // MARK: - Methods
+    
+    private func getRemainingDaysFromEndDate() -> String {
+        let calendar = NSCalendar.current
+        
+        guard let warrantyEnd = viewModel?.warranty.warrantyEnd else { return "0" }
+        let date1 = calendar.startOfDay(for: Date())
+        let date2 = calendar.startOfDay(for: warrantyEnd)
+        
+        let components = calendar.dateComponents([.day], from: date1, to: date2)
+        guard let remainingDays = components.day else { return "0" }
+        return String("\(remainingDays)")
     }
 }
 
@@ -71,88 +91,83 @@ extension WarrantyDetailsViewController {
         self.title = Strings.warrantiesTitle
         view.backgroundColor = .white
         
-        if let image = viewModel?.warranty.productPhoto {
-            productImageView.image = UIImage(data: image)
-        }
         productImageView.roundingViewCorners(radius: 64)
         productImageView.layer.borderWidth = 1.5
         productImageView.layer.borderColor = MWColor.bluegrey.cgColor
         productImageView.translatesAutoresizingMaskIntoConstraints = false
         
-        productName.text = viewModel?.warranty.name
-        productName.font = UIFont.boldSystemFont(ofSize: 20)
+        productName.font = UIFont.boldSystemFont(ofSize: 22)
+        productName.numberOfLines = 2
         productName.translatesAutoresizingMaskIntoConstraints = false
         
-        let formatter1 = DateFormatter()
-        formatter1.dateStyle = .full
-        warrantyStatus.roundingViewCorners(radius: 5)
-        warrantyStatus.textAlignment = .center
-        warrantyStatus.numberOfLines = 2
-        warrantyStatus.translatesAutoresizingMaskIntoConstraints = false
-        if viewModel?.warranty.lifetimeWarranty == false {
-            if let text = viewModel?.warranty.warrantyEnd {
-                warrantyStatus.text = "Couvert jusqu'au\n\(formatter1.string(from: text))"
-            }
-        } else {
-            warrantyStatus.text = Strings.lifetimeWarrantyDefaultText
-        }
+        warrantyStatusLabel.textAlignment = .center
+        warrantyStatusLabel.textColor = .white
+        warrantyStatusLabel.font = UIFont.systemFont(ofSize: 15, weight: .semibold)
+        warrantyStatusLabel.numberOfLines = 2
+        warrantyStatusLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        topStackView.axis = .vertical
-        topStackView.spacing = 16
-        topStackView.alignment = .center
-        topStackView.translatesAutoresizingMaskIntoConstraints = false
+        warrantyStatusView.roundingViewCorners(radius: 8)
+       // warrantyStatusView.addShadow()
+        warrantyStatusView.addSubview(warrantyStatusLabel)
         
-        topStackView.addArrangedSubview(productImageView)
-        topStackView.addArrangedSubview(productName)
-        topStackView.addArrangedSubview(warrantyStatus)
+        topRightStackView.axis = .vertical
+        topRightStackView.alignment = .center
+        topRightStackView.distribution = .equalSpacing
+        topRightStackView.spacing = 16
+        topRightStackView.addArrangedSubview(productName)
+        topRightStackView.addArrangedSubview(warrantyStatusView)
         
-        invoicePhotoTitle.text = "Facture"
-        invoicePhotoTitle.font = UIFont.boldSystemFont(ofSize: 16)
         
-        if let invoicePhotoAsData = viewModel?.warranty.invoicePhoto {
-            invoiceImageView.image = UIImage(data: invoicePhotoAsData)
-        }
+        topParentStackView.axis = .horizontal
+        topParentStackView.alignment = .center
+        topParentStackView.translatesAutoresizingMaskIntoConstraints = false
+        
+        topParentStackView.addArrangedSubview(productImageView)
+        topParentStackView.addArrangedSubview(topRightStackView)
+
+        bottomBorder.setBottomBorder()
+        
+        invoicePhotoTitle.text = Strings.invoice
+        invoicePhotoTitle.font = UIFont.boldSystemFont(ofSize: 18)
         
         invoicePhotoStackView.axis = .vertical
         invoicePhotoStackView.spacing = 8
-        invoicePhotoStackView.alignment = .center
+        invoicePhotoStackView.alignment = .leading
         invoicePhotoStackView.addArrangedSubview(invoicePhotoTitle)
         invoicePhotoStackView.addArrangedSubview(invoiceImageView)
         
-        
-        editWarrantyButton.setTitle(" Modifier ", for: .normal)
-        editWarrantyButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
+        editWarrantyButton.setTitle(Strings.edit, for: .normal)
+        editWarrantyButton.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .medium)
         editWarrantyButton.setTitleColor(.white, for: .normal)
         editWarrantyButton.backgroundColor = MWColor.bluegrey
-        editWarrantyButton.roundingViewCorners(radius: 8)
-        editWarrantyButton.addShadow()
+        editWarrantyButton.roundingViewCorners(radius: 11)
+       // editWarrantyButton.addShadow()
         editWarrantyButton.addTarget(self, action: #selector(editWarranty), for: .touchUpInside)
         editWarrantyButton.translatesAutoresizingMaskIntoConstraints = false
         
-        deleteWarrantyButton.setTitle(" Supprimer la garantie ", for: .normal)
-        deleteWarrantyButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
+        deleteWarrantyButton.setTitle(Strings.delete, for: .normal)
+        deleteWarrantyButton.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .medium)
         deleteWarrantyButton.setTitleColor(.white, for: .normal)
         deleteWarrantyButton.backgroundColor = .red
-        deleteWarrantyButton.roundingViewCorners(radius: 8)
-        deleteWarrantyButton.addShadow()
+        deleteWarrantyButton.roundingViewCorners(radius: 11)
+       // deleteWarrantyButton.addShadow()
         deleteWarrantyButton.addTarget(self, action: #selector(deleteWarranty), for: .touchUpInside)
         deleteWarrantyButton.translatesAutoresizingMaskIntoConstraints = false
         
-        bottomButtonsStackView.axis = .vertical
+        bottomButtonsStackView.axis = .horizontal
         bottomButtonsStackView.alignment = .center
-        bottomButtonsStackView.spacing = 24
+        bottomButtonsStackView.spacing = 18
         bottomButtonsStackView.translatesAutoresizingMaskIntoConstraints = false
         bottomButtonsStackView.addArrangedSubview(editWarrantyButton)
         bottomButtonsStackView.addArrangedSubview(deleteWarrantyButton)
         
         parentStackView.axis = .vertical
-        parentStackView.alignment = .center
-        parentStackView.spacing = 80
-        // parentStackView.distribution = .fill
         parentStackView.translatesAutoresizingMaskIntoConstraints = false
         
-        parentStackView.addArrangedSubview(topStackView)
+        parentStackView.addArrangedSubview(topParentStackView)
+        parentStackView.addArrangedSubview(bottomBorder)
         parentStackView.addArrangedSubview(invoicePhotoStackView)
+        parentStackView.setCustomSpacing(24, after: bottomBorder)
         //parentStackView.addArrangedSubview(editWarrantyButton)
         //parentStackView.addArrangedSubview(deleteWarrantyButton)
         view.addSubview(parentStackView)
@@ -160,20 +175,60 @@ extension WarrantyDetailsViewController {
         
         NSLayoutConstraint.activate([
             parentStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 24),
-            // parentStackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -24),
+            parentStackView.bottomAnchor.constraint(equalTo: bottomButtonsStackView.topAnchor, constant: -24),
             parentStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
             parentStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
             
-            bottomButtonsStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
-            bottomButtonsStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
+           // bottomButtonsStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
+           // bottomButtonsStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
+            bottomButtonsStackView.centerXAnchor.constraint(equalTo: parentStackView.centerXAnchor),
             bottomButtonsStackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -24),
+            
+//            warrantyStatusView.widthAnchor.constraint(equalToConstant: 150),
+//            warrantyStatusView.heightAnchor.constraint(equalToConstant: 55),
+            editWarrantyButton.heightAnchor.constraint(equalToConstant: 37),
+            deleteWarrantyButton.heightAnchor.constraint(equalToConstant: 37),
+            editWarrantyButton.widthAnchor.constraint(equalToConstant: 140),
+            deleteWarrantyButton.widthAnchor.constraint(equalToConstant: 140),
+            
+            warrantyStatusLabel.leadingAnchor.constraint(equalTo: warrantyStatusView.leadingAnchor, constant: 8),
+            warrantyStatusLabel.trailingAnchor.constraint(equalTo: warrantyStatusView.trailingAnchor, constant: -8),
+            warrantyStatusLabel.topAnchor.constraint(equalTo: warrantyStatusView.topAnchor, constant: 4),
+            warrantyStatusLabel.bottomAnchor.constraint(equalTo: warrantyStatusView.bottomAnchor, constant: -4),
+
+       //     warrantyStatusLabel.centerXAnchor.constraint(equalTo: warrantyStatusView.centerXAnchor),
             
             productImageView.heightAnchor.constraint(equalToConstant: 130),
             productImageView.widthAnchor.constraint(equalToConstant: 130),
             
-            invoiceImageView.heightAnchor.constraint(equalToConstant: 150),
-            invoiceImageView.widthAnchor.constraint(equalToConstant: 150)
+           // invoiceImageView.heightAnchor.constraint(equalToConstant: 170),
+           // invoiceImageView.widthAnchor.constraint(equalToConstant: 170)
         ])
+    }
+    
+    func setupData() {
+        if let image = viewModel?.warranty.productPhoto {
+            productImageView.image = UIImage(data: image)
+        }
+        productName.text = viewModel?.warranty.name
+        let formatter1 = DateFormatter()
+        formatter1.dateStyle = .long
+        if viewModel?.warranty.lifetimeWarranty == false {
+            if Int(getRemainingDaysFromEndDate()) ?? 0 < 0 {
+                warrantyStatusLabel.text = Strings.warrantyExpired
+                warrantyStatusView.backgroundColor = MWColor.warrantyExpiredRed
+            } else {
+                if let text = viewModel?.warranty.warrantyEnd {
+                    warrantyStatusLabel.text = Strings.coveredUntil + "\n\(formatter1.string(from: text))"
+                    warrantyStatusView.backgroundColor = MWColor.warrantyActiveGreen
+                }
+            }
+        } else {
+            warrantyStatusLabel.text = Strings.lifetimeWarrantyDefaultText
+        }
+        if let invoicePhotoAsData = viewModel?.warranty.invoicePhoto {
+            invoiceImageView.image = UIImage(data: invoicePhotoAsData)
+        }
     }
     
     func colors() {
