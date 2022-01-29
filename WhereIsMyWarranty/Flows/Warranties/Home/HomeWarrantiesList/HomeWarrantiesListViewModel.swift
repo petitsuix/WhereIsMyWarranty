@@ -28,18 +28,14 @@ class HomeWarrantiesListViewModel {
     
     // MARK: - Private properties
     
-    private let coordinator: WarrantiesCoordinator
+    private let coordinator: AppCoordinatorProtocol
     private let storageService: StorageService
     
     // MARK: - objc methods
-    
-    @objc func showAddCategoryAlert() {
-        
-    }
-    
+
     // MARK: - Methods
     
-    init(coordinator: WarrantiesCoordinator, storageService: StorageService) {
+    init(coordinator: AppCoordinatorProtocol, storageService: StorageService) {
         self.coordinator = coordinator
         self.storageService = storageService
     }

@@ -88,10 +88,6 @@ class HomeWarrantiesListViewController: UIViewController {
         // coordinator?.showNewWarrantiesScreenFor(category: "MA SUPER CATEGORY")
     }
     
-    @objc func addCategoryButtonAction() {
-        viewModel?.showAddCategoryAlert()
-    }
-    
     @objc func showAlert() {
         let alert = UIAlertController(title: "Nouvelle categorie", message: "Donnez lui un nom", preferredStyle: .alert)
         let saveAction = UIAlertAction(title: "ajouter", style: .default) { [unowned self] action in

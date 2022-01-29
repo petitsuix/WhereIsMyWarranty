@@ -10,11 +10,51 @@ import UIKit
 @testable import WhereIsMyWarranty
 
 
-class WarrantiesCoordinatorMock: WarrantiesCoordinator {
+class WarrantiesCoordinatorMock: AppCoordinatorProtocol {
+    func start() {
+        coordinatorStartCalled = true
+    }
     
+    var navigationController = UINavigationController()
     var coordinatorStartCalled = false
     
-    override func start() {
-        coordinatorStartCalled = true
+//    init() {
+//        start()
+//    }
+    
+//    func start() {
+//        coordinatorStartCalled = true
+//    }
+    
+    func showWarrantiesScreen() {
+    }
+    
+    func showNewWarrantyProductInfoScreen() {
+        start()
+    }
+    
+    func showNewWarrantyProductPhotoScreen() {
+    }
+    
+    func showNewWarrantyInvoicePhotoScreen() {
+    }
+    
+    func warrantySaved() {
+    }
+    
+    func showWarrantyDetailsScreen(warranty: Warranty) {
+        start()
+    }
+    
+    func showEditWarrantyProductInfoScreen(warranty: Warranty) {
+    }
+    
+    func showEditWarrantyProductPhotoScreen() {
+    }
+    
+    func showEditWarrantyInvoicePhotoScreen() {
+    }
+    
+    func editedWarrantySaved() {
     }
 }

@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class WarrantiesCoordinator: Coordinator {
+class WarrantiesCoordinator: Coordinator, AppCoordinatorProtocol {
     
     // MARK: - Public properties
     
@@ -124,4 +124,18 @@ class WarrantiesCoordinator: Coordinator {
         }
         editWarrantyViewModel?.notifyWarrantyUpdated() // j'ai bien fait de déclarer notifyWarrantiesListUpdated dans le viewModel ?
     }
+}
+
+protocol AppCoordinatorProtocol: Coordinator {
+    
+    func showWarrantiesScreen()
+    func showNewWarrantyProductInfoScreen()
+    func showNewWarrantyProductPhotoScreen()
+    func showNewWarrantyInvoicePhotoScreen()
+    func warrantySaved()
+    func showWarrantyDetailsScreen(warranty: Warranty)
+    func showEditWarrantyProductInfoScreen(warranty: Warranty)
+    func showEditWarrantyProductPhotoScreen()
+    func showEditWarrantyInvoicePhotoScreen()
+    func editedWarrantySaved()
 }
