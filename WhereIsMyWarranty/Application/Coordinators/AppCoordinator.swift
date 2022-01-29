@@ -20,9 +20,10 @@ class AppCoordinator: NSObject, Coordinator, UITabBarControllerDelegate {
     
     var tabBarController: UITabBarController
     
-    var coordinators: [Coordinator] {
-        return [warrantiesCoordinator, settingsCoordinator]
-    }
+//    var coordinators: [Coordinator] {
+//        return [warrantiesCoordinator, settingsCoordinator]
+//    }
+    
     let warrantiesCoordinator: WarrantiesCoordinator
     let settingsCoordinator: SettingsCoordinator
     let window: UIWindow
@@ -66,7 +67,6 @@ class AppCoordinator: NSObject, Coordinator, UITabBarControllerDelegate {
     // MARK: - Methods
 
     func start() {
-        print("ok")
         startWarrantiesFlow()
         window.rootViewController = tabBarController
         window.makeKeyAndVisible()
