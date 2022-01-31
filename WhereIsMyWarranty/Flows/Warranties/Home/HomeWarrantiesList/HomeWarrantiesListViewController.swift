@@ -272,7 +272,7 @@ extension HomeWarrantiesListViewController: UICollectionViewDataSource, UICollec
 extension HomeWarrantiesListViewController {
     func refreshWith(warranties: [Warranty]) {
         if warranties.isEmpty {
-            //   viewState = .empty // Displays "no results found" view
+            viewState = .empty // Displays "no results found" view
         } else {
             viewState = .showData
         }

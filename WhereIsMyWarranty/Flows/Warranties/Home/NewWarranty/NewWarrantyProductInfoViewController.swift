@@ -215,7 +215,7 @@ extension NewWarrantyProductInfoViewController {
         view.backgroundColor = .white
         
         nameTitle.text = "Nom du produit"
-        nameTitle.font = UIFont.boldSystemFont(ofSize: 30)
+        nameTitle.font = UIFont.boldSystemFont(ofSize: 29)
         nameTitle.textAlignment = .natural
         
         nameField.addTarget(self, action: #selector(nameTextfieldDidChange), for: .editingChanged)
@@ -224,23 +224,23 @@ extension NewWarrantyProductInfoViewController {
         
         nameStackView = UIStackView(arrangedSubviews: [nameTitle, nameField])
         nameStackView.axis = .vertical
-        nameStackView.spacing = 16
+        nameStackView.spacing = 12
         
         startDateTitle.text = "Date de début de garantie"
         startDateTitle.font = UIFont.boldSystemFont(ofSize: 16)
-        startDateTitle.textAlignment = .left
+        startDateTitle.textAlignment = .natural
         
         datePicker.datePickerMode = .date
         datePicker.addTarget(self, action: #selector(updateTimeIntervals), for: .editingDidEnd)
         
         startDateStackView.axis = .vertical
         startDateStackView.alignment = .leading
-        startDateStackView.spacing = 16
+        startDateStackView.spacing = 12
         startDateStackView.addArrangedSubview(startDateTitle)
         startDateStackView.addArrangedSubview(datePicker)
         
         nameAndStartDateStackView.axis = .vertical
-        nameAndStartDateStackView.spacing = 56
+        nameAndStartDateStackView.spacing = 40
         nameAndStartDateStackView.addArrangedSubview(nameStackView)
         nameAndStartDateStackView.addArrangedSubview(startDateStackView)
         
@@ -280,11 +280,12 @@ extension NewWarrantyProductInfoViewController {
         
         // contentStackView
         parentStackView.axis = .vertical
-        parentStackView.spacing = 56
+        parentStackView.spacing = 40
         parentStackView.translatesAutoresizingMaskIntoConstraints = false
         parentStackView.addArrangedSubview(nameAndStartDateStackView)
         parentStackView.addArrangedSubview(customLengthStackView)
         parentStackView.addArrangedSubview(endDateLabel)
+        
         //  parentStackView.setCustomSpacing(50, after: customLengthStackView)
         //  parentStackView.setCustomSpacing(40, after: endDateLabel)
         
@@ -302,11 +303,12 @@ extension NewWarrantyProductInfoViewController {
             parentStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 24),
             parentStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
             parentStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
+            parentStackView.bottomAnchor.constraint(lessThanOrEqualTo: nextStepButton.topAnchor, constant: -16),
             
             endDateLabel.heightAnchor.constraint(equalToConstant: 60),
             
             nextStepButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            nextStepButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -48),
+            nextStepButton.bottomAnchor.constraint(lessThanOrEqualTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -24),
             nextStepButton.heightAnchor.constraint(equalToConstant: 55),
             nextStepButton.widthAnchor.constraint(equalToConstant: 170)
         ])

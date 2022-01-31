@@ -20,24 +20,9 @@ class AppCoordinator: NSObject, Coordinator, UITabBarControllerDelegate {
     
     var tabBarController: UITabBarController
     
-//    var coordinators: [Coordinator] {
-//        return [warrantiesCoordinator, settingsCoordinator]
-//    }
-    
     let warrantiesCoordinator: WarrantiesCoordinator
     let settingsCoordinator: SettingsCoordinator
     let window: UIWindow
-    
-    /*
-    let userdefault ..
-    let networkSetrvice: Network..
-    let storage: staor...State
-    
-    init(window: UIWindow, storageService: StorageService = StorageService() ...) {
-        self.window =
-        ...
-    }
-     */
     
     // MARK: - Initializer
     

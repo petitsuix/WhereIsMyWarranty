@@ -11,11 +11,9 @@ class TextWithStepperView: UIView {
     
     // MARK: - Properties
     
-    var stackView = UIStackView()
-    var stepperStackView = UIStackView()
-    
     var timeUnitTitle = UILabel()
-    var timeUnitType = String()
+    var stepper = UIStepper()
+    var didIncrementStepper: Bool = false
     
     var stepperAmount: Double = 0 {
         didSet {
@@ -24,26 +22,19 @@ class TextWithStepperView: UIView {
         }
     }
     
-   // var stepperAction nice to have 
+    var timeUnitAmount = UILabel()
+  
+    // MARK: - Private properties
     
-    // private
-    var stepper = UIStepper()
-    
-    var slider = UISlider()
-    
-    func addTarget(_ target: Any?, action: Selector) {
-        stepper.addTarget(target, action: action, for: .valueChanged)
-    }
-    
-    var didIncrementStepper: Bool = false
+    private var stackView = UIStackView()
+    private  var stepperStackView = UIStackView()
+    private var timeUnitType = String()
     
     private var stepperValue: Double = 0 {
         didSet {
             didIncrementStepper = stepperValue > oldValue ? true : false
         }
     }
-    
-    var timeUnitAmount = UILabel()
     
     // MARK: - objc methods
     
@@ -55,53 +46,28 @@ class TextWithStepperView: UIView {
     
     // MARK: - Methods
     
+    func addTarget(_ target: Any?, action: Selector) {
+        stepper.addTarget(target, action: action, for: .valueChanged)
+    }
+    
     func configureView() {
-        configureStackView()
-        configureStepperStackView()
-        configureTimeUnitTitle()
-        configureStepper()
-        addSubview(stackView)
-        activateConstraints()
-    }
-    
-    func configureStackView() {
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.axis = .horizontal
-        stackView.addArrangedSubview(timeUnitTitle)
-        stackView.addArrangedSubview(stepperStackView)
-    }
-    
-    func configureTimeUnitTitle() {
-        timeUnitTitle.translatesAutoresizingMaskIntoConstraints = false
-    }
-    
-    func configureStepperStackView() {
-        stepperStackView.axis = .horizontal
-        stepperStackView.spacing = 24
-        stepperStackView.translatesAutoresizingMaskIntoConstraints = false
-        
-        timeUnitAmount.text = "0"
-        
-        timeUnitAmount.translatesAutoresizingMaskIntoConstraints = false
-        stepperStackView.addArrangedSubview(stepper)
-        stepperStackView.addArrangedSubview(timeUnitAmount)
-    }
-    
-    func configureStepper() {
-        stepper.translatesAutoresizingMaskIntoConstraints = false
         stepper.value = 0
         stepper.minimumValue = 0
         stepper.maximumValue = 99
         stepper.addTarget(self, action: #selector(updateTimeUnitAmount(_:)), for: .valueChanged)
-//        stepper.setDecrementImage(UIImage(systemName: "minus.circle.fill"), for: .normal)
-//        stepper.setIncrementImage(UIImage(systemName: "plus.circle.fill"), for: .normal)
-    }
-    
-    func configureTimeUnitAmount() {
-        timeUnitAmount.translatesAutoresizingMaskIntoConstraints = false
-    }
-
-    func activateConstraints() {
+        timeUnitAmount.text = "0"
+        stepperStackView.axis = .horizontal
+        stepperStackView.spacing = 24
+        stepperStackView.addArrangedSubview(stepper)
+        stepperStackView.addArrangedSubview(timeUnitAmount)
+        
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .horizontal
+        stackView.addArrangedSubview(timeUnitTitle)
+        stackView.addArrangedSubview(stepperStackView)
+        
+        addSubview(stackView)
+        
         NSLayoutConstraint.activate([
             stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0),
             stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0),
