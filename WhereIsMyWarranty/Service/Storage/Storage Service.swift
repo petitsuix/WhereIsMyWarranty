@@ -6,8 +6,10 @@
 //
 
 import CoreData
+import UIKit
 
-class StorageService {
+class StorageService: StorageServiceProtocol {
+    
     
     // MARK: - Properties
     
@@ -68,4 +70,13 @@ class StorageService {
             throw error
         }
     }
+}
+
+
+protocol StorageServiceProtocol {
+    var viewContext: NSManagedObjectContext {get}
+    func loadWarranties() throws -> [Warranty]
+    func loadCategories() throws -> [Category]
+    func save()
+    func deleteWarranty(_ object: NSManagedObject) throws
 }

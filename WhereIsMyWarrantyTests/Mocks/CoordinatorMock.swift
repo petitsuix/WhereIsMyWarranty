@@ -10,7 +10,7 @@ import UIKit
 @testable import WhereIsMyWarranty
 
 
-class WarrantiesCoordinatorMock: AppCoordinatorProtocol {
+class CoordinatorMock: WarrantiesCoordinatorProtocol {
     var navigationController = UINavigationController()
     
     var coordinatorStartCalled = false

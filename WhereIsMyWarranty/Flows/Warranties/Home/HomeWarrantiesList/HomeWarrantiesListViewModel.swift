@@ -28,14 +28,14 @@ class HomeWarrantiesListViewModel {
     
     // MARK: - Private properties
     
-    private let coordinator: AppCoordinatorProtocol
-    private let storageService: StorageService
+    private let coordinator: WarrantiesCoordinatorProtocol
+    private let storageService: StorageServiceProtocol
     
     // MARK: - objc methods
 
     // MARK: - Methods
     
-    init(coordinator: AppCoordinatorProtocol, storageService: StorageService) {
+    init(coordinator: WarrantiesCoordinator, storageService: StorageService) {
         self.coordinator = coordinator
         self.storageService = storageService
     }

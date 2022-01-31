@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		970B02AD27A8387E00EC4163 /* StorageServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 970B02AC27A8387E00EC4163 /* StorageServiceMock.swift */; };
+		970B02AF27A848CE00EC4163 /* WarrantyDetailsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 970B02AE27A848CE00EC4163 /* WarrantyDetailsViewModelTests.swift */; };
 		970D86A3278F30FD00216ED7 /* ResizeImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 970D86A2278F30FD00216ED7 /* ResizeImage.swift */; };
 		971AE69A277B382D00C970E3 /* TextWithStepperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 971AE699277B382D00C970E3 /* TextWithStepperView.swift */; };
 		97630447275A68B200688DDB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97630446275A68B200688DDB /* AppDelegate.swift */; };
@@ -53,8 +55,8 @@
 		97F1D3052773448D00D0C52C /* WarrantyDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F1D3042773448D00D0C52C /* WarrantyDetailsViewController.swift */; };
 		97F1D307277345F400D0C52C /* WarrantyDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F1D306277345F400D0C52C /* WarrantyDetailsViewModel.swift */; };
 		97F768D027A41FE00012DA52 /* HomeWarrantiesListViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F768CF27A41FE00012DA52 /* HomeWarrantiesListViewModelTests.swift */; };
-		97F768D227A428900012DA52 /* WarrantiesCoordinatorMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F768D127A428900012DA52 /* WarrantiesCoordinatorMock.swift */; };
-		97F8075527A16234005F274E /* fakeData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F8075427A16234005F274E /* fakeData.swift */; };
+		97F768D227A428900012DA52 /* CoordinatorMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F768D127A428900012DA52 /* CoordinatorMock.swift */; };
+		97F8075527A16234005F274E /* FakeData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F8075427A16234005F274E /* FakeData.swift */; };
 		97FE356A2791C606009CEF78 /* EditWarrantyProductInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FE35692791C606009CEF78 /* EditWarrantyProductInfoViewController.swift */; };
 		97FE356C2791C619009CEF78 /* EditWarrantyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FE356B2791C619009CEF78 /* EditWarrantyViewModel.swift */; };
 		97FE356E2791C9AA009CEF78 /* AddingTimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FE356D2791C9AA009CEF78 /* AddingTimeInterval.swift */; };
@@ -100,6 +102,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		970B02AC27A8387E00EC4163 /* StorageServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageServiceMock.swift; sourceTree = "<group>"; };
+		970B02AE27A848CE00EC4163 /* WarrantyDetailsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarrantyDetailsViewModelTests.swift; sourceTree = "<group>"; };
 		970D86A2278F30FD00216ED7 /* ResizeImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResizeImage.swift; sourceTree = "<group>"; };
 		971AE699277B382D00C970E3 /* TextWithStepperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextWithStepperView.swift; sourceTree = "<group>"; };
 		97630443275A68B200688DDB /* WhereIsMyWarranty.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WhereIsMyWarranty.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -152,8 +156,8 @@
 		97F1D3042773448D00D0C52C /* WarrantyDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarrantyDetailsViewController.swift; sourceTree = "<group>"; };
 		97F1D306277345F400D0C52C /* WarrantyDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarrantyDetailsViewModel.swift; sourceTree = "<group>"; };
 		97F768CF27A41FE00012DA52 /* HomeWarrantiesListViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeWarrantiesListViewModelTests.swift; sourceTree = "<group>"; };
-		97F768D127A428900012DA52 /* WarrantiesCoordinatorMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarrantiesCoordinatorMock.swift; sourceTree = "<group>"; };
-		97F8075427A16234005F274E /* fakeData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fakeData.swift; sourceTree = "<group>"; };
+		97F768D127A428900012DA52 /* CoordinatorMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorMock.swift; sourceTree = "<group>"; };
+		97F8075427A16234005F274E /* FakeData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeData.swift; sourceTree = "<group>"; };
 		97FE35692791C606009CEF78 /* EditWarrantyProductInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditWarrantyProductInfoViewController.swift; sourceTree = "<group>"; };
 		97FE356B2791C619009CEF78 /* EditWarrantyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditWarrantyViewModel.swift; sourceTree = "<group>"; };
 		97FE356D2791C9AA009CEF78 /* AddingTimeInterval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddingTimeInterval.swift; sourceTree = "<group>"; };
@@ -195,6 +199,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		970B02B027A8493700EC4163 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				97F768D127A428900012DA52 /* CoordinatorMock.swift */,
+				970B02AC27A8387E00EC4163 /* StorageServiceMock.swift */,
+			);
+			path = Mocks;
+			sourceTree = "<group>";
+		};
+		970B02B127A8495900EC4163 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				97F768CF27A41FE00012DA52 /* HomeWarrantiesListViewModelTests.swift */,
+				970B02AE27A848CE00EC4163 /* WarrantyDetailsViewModelTests.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
 		9763043A275A68B200688DDB = {
 			isa = PBXGroup;
 			children = (
@@ -238,10 +260,10 @@
 		9763045F275A68B300688DDB /* WhereIsMyWarrantyTests */ = {
 			isa = PBXGroup;
 			children = (
+				97F8075427A16234005F274E /* FakeData.swift */,
+				970B02B027A8493700EC4163 /* Mocks */,
 				97F768CE27A41D550012DA52 /* CoreData */,
-				97F8075427A16234005F274E /* fakeData.swift */,
-				97F768CF27A41FE00012DA52 /* HomeWarrantiesListViewModelTests.swift */,
-				97F768D127A428900012DA52 /* WarrantiesCoordinatorMock.swift */,
+				970B02B127A8495900EC4163 /* ViewModels */,
 			);
 			path = WhereIsMyWarrantyTests;
 			sourceTree = "<group>";
@@ -689,9 +711,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				97F8075527A16234005F274E /* fakeData.swift in Sources */,
-				97F768D227A428900012DA52 /* WarrantiesCoordinatorMock.swift in Sources */,
+				97F8075527A16234005F274E /* FakeData.swift in Sources */,
+				970B02AF27A848CE00EC4163 /* WarrantyDetailsViewModelTests.swift in Sources */,
+				97F768D227A428900012DA52 /* CoordinatorMock.swift in Sources */,
 				97630461275A68B300688DDB /* WhereIsMyWarrantyTests.swift in Sources */,
+				970B02AD27A8387E00EC4163 /* StorageServiceMock.swift in Sources */,
 				97F768D027A41FE00012DA52 /* HomeWarrantiesListViewModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

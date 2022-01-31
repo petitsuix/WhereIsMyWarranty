@@ -15,7 +15,8 @@ final class FakeData {
     static var warranty1 = Warranty()
     static var warranty2 = Warranty()
     
-    
+    static var category = Category()
+    static var category2 = Category()
     
 //    static var warranty1: Warranty {
 //        let warranty = Warranty()

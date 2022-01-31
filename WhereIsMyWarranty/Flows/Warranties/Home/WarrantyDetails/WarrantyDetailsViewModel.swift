@@ -9,17 +9,24 @@ import Foundation
 
 class WarrantyDetailsViewModel {
     
+    //MARK: - Properties
+    
     weak var viewDelegate: WarrantyDetailsViewController?
-    private let coordinator: WarrantiesCoordinator
-    private let storageService: StorageService
+    
+    var warranty: Warranty
+    
+    //MARK: - Private properties
+    
+    private let coordinator: WarrantiesCoordinatorProtocol
+    private let storageService: StorageServiceProtocol
+    
+    //MARK: - Methods
     
     init(coordinator: WarrantiesCoordinator, storageService: StorageService, warranty: Warranty) {
         self.coordinator = coordinator
         self.storageService = storageService
         self.warranty = warranty
     }
-    
-    var warranty: Warranty
     
     func deleteWarranty() {
         do {
@@ -33,10 +40,4 @@ class WarrantyDetailsViewModel {
     func editWarranty() {
         coordinator.showEditWarrantyProductInfoScreen(warranty: warranty)
     }
-    
-//    var warranty: Warranty? {
-//        didSet {
-//            
-//        }
-//    }
 }

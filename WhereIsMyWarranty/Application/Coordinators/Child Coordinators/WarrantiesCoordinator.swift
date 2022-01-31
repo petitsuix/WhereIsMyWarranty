@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class WarrantiesCoordinator: Coordinator, AppCoordinatorProtocol {
+class WarrantiesCoordinator: Coordinator, WarrantiesCoordinatorProtocol {
     
     // MARK: - Public properties
     
@@ -41,7 +41,6 @@ class WarrantiesCoordinator: Coordinator, AppCoordinatorProtocol {
         warrantiesViewModel.viewDelegate = warrantiesVC
         warrantiesVC.viewModel = warrantiesViewModel
         navigationController.setViewControllers([warrantiesVC], animated: false)
-      
     }
     
     func testShowWarrantiesScreen() {
@@ -133,8 +132,7 @@ class WarrantiesCoordinator: Coordinator, AppCoordinatorProtocol {
     }
 }
 
-protocol AppCoordinatorProtocol: Coordinator {
-    
+protocol WarrantiesCoordinatorProtocol: Coordinator {
     func showWarrantiesScreen()
     func showNewWarrantyProductInfoScreen()
     func showNewWarrantyProductPhotoScreen()
