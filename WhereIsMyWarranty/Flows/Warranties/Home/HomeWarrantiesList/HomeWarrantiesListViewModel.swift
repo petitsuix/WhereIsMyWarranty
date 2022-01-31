@@ -35,7 +35,7 @@ class HomeWarrantiesListViewModel {
 
     // MARK: - Methods
     
-    init(coordinator: WarrantiesCoordinator, storageService: StorageService) {
+    init(coordinator: WarrantiesCoordinatorProtocol, storageService: StorageServiceProtocol) {
         self.coordinator = coordinator
         self.storageService = storageService
     }
@@ -73,11 +73,3 @@ class HomeWarrantiesListViewModel {
         // categories = ["Electroménager", "Pro", "Informatique"]
     }
 }
-
-/*
-extension Warranty {
-    convenience init(name: String?) {
-        self.name = name
-    }
-}
-*/

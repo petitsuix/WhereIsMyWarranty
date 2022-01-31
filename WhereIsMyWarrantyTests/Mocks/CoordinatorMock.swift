@@ -13,6 +13,8 @@ import UIKit
 class CoordinatorMock: WarrantiesCoordinatorProtocol {
     var navigationController = UINavigationController()
     
+    var warranty: Warranty?
+    
     var coordinatorStartCalled = false
     func start() {
         coordinatorStartCalled = true
@@ -39,7 +41,6 @@ class CoordinatorMock: WarrantiesCoordinatorProtocol {
     func warrantySaved() {
     }
     
-    var warranty: Warranty?
     var showWarrantyDetailsScreenCalled = false
     func showWarrantyDetailsScreen(warranty: Warranty) {
         self.warranty = warranty
@@ -47,7 +48,9 @@ class CoordinatorMock: WarrantiesCoordinatorProtocol {
         
     }
     
+    var showEditWarrantyProductInfoCalled = false
     func showEditWarrantyProductInfoScreen(warranty: Warranty) {
+        showEditWarrantyProductInfoCalled = true
     }
     
     func showEditWarrantyProductPhotoScreen() {

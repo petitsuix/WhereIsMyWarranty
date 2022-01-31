@@ -22,7 +22,7 @@ class WarrantyDetailsViewModel {
     
     //MARK: - Methods
     
-    init(coordinator: WarrantiesCoordinator, storageService: StorageService, warranty: Warranty) {
+    init(coordinator: WarrantiesCoordinatorProtocol, storageService: StorageServiceProtocol, warranty: Warranty) {
         self.coordinator = coordinator
         self.storageService = storageService
         self.warranty = warranty
