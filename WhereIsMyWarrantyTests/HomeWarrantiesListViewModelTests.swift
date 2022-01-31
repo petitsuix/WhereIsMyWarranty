@@ -17,7 +17,7 @@ class HomeWarrantiesListViewModelTests: XCTestCase {
     
     var loadedWarranties: [Warranty] = []
     
-    var warranty1 = Warranty()
+    private let warranty1 = Warranty()
     var warranty2 = Warranty()
 
     override func setUpWithError() throws {
@@ -38,7 +38,7 @@ class HomeWarrantiesListViewModelTests: XCTestCase {
             }
         }
         storageService = StorageService(persistentContainer: persistentContainer)
-        warranty1 = Warranty(context: storageService.viewContext)
+       // warranty1 = Warranty(context: storageService.viewContext)
         warranty2 = Warranty(context: storageService.viewContext)
         coordinator = WarrantiesCoordinatorMock()
         viewModel = HomeWarrantiesListViewModel(coordinator: coordinator, storageService: storageService)
@@ -52,14 +52,24 @@ class HomeWarrantiesListViewModelTests: XCTestCase {
     func testShowNewWarrantyScreen() {
         XCTAssertFalse(coordinator.coordinatorStartCalled)
         viewModel.showNewWarrantyScreen()
-        XCTAssertTrue(coordinator.coordinatorStartCalled)
+        XCTAssertTrue(coordinator.showWarrantiesCalled)
     }
     
+    func testShowWarrantyDetailsScreen() {
+        XCTAssertFalse(coordinator.showWarrantyDetailsScreenCalled)
+        XCTAssertNil(coordinator.warranty)
+        viewModel.showWarrantyDetailsScreen(warranty: warranty1)
+        XCTAssertTrue(coordinator.showWarrantyDetailsScreenCalled)
+        XCTAssertEqual(coordinator.warranty, warranty1)
+    }
+    
+    /*
     func testShowWarrantyDetailsScreen() {
         XCTAssertFalse(coordinator.coordinatorStartCalled)
         viewModel.showWarrantyDetailsScreen(warranty: warranty1)
         XCTAssertTrue(coordinator.coordinatorStartCalled)
     }
+     */
     
     func testFetchWarrantiesFromDatabase() {
         viewModel.fetchWarrantiesFromDatabase()

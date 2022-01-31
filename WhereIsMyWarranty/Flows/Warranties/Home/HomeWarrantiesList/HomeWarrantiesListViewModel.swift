@@ -73,3 +73,11 @@ class HomeWarrantiesListViewModel {
         // categories = ["Electroménager", "Pro", "Informatique"]
     }
 }
+
+/*
+extension Warranty {
+    convenience init(name: String?) {
+        self.name = name
+    }
+}
+*/

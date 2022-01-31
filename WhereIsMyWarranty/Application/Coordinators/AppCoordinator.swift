@@ -14,15 +14,15 @@ class AppCoordinator: NSObject, Coordinator, UITabBarControllerDelegate {
     
     var navigationController: UINavigationController
     
-    var rootViewController: UIViewController {
+    // MARK: - Private Properties
+    
+    private var rootViewController: UIViewController {
         return tabBarController
     }
-    
-    var tabBarController: UITabBarController
-    
-    let warrantiesCoordinator: WarrantiesCoordinator
-    let settingsCoordinator: SettingsCoordinator
-    let window: UIWindow
+    private var tabBarController: UITabBarController
+    private let warrantiesCoordinator: WarrantiesCoordinator
+    private let settingsCoordinator: SettingsCoordinator
+    private let window: UIWindow
     
     // MARK: - Initializer
     

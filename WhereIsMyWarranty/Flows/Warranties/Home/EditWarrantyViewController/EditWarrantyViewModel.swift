@@ -26,14 +26,8 @@ class EditWarrantyViewModel {
         return hasNameChanged
     }
     
-    var name: String? //{
-//        didSet {
-//            if oldValue != name {
-//                
-//            }
-//        }
-//    }
-//    
+    var name: String?
+    
     var canSaveWarranty: Bool {
         return name?.isEmpty == false /// if name?.isEmpty == false, then canSaveWarranty == true
     }
@@ -44,11 +38,6 @@ class EditWarrantyViewModel {
     var productPhoto: Data?
     var invoicePhoto: Data?
     var yearsStepperValue: Int?
-    //{
-        // date debut
-        // date de fin
-        // compute l'increment d'annee Double
-    //}
     var monthsStepperValue: Int?
     var weeksStepperValue: Int?
     

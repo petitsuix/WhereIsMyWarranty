@@ -41,6 +41,13 @@ class WarrantiesCoordinator: Coordinator, AppCoordinatorProtocol {
         warrantiesViewModel.viewDelegate = warrantiesVC
         warrantiesVC.viewModel = warrantiesViewModel
         navigationController.setViewControllers([warrantiesVC], animated: false)
+      
+    }
+    
+    func testShowWarrantiesScreen() {
+     //   coordinator.showWarrantiesScreen()
+        // let topVC = navigationController.topViewController
+        // XCTAssert(topVC?.isKind(of: HomeWarrantiesListViewController.self)
     }
     
     func showNewWarrantyProductInfoScreen() {
