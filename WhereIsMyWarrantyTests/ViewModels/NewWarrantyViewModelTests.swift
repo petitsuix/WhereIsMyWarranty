@@ -25,11 +25,11 @@ class NewWarrantyViewModelTests: XCTestCase {
         viewModel = nil
     }
     
-//    func testWarrantySaved() {
-//        XCTAssertFalse(coordinatorMock.warrantySavedCalled)
-//        viewModel.warrantySaved()
-//        XCTAssertTrue(coordinatorMock.warrantySavedCalled)
-//    }
+    func testWarrantySaved() {
+        XCTAssertFalse(coordinatorMock.warrantySavedCalled)
+        viewModel.warrantySaved()
+        XCTAssertTrue(coordinatorMock.warrantySavedCalled)
+    }
     
     func testGoToAddProductPhotoScreen() {
         XCTAssertEqual(coordinatorMock.showNewWarrantyProductPhotoScreenCallCount, 0)

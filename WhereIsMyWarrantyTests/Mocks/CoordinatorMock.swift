@@ -67,6 +67,8 @@ class CoordinatorMock: WarrantiesCoordinatorProtocol {
         showEditWarrantyInvoicePhotoCalled = true
     }
     
+    var editedWarrantySavedCalled = false
     func editedWarrantySaved() {
+        editedWarrantySavedCalled = true
     }
 }

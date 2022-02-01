@@ -148,9 +148,10 @@ class EditWarrantyProductInfoViewController: UIViewController {
         //        if viewModel?.name?.isEmpty == true {
         //            alert("Son petit nom ?", "Il faut au moins un nom pour pouvoir continuer")
         //        }
-        if viewModel?.canSaveWarranty == false {
-            alert("Son petit nom ?", "Il faut au moins un nom pour pouvoir continuer")
-        }
+//        if viewModel?.canSaveWarranty == false {
+//            alert("Son petit nom ?", "Il faut au moins un nom pour pouvoir continuer")
+//        }
+        viewModel?.name = nameField.text
         viewModel?.startDate = datePicker.date
         viewModel?.isLifetimeWarranty = (lifetimeWarrantySwitch.isOn ? true : false)
         viewModel?.endDate = updatedDate
@@ -320,15 +321,15 @@ extension EditWarrantyProductInfoViewController {
         if let startDate = viewModel?.warranty.warrantyStart {
             datePicker.date = startDate
         }
-        if let yearsStepperValue = viewModel?.getYearsStepperValue() {
+        if let yearsStepperValue = viewModel?.calculateNumberOfYears() {
             yearsView.stepperAmount = yearsStepperValue
             yearsView.timeUnitAmount.text = "\(Int(yearsStepperValue))"
         }
-        if let monthsStepperValue = viewModel?.getMonthsStepperValue() {
+        if let monthsStepperValue = viewModel?.calculateNumberOfMonths() {
             monthsView.stepperAmount = monthsStepperValue
             monthsView.timeUnitAmount.text = "\(Int(monthsStepperValue))"
         }
-        if let weeksStepperValue = viewModel?.getWeeksStepperValue() {
+        if let weeksStepperValue = viewModel?.calculateNumberOfWeeks() {
             weeksView.stepperAmount = weeksStepperValue
             weeksView.timeUnitAmount.text = "\(Int(weeksStepperValue))"
         }

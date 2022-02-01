@@ -20,6 +20,7 @@ class HomeWarrantiesListViewModelTests: XCTestCase {
     var warranty2 = Warranty()
 
     override func setUpWithError() throws {
+        super.setUp()
         storageServiceMock = StorageServiceMock()
         coordinatorMock = CoordinatorMock()
         viewModel = HomeWarrantiesListViewModel(coordinator: coordinatorMock, storageService: storageServiceMock)

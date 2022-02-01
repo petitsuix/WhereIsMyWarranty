@@ -19,18 +19,18 @@ class EditWarrantyViewModel {
     
     var warranty: Warranty
     
-    private var hasNameChanged: Bool {
-        name != warranty.name
-    }
-    var canSave: Bool {
-        return hasNameChanged
-    }
+//    private var hasNameChanged: Bool {
+//        name != warranty.name
+//    }
+//    var canSave: Bool {
+//        return hasNameChanged
+//    }
     
     var name: String?
     
-    var canSaveWarranty: Bool {
-        return name?.isEmpty == false /// if name?.isEmpty == false, then canSaveWarranty == true
-    }
+//    var canSaveWarranty: Bool {
+//        return name?.isEmpty == false /// if name?.isEmpty == false, then canSaveWarranty == true
+//    }
     
     var startDate: Date?
     var isLifetimeWarranty: Bool?
@@ -47,7 +47,7 @@ class EditWarrantyViewModel {
         self.coordinator = coordinator
         self.storageService = storageService
         self.warranty = warranty
-        self.name = warranty.name
+       // self.name = warranty.name
     }
     
     func notifyWarrantyUpdated() {
@@ -69,9 +69,7 @@ class EditWarrantyViewModel {
     }
     
     func saveEditedWarranty() {
-        if hasNameChanged {
-            warranty.name = name
-        }
+        warranty.name = name
         warranty.warrantyStart = startDate
         warranty.lifetimeWarranty = isLifetimeWarranty ?? false
         warranty.warrantyEnd = endDate
@@ -81,21 +79,21 @@ class EditWarrantyViewModel {
         warrantySaved()
     }
     
-    func getYearsStepperValue() -> Double {
+    func calculateNumberOfYears() -> Double {
         let calendar = Calendar.current
         guard let warrantyStart = warranty.warrantyStart, let warrantyEnd = warranty.warrantyEnd else { return 0.0 }
         let components = calendar.dateComponents([.year, .month, .day], from: warrantyStart.startOfDay, to: warrantyEnd)
         return Double(components.year ?? 0)
     }
     
-    func getMonthsStepperValue() -> Double {
+    func calculateNumberOfMonths() -> Double {
         let calendar = Calendar.current
         guard let warrantyStart = warranty.warrantyStart, let warrantyEnd = warranty.warrantyEnd else { return 0.0 }
         let components = calendar.dateComponents([.year, .month, .day], from: warrantyStart.startOfDay, to: warrantyEnd)
         return Double(components.month ?? 0)
     }
     
-    func getWeeksStepperValue() -> Double {
+    func calculateNumberOfWeeks() -> Double {
         let calendar = Calendar.current
         guard let warrantyStart = warranty.warrantyStart, let warrantyEnd = warranty.warrantyEnd else { return 0.0 }
         let components = calendar.dateComponents([.year, .month, .day], from: warrantyStart.startOfDay, to: warrantyEnd)
