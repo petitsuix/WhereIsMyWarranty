@@ -45,7 +45,8 @@ class HomeWarrantiesListViewModelTests: XCTestCase {
     }
     
     func testFetchWarrantiesFromDatabase() {
+        XCTAssertFalse(storageServiceMock.loadWarrantiesCalled)
         viewModel.fetchWarrantiesFromDatabase()
-        XCTAssertFalse(viewModel.warranties.isEmpty)
+        XCTAssertTrue(storageServiceMock.loadWarrantiesCalled)
     }
 }

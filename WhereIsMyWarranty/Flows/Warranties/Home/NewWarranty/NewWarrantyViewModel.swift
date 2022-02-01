@@ -13,15 +13,13 @@ class NewWarrantyViewModel: NSObject {
     
     weak var newWarrantyProductInfoViewDelegate: NewWarrantyProductInfoViewController?
     weak var newWarrantyPhotoViewDelegate: NewWarrantyPhotoViewController?
-    let coordinator: WarrantiesCoordinator
-    let storageService: StorageService
+    let coordinator: WarrantiesCoordinatorProtocol
+    let storageService: StorageServiceProtocol
     
     var name: String? {
         didSet {
             guard oldValue != name else { return }
             newWarrantyProductInfoViewDelegate?.canGoToNextStep(canSave: canSaveWarranty)
-            print(oldValue)
-            print(name)
         }
     }
     
@@ -37,7 +35,7 @@ class NewWarrantyViewModel: NSObject {
     
     // MARK: - Methods
     
-    init(coordinator: WarrantiesCoordinator, storageService: StorageService) {
+    init(coordinator: WarrantiesCoordinatorProtocol, storageService: StorageServiceProtocol) {
         self.coordinator = coordinator
         self.storageService = storageService
     }

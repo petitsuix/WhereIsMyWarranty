@@ -74,7 +74,7 @@ class StorageService: StorageServiceProtocol {
 
 
 protocol StorageServiceProtocol {
-    var viewContext: NSManagedObjectContext {get}
+    var viewContext: NSManagedObjectContext { get }
     func loadWarranties() throws -> [Warranty]
     func loadCategories() throws -> [Category]
     func save()

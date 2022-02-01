@@ -40,7 +40,7 @@ class EditWarrantyPhotoViewController: UIViewController {
     
     @objc func goToEditInvoicePhotoScreen() {
         photoDidChange()
-        viewModel?.goToAddInvoicePhotoScreen()
+        viewModel?.goToEditInvoicePhotoScreen()
     }
     
     @objc func saveWarranty() {

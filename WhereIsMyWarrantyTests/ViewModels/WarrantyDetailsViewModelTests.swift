@@ -11,7 +11,7 @@ import XCTest
 
 class WarrantyDetailsViewModelTests: XCTestCase {
 
-    private let warranty1 = Warranty()
+    //private let warranty1 = Warranty()
     
     var viewModel: WarrantyDetailsViewModel!
     var coordinatorMock: CoordinatorMock!
@@ -20,7 +20,7 @@ class WarrantyDetailsViewModelTests: XCTestCase {
     override func setUp() {
         storageServiceMock = StorageServiceMock()
         coordinatorMock = CoordinatorMock()
-        viewModel = WarrantyDetailsViewModel(coordinator: coordinatorMock, storageService: storageServiceMock, warranty: warranty1)
+        viewModel = WarrantyDetailsViewModel(coordinator: coordinatorMock, storageService: storageServiceMock, warranty: FakeData.warranty1)
     }
 
     override func tearDown() {

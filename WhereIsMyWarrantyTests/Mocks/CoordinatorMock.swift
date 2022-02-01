@@ -30,15 +30,19 @@ class CoordinatorMock: WarrantiesCoordinatorProtocol {
         showNewWarrantyProductInfoCalled = true
     }
     
-    var showNewWarrantyPhotoSCreenCallCount = 0
+    var showNewWarrantyProductPhotoScreenCallCount = 0
     func showNewWarrantyProductPhotoScreen() {
-        showNewWarrantyPhotoSCreenCallCount += 1
+        showNewWarrantyProductPhotoScreenCallCount += 1
     }
     
+    var showNewWarrantyInvoicePhotoScreenCallCount = 0
     func showNewWarrantyInvoicePhotoScreen() {
+        showNewWarrantyInvoicePhotoScreenCallCount += 1
     }
     
+    var warrantySavedCalled = false
     func warrantySaved() {
+        warrantySavedCalled = true
     }
     
     var showWarrantyDetailsScreenCalled = false
@@ -53,10 +57,14 @@ class CoordinatorMock: WarrantiesCoordinatorProtocol {
         showEditWarrantyProductInfoCalled = true
     }
     
+    var showEditWarrantyProductPhotoCalled = false
     func showEditWarrantyProductPhotoScreen() {
+        showEditWarrantyProductPhotoCalled = true
     }
     
+    var showEditWarrantyInvoicePhotoCalled = false
     func showEditWarrantyInvoicePhotoScreen() {
+        showEditWarrantyInvoicePhotoCalled = true
     }
     
     func editedWarrantySaved() {

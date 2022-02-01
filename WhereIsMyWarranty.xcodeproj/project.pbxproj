@@ -56,6 +56,8 @@
 		97F1D307277345F400D0C52C /* WarrantyDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F1D306277345F400D0C52C /* WarrantyDetailsViewModel.swift */; };
 		97F768D027A41FE00012DA52 /* HomeWarrantiesListViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F768CF27A41FE00012DA52 /* HomeWarrantiesListViewModelTests.swift */; };
 		97F768D227A428900012DA52 /* CoordinatorMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F768D127A428900012DA52 /* CoordinatorMock.swift */; };
+		97F7F5F627A947F300C4A50E /* NewWarrantyViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F7F5F527A947F300C4A50E /* NewWarrantyViewModelTests.swift */; };
+		97F7F5F827A9523000C4A50E /* EditWarrantyViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F7F5F727A9523000C4A50E /* EditWarrantyViewModelTests.swift */; };
 		97F8075527A16234005F274E /* FakeData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F8075427A16234005F274E /* FakeData.swift */; };
 		97FE356A2791C606009CEF78 /* EditWarrantyProductInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FE35692791C606009CEF78 /* EditWarrantyProductInfoViewController.swift */; };
 		97FE356C2791C619009CEF78 /* EditWarrantyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FE356B2791C619009CEF78 /* EditWarrantyViewModel.swift */; };
@@ -157,6 +159,8 @@
 		97F1D306277345F400D0C52C /* WarrantyDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarrantyDetailsViewModel.swift; sourceTree = "<group>"; };
 		97F768CF27A41FE00012DA52 /* HomeWarrantiesListViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeWarrantiesListViewModelTests.swift; sourceTree = "<group>"; };
 		97F768D127A428900012DA52 /* CoordinatorMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorMock.swift; sourceTree = "<group>"; };
+		97F7F5F527A947F300C4A50E /* NewWarrantyViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWarrantyViewModelTests.swift; sourceTree = "<group>"; };
+		97F7F5F727A9523000C4A50E /* EditWarrantyViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditWarrantyViewModelTests.swift; sourceTree = "<group>"; };
 		97F8075427A16234005F274E /* FakeData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeData.swift; sourceTree = "<group>"; };
 		97FE35692791C606009CEF78 /* EditWarrantyProductInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditWarrantyProductInfoViewController.swift; sourceTree = "<group>"; };
 		97FE356B2791C619009CEF78 /* EditWarrantyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditWarrantyViewModel.swift; sourceTree = "<group>"; };
@@ -213,6 +217,8 @@
 			children = (
 				97F768CF27A41FE00012DA52 /* HomeWarrantiesListViewModelTests.swift */,
 				970B02AE27A848CE00EC4163 /* WarrantyDetailsViewModelTests.swift */,
+				97F7F5F527A947F300C4A50E /* NewWarrantyViewModelTests.swift */,
+				97F7F5F727A9523000C4A50E /* EditWarrantyViewModelTests.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -711,10 +717,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				97F7F5F827A9523000C4A50E /* EditWarrantyViewModelTests.swift in Sources */,
 				97F8075527A16234005F274E /* FakeData.swift in Sources */,
 				970B02AF27A848CE00EC4163 /* WarrantyDetailsViewModelTests.swift in Sources */,
 				97F768D227A428900012DA52 /* CoordinatorMock.swift in Sources */,
 				97630461275A68B300688DDB /* WhereIsMyWarrantyTests.swift in Sources */,
+				97F7F5F627A947F300C4A50E /* NewWarrantyViewModelTests.swift in Sources */,
 				970B02AD27A8387E00EC4163 /* StorageServiceMock.swift in Sources */,
 				97F768D027A41FE00012DA52 /* HomeWarrantiesListViewModelTests.swift in Sources */,
 			);

@@ -14,8 +14,8 @@ class EditWarrantyViewModel {
     
     weak var productInfoViewDelegate: EditWarrantyProductInfoViewController?
     weak var invoicePhotoViewDelegate: EditWarrantyPhotoViewController?
-    private let coordinator: WarrantiesCoordinator
-    private let storageService: StorageService
+    private let coordinator: WarrantiesCoordinatorProtocol
+    private let storageService: StorageServiceProtocol
     
     var warranty: Warranty
     
@@ -43,7 +43,7 @@ class EditWarrantyViewModel {
     
     // MARK: - Methods
     
-    init(coordinator: WarrantiesCoordinator, storageService: StorageService, warranty: Warranty) {
+    init(coordinator: WarrantiesCoordinatorProtocol, storageService: StorageServiceProtocol, warranty: Warranty) {
         self.coordinator = coordinator
         self.storageService = storageService
         self.warranty = warranty
@@ -60,7 +60,7 @@ class EditWarrantyViewModel {
         coordinator.showEditWarrantyProductPhotoScreen()
     }
     
-    func goToAddInvoicePhotoScreen() {
+    func goToEditInvoicePhotoScreen() {
         coordinator.showEditWarrantyInvoicePhotoScreen()
     }
     
