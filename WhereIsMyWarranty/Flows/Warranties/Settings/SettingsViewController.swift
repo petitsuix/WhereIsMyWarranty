@@ -11,61 +11,59 @@ class SettingsViewController: UIViewController {
   
     let navBarAppearance = UINavigationBarAppearance()
     
+    let parentStackView = UIStackView()
+    
     let proView = UIView()
-    let proLabel = UILabel()
-    let proButton = UIButton()
+    let topPresentationLabel = UILabel()
     
     let cloudSyncLabel = UILabel()
     let cloudSyncSwitch = UISwitch()
+    let cloudSyncStackView = UIStackView()
+    
     let notificationsLabel = UILabel()
     let notificationsSwitch = UISwitch()
-    let aboutButton = UIButton()
-    
-    let cloudSyncStackView = UIStackView()
     let notificationsStackView = UIStackView()
+    
+    let aboutLabel = UILabel()
+    let versionLabel = UILabel()
+    let bottomBorder = UIView()
+    
+    let privacyPolicyButton = UIButton()
+    let termsAndConditionsButton = UIButton()
+    let privacyAndTermsStackView = UIStackView()
+    
     let parentSettingsStackView = UIStackView()
+    
     
     override func viewWillAppear(_ animated: Bool) {}
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        // FIXME: gérer le dark mode ?
+        view.backgroundColor = .systemBackground
         self.title = Strings.settingsTitle
+        navBarAppearance.titleTextAttributes = [.foregroundColor: MWColor.bluegrey, .font: UIFont.systemFont(ofSize: 19, weight: .semibold)]
+        
+        topPresentationLabel.text = Strings.settingsPresentationLabel
+        topPresentationLabel.textAlignment = .center
+        topPresentationLabel.textColor = .white
+        topPresentationLabel.numberOfLines = 0
+        topPresentationLabel.translatesAutoresizingMaskIntoConstraints = false
+        
         configureNavigationBar()
         proView.backgroundColor = #colorLiteral(red: 0.09810357541, green: 0.3023771942, blue: 0.3678480089, alpha: 1)
         proView.translatesAutoresizingMaskIntoConstraints = false
         proView.roundingViewCorners(radius: 9)
-        view.addSubview(proView)
         
-        proLabel.text = "Donnez nous un coup de pouce !\n En passant à la version pro."
-        proLabel.textAlignment = .center
-        proLabel.textColor = .white
-        proLabel.numberOfLines = 0
-        proLabel.translatesAutoresizingMaskIntoConstraints = false
+        proView.addSubview(topPresentationLabel)
         
-        proButton.backgroundColor = #colorLiteral(red: 0.9260300994, green: 0.7213724256, blue: 0.593736887, alpha: 1)
-        proButton.setTitle("Où est ma garantie PRO", for: .normal)
-        proButton.titleLabel?.textColor = .white
-        proButton.translatesAutoresizingMaskIntoConstraints = false
-        proButton.roundingViewCorners(radius: 9)
-        
-        proView.addSubview(proLabel)
-        proView.addSubview(proButton)
-        
-        
-        
-        cloudSyncLabel.text = "Synchronisation cloud"
+        cloudSyncLabel.text = Strings.cloudSync
         cloudSyncLabel.textColor = #colorLiteral(red: 0.09810357541, green: 0.3023771942, blue: 0.3678480089, alpha: 1)
         cloudSyncLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        notificationsLabel.text = "Notifications"
+        notificationsLabel.text = Strings.notifications
         notificationsLabel.textColor = #colorLiteral(red: 0.09810357541, green: 0.3023771942, blue: 0.3678480089, alpha: 1)
         notificationsLabel.translatesAutoresizingMaskIntoConstraints = false
-        
-        aboutButton.setTitle("À propos", for: .normal)
-        aboutButton.setTitleColor(UIColor(red: 0.09810357541, green: 0.3023771942, blue: 0.3678480089, alpha: 1), for: .normal)
-        aboutButton.translatesAutoresizingMaskIntoConstraints = false
-        aboutButton.contentHorizontalAlignment = .left
         
         cloudSyncStackView.axis = .horizontal
         cloudSyncStackView.translatesAutoresizingMaskIntoConstraints = false
@@ -80,53 +78,87 @@ class SettingsViewController: UIViewController {
         parentSettingsStackView.axis = .vertical
         parentSettingsStackView.spacing = 24
         parentSettingsStackView.translatesAutoresizingMaskIntoConstraints = false
-        parentSettingsStackView.addArrangedSubview(cloudSyncStackView)
+        parentSettingsStackView.isUserInteractionEnabled = false
+        parentSettingsStackView.alpha = 0.5
+
         parentSettingsStackView.addArrangedSubview(notificationsStackView)
+        parentSettingsStackView.addArrangedSubview(cloudSyncStackView)
+        parentSettingsStackView.addArrangedSubview(bottomBorder)
+       
+        bottomBorder.setBottomBorder()
         
-        view.addSubview(parentSettingsStackView)
-        view.addSubview(aboutButton)
+        aboutLabel.text = Strings.about
+        aboutLabel.font = UIFont.systemFont(ofSize: 18, weight: .regular)
+        aboutLabel.textColor = MWColor.bluegrey
+        aboutLabel.textAlignment = .center
+        aboutLabel.translatesAutoresizingMaskIntoConstraints = false
         
+        privacyPolicyButton.setTitle(Strings.privacyPolicy, for: .normal)
+        privacyPolicyButton.setImage(UIImage(systemName: Strings.chevron), for: .normal)
+        privacyPolicyButton.tintColor = MWColor.bluegrey
+        privacyPolicyButton.semanticContentAttribute = .forceRightToLeft
+        privacyPolicyButton.setTitleColor(MWColor.bluegrey, for: .normal)
+        
+        termsAndConditionsButton.setTitle(Strings.termsAndConditions, for: .normal)
+        termsAndConditionsButton.setImage(UIImage(systemName: Strings.chevron), for: .normal)
+        termsAndConditionsButton.tintColor = MWColor.bluegrey
+        termsAndConditionsButton.semanticContentAttribute = .forceRightToLeft
+        termsAndConditionsButton.setTitleColor(MWColor.bluegrey, for: .normal)
+ 
+        privacyAndTermsStackView.axis = .vertical
+        privacyAndTermsStackView.spacing = 24
+        privacyAndTermsStackView.alignment = .leading
+        privacyAndTermsStackView.isUserInteractionEnabled = false
+        privacyAndTermsStackView.alpha = 0.5
+        
+        privacyAndTermsStackView.addArrangedSubview(privacyPolicyButton)
+        privacyAndTermsStackView.addArrangedSubview(termsAndConditionsButton)
+
+        parentStackView.translatesAutoresizingMaskIntoConstraints = false
+        parentStackView.axis = .vertical
+        parentStackView.spacing = 24
+        
+        parentStackView.addArrangedSubview(proView)
+        parentStackView.addArrangedSubview(parentSettingsStackView)
+        parentStackView.addArrangedSubview(aboutLabel)
+        parentStackView.addArrangedSubview(privacyAndTermsStackView)
+        parentStackView.setCustomSpacing(32, after: parentSettingsStackView)
+        parentStackView.setCustomSpacing(32, after: aboutLabel)
+        
+        versionLabel.text = Strings.version
+        versionLabel.font = UIFont.systemFont(ofSize: 16, weight: .regular)
+        versionLabel.textColor = MWColor.bluegrey
+        versionLabel.numberOfLines = 0
+        versionLabel.translatesAutoresizingMaskIntoConstraints = false
+        versionLabel.textAlignment = .center
+        
+        view.addSubview(parentStackView)
+        view.addSubview(versionLabel)
+    
         activateConstraints()
     }
     
     func configureNavigationBar() {
-        navBarAppearance.backgroundColor = #colorLiteral(red: 0.9285728335, green: 0.7623301148, blue: 0.6474828124, alpha: 1)
+        navBarAppearance.backgroundColor = MWColor.paleOrange
         navigationController?.navigationBar.standardAppearance = navBarAppearance
         navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
     }
     
-    func configureSwitchesStackView() {
-        
-    }
-    
-    func configureTitlesStackView() {
-        
-    }
-    
     func activateConstraints() {
         NSLayoutConstraint.activate([
-            proView.leadingAnchor.constraint(equalToSystemSpacingAfter: view.leadingAnchor, multiplier: 2),
-            proView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            proView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 12),
-            proView.heightAnchor.constraint(equalToConstant: 200),
+
+            topPresentationLabel.leadingAnchor.constraint(equalTo: proView.leadingAnchor, constant: 16),
+            topPresentationLabel.trailingAnchor.constraint(equalTo: proView.trailingAnchor, constant: -16),
+            topPresentationLabel.topAnchor.constraint(equalTo: proView.topAnchor, constant: 16),
+            topPresentationLabel.bottomAnchor.constraint(equalTo: proView.bottomAnchor, constant: -16),
             
-            proLabel.leadingAnchor.constraint(equalTo: proView.leadingAnchor, constant: 20),
-            proLabel.trailingAnchor.constraint(equalTo: proView.trailingAnchor, constant: -20),
-            proLabel.topAnchor.constraint(equalTo: proView.topAnchor, constant: 20),
+            bottomBorder.heightAnchor.constraint(equalToConstant: 1),
+            parentStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
+            parentStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            parentStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             
-            proButton.leadingAnchor.constraint(equalTo: proView.leadingAnchor, constant: 55),
-            proButton.trailingAnchor.constraint(equalTo: proView.trailingAnchor, constant: -55),
-            proButton.bottomAnchor.constraint(equalTo: proView.bottomAnchor, constant: -20),
-            proButton.heightAnchor.constraint(equalToConstant: 40),
-            
-            parentSettingsStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
-            parentSettingsStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
-            parentSettingsStackView.topAnchor.constraint(equalTo: proView.bottomAnchor, constant: 24),
-            
-            aboutButton.topAnchor.constraint(equalTo: notificationsStackView.bottomAnchor, constant: 24),
-            aboutButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
-            aboutButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
-            aboutButton.heightAnchor.constraint(equalToConstant: 30)
+            versionLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            versionLabel.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -24)
         ])
     }
 }

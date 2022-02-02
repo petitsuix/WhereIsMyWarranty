@@ -138,8 +138,9 @@ class HomeWarrantiesListViewController: UIViewController {
 extension HomeWarrantiesListViewController {
     private func setupView() {
         self.title = Strings.warrantiesTitle
-        view.backgroundColor = .white
         
+        view.backgroundColor = .white
+        navBarAppearance.titleTextAttributes = [.foregroundColor: MWColor.bluegrey, .font: UIFont.systemFont(ofSize: 19, weight: .semibold)]
         navBarAppearance.backgroundColor = MWColor.paleOrange
         navigationController?.navigationBar.standardAppearance = navBarAppearance
         navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance

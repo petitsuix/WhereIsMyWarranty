@@ -13,7 +13,6 @@ class HomeWarrantiesListViewModel {
     
     weak var viewDelegate: HomeWarrantiesListViewController?
     
-    
     var warranties: [Warranty] = [] {
         didSet {
             viewDelegate?.refreshWith(warranties: warranties)
@@ -31,8 +30,6 @@ class HomeWarrantiesListViewModel {
     private let coordinator: WarrantiesCoordinatorProtocol
     private let storageService: StorageServiceProtocol
     
-    // MARK: - objc methods
-
     // MARK: - Methods
     
     init(coordinator: WarrantiesCoordinatorProtocol, storageService: StorageServiceProtocol) {

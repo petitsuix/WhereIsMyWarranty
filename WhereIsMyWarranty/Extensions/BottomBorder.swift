@@ -7,9 +7,8 @@
 
 import UIKit
 
-extension UITextField {
+extension UIView {
   func setBottomBorder() {
-    self.borderStyle = .none
     self.layer.backgroundColor = UIColor.white.cgColor
 
     self.layer.masksToBounds = false

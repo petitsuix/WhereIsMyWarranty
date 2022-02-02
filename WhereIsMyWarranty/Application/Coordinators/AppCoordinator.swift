@@ -44,6 +44,9 @@ class AppCoordinator: NSObject, Coordinator, UITabBarControllerDelegate {
         tabBarControllers.append(warrantiesViewController)
         tabBarControllers.append(settingsViewController)
         
+        tabBarController.tabBar.unselectedItemTintColor = MWColor.bluegrey
+        tabBarController.tabBar.tintColor = MWColor.bluegrey
+
         tabBarController.viewControllers = tabBarControllers
         tabBarController.tabBar.isTranslucent = false
         tabBarController.tabBar.backgroundColor = MWColor.paleOrange

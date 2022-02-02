@@ -87,7 +87,7 @@ class WarrantiesCell: UICollectionViewCell {
             
             if Int(getRemainingDaysFromEndDate()) ?? 0 < 0 {
                 remainingTime.text = "0" + Strings.remainingDays
-                warrantyEnd.text = Strings.warrantyExpired
+                warrantyEnd.text = Strings.cellDisplayWarrantyExpired
             } else {
                 remainingTime.text = getRemainingDaysFromEndDate() + Strings.remainingDays
                 if let warrantyEndDate = warranty?.warrantyEnd {

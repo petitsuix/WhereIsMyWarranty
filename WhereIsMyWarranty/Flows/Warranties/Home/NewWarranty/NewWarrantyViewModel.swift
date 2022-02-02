@@ -16,22 +16,12 @@ class NewWarrantyViewModel: NSObject {
     let coordinator: WarrantiesCoordinatorProtocol
     let storageService: StorageServiceProtocol
     
-    var name: String? {
-        didSet {
-            guard oldValue != name else { return }
-            newWarrantyProductInfoViewDelegate?.canGoToNextStep(canSave: canSaveWarranty)
-        }
-    }
-    
+    var name: String?
     var startDate: Date?
     var endDate: Date?
     var isLifetimeWarranty: Bool?
     var productPhoto: Data?
     var invoicePhoto: Data?
-    
-    var canSaveWarranty: Bool {
-        return name?.isEmpty == false
-    }
     
     // MARK: - Methods
     
