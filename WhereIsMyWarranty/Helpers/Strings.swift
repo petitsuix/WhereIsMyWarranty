@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 enum Strings {
     
     static let settingsTitle = "Réglages"

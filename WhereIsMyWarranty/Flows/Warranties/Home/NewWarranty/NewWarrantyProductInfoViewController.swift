@@ -4,6 +4,7 @@
 //
 //  Created by Richardier on 07/12/2021.
 //
+//swiftlint:disable file_length
 
 import UIKit
 
@@ -25,7 +26,6 @@ class NewWarrantyProductInfoViewController: UIViewController {
     let startDateTitle = UILabel()
     let datePicker = UIDatePicker()
     
-    
     // 1.2
     let customLengthStackView = UIStackView()
     let validityLengthTitle = UILabel()
@@ -36,7 +36,6 @@ class NewWarrantyProductInfoViewController: UIViewController {
     let yearsView = TextWithStepperView()
     let monthsView = TextWithStepperView()
     let weeksView = TextWithStepperView()
-    
     
     let endDateLabel = UILabel()
     let nextStepButton = UIButton()
@@ -198,7 +197,6 @@ class NewWarrantyProductInfoViewController: UIViewController {
         }
     }
 }
-
 
 extension NewWarrantyProductInfoViewController {
     

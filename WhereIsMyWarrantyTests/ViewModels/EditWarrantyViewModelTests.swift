@@ -74,4 +74,3 @@ class EditWarrantyViewModelTests: XCTestCase {
         XCTAssertEqual(numberOfWeeks, 1.0)
     }
 }
-

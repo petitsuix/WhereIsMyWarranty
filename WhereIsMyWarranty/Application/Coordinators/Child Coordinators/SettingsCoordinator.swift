@@ -25,6 +25,7 @@ class SettingsCoordinator: Coordinator {
         showSettingsScreen()
     }
     
+    // FIXME: Pourquoi lui il est jamais lu ?
     func start() {
         showSettingsScreen()
     }

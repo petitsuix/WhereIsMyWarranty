@@ -7,7 +7,6 @@
 
 import UIKit
 
-
 enum MWAppearance {
     static func setup() {
 //        UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .headline)]

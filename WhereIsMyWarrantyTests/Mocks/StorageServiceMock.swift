@@ -10,8 +10,6 @@ import CoreData
 
 class StorageServiceMock: StorageServiceProtocol {
     
-    
-    
     var viewContext: NSManagedObjectContext
     
     init() {
@@ -38,7 +36,6 @@ class StorageServiceMock: StorageServiceProtocol {
         loadCategoriesCalled = true
         return [FakeData.category, FakeData.category2]
     }
-    
     
     var loadWarrantiesCalled = false
     func loadWarranties() throws -> [Warranty] {

@@ -105,7 +105,6 @@ class NewWarrantyPhotoViewController: UIViewController {
         imageView.layer.masksToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
         
-        
         let buttonImage = UIImage(systemName: "plus.circle.fill", withConfiguration: UIImage.SymbolConfiguration(pointSize: 30, weight: .light, scale: .small))
         selectImageButton.translatesAutoresizingMaskIntoConstraints = false
         selectImageButton.setImage(buttonImage, for: .normal)
@@ -115,7 +114,6 @@ class NewWarrantyPhotoViewController: UIViewController {
         selectImageButton.setTitleColor(.label, for: .normal)
         selectImageButton.tintColor = MWColor.paleOrange
         selectImageButton.addTarget(self, action: #selector(chooseAndDisplayImage), for: .touchUpInside)
-        
         
         endCurrentScreenButton.backgroundColor = MWColor.paleOrange
         endCurrentScreenButton.roundingViewCorners(radius: 8)
@@ -145,7 +143,7 @@ class NewWarrantyPhotoViewController: UIViewController {
     }
     
     func openPhotoGallery() {
-        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerController.SourceType.photoLibrary){
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerController.SourceType.photoLibrary) {
             let imagePicker = UIImagePickerController()
             imagePicker.delegate = self
             imagePicker.allowsEditing = true
@@ -174,7 +172,7 @@ class NewWarrantyPhotoViewController: UIViewController {
     
     // MARK: - Image Picker Configuration
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         let selectedImage = info[.originalImage] as? UIImage
         imageView.image = selectedImage?.resized(to: CGSize(width: 250, height: 320))
         picker.dismiss(animated: true, completion: nil)
@@ -194,17 +192,6 @@ class NewWarrantyPhotoViewController: UIViewController {
             endCurrentScreenButton.widthAnchor.constraint(equalToConstant: 170)
         ])
     }
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
-    
 }
 
 extension NewWarrantyPhotoViewController: UIImagePickerControllerDelegate & UINavigationControllerDelegate {

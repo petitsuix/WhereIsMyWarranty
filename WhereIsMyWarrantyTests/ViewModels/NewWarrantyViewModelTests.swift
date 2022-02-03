@@ -32,15 +32,15 @@ class NewWarrantyViewModelTests: XCTestCase {
     }
     
     func testGoToAddProductPhotoScreen() {
-        XCTAssertEqual(coordinatorMock.showNewWarrantyProductPhotoScreenCallCount, 0)
+        XCTAssertEqual(coordinatorMock.showNewWarrantyProductPhotoCallCount, 0)
         viewModel.goToAddProductPhotoScreen()
-        XCTAssertEqual(coordinatorMock.showNewWarrantyProductPhotoScreenCallCount, 1)
+        XCTAssertEqual(coordinatorMock.showNewWarrantyProductPhotoCallCount, 1)
     }
     
     func testGoToAddInvoicePhotoScreen() {
-        XCTAssertEqual(coordinatorMock.showNewWarrantyInvoicePhotoScreenCallCount, 0)
+        XCTAssertEqual(coordinatorMock.showNewWarrantyInvoicePhotoCallCount, 0)
         viewModel.goToAddInvoicePhotoScreen()
-        XCTAssertEqual(coordinatorMock.showNewWarrantyInvoicePhotoScreenCallCount, 1)
+        XCTAssertEqual(coordinatorMock.showNewWarrantyInvoicePhotoCallCount, 1)
     }
     
     func testSaveWarranty() {

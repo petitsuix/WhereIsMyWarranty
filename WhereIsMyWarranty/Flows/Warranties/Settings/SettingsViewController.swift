@@ -9,31 +9,30 @@ import UIKit
 
 class SettingsViewController: UIViewController {
   
-    let navBarAppearance = UINavigationBarAppearance()
+   private let navBarAppearance = UINavigationBarAppearance()
     
-    let parentStackView = UIStackView()
+    private let parentStackView = UIStackView()
     
-    let proView = UIView()
-    let topPresentationLabel = UILabel()
+    private let proView = UIView()
+    private let topPresentationLabel = UILabel()
     
-    let cloudSyncLabel = UILabel()
-    let cloudSyncSwitch = UISwitch()
-    let cloudSyncStackView = UIStackView()
+    private let cloudSyncLabel = UILabel()
+    private let cloudSyncSwitch = UISwitch()
+    private let cloudSyncStackView = UIStackView()
     
-    let notificationsLabel = UILabel()
-    let notificationsSwitch = UISwitch()
-    let notificationsStackView = UIStackView()
+    private let notificationsLabel = UILabel()
+    private let notificationsSwitch = UISwitch()
+    private let notificationsStackView = UIStackView()
     
-    let aboutLabel = UILabel()
-    let versionLabel = UILabel()
-    let bottomBorder = UIView()
+    private let aboutLabel = UILabel()
+    private let versionLabel = UILabel()
+    private let bottomBorder = UIView()
     
-    let privacyPolicyButton = UIButton()
-    let termsAndConditionsButton = UIButton()
-    let privacyAndTermsStackView = UIStackView()
+    private let privacyPolicyButton = UIButton()
+    private let termsAndConditionsButton = UIButton()
+    private let privacyAndTermsStackView = UIStackView()
     
-    let parentSettingsStackView = UIStackView()
-    
+    private let parentSettingsStackView = UIStackView()
     
     override func viewWillAppear(_ animated: Bool) {}
     

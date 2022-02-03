@@ -9,8 +9,8 @@ import Foundation
 import UIKit
 @testable import WhereIsMyWarranty
 
-
 class CoordinatorMock: WarrantiesCoordinatorProtocol {
+    
     var navigationController = UINavigationController()
     
     var warranty: Warranty?
@@ -21,7 +21,7 @@ class CoordinatorMock: WarrantiesCoordinatorProtocol {
     }
     
    var showWarrantiesCalled = false
-    func showWarrantiesScreen() {
+    func showHomeWarrantiesListScreen() {
         showWarrantiesCalled = true
     }
     
@@ -30,14 +30,14 @@ class CoordinatorMock: WarrantiesCoordinatorProtocol {
         showNewWarrantyProductInfoCalled = true
     }
     
-    var showNewWarrantyProductPhotoScreenCallCount = 0
+    var showNewWarrantyProductPhotoCallCount = 0
     func showNewWarrantyProductPhotoScreen() {
-        showNewWarrantyProductPhotoScreenCallCount += 1
+        showNewWarrantyProductPhotoCallCount += 1
     }
     
-    var showNewWarrantyInvoicePhotoScreenCallCount = 0
+    var showNewWarrantyInvoicePhotoCallCount = 0
     func showNewWarrantyInvoicePhotoScreen() {
-        showNewWarrantyInvoicePhotoScreenCallCount += 1
+        showNewWarrantyInvoicePhotoCallCount += 1
     }
     
     var warrantySavedCalled = false
@@ -71,4 +71,6 @@ class CoordinatorMock: WarrantiesCoordinatorProtocol {
     func editedWarrantySaved() {
         editedWarrantySavedCalled = true
     }
+    
+    func showFullScreenInvoicePhoto(invoicePhoto: Data) {}
 }

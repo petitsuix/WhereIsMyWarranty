@@ -10,7 +10,6 @@ import UIKit
 
 class StorageService: StorageServiceProtocol {
     
-    
     // MARK: - Properties
     
     var viewContext: NSManagedObjectContext
@@ -18,7 +17,7 @@ class StorageService: StorageServiceProtocol {
     static private var persistentContainer: NSPersistentCloudKitContainer = {
         
         let container = NSPersistentCloudKitContainer(name: "WhereIsMyWarranty")
-        container.loadPersistentStores(completionHandler: { (storeDescription, error) in
+        container.loadPersistentStores(completionHandler: { (_, error) in
             if let error = error as NSError? {
                 fatalError("Unresolved error \(error), \(error.userInfo)")
             }
@@ -36,8 +35,8 @@ class StorageService: StorageServiceProtocol {
         var warranties = [Warranty]()
         do {
             warranties = try viewContext.fetch(Warranty.fetchRequest())
-        }
-        catch { throw error }
+        } catch {
+            throw error }
         return warranties
     }
     
@@ -45,10 +44,8 @@ class StorageService: StorageServiceProtocol {
         var categories = [Category]()
         do {
             categories = try viewContext.fetch(Category.fetchRequest())
-        }
-        catch {
-            print(error)
-        }
+        } catch {
+            print(error) }
         return categories
     }
     
@@ -56,8 +53,8 @@ class StorageService: StorageServiceProtocol {
         if viewContext.hasChanges {
             do {
                 try viewContext.save()
-            }
-            catch { print(error) }
+            } catch {
+                print(error) }
         }
     }
     
@@ -65,14 +62,13 @@ class StorageService: StorageServiceProtocol {
         do {
             viewContext.delete(object)
             try viewContext.save()
-        }
-        catch {
+        } catch {
             throw error
         }
     }
 }
 
-
+// FIXME: faire un fichier a part pour protocols ?
 protocol StorageServiceProtocol {
     var viewContext: NSManagedObjectContext { get }
     func loadWarranties() throws -> [Warranty]

@@ -4,6 +4,7 @@
 //
 //  Created by Richardier on 14/01/2022.
 //
+//swiftlint:disable file_length
 
 import UIKit
 
@@ -29,7 +30,6 @@ class EditWarrantyProductInfoViewController: UIViewController {
     private let startDateTitle = UILabel()
     private var datePicker = UIDatePicker()
     
-    
     // 1.2
     private let customLengthStackView = UIStackView()
     private let validityLengthTitle = UILabel()
@@ -45,8 +45,7 @@ class EditWarrantyProductInfoViewController: UIViewController {
     private let endDateLabel = UILabel()
     
     private var nextStepButton = UIButton()
-    
-    
+
     private var updatedDate: Date?
     
     // MARK: - View life cycle methods
@@ -148,9 +147,6 @@ class EditWarrantyProductInfoViewController: UIViewController {
         //        if viewModel?.name?.isEmpty == true {
         //            alert("Son petit nom ?", "Il faut au moins un nom pour pouvoir continuer")
         //        }
-//        if viewModel?.canSaveWarranty == false {
-//            alert("Son petit nom ?", "Il faut au moins un nom pour pouvoir continuer")
-//        }
         viewModel?.name = nameField.text
         viewModel?.startDate = datePicker.date
         viewModel?.isLifetimeWarranty = (lifetimeWarrantySwitch.isOn ? true : false)
@@ -284,7 +280,7 @@ extension EditWarrantyProductInfoViewController {
         endDateLabel.numberOfLines = 2
         
         parentStackView.axis = .vertical
-        parentStackView.spacing = 56
+        parentStackView.spacing = 40
         parentStackView.translatesAutoresizingMaskIntoConstraints = false
         parentStackView.addArrangedSubview(nameAndStartDateStackView)
         parentStackView.addArrangedSubview(customLengthStackView)
@@ -306,11 +302,12 @@ extension EditWarrantyProductInfoViewController {
             parentStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 24),
             parentStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
             parentStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
+            parentStackView.bottomAnchor.constraint(lessThanOrEqualTo: nextStepButton.topAnchor, constant: -16),
             
             endDateLabel.heightAnchor.constraint(equalToConstant: 60),
             
             nextStepButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            nextStepButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -48),
+            nextStepButton.bottomAnchor.constraint(lessThanOrEqualTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -24),
             nextStepButton.heightAnchor.constraint(equalToConstant: 55),
             nextStepButton.widthAnchor.constraint(equalToConstant: 170)
         ])

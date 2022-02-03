@@ -48,10 +48,8 @@ class HomeWarrantiesListViewModel {
     func fetchWarrantiesFromDatabase() {
         do {
             warranties = try storageService.loadWarranties()
-        }
-        catch {
-            print(error)
-        }
+        } catch {
+            print(error) }
     }
     
     func saveCategory(categoryToSave: String) {
@@ -63,10 +61,8 @@ class HomeWarrantiesListViewModel {
     func fetchCategoriesFromDatabase() {
         do {
             categories = try storageService.loadCategories()
-        }
-        catch {
-            print(error)
-        }
+        } catch {
+            print(error) }
         // categories = ["Electroménager", "Pro", "Informatique"]
     }
 }

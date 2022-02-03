@@ -16,7 +16,6 @@ enum State<Data> { // To execute particular actions according to the situation
 
 class HomeWarrantiesListViewController: UIViewController {
     
-    
     // MARK: - Properties
     
     var viewModel: HomeWarrantiesListViewModel?
@@ -90,10 +89,9 @@ class HomeWarrantiesListViewController: UIViewController {
     
     @objc func showAlert() {
         let alert = UIAlertController(title: "Nouvelle categorie", message: "Donnez lui un nom", preferredStyle: .alert)
-        let saveAction = UIAlertAction(title: "ajouter", style: .default) { [unowned self] action in
+        let saveAction = UIAlertAction(title: "ajouter", style: .default) { [unowned self] _ in
             guard let textfield = alert.textFields?.first, let categoryToSave = textfield.text else { return }
             viewModel?.saveCategory(categoryToSave: categoryToSave)
-            // FIXME: Comment refresh la collection view après le completion
             viewModel?.fetchCategoriesFromDatabase()
             refresh()
         }
@@ -256,8 +254,8 @@ extension HomeWarrantiesListViewController: UICollectionViewDataSource, UICollec
         print("selected item nbr \(indexPath.row)")
         if collectionView == warrantiesCollectionView {
             guard let selectedWarranty = viewModel?.warranties[indexPath.row] else { return }
-            warrantyCellTapped(warranty: selectedWarranty) }
-        else {
+            warrantyCellTapped(warranty: selectedWarranty)
+        } else {
             //  storageService.selectedWarranty = viewModel.warranties[indexPath.row]
             
             guard let selectedCategory = viewModel?.categories[indexPath.row] else { return }

@@ -32,15 +32,15 @@ class WarrantiesCoordinator: Coordinator, WarrantiesCoordinatorProtocol {
     }
     
     func start() {
-        showWarrantiesScreen()
+        showHomeWarrantiesListScreen()
     }
     
-    func showWarrantiesScreen() {
-        let warrantiesVC = HomeWarrantiesListViewController()
-        let warrantiesViewModel = HomeWarrantiesListViewModel(coordinator: self, storageService: storageService)
-        warrantiesViewModel.viewDelegate = warrantiesVC
-        warrantiesVC.viewModel = warrantiesViewModel
-        navigationController.setViewControllers([warrantiesVC], animated: false)
+    func showHomeWarrantiesListScreen() {
+        let homeWarrantiesListViewController = HomeWarrantiesListViewController()
+        let homeWarrantiesListViewModel = HomeWarrantiesListViewModel(coordinator: self, storageService: storageService)
+        homeWarrantiesListViewModel.viewDelegate = homeWarrantiesListViewController
+        homeWarrantiesListViewController.viewModel = homeWarrantiesListViewModel
+        navigationController.setViewControllers([homeWarrantiesListViewController], animated: false)
     }
     
     func testShowWarrantiesScreen() {
@@ -95,6 +95,16 @@ class WarrantiesCoordinator: Coordinator, WarrantiesCoordinatorProtocol {
         navigationController.pushViewController(warrantyDetailsViewController, animated: true)
     }
     
+    func showFullScreenInvoicePhoto(invoicePhoto: Data) {
+        let fullScreenInvoicePhotoViewController = FullScreenInvoicePhotoViewController()
+        fullScreenInvoicePhotoViewController.invoicePhoto = invoicePhoto
+        modalNavigationController.modalPresentationStyle = .popover
+        modalNavigationController.modalTransitionStyle = .coverVertical
+        modalNavigationController = UINavigationController(rootViewController: fullScreenInvoicePhotoViewController)
+        navigationController.present(modalNavigationController, animated: true, completion: nil)
+    }
+
+    
     func showEditWarrantyProductInfoScreen(warranty: Warranty) {
         let editWarrantyProductInfoViewController = EditWarrantyProductInfoViewController()
         let viewModel = EditWarrantyViewModel(coordinator: self, storageService: storageService, warranty: warranty)
@@ -130,10 +140,11 @@ class WarrantiesCoordinator: Coordinator, WarrantiesCoordinatorProtocol {
         }
         editWarrantyViewModel?.notifyWarrantyUpdated() // j'ai bien fait de déclarer notifyWarrantiesListUpdated dans le viewModel ?
     }
+    
 }
 
 protocol WarrantiesCoordinatorProtocol: Coordinator {
-    func showWarrantiesScreen()
+    func showHomeWarrantiesListScreen()
     func showNewWarrantyProductInfoScreen()
     func showNewWarrantyProductPhotoScreen()
     func showNewWarrantyInvoicePhotoScreen()
@@ -143,4 +154,5 @@ protocol WarrantiesCoordinatorProtocol: Coordinator {
     func showEditWarrantyProductPhotoScreen()
     func showEditWarrantyInvoicePhotoScreen()
     func editedWarrantySaved()
+    func showFullScreenInvoicePhoto(invoicePhoto: Data)
 }

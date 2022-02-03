@@ -60,7 +60,7 @@ class EditWarrantyPhotoViewController: UIViewController {
         
         parentStackView.translatesAutoresizingMaskIntoConstraints = false
         parentStackView.axis = .vertical
-        parentStackView.spacing = 40
+        parentStackView.spacing = 32
         view.addSubview(parentStackView)
         
         addAFileTitleLabel.textColor = .black
@@ -78,7 +78,6 @@ class EditWarrantyPhotoViewController: UIViewController {
         imageView.layer.masksToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
         
-        
         let buttonImage = UIImage(systemName: "plus.circle.fill", withConfiguration: UIImage.SymbolConfiguration(pointSize: 30, weight: .light, scale: .small))
         selectImageButton.translatesAutoresizingMaskIntoConstraints = false
         selectImageButton.setImage(buttonImage, for: .normal)
@@ -88,7 +87,6 @@ class EditWarrantyPhotoViewController: UIViewController {
         selectImageButton.setTitleColor(.label, for: .normal)
         selectImageButton.tintColor = MWColor.paleOrange
         selectImageButton.addTarget(self, action: #selector(chooseAndDisplayImage), for: .touchUpInside)
-        
         
         endCurrentScreenButton.backgroundColor = MWColor.paleOrange
         endCurrentScreenButton.roundingViewCorners(radius: 8)
@@ -148,7 +146,7 @@ class EditWarrantyPhotoViewController: UIViewController {
     }
     
     func openPhotoGallery() {
-        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerController.SourceType.photoLibrary){
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerController.SourceType.photoLibrary) {
             let imagePicker = UIImagePickerController()
             imagePicker.delegate = self
             imagePicker.allowsEditing = true
@@ -177,47 +175,29 @@ class EditWarrantyPhotoViewController: UIViewController {
     
     // MARK: - Image Picker Configuration
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         let selectedImage = info[.originalImage] as? UIImage
         imageView.image = selectedImage?.resized(to: CGSize(width: 250, height: 320))
         picker.dismiss(animated: true, completion: nil)
     }
     
-    func colorTests() {
-        parentStackView.backgroundColor = .green
-        addAFileTitleLabel.backgroundColor = .red
-        imageView.backgroundColor = .yellow
-        selectImageButton.backgroundColor = .orange
-    }
-    
     func activateConstraints() {
         NSLayoutConstraint.activate([
-            parentStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 32),
+            parentStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 24),
             parentStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            parentStackView.bottomAnchor.constraint(lessThanOrEqualTo: endCurrentScreenButton.topAnchor, constant: -24),
             
             imageView.widthAnchor.constraint(equalToConstant: 250),
             imageView.heightAnchor.constraint(equalToConstant: 320),
             
+            selectImageButton.heightAnchor.constraint(equalToConstant: 30),
+            
             endCurrentScreenButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            endCurrentScreenButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -48),
+            endCurrentScreenButton.bottomAnchor.constraint(lessThanOrEqualTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -24),
             endCurrentScreenButton.heightAnchor.constraint(equalToConstant: 55),
             endCurrentScreenButton.widthAnchor.constraint(equalToConstant: 170)
         ])
     }
-    
-    
-    
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
-    
 }
 
 extension EditWarrantyPhotoViewController: UIImagePickerControllerDelegate & UINavigationControllerDelegate {

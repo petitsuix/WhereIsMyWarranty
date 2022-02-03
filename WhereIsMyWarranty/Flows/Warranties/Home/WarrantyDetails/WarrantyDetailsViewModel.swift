@@ -9,18 +9,18 @@ import Foundation
 
 class WarrantyDetailsViewModel {
     
-    //MARK: - Properties
+    // MARK: - Properties
     
     weak var viewDelegate: WarrantyDetailsViewController?
     
     var warranty: Warranty
     
-    //MARK: - Private properties
+    // MARK: - Private properties
     
     private let coordinator: WarrantiesCoordinatorProtocol
     private let storageService: StorageServiceProtocol
     
-    //MARK: - Methods
+    // MARK: - Methods
     
     init(coordinator: WarrantiesCoordinatorProtocol, storageService: StorageServiceProtocol, warranty: Warranty) {
         self.coordinator = coordinator
@@ -28,13 +28,17 @@ class WarrantyDetailsViewModel {
         self.warranty = warranty
     }
     
+    func showFullScreenInvoicePhoto() {
+        if let invoicePhoto = warranty.invoicePhoto {
+        coordinator.showFullScreenInvoicePhoto(invoicePhoto: invoicePhoto)
+        }
+    }
+    
     func deleteWarranty() {
         do {
-           try storageService.deleteWarranty(warranty)
-        }
-        catch {
-            print(error)
-        }
+            try storageService.deleteWarranty(warranty)
+        } catch {
+            print(error) }
     }
     
     func editWarranty() {

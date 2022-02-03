@@ -60,6 +60,10 @@ class WarrantyDetailsViewController: UIViewController {
         setupData()
     }
     
+    @objc func showFullScreenImage() {
+        viewModel?.showFullScreenInvoicePhoto()
+    }
+    
     @objc func deleteWarranty() {
         viewModel?.deleteWarranty()
     }
@@ -131,6 +135,8 @@ extension WarrantyDetailsViewController {
         invoicePhotoTitle.font = UIFont.boldSystemFont(ofSize: 18)
         
         invoiceImageView.contentMode = .scaleAspectFit
+        invoiceImageView.isUserInteractionEnabled = true
+        invoiceImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showFullScreenImage)))
         
         invoicePhotoStackView.axis = .vertical
         invoicePhotoStackView.spacing = 8
@@ -198,7 +204,7 @@ extension WarrantyDetailsViewController {
             bottomBorder.heightAnchor.constraint(equalToConstant: 1),
 
             productImageView.heightAnchor.constraint(equalToConstant: 130),
-            productImageView.widthAnchor.constraint(equalToConstant: 130),
+            productImageView.widthAnchor.constraint(equalToConstant: 130)
         ])
     }
     

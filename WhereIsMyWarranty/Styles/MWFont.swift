@@ -8,7 +8,5 @@
 import UIKit
 
 enum MWFont {
-    
     static let caption1 = UIFont.preferredFont(forTextStyle: .caption1)
-    
 }
