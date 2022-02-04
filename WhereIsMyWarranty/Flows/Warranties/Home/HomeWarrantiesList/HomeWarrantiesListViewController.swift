@@ -35,6 +35,12 @@ class HomeWarrantiesListViewController: UIViewController {
     private let categoriesStackView = UIStackView()
     private let bottomBorder = UIView()
     
+    private let noWarrantyStackView = UIStackView()
+    private let noWarrantyTitleLabel = UILabel()
+    private let noWarrantyBodyLabel = UILabel()
+    private let noWarrantyImageView = UIImageView()
+    // private let noWarranty
+    
     // MARK: - Computed properties
     
     private var viewState: State<Void> = .loading {
@@ -44,17 +50,19 @@ class HomeWarrantiesListViewController: UIViewController {
             case .loading :
                 print("loading")
             case .empty :
-                // displayNoWarrantiesView()
+                noWarrantyStackView.isHidden = false
+                noWarrantyImageView.isHidden = false
                 print("fell into the .empty case of viewState. That means the collectionView is empty.")
             case .error :
                 alert("Oops...", "Something went wrong, please try again.")
                 print("error : fell into the .error case of viewState")
             case .showData :
-                //self.warranties = warranties
                 warrantiesCollectionView.reloadData()
                 categoriesCollectionView.reloadData()
                 warrantiesCollectionView.isHidden = false
                 categoriesCollectionView.isHidden = false
+                noWarrantyStackView.isHidden = true
+                noWarrantyImageView.isHidden = true
             }
         }
     }
@@ -72,19 +80,18 @@ class HomeWarrantiesListViewController: UIViewController {
         super.viewWillAppear(animated)
         viewModel?.fetchCategoriesFromDatabase()
         viewModel?.fetchWarrantiesFromDatabase()
-        viewState = .showData
+        didFinishLoadingWarranties()
     }
     
     // MARK: - objc methods
     
     @objc func warrantiesUpdated() {
         viewModel?.fetchWarrantiesFromDatabase()
-        viewState = .showData
+        didFinishLoadingWarranties()
     }
     
     @objc func newWarrantyButtonAction() {
         viewModel?.showNewWarrantyScreen()
-        // coordinator?.showNewWarrantiesScreenFor(category: "MA SUPER CATEGORY")
     }
     
     @objc func showAlert() {
@@ -117,18 +124,6 @@ class HomeWarrantiesListViewController: UIViewController {
     private func resetViewState() {
         warrantiesCollectionView.isHidden = true
     }
-    
-    private func displayNoWarrantiesView() {
-        let noResultTextView = UITextView.init(frame: self.view.frame)
-        noResultTextView.text = "\n\n\n\n\nOops, nothing to show here !"
-        noResultTextView.font = UIFont.preferredFont(forTextStyle: .subheadline)
-        noResultTextView.textColor = .systemGray
-        noResultTextView.textAlignment = .center
-        noResultTextView.isEditable = false
-        noResultTextView.translatesAutoresizingMaskIntoConstraints = false
-        noResultTextView.adjustsFontForContentSizeCategory = true
-        view.addSubview(noResultTextView)
-    }
 }
 
 // MARK: - View Configuration
@@ -136,14 +131,32 @@ class HomeWarrantiesListViewController: UIViewController {
 extension HomeWarrantiesListViewController {
     private func setupView() {
         self.title = Strings.warrantiesTitle
-        
         view.backgroundColor = .white
+        
+        noWarrantyTitleLabel.text = "Des garanties plein les poches ! 🦘"
+        noWarrantyTitleLabel.font = UIFont.preferredFont(forTextStyle: .title3)
+        noWarrantyTitleLabel.textAlignment = .center
+        
+        noWarrantyBodyLabel.text = "appuyez ici pour commencer"
+        noWarrantyBodyLabel.font = UIFont.preferredFont(forTextStyle: .body)
+        noWarrantyBodyLabel.textAlignment = .center
+        
+        noWarrantyImageView.image = UIImage(named: "fancy-arrow")
+        noWarrantyImageView.contentMode = .scaleAspectFit
+        noWarrantyImageView.translatesAutoresizingMaskIntoConstraints = false
+        
+        noWarrantyStackView.axis = .vertical
+        noWarrantyStackView.translatesAutoresizingMaskIntoConstraints = false
+        
+        noWarrantyStackView.addArrangedSubview(noWarrantyTitleLabel)
+        noWarrantyStackView.addArrangedSubview(noWarrantyBodyLabel)
+        noWarrantyStackView.setCustomSpacing(8, after: noWarrantyBodyLabel)
+        
         navBarAppearance.titleTextAttributes = [.foregroundColor: MWColor.bluegrey, .font: UIFont.systemFont(ofSize: 19, weight: .semibold)]
         navBarAppearance.backgroundColor = MWColor.paleOrange
         navigationController?.navigationBar.standardAppearance = navBarAppearance
         navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
         
-        addCategoryButton.translatesAutoresizingMaskIntoConstraints = false
         addCategoryButton.backgroundColor = .white
         addCategoryButton.setImage(UIImage(systemName: "plus.circle.fill", withConfiguration: UIImage.SymbolConfiguration(pointSize: 38, weight: .light, scale: .small)), for: .normal)
         addCategoryButton.tintColor = MWColor.bluegrey
@@ -188,13 +201,23 @@ extension HomeWarrantiesListViewController {
         view.addSubview(bottomBorder)
         view.addSubview(warrantiesCollectionView)
         view.addSubview(newWarrantyButton)
+        view.addSubview(noWarrantyStackView)
+        view.addSubview(noWarrantyImageView)
         
         NSLayoutConstraint.activate([
+            noWarrantyStackView.bottomAnchor.constraint(equalTo: noWarrantyImageView.topAnchor, constant: -8),
+            noWarrantyStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
+            noWarrantyStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
+            
+            noWarrantyImageView.heightAnchor.constraint(equalToConstant: 100),
+            noWarrantyImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 36),
+            noWarrantyImageView.bottomAnchor.constraint(equalTo: newWarrantyButton.topAnchor, constant: 0),
+            
             categoriesCollectionView.heightAnchor.constraint(equalToConstant: 60),
             
             categoriesStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
             categoriesStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 6),
-            categoriesStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
+            categoriesStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
             categoriesStackView.heightAnchor.constraint(equalToConstant: 60),
             
             newWarrantyButton.bottomAnchor.constraint(equalToSystemSpacingBelow: view.safeAreaLayoutGuide.bottomAnchor, multiplier: 0),
@@ -269,29 +292,15 @@ extension HomeWarrantiesListViewController: UICollectionViewDataSource, UICollec
 // MARK: - Viewmodel delegate
 
 extension HomeWarrantiesListViewController {
-    func refreshWith(warranties: [Warranty]) {
-        if warranties.isEmpty {
-            viewState = .empty // Displays "no results found" view
-        } else {
-            viewState = .showData
-        }
-        // pas de reloaddata ici
-        //viewState = .showData(warranties)
-    }
     
     func refresh() {
         viewState = .showData
     }
-    
+  
     func didFinishLoadingWarranties() {
-        warrantiesCollectionView.reloadData()
-    }
-    
-    func didFinishLoadingWarranties2() {
         if viewModel?.warranties.isEmpty == true {
             viewState = .empty
         } else {
-            
             viewState = .showData
         }
     }

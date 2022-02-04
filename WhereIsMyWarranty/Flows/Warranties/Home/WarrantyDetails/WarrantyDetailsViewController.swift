@@ -175,8 +175,6 @@ extension WarrantyDetailsViewController {
         parentStackView.addArrangedSubview(topParentStackView)
         parentStackView.addArrangedSubview(bottomBorder)
         parentStackView.addArrangedSubview(invoicePhotoStackView)
-        //parentStackView.addArrangedSubview(editWarrantyButton)
-        //parentStackView.addArrangedSubview(deleteWarrantyButton)
         view.addSubview(parentStackView)
         view.addSubview(bottomButtonsStackView)
         
@@ -226,7 +224,8 @@ extension WarrantyDetailsViewController {
                 }
             }
         } else {
-            warrantyStatusLabel.text = Strings.lifetimeWarrantyDefaultText
+            warrantyStatusLabel.text = Strings.lifetimeWarrantyTextWithExtraLine
+            warrantyStatusView.backgroundColor = MWColor.warrantyActiveGreen
         }
         if let invoicePhotoAsData = viewModel?.warranty.invoicePhoto {
             invoiceImageView.image = UIImage(data: invoicePhotoAsData)

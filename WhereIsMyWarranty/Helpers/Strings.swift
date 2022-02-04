@@ -12,6 +12,7 @@ enum Strings {
     static let settingsTitle = "Réglages"
     static let warrantiesTitle = "Garanties"
     static let lifetimeWarrantyDefaultText = "Produit garanti à vie 🍾"
+    static let lifetimeWarrantyTextWithExtraLine = "Produit garanti\n    à vie 🍾"
     static let productCoveredUntil = "Produit sous garantie jusqu'au :\n"
     static let coveredUntil = "Couvert jusqu'au "
     static let remainingDays = " jours restants"
