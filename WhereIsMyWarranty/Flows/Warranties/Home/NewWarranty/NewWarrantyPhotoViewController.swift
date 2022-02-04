@@ -84,53 +84,7 @@ class NewWarrantyPhotoViewController: UIViewController {
         }
     }
     
-    func setupView() {
-        view.backgroundColor = .white
-        
-        parentStackView.translatesAutoresizingMaskIntoConstraints = false
-        parentStackView.axis = .vertical
-        parentStackView.spacing = 40
-        view.addSubview(parentStackView)
-        
-        addAFileTitleLabel.textColor = .black
-        addAFileTitleLabel.font = UIFont.boldSystemFont(ofSize: 26)
-        addAFileTitleLabel.textAlignment = .center
-        addAFileTitleLabel.numberOfLines = 0
-       // addAFileTitleLabel.text = "Ajouter un fichier"
-        addAFileTitleLabel.translatesAutoresizingMaskIntoConstraints = false
-        
-        imageView.layer.borderWidth = 1
-        imageView.layer.borderColor = UIColor.label.cgColor
-        imageView.contentMode = .scaleAspectFill
-        imageView.layer.masksToBounds = true
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        
-        let buttonImage = UIImage(systemName: "plus.circle.fill", withConfiguration: UIImage.SymbolConfiguration(pointSize: 30, weight: .light, scale: .small))
-        selectImageButton.translatesAutoresizingMaskIntoConstraints = false
-        selectImageButton.setImage(buttonImage, for: .normal)
-        selectImageButton.setTitle("Choisir une image", for: .normal)
-        selectImageButton.arrangeButtonsImageAndText2(spacing: 6, contentYInset: 1.6)
-        
-        selectImageButton.setTitleColor(.label, for: .normal)
-        selectImageButton.tintColor = MWColor.paleOrange
-        selectImageButton.addTarget(self, action: #selector(chooseAndDisplayImage), for: .touchUpInside)
-        
-        endCurrentScreenButton.backgroundColor = MWColor.paleOrange
-        endCurrentScreenButton.roundingViewCorners(radius: 8)
-       // endCurrentScreenButton.setTitle("Enregistrer", for: .normal)
-       // endCurrentScreenButton.addTarget(self, action: #selector(saveWarranty), for: .touchUpInside)
-        endCurrentScreenButton.isUserInteractionEnabled = true
-        endCurrentScreenButton.translatesAutoresizingMaskIntoConstraints = false
-        
-        parentStackView.addArrangedSubview(addAFileTitleLabel)
-        parentStackView.addArrangedSubview(imageView)
-        parentStackView.addArrangedSubview(selectImageButton)
-        
-        view.addSubview(endCurrentScreenButton)
-        activateConstraints()
-    }
-    
-    func setupAlert() {
+    private func setupAlert() {
         let alert = UIAlertController(title: "Choose Image", message: nil, preferredStyle: .actionSheet)
         alert.addAction(UIAlertAction(title: "Camera", style: .default, handler: { _ in
             self.openCamera()
@@ -142,7 +96,7 @@ class NewWarrantyPhotoViewController: UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
-    func openPhotoGallery() {
+    private func openPhotoGallery() {
         if UIImagePickerController.isSourceTypeAvailable(UIImagePickerController.SourceType.photoLibrary) {
             let imagePicker = UIImagePickerController()
             imagePicker.delegate = self
@@ -177,14 +131,56 @@ class NewWarrantyPhotoViewController: UIViewController {
         imageView.image = selectedImage?.resized(to: CGSize(width: 250, height: 320))
         picker.dismiss(animated: true, completion: nil)
     }
+}
+
+extension NewWarrantyPhotoViewController: UIImagePickerControllerDelegate & UINavigationControllerDelegate {
     
-    func activateConstraints() {
+    // MARK: - View configuration
+    
+    func setupView() {
+        view.backgroundColor = .white
+        
+        addAFileTitleLabel.textColor = .black
+        addAFileTitleLabel.font = UIFont.boldSystemFont(ofSize: 26)
+        addAFileTitleLabel.textAlignment = .center
+        addAFileTitleLabel.numberOfLines = 0
+        
+        imageView.layer.borderWidth = 1
+        imageView.layer.borderColor = UIColor.label.cgColor
+        imageView.contentMode = .scaleAspectFill
+        imageView.layer.masksToBounds = true
+        
+        let buttonImage = UIImage(systemName: "plus.circle.fill", withConfiguration: UIImage.SymbolConfiguration(pointSize: 30, weight: .light, scale: .small))
+        selectImageButton.setImage(buttonImage, for: .normal)
+        selectImageButton.setTitle("Choisir une image", for: .normal)
+        selectImageButton.arrangeButtonsImageAndText2(spacing: 6, contentYInset: 1.6)
+        
+        selectImageButton.setTitleColor(.label, for: .normal)
+        selectImageButton.tintColor = MWColor.paleOrange
+        selectImageButton.addTarget(self, action: #selector(chooseAndDisplayImage), for: .touchUpInside)
+        
+        parentStackView.translatesAutoresizingMaskIntoConstraints = false
+        parentStackView.axis = .vertical
+        parentStackView.spacing = 40
+        
+        parentStackView.addArrangedSubview(addAFileTitleLabel)
+        parentStackView.addArrangedSubview(imageView)
+        parentStackView.addArrangedSubview(selectImageButton)
+        
+        endCurrentScreenButton.backgroundColor = MWColor.paleOrange
+        endCurrentScreenButton.roundingViewCorners(radius: 8)
+        endCurrentScreenButton.isUserInteractionEnabled = true
+        endCurrentScreenButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        view.addSubview(parentStackView)
+        view.addSubview(endCurrentScreenButton)
+        
         NSLayoutConstraint.activate([
-            parentStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 32),
-            parentStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            
             imageView.widthAnchor.constraint(equalToConstant: 250),
             imageView.heightAnchor.constraint(equalToConstant: 320),
+            
+            parentStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 32),
+            parentStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             
             endCurrentScreenButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             endCurrentScreenButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -48),
@@ -192,7 +188,4 @@ class NewWarrantyPhotoViewController: UIViewController {
             endCurrentScreenButton.widthAnchor.constraint(equalToConstant: 170)
         ])
     }
-}
-
-extension NewWarrantyPhotoViewController: UIImagePickerControllerDelegate & UINavigationControllerDelegate {
 }

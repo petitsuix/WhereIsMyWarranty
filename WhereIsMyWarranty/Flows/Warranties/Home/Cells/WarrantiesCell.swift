@@ -31,14 +31,7 @@ class WarrantiesCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        contentView.backgroundColor = .white
-        contentView.layer.borderColor = MWColor.bluegrey.cgColor
-        contentView.layer.borderWidth = 1.7
-        roundingCellCorners(radius: 10)
-        addShadow()
-        configureImageView()
-        configureWarrantyCellInfoStackView()
-        activateConstraints()
+        setup()
     }
     
     required init?(coder: NSCoder) {
@@ -51,27 +44,6 @@ class WarrantiesCell: UICollectionViewCell {
     }
     
     // MARK: - Private Methods
-    
-    private func configureImageView() {
-        warrantyProductImageView.translatesAutoresizingMaskIntoConstraints = false
-        warrantyProductImageView.roundingViewCorners(radius: 10)
-        warrantyProductImageView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMinXMaxYCorner] // to round specific corners (top left and bottom left)
-        contentView.addSubview(warrantyProductImageView)
-    }
-    
-    private func configureWarrantyCellInfoStackView() {
-        infoStackView.axis = .vertical
-        infoStackView.translatesAutoresizingMaskIntoConstraints = false
-        infoStackView.spacing = 8
-        
-        warrantyName.font = UIFont.boldSystemFont(ofSize: 20)
-        
-        infoStackView.addArrangedSubview(warrantyName)
-        infoStackView.addArrangedSubview(remainingTime)
-        infoStackView.addArrangedSubview(warrantyEnd)
-        
-        contentView.addSubview(infoStackView)
-    }
     
     private func refreshWarrantyData() {
         if let invoicePhoto = warranty?.productPhoto {
@@ -111,21 +83,46 @@ class WarrantiesCell: UICollectionViewCell {
         guard let remainingDays = components.day else { return "0" }
         return String("\(remainingDays)")
     }
+}
+
+// MARK: - View configuration
+
+extension WarrantiesCell {
     
-    // MARK: - Constraints setup
-    
-    private func activateConstraints() {
+   private func setup() {
+        warrantyProductImageView.translatesAutoresizingMaskIntoConstraints = false
+        warrantyProductImageView.roundingViewCorners(radius: 10)
+        warrantyProductImageView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMinXMaxYCorner] // to round specific corners (top left and bottom left)
+        
+        warrantyName.font = UIFont.boldSystemFont(ofSize: 20)
+        
+        infoStackView.axis = .vertical
+        infoStackView.translatesAutoresizingMaskIntoConstraints = false
+        infoStackView.spacing = 8
+        
+        infoStackView.addArrangedSubview(warrantyName)
+        infoStackView.addArrangedSubview(remainingTime)
+        infoStackView.addArrangedSubview(warrantyEnd)
+        
+        contentView.backgroundColor = .white
+        contentView.layer.borderColor = MWColor.bluegrey.cgColor
+        contentView.layer.borderWidth = 1.7
+        roundingCellCorners(radius: 10)
+        addShadow()
+        contentView.addSubview(warrantyProductImageView)
+        contentView.addSubview(infoStackView)
+        
         NSLayoutConstraint.activate([
             warrantyProductImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0),
             warrantyProductImageView.topAnchor.constraint(equalTo: topAnchor, constant: 0),
             warrantyProductImageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0),
             warrantyProductImageView.widthAnchor.constraint(equalTo: warrantyProductImageView.heightAnchor),
             
+            warrantyName.heightAnchor.constraint(equalToConstant: 40),
+            
             infoStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 4),
             infoStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
-            infoStackView.leadingAnchor.constraint(equalTo: warrantyProductImageView.trailingAnchor, constant: 16),
-            
-            warrantyName.heightAnchor.constraint(equalToConstant: 40)
+            infoStackView.leadingAnchor.constraint(equalTo: warrantyProductImageView.trailingAnchor, constant: 16)
         ])
     }
 }

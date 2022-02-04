@@ -209,9 +209,9 @@ class EditWarrantyProductInfoViewController: UIViewController {
     }
 }
 
-// MARK: - Extensions
-
 extension EditWarrantyProductInfoViewController {
+    
+    // MARK: - View configuration
     
     func setupView() {
         view.backgroundColor = .white
@@ -249,9 +249,9 @@ extension EditWarrantyProductInfoViewController {
         validityLengthTitle.text = "Durée de validité"
         validityLengthTitle.font = UIFont.boldSystemFont(ofSize: 16)
         
-        monthsView.configureView()
-        weeksView.configureView()
-        yearsView.configureView()
+        monthsView.setup()
+        weeksView.setup()
+        yearsView.setup()
         
         yearsView.timeUnitTitle.text = "années"
         yearsView.addTarget(self, action: #selector(updateYearsWithStepper))
@@ -299,17 +299,17 @@ extension EditWarrantyProductInfoViewController {
         view.addSubview(nextStepButton)
         
         NSLayoutConstraint.activate([
-            parentStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 24),
-            parentStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
-            parentStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
-            parentStackView.bottomAnchor.constraint(lessThanOrEqualTo: nextStepButton.topAnchor, constant: -16),
-            
             endDateLabel.heightAnchor.constraint(equalToConstant: 60),
             
             nextStepButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             nextStepButton.bottomAnchor.constraint(lessThanOrEqualTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -24),
             nextStepButton.heightAnchor.constraint(equalToConstant: 55),
-            nextStepButton.widthAnchor.constraint(equalToConstant: 170)
+            nextStepButton.widthAnchor.constraint(equalToConstant: 170),
+            
+            parentStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 24),
+            parentStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
+            parentStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
+            parentStackView.bottomAnchor.constraint(lessThanOrEqualTo: nextStepButton.topAnchor, constant: -16)
         ])
     }
     

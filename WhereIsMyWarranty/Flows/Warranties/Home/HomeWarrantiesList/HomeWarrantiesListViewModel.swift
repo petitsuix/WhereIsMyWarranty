@@ -15,7 +15,7 @@ class HomeWarrantiesListViewModel {
     
     var warranties: [Warranty] = [] {
         didSet {
-            viewDelegate?.refreshWith(warranties: warranties)
+            viewDelegate?.didFinishLoadingWarranties()
         }
     }
     

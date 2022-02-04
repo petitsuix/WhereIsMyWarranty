@@ -8,12 +8,12 @@
 import UIKit
 
 class SettingsViewController: UIViewController {
-  
-   private let navBarAppearance = UINavigationBarAppearance()
+    
+    private let navBarAppearance = UINavigationBarAppearance()
     
     private let parentStackView = UIStackView()
     
-    private let proView = UIView()
+    private let topPresentationView = UIView()
     private let topPresentationLabel = UILabel()
     
     private let cloudSyncLabel = UILabel()
@@ -34,63 +34,65 @@ class SettingsViewController: UIViewController {
     
     private let parentSettingsStackView = UIStackView()
     
-    override func viewWillAppear(_ animated: Bool) {}
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // FIXME: gérer le dark mode ?
-        view.backgroundColor = .systemBackground
+        setup()
+    }
+}
+
+extension SettingsViewController {
+    
+    // MARK: - View configuration
+    
+    func setup() {
+        view.backgroundColor = .white
         self.title = Strings.settingsTitle
-        navBarAppearance.titleTextAttributes = [.foregroundColor: MWColor.bluegrey, .font: UIFont.systemFont(ofSize: 19, weight: .semibold)]
         
+        navBarAppearance.titleTextAttributes = [.foregroundColor: MWColor.bluegrey, .font: UIFont.systemFont(ofSize: 19, weight: .semibold)]
+        navBarAppearance.backgroundColor = MWColor.paleOrange
+        navigationController?.navigationBar.standardAppearance = navBarAppearance
+        navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
+        
+        topPresentationLabel.translatesAutoresizingMaskIntoConstraints = false
         topPresentationLabel.text = Strings.settingsPresentationLabel
         topPresentationLabel.textAlignment = .center
         topPresentationLabel.textColor = .white
         topPresentationLabel.numberOfLines = 0
-        topPresentationLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        configureNavigationBar()
-        proView.backgroundColor = #colorLiteral(red: 0.09810357541, green: 0.3023771942, blue: 0.3678480089, alpha: 1)
-        proView.translatesAutoresizingMaskIntoConstraints = false
-        proView.roundingViewCorners(radius: 9)
+        topPresentationView.backgroundColor = #colorLiteral(red: 0.09810357541, green: 0.3023771942, blue: 0.3678480089, alpha: 1)
+        topPresentationView.roundingViewCorners(radius: 9)
         
-        proView.addSubview(topPresentationLabel)
-        
-        cloudSyncLabel.text = Strings.cloudSync
-        cloudSyncLabel.textColor = #colorLiteral(red: 0.09810357541, green: 0.3023771942, blue: 0.3678480089, alpha: 1)
-        cloudSyncLabel.translatesAutoresizingMaskIntoConstraints = false
+        topPresentationView.addSubview(topPresentationLabel)
         
         notificationsLabel.text = Strings.notifications
         notificationsLabel.textColor = #colorLiteral(red: 0.09810357541, green: 0.3023771942, blue: 0.3678480089, alpha: 1)
-        notificationsLabel.translatesAutoresizingMaskIntoConstraints = false
-        
-        cloudSyncStackView.axis = .horizontal
-        cloudSyncStackView.translatesAutoresizingMaskIntoConstraints = false
-        cloudSyncStackView.addArrangedSubview(cloudSyncLabel)
-        cloudSyncStackView.addArrangedSubview(cloudSyncSwitch)
         
         notificationsStackView.axis = .horizontal
-        notificationsStackView.translatesAutoresizingMaskIntoConstraints = false
         notificationsStackView.addArrangedSubview(notificationsLabel)
         notificationsStackView.addArrangedSubview(notificationsSwitch)
         
+        cloudSyncLabel.text = Strings.cloudSync
+        cloudSyncLabel.textColor = #colorLiteral(red: 0.09810357541, green: 0.3023771942, blue: 0.3678480089, alpha: 1)
+        
+        cloudSyncStackView.axis = .horizontal
+        cloudSyncStackView.addArrangedSubview(cloudSyncLabel)
+        cloudSyncStackView.addArrangedSubview(cloudSyncSwitch)
+        
         parentSettingsStackView.axis = .vertical
         parentSettingsStackView.spacing = 24
-        parentSettingsStackView.translatesAutoresizingMaskIntoConstraints = false
         parentSettingsStackView.isUserInteractionEnabled = false
         parentSettingsStackView.alpha = 0.5
-
+        
         parentSettingsStackView.addArrangedSubview(notificationsStackView)
         parentSettingsStackView.addArrangedSubview(cloudSyncStackView)
         parentSettingsStackView.addArrangedSubview(bottomBorder)
-       
+        
         bottomBorder.setBottomBorder()
         
         aboutLabel.text = Strings.about
         aboutLabel.font = UIFont.systemFont(ofSize: 18, weight: .regular)
         aboutLabel.textColor = MWColor.bluegrey
         aboutLabel.textAlignment = .center
-        aboutLabel.translatesAutoresizingMaskIntoConstraints = false
         
         privacyPolicyButton.setTitle(Strings.privacyPolicy, for: .normal)
         privacyPolicyButton.setImage(UIImage(systemName: Strings.chevron), for: .normal)
@@ -103,21 +105,20 @@ class SettingsViewController: UIViewController {
         termsAndConditionsButton.tintColor = MWColor.bluegrey
         termsAndConditionsButton.semanticContentAttribute = .forceRightToLeft
         termsAndConditionsButton.setTitleColor(MWColor.bluegrey, for: .normal)
- 
+        
         privacyAndTermsStackView.axis = .vertical
         privacyAndTermsStackView.spacing = 24
         privacyAndTermsStackView.alignment = .leading
-        privacyAndTermsStackView.isUserInteractionEnabled = false
         privacyAndTermsStackView.alpha = 0.5
         
         privacyAndTermsStackView.addArrangedSubview(privacyPolicyButton)
         privacyAndTermsStackView.addArrangedSubview(termsAndConditionsButton)
-
+        
         parentStackView.translatesAutoresizingMaskIntoConstraints = false
         parentStackView.axis = .vertical
         parentStackView.spacing = 24
         
-        parentStackView.addArrangedSubview(proView)
+        parentStackView.addArrangedSubview(topPresentationView)
         parentStackView.addArrangedSubview(parentSettingsStackView)
         parentStackView.addArrangedSubview(aboutLabel)
         parentStackView.addArrangedSubview(privacyAndTermsStackView)
@@ -133,23 +134,12 @@ class SettingsViewController: UIViewController {
         
         view.addSubview(parentStackView)
         view.addSubview(versionLabel)
-    
-        activateConstraints()
-    }
-    
-    func configureNavigationBar() {
-        navBarAppearance.backgroundColor = MWColor.paleOrange
-        navigationController?.navigationBar.standardAppearance = navBarAppearance
-        navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
-    }
-    
-    func activateConstraints() {
+        
         NSLayoutConstraint.activate([
-
-            topPresentationLabel.leadingAnchor.constraint(equalTo: proView.leadingAnchor, constant: 16),
-            topPresentationLabel.trailingAnchor.constraint(equalTo: proView.trailingAnchor, constant: -16),
-            topPresentationLabel.topAnchor.constraint(equalTo: proView.topAnchor, constant: 16),
-            topPresentationLabel.bottomAnchor.constraint(equalTo: proView.bottomAnchor, constant: -16),
+            topPresentationLabel.leadingAnchor.constraint(equalTo: topPresentationView.leadingAnchor, constant: 16),
+            topPresentationLabel.trailingAnchor.constraint(equalTo: topPresentationView.trailingAnchor, constant: -16),
+            topPresentationLabel.topAnchor.constraint(equalTo: topPresentationView.topAnchor, constant: 16),
+            topPresentationLabel.bottomAnchor.constraint(equalTo: topPresentationView.bottomAnchor, constant: -16),
             
             bottomBorder.heightAnchor.constraint(equalToConstant: 1),
             parentStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),

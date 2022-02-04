@@ -172,9 +172,8 @@ extension HomeWarrantiesListViewController {
         
         let categoriesLayout = UICollectionViewFlowLayout()
         categoriesLayout.scrollDirection = .horizontal
-        // layout.itemSize = CGSize(width: view.frame.size.width/5, height: view.frame.size.width/13.5)
         categoriesLayout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
-        categoriesCollectionView = UICollectionView(frame: .zero, collectionViewLayout: categoriesLayout) // self.view.frame c'est pareil ?
+        categoriesCollectionView = UICollectionView(frame: .zero, collectionViewLayout: categoriesLayout)
         categoriesCollectionView.translatesAutoresizingMaskIntoConstraints = false
         categoriesCollectionView.register(TopCategoriesCell.self, forCellWithReuseIdentifier: TopCategoriesCell.identifier)
         categoriesCollectionView.dataSource = self
@@ -279,10 +278,7 @@ extension HomeWarrantiesListViewController: UICollectionViewDataSource, UICollec
             guard let selectedWarranty = viewModel?.warranties[indexPath.row] else { return }
             warrantyCellTapped(warranty: selectedWarranty)
         } else {
-            //  storageService.selectedWarranty = viewModel.warranties[indexPath.row]
-            
             guard let selectedCategory = viewModel?.categories[indexPath.row] else { return }
-            
             categoryCellTapped(category: selectedCategory)
         }
         // displayWarrantiesFor(selectedCategory)

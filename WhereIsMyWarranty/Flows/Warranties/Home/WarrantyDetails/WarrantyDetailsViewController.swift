@@ -121,11 +121,8 @@ extension WarrantyDetailsViewController {
         topRightStackView.addArrangedSubview(productName)
         topRightStackView.addArrangedSubview(warrantyStatusView)
         
-        //topParentStackView.contentMode = .top
         topParentStackView.axis = .horizontal
         topParentStackView.alignment = .center
-        topParentStackView.translatesAutoresizingMaskIntoConstraints = false
-        
         topParentStackView.addArrangedSubview(productImageView)
         topParentStackView.addArrangedSubview(topRightStackView)
 
@@ -151,7 +148,6 @@ extension WarrantyDetailsViewController {
         editWarrantyButton.roundingViewCorners(radius: 11)
        // editWarrantyButton.addShadow()
         editWarrantyButton.addTarget(self, action: #selector(editWarranty), for: .touchUpInside)
-        editWarrantyButton.translatesAutoresizingMaskIntoConstraints = false
         
         deleteWarrantyButton.setTitle(Strings.delete, for: .normal)
         deleteWarrantyButton.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .medium)
@@ -160,7 +156,6 @@ extension WarrantyDetailsViewController {
         deleteWarrantyButton.roundingViewCorners(radius: 11)
        // deleteWarrantyButton.addShadow()
         deleteWarrantyButton.addTarget(self, action: #selector(deleteWarranty), for: .touchUpInside)
-        deleteWarrantyButton.translatesAutoresizingMaskIntoConstraints = false
         
         bottomButtonsStackView.axis = .horizontal
         bottomButtonsStackView.alignment = .center

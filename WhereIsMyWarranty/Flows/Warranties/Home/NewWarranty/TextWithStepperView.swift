@@ -23,7 +23,7 @@ class TextWithStepperView: UIView {
     }
     
     var timeUnitAmount = UILabel()
-  
+    
     // MARK: - Private properties
     
     private var stackView = UIStackView()
@@ -49,13 +49,19 @@ class TextWithStepperView: UIView {
     func addTarget(_ target: Any?, action: Selector) {
         stepper.addTarget(target, action: action, for: .valueChanged)
     }
+}
+
+extension TextWithStepperView {
     
-    func configureView() {
+    // MARK: - View configuration
+    
+    func setup() {
         stepper.value = 0
         stepper.minimumValue = 0
         stepper.maximumValue = 99
         stepper.addTarget(self, action: #selector(updateTimeUnitAmount(_:)), for: .valueChanged)
         timeUnitAmount.text = "0"
+        
         stepperStackView.axis = .horizontal
         stepperStackView.spacing = 24
         stepperStackView.addArrangedSubview(stepper)
