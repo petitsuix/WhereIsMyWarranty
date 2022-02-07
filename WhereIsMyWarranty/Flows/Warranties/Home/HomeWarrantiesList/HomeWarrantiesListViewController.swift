@@ -8,7 +8,6 @@
 import UIKit
 
 enum State<Data> { // To execute particular actions according to the situation
-    case loading
     case empty
     case error
     case showData
@@ -43,19 +42,15 @@ class HomeWarrantiesListViewController: UIViewController {
     
     // MARK: - Computed properties
     
-    private var viewState: State<Void> = .loading {
+    private var viewState: State<Void> = .showData {
         didSet {
             resetViewState() // Hides tableview, stops activity indicator animation
             switch viewState {
-            case .loading :
-                print("loading")
             case .empty :
                 noWarrantyStackView.isHidden = false
                 noWarrantyImageView.isHidden = false
-                print("fell into the .empty case of viewState. That means the collectionView is empty.")
             case .error :
                 alert("Oops...", "Something went wrong, please try again.")
-                print("error : fell into the .error case of viewState")
             case .showData :
                 warrantiesCollectionView.reloadData()
                 categoriesCollectionView.reloadData()
@@ -71,7 +66,7 @@ class HomeWarrantiesListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let notificationName = NSNotification.Name(rawValue: "warranties list updated")
+        let notificationName = NSNotification.Name(rawValue: Strings.warrantiesListUpdatedNotif)
         NotificationCenter.default.addObserver(self, selector: #selector(warrantiesUpdated), name: notificationName, object: nil)
         setupView()
     }
@@ -126,6 +121,70 @@ class HomeWarrantiesListViewController: UIViewController {
     }
 }
 
+// MARK: - CollectionViews configuration
+
+extension HomeWarrantiesListViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        // return user.categories.count
+        if collectionView == categoriesCollectionView {
+            return viewModel?.categories.count ?? 1 // On devrait pouvoir retourner user.categories.count
+        } else {
+            return viewModel?.warranties.count ?? 1
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        if collectionView == categoriesCollectionView {
+            guard let categoryCell = collectionView.dequeueReusableCell(withReuseIdentifier: TopCategoriesCell.identifier, for: indexPath) as? TopCategoriesCell else {
+                assertionFailure(Strings.dequeueCellIsOfUnknownType)
+                return UICollectionViewCell()
+            }
+            categoryCell.category = viewModel?.categories[indexPath.row]
+            return categoryCell
+        } else {
+            guard let warrantyCell = collectionView.dequeueReusableCell(withReuseIdentifier: WarrantiesCell.identifier, for: indexPath) as? WarrantiesCell else {
+                assertionFailure(Strings.dequeueCellIsOfUnknownType)
+                return UICollectionViewCell()
+            }
+            warrantyCell.warranty = viewModel?.warranties[indexPath.row]
+            return warrantyCell
+        }
+    }
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if collectionView == warrantiesCollectionView {
+            guard let selectedWarranty = viewModel?.warranties[indexPath.row] else { return }
+            warrantyCellTapped(warranty: selectedWarranty)
+        } else {
+            guard let selectedCategory = viewModel?.categories[indexPath.row] else { return }
+            categoryCellTapped(category: selectedCategory)
+        }
+        // displayWarrantiesFor(selectedCategory)
+    }
+}
+
+// MARK: - Viewmodel delegate
+
+extension HomeWarrantiesListViewController {
+    
+    func refresh() {
+        viewState = .showData
+    }
+  
+    func didFinishLoadingWarranties() {
+        if viewModel?.warranties.isEmpty == true {
+            viewState = .empty
+        } else {
+            viewState = .showData
+        }
+    }
+}
+
 // MARK: - View Configuration
 
 extension HomeWarrantiesListViewController {
@@ -133,32 +192,32 @@ extension HomeWarrantiesListViewController {
         self.title = Strings.warrantiesTitle
         view.backgroundColor = .white
         
-        noWarrantyTitleLabel.text = "Des garanties plein les poches ! 🦘"
-        noWarrantyTitleLabel.font = UIFont.preferredFont(forTextStyle: .title3)
+        navBarAppearance.titleTextAttributes = [.foregroundColor: MWColor.bluegrey, .font: MWFont.navBarFont]
+        navBarAppearance.backgroundColor = MWColor.paleOrange
+        navigationController?.navigationBar.standardAppearance = navBarAppearance
+        navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
+        
+        noWarrantyTitleLabel.text = Strings.warrantiesInMyPockets
+        noWarrantyTitleLabel.font = MWFont.title3
         noWarrantyTitleLabel.textAlignment = .center
         
-        noWarrantyBodyLabel.text = "appuyez ici pour commencer"
-        noWarrantyBodyLabel.font = UIFont.preferredFont(forTextStyle: .body)
+        noWarrantyBodyLabel.text = Strings.tapHereToStart
+        noWarrantyBodyLabel.font = MWFont.body
         noWarrantyBodyLabel.textAlignment = .center
         
-        noWarrantyImageView.image = UIImage(named: "fancy-arrow")
-        noWarrantyImageView.contentMode = .scaleAspectFit
         noWarrantyImageView.translatesAutoresizingMaskIntoConstraints = false
+        noWarrantyImageView.image = MWImages.arrow
+        noWarrantyImageView.contentMode = .scaleAspectFit
         
-        noWarrantyStackView.axis = .vertical
         noWarrantyStackView.translatesAutoresizingMaskIntoConstraints = false
+        noWarrantyStackView.axis = .vertical
         
         noWarrantyStackView.addArrangedSubview(noWarrantyTitleLabel)
         noWarrantyStackView.addArrangedSubview(noWarrantyBodyLabel)
         noWarrantyStackView.setCustomSpacing(8, after: noWarrantyBodyLabel)
         
-        navBarAppearance.titleTextAttributes = [.foregroundColor: MWColor.bluegrey, .font: UIFont.systemFont(ofSize: 19, weight: .semibold)]
-        navBarAppearance.backgroundColor = MWColor.paleOrange
-        navigationController?.navigationBar.standardAppearance = navBarAppearance
-        navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
-        
         addCategoryButton.backgroundColor = .white
-        addCategoryButton.setImage(UIImage(systemName: "plus.circle.fill", withConfiguration: UIImage.SymbolConfiguration(pointSize: 38, weight: .light, scale: .small)), for: .normal)
+        addCategoryButton.setImage(MWImages.addCategoryButtonImage, for: .normal)
         addCategoryButton.tintColor = MWColor.bluegrey
         categoriesStackView.addArrangedSubview(addCategoryButton)
         addCategoryButton.addTarget(self, action: #selector(showAlert), for: .touchUpInside)
@@ -191,10 +250,10 @@ extension HomeWarrantiesListViewController {
         warrantiesCollectionView.dataSource = self
         warrantiesCollectionView.delegate = self
         
-        newWarrantyButton.setImage(UIImage(systemName: "plus.circle.fill", withConfiguration: UIImage.SymbolConfiguration(pointSize: 50, weight: .light, scale: .small)), for: .normal)
+        newWarrantyButton.translatesAutoresizingMaskIntoConstraints = false
+        newWarrantyButton.setImage(MWImages.newWarrantyButtonImage, for: .normal)
         newWarrantyButton.tintColor = MWColor.bluegrey
         newWarrantyButton.addTarget(self, action: #selector(newWarrantyButtonAction), for: .touchUpInside)
-        newWarrantyButton.translatesAutoresizingMaskIntoConstraints = false
         
         view.addSubview(categoriesStackView)
         view.addSubview(bottomBorder)
@@ -237,67 +296,3 @@ extension HomeWarrantiesListViewController {
     }
 }
 
-// MARK: - CollectionViews configuration
-
-extension HomeWarrantiesListViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // return user.categories.count
-        if collectionView == categoriesCollectionView {
-            return viewModel?.categories.count ?? 1 // On devrait pouvoir retourner user.categories.count
-        } else {
-            return viewModel?.warranties.count ?? 1
-        }
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if collectionView == categoriesCollectionView {
-            guard let categoryCell = collectionView.dequeueReusableCell(withReuseIdentifier: TopCategoriesCell.identifier, for: indexPath) as? TopCategoriesCell else {
-                assertionFailure("The dequeue collection view cell was of an unknown type!")
-                return UICollectionViewCell()
-            }
-            categoryCell.category = viewModel?.categories[indexPath.row]
-            return categoryCell
-        } else {
-            guard let warrantyCell = collectionView.dequeueReusableCell(withReuseIdentifier: WarrantiesCell.identifier, for: indexPath) as? WarrantiesCell else {
-                assertionFailure("The dequeue collection view cell was of an unknown type!")
-                return UICollectionViewCell()
-            }
-            warrantyCell.warranty = viewModel?.warranties[indexPath.row]
-            return warrantyCell
-        }
-    }
-    
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("selected item nbr \(indexPath.row)")
-        if collectionView == warrantiesCollectionView {
-            guard let selectedWarranty = viewModel?.warranties[indexPath.row] else { return }
-            warrantyCellTapped(warranty: selectedWarranty)
-        } else {
-            guard let selectedCategory = viewModel?.categories[indexPath.row] else { return }
-            categoryCellTapped(category: selectedCategory)
-        }
-        // displayWarrantiesFor(selectedCategory)
-    }
-}
-
-// MARK: - Viewmodel delegate
-
-extension HomeWarrantiesListViewController {
-    
-    func refresh() {
-        viewState = .showData
-    }
-  
-    func didFinishLoadingWarranties() {
-        if viewModel?.warranties.isEmpty == true {
-            viewState = .empty
-        } else {
-            viewState = .showData
-        }
-    }
-}

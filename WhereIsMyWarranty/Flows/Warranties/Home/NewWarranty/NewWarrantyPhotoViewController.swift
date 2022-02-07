@@ -161,16 +161,16 @@ extension NewWarrantyPhotoViewController: UIImagePickerControllerDelegate & UINa
         
         parentStackView.translatesAutoresizingMaskIntoConstraints = false
         parentStackView.axis = .vertical
-        parentStackView.spacing = 40
+        parentStackView.spacing = 32
         
         parentStackView.addArrangedSubview(addAFileTitleLabel)
         parentStackView.addArrangedSubview(imageView)
         parentStackView.addArrangedSubview(selectImageButton)
         
+        endCurrentScreenButton.translatesAutoresizingMaskIntoConstraints = false
         endCurrentScreenButton.backgroundColor = MWColor.paleOrange
         endCurrentScreenButton.roundingViewCorners(radius: 8)
         endCurrentScreenButton.isUserInteractionEnabled = true
-        endCurrentScreenButton.translatesAutoresizingMaskIntoConstraints = false
         
         view.addSubview(parentStackView)
         view.addSubview(endCurrentScreenButton)
@@ -179,11 +179,14 @@ extension NewWarrantyPhotoViewController: UIImagePickerControllerDelegate & UINa
             imageView.widthAnchor.constraint(equalToConstant: 250),
             imageView.heightAnchor.constraint(equalToConstant: 320),
             
-            parentStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 32),
+            selectImageButton.heightAnchor.constraint(equalToConstant: 30),
+            
+            parentStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 24),
             parentStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            parentStackView.bottomAnchor.constraint(lessThanOrEqualTo: endCurrentScreenButton.topAnchor, constant: -24),
             
             endCurrentScreenButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            endCurrentScreenButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -48),
+            endCurrentScreenButton.bottomAnchor.constraint(lessThanOrEqualTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -24),
             endCurrentScreenButton.heightAnchor.constraint(equalToConstant: 55),
             endCurrentScreenButton.widthAnchor.constraint(equalToConstant: 170)
         ])

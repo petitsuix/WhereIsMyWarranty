@@ -105,6 +105,7 @@ class NewWarrantyProductInfoViewController: UIViewController {
         }
         let formatter1 = DateFormatter()
         formatter1.dateStyle = .full
+        formatter1.locale = Locale(identifier: "fr_FR")
         updatedDate = updatedDate?.adding(.day, value: (weeksView.didIncrementStepper ? 7 : -7))
         if let updatedDate = updatedDate {
             endDateLabel.text = Strings.productCoveredUntil + formatter1.string(from: updatedDate)
@@ -118,6 +119,7 @@ class NewWarrantyProductInfoViewController: UIViewController {
         }
         let formatter1 = DateFormatter()
         formatter1.dateStyle = .full
+        formatter1.locale = Locale(identifier: "fr_FR")
         updatedDate = updatedDate?.adding(.month, value: (monthsView.didIncrementStepper ? 1 : -1))
         if let updatedDate = updatedDate {
             endDateLabel.text = Strings.productCoveredUntil + formatter1.string(from: updatedDate)
@@ -131,6 +133,7 @@ class NewWarrantyProductInfoViewController: UIViewController {
         }
         let formatter1 = DateFormatter()
         formatter1.dateStyle = .full
+        formatter1.locale = Locale(identifier: "fr_FR")
         updatedDate = updatedDate?.adding(.year, value: (yearsView.didIncrementStepper ? 1 : -1))
         if let updatedDate = updatedDate {
             endDateLabel.text = Strings.productCoveredUntil + formatter1.string(from: updatedDate)
@@ -143,6 +146,7 @@ class NewWarrantyProductInfoViewController: UIViewController {
     private func updateWeeks() {
         let formatter1 = DateFormatter()
         formatter1.dateStyle = .full
+        formatter1.locale = Locale(identifier: "fr_FR")
         if let timeUnitAmount = weeksView.timeUnitAmount.text {
             if let timeUnitAmountAsInt = Int(timeUnitAmount) {
                 updatedDate = updatedDate?.adding(.day, value: timeUnitAmountAsInt * 7)
@@ -157,6 +161,7 @@ class NewWarrantyProductInfoViewController: UIViewController {
     private func updateMonths() {
         let formatter1 = DateFormatter()
         formatter1.dateStyle = .full
+        formatter1.locale = Locale(identifier: "fr_FR")
         if let timeUnitAmount = monthsView.timeUnitAmount.text {
             if let timeUnitAmountAsInt = Int(timeUnitAmount) {
                 updatedDate = updatedDate?.adding(.month, value: timeUnitAmountAsInt)
@@ -171,6 +176,7 @@ class NewWarrantyProductInfoViewController: UIViewController {
     private func updateYears() {
         let formatter1 = DateFormatter()
         formatter1.dateStyle = .full
+        formatter1.locale = Locale(identifier: "fr_FR")
         if let timeUnitAmount = yearsView.timeUnitAmount.text {
             if let timeUnitAmountAsInt = Int(timeUnitAmount) {
                 updatedDate = updatedDate?.adding(.year, value: timeUnitAmountAsInt)
@@ -188,6 +194,7 @@ class NewWarrantyProductInfoViewController: UIViewController {
         }
         let formatter1 = DateFormatter()
         formatter1.dateStyle = .full
+        formatter1.locale = Locale(identifier: "fr_FR")
         if let updatedDate = updatedDate {
             if weeksView.timeUnitAmount.text == "0" && monthsView.timeUnitAmount.text == "0" && yearsView.timeUnitAmount.text == "0" {
                 endDateLabel.text = Strings.productCoveredUntil
@@ -195,13 +202,6 @@ class NewWarrantyProductInfoViewController: UIViewController {
                 endDateLabel.text = Strings.productCoveredUntil + formatter1.string(from: updatedDate)
             }
         }
-    }
-}
-
-extension NewWarrantyProductInfoViewController {
-    
-    func canGoToNextStep(canSave: Bool) { // pour checker que les champs soient pas vides ?
-        nextStepButton.isEnabled = canSave
     }
 }
 
@@ -300,15 +300,15 @@ extension NewWarrantyProductInfoViewController {
         NSLayoutConstraint.activate([
             endDateLabel.heightAnchor.constraint(equalToConstant: 60),
             
-            nextStepButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            nextStepButton.bottomAnchor.constraint(lessThanOrEqualTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -24),
-            nextStepButton.heightAnchor.constraint(equalToConstant: 55),
-            nextStepButton.widthAnchor.constraint(equalToConstant: 170),
-            
             parentStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 24),
             parentStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
             parentStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
-            parentStackView.bottomAnchor.constraint(lessThanOrEqualTo: nextStepButton.topAnchor, constant: -16)
+            parentStackView.bottomAnchor.constraint(lessThanOrEqualTo: nextStepButton.topAnchor, constant: -16),
+            
+            nextStepButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            nextStepButton.bottomAnchor.constraint(lessThanOrEqualTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -24),
+            nextStepButton.heightAnchor.constraint(equalToConstant: 55),
+            nextStepButton.widthAnchor.constraint(equalToConstant: 170)
         ])
     }
 }

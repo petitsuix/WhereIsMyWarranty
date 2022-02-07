@@ -8,7 +8,8 @@
 import UIKit
 
 enum MWImages {
-    
-   // static let myImage = UIImage(named: "Business team looking for new people")
-    static let myImage = #imageLiteral(resourceName: "Business team looking for new people")
+    static let arrow = #imageLiteral(resourceName: "fancy-arrow")
+    static let doggos = [UIImage(named: "labrador"), UIImage(named: "king charles"), UIImage(named: "golden retriever"), UIImage(named: "Pug")]
+    static let addCategoryButtonImage = UIImage(systemName: "plus.circle.fill", withConfiguration: UIImage.SymbolConfiguration(pointSize: 38, weight: .light, scale: .small))
+    static let newWarrantyButtonImage = UIImage(systemName: "plus.circle.fill", withConfiguration: UIImage.SymbolConfiguration(pointSize: 50, weight: .light, scale: .small))
 }

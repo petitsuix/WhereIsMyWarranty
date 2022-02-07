@@ -110,6 +110,7 @@ class EditWarrantyProductInfoViewController: UIViewController {
         }
         let formatter1 = DateFormatter()
         formatter1.dateStyle = .full
+        formatter1.locale = Locale(identifier: "fr_FR")
         updatedDate = updatedDate?.adding(.day, value: (weeksView.didIncrementStepper ? 7 : -7))
         if let updatedDate = updatedDate {
             endDateLabel.text = Strings.productCoveredUntil + formatter1.string(from: updatedDate)
@@ -123,6 +124,7 @@ class EditWarrantyProductInfoViewController: UIViewController {
         }
         let formatter1 = DateFormatter()
         formatter1.dateStyle = .full
+        formatter1.locale = Locale(identifier: "fr_FR")
         updatedDate = updatedDate?.adding(.month, value: (monthsView.didIncrementStepper ? 1 : -1))
         if let updatedDate = updatedDate {
             endDateLabel.text = Strings.productCoveredUntil + formatter1.string(from: updatedDate)
@@ -136,6 +138,7 @@ class EditWarrantyProductInfoViewController: UIViewController {
         }
         let formatter1 = DateFormatter()
         formatter1.dateStyle = .full
+        formatter1.locale = Locale(identifier: "fr_FR")
         updatedDate = updatedDate?.adding(.year, value: (yearsView.didIncrementStepper ? 1 : -1))
         if let updatedDate = updatedDate {
             endDateLabel.text = Strings.productCoveredUntil + formatter1.string(from: updatedDate)
@@ -159,6 +162,7 @@ class EditWarrantyProductInfoViewController: UIViewController {
     private func updateWeeks() {
         let formatter1 = DateFormatter()
         formatter1.dateStyle = .full
+        formatter1.locale = Locale(identifier: "fr_FR")
         if let timeUnitAmount = weeksView.timeUnitAmount.text {
             if let timeUnitAmountAsInt = Int(timeUnitAmount) {
                 updatedDate = updatedDate?.adding(.day, value: timeUnitAmountAsInt * 7)
@@ -173,6 +177,7 @@ class EditWarrantyProductInfoViewController: UIViewController {
     private func updateMonths() {
         let formatter1 = DateFormatter()
         formatter1.dateStyle = .full
+        formatter1.locale = Locale(identifier: "fr_FR")
         if let timeUnitAmount = monthsView.timeUnitAmount.text {
             if let timeUnitAmountAsInt = Int(timeUnitAmount) {
                 updatedDate = updatedDate?.adding(.month, value: timeUnitAmountAsInt)
@@ -187,6 +192,7 @@ class EditWarrantyProductInfoViewController: UIViewController {
     private func updateYears() {
         let formatter1 = DateFormatter()
         formatter1.dateStyle = .full
+        formatter1.locale = Locale(identifier: "fr_FR")
         if let timeUnitAmount = yearsView.timeUnitAmount.text {
             if let timeUnitAmountAsInt = Int(timeUnitAmount) {
                 updatedDate = updatedDate?.adding(.year, value: timeUnitAmountAsInt)
@@ -201,6 +207,7 @@ class EditWarrantyProductInfoViewController: UIViewController {
     private func updateDateAfterTurningSwitchOff() {
         let formatter1 = DateFormatter()
         formatter1.dateStyle = .full
+        formatter1.locale = Locale(identifier: "fr_FR")
         if weeksView.timeUnitAmount.text == "0" && monthsView.timeUnitAmount.text == "0" && yearsView.timeUnitAmount.text == "0" {
             endDateLabel.text = Strings.productCoveredUntil
         } else {
@@ -233,6 +240,7 @@ extension EditWarrantyProductInfoViewController {
         startDateTitle.textAlignment = .left
         
         datePicker.datePickerMode = .date
+        datePicker.locale = Locale(identifier: "fr_FR")
         datePicker.addTarget(self, action: #selector(updateTimeIntervals), for: .editingDidEnd)
         
         startDateStackView.axis = .vertical
@@ -249,6 +257,13 @@ extension EditWarrantyProductInfoViewController {
         validityLengthTitle.text = "Durée de validité"
         validityLengthTitle.font = UIFont.boldSystemFont(ofSize: 16)
         
+        lifetimeWarrantyTitle.text = "garanti à vie"
+        lifetimeWarrantySwitch.addTarget(self, action: #selector(switchAction), for: .valueChanged)
+        
+        lifetimeWarrantyStackView.axis = .horizontal
+        lifetimeWarrantyStackView.addArrangedSubview(lifetimeWarrantyTitle)
+        lifetimeWarrantyStackView.addArrangedSubview(lifetimeWarrantySwitch)
+        
         monthsView.setup()
         weeksView.setup()
         yearsView.setup()
@@ -261,12 +276,6 @@ extension EditWarrantyProductInfoViewController {
         
         weeksView.timeUnitTitle.text = "semaines"
         weeksView.addTarget(self, action: #selector(updateWeeksWithStepper))
-        
-        lifetimeWarrantyStackView.axis = .horizontal
-        lifetimeWarrantyTitle.text = "garanti à vie"
-        lifetimeWarrantySwitch.addTarget(self, action: #selector(switchAction), for: .valueChanged)
-        lifetimeWarrantyStackView.addArrangedSubview(lifetimeWarrantyTitle)
-        lifetimeWarrantyStackView.addArrangedSubview(lifetimeWarrantySwitch)
         
         customLengthStackView.axis = .vertical
         customLengthStackView.spacing = 16
@@ -285,9 +294,7 @@ extension EditWarrantyProductInfoViewController {
         parentStackView.addArrangedSubview(nameAndStartDateStackView)
         parentStackView.addArrangedSubview(customLengthStackView)
         parentStackView.addArrangedSubview(endDateLabel)
-        //  parentStackView.setCustomSpacing(50, after: customLengthStackView)
-        //  parentStackView.setCustomSpacing(40, after: endDateLabel)
-        
+
         nextStepButton.backgroundColor = MWColor.paleOrange
         nextStepButton.roundingViewCorners(radius: 8)
         nextStepButton.setTitle("Suivant", for: .normal)
@@ -301,15 +308,15 @@ extension EditWarrantyProductInfoViewController {
         NSLayoutConstraint.activate([
             endDateLabel.heightAnchor.constraint(equalToConstant: 60),
             
-            nextStepButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            nextStepButton.bottomAnchor.constraint(lessThanOrEqualTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -24),
-            nextStepButton.heightAnchor.constraint(equalToConstant: 55),
-            nextStepButton.widthAnchor.constraint(equalToConstant: 170),
-            
             parentStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 24),
             parentStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
             parentStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
-            parentStackView.bottomAnchor.constraint(lessThanOrEqualTo: nextStepButton.topAnchor, constant: -16)
+            parentStackView.bottomAnchor.constraint(lessThanOrEqualTo: nextStepButton.topAnchor, constant: -16),
+            
+            nextStepButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            nextStepButton.bottomAnchor.constraint(lessThanOrEqualTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -24),
+            nextStepButton.heightAnchor.constraint(equalToConstant: 55),
+            nextStepButton.widthAnchor.constraint(equalToConstant: 170)
         ])
     }
     

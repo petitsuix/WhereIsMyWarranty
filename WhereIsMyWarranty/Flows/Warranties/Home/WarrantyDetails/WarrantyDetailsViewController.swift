@@ -208,6 +208,7 @@ extension WarrantyDetailsViewController {
         productName.text = viewModel?.warranty.name
         let formatter1 = DateFormatter()
         formatter1.dateStyle = .long
+        formatter1.locale = Locale(identifier: "fr_FR")
         if viewModel?.warranty.lifetimeWarranty == false {
             if Int(getRemainingDaysFromEndDate()) ?? 0 < 0 {
                 warrantyStatusLabel.text = Strings.warrantyExpired

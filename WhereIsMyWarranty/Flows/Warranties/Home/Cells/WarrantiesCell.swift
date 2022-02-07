@@ -11,7 +11,7 @@ class WarrantiesCell: UICollectionViewCell {
     
     // MARK: - Properties
     
-    static let identifier = "WarrantiesCollectionViewCell"
+    static let identifier = Strings.cellIdentifier
     
     var warranty: Warranty? {
         didSet {
@@ -52,6 +52,7 @@ class WarrantiesCell: UICollectionViewCell {
         
         let formatter1 = DateFormatter()
         formatter1.dateStyle = .short
+        formatter1.locale = Locale(identifier: "fr_FR")
         warrantyName.text = warranty?.name
         
         if warranty?.lifetimeWarranty == false {
@@ -59,7 +60,7 @@ class WarrantiesCell: UICollectionViewCell {
             
             if Int(getRemainingDaysFromEndDate()) ?? 0 < 0 {
                 remainingTime.text = "0" + Strings.remainingDays
-                warrantyEnd.text = Strings.cellDisplayWarrantyExpired
+                warrantyEnd.text = Strings.warrantyExpiredCellStyle
             } else {
                 remainingTime.text = getRemainingDaysFromEndDate() + Strings.remainingDays
                 if let warrantyEndDate = warranty?.warrantyEnd {
@@ -89,15 +90,15 @@ class WarrantiesCell: UICollectionViewCell {
 
 extension WarrantiesCell {
     
-   private func setup() {
+    private func setup() {
         warrantyProductImageView.translatesAutoresizingMaskIntoConstraints = false
         warrantyProductImageView.roundingViewCorners(radius: 10)
         warrantyProductImageView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMinXMaxYCorner] // to round specific corners (top left and bottom left)
         
-        warrantyName.font = UIFont.boldSystemFont(ofSize: 20)
+        warrantyName.font = MWFont.cellWarrantyNameFont
         
-        infoStackView.axis = .vertical
         infoStackView.translatesAutoresizingMaskIntoConstraints = false
+        infoStackView.axis = .vertical
         infoStackView.spacing = 8
         
         infoStackView.addArrangedSubview(warrantyName)
