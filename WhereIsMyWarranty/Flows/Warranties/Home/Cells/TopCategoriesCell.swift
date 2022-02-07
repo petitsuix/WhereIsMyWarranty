@@ -9,11 +9,10 @@ import UIKit
 
 class TopCategoriesCell: UICollectionViewCell {
     
-    // MARK: - Properties
+    // MARK: - Internal properties
     
     static let identifier = "CustomCollectionViewCell"
-    
-    // FIXME: 
+
     let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "éléctroniques"

@@ -9,7 +9,7 @@ import UIKit
 
 class TextWithStepperView: UIView {
     
-    // MARK: - Properties
+    // MARK: - Internal properties
     
     var timeUnitTitle = UILabel()
     var stepper = UIStepper()
@@ -39,7 +39,6 @@ class TextWithStepperView: UIView {
     // MARK: - objc methods
     
     @objc func updateTimeUnitAmount(_ sender: UIStepper) {
-        print("UIStepper is now \(Int(sender.value))")
         timeUnitAmount.text = String(sender.value.shortDigitsIn(0))
         stepperValue = sender.value
     }

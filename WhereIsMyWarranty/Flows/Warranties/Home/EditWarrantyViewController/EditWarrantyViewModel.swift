@@ -10,36 +10,24 @@ import UIKit
 
 class EditWarrantyViewModel {
     
-    // MARK: - Properties
+    // MARK: - Internal properties
     
     weak var productInfoViewDelegate: EditWarrantyProductInfoViewController?
     weak var invoicePhotoViewDelegate: EditWarrantyPhotoViewController?
-    private let coordinator: WarrantiesCoordinatorProtocol
-    private let storageService: StorageServiceProtocol
     
     var warranty: Warranty
     
-//    private var hasNameChanged: Bool {
-//        name != warranty.name
-//    }
-//    var canSave: Bool {
-//        return hasNameChanged
-//    }
-    
     var name: String?
-    
-//    var canSaveWarranty: Bool {
-//        return name?.isEmpty == false /// if name?.isEmpty == false, then canSaveWarranty == true
-//    }
-    
     var startDate: Date?
     var isLifetimeWarranty: Bool?
     var endDate: Date?
     var productPhoto: Data?
     var invoicePhoto: Data?
-    var yearsStepperValue: Int?
-    var monthsStepperValue: Int?
-    var weeksStepperValue: Int?
+    
+    // MARK: - Private properties
+    
+    private let coordinator: WarrantiesCoordinatorProtocol
+    private let storageService: StorageServiceProtocol
     
     // MARK: - Methods
     
@@ -47,11 +35,10 @@ class EditWarrantyViewModel {
         self.coordinator = coordinator
         self.storageService = storageService
         self.warranty = warranty
-       // self.name = warranty.name
     }
     
     func notifyWarrantyUpdated() {
-        let notificationName = NSNotification.Name(rawValue: "warranty updated")
+        let notificationName = NSNotification.Name(rawValue: Strings.warrantyUpdatedNotif)
         let notification = Notification(name: notificationName)
         NotificationCenter.default.post(notification)
     }

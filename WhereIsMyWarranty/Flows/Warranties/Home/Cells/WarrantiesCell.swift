@@ -9,7 +9,7 @@ import UIKit
 
 class WarrantiesCell: UICollectionViewCell {
     
-    // MARK: - Properties
+    // MARK: - Internal properties
     
     static let identifier = Strings.cellIdentifier
     
@@ -35,7 +35,7 @@ class WarrantiesCell: UICollectionViewCell {
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(Strings.initCoderNotImplemented)
     }
     
     // Overriding layoutSubviews if autoresizing and constraint-based behaviors of subviews do not offer the behavior we want.
@@ -95,7 +95,7 @@ extension WarrantiesCell {
         warrantyProductImageView.roundingViewCorners(radius: 10)
         warrantyProductImageView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMinXMaxYCorner] // to round specific corners (top left and bottom left)
         
-        warrantyName.font = MWFont.cellWarrantyNameFont
+        warrantyName.font = MWFont.cellWarrantyName
         
         infoStackView.translatesAutoresizingMaskIntoConstraints = false
         infoStackView.axis = .vertical
@@ -105,7 +105,7 @@ extension WarrantiesCell {
         infoStackView.addArrangedSubview(remainingTime)
         infoStackView.addArrangedSubview(warrantyEnd)
         
-        contentView.backgroundColor = .white
+        contentView.backgroundColor = MWColor.white
         contentView.layer.borderColor = MWColor.bluegrey.cgColor
         contentView.layer.borderWidth = 1.7
         roundingCellCorners(radius: 10)

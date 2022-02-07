@@ -9,7 +9,7 @@ import Foundation
 
 class WarrantyDetailsViewModel {
     
-    // MARK: - Properties
+    // MARK: - Internal properties
     
     weak var viewDelegate: WarrantyDetailsViewController?
     

@@ -9,7 +9,7 @@ import UIKit
 
 class WarrantyDetailsViewController: UIViewController {
     
-    // MARK: - Properties
+    // MARK: - Internal properties
     
     var viewModel: WarrantyDetailsViewModel?
     
@@ -93,22 +93,22 @@ extension WarrantyDetailsViewController {
     
     private func setupView() {
         self.title = Strings.warrantiesTitle
-        view.backgroundColor = .white
+        view.backgroundColor = MWColor.white
         
+        productImageView.translatesAutoresizingMaskIntoConstraints = false
         productImageView.roundingViewCorners(radius: 64)
         productImageView.layer.borderWidth = 1.5
         productImageView.layer.borderColor = MWColor.bluegrey.cgColor
-        productImageView.translatesAutoresizingMaskIntoConstraints = false
         
-        productName.font = UIFont.boldSystemFont(ofSize: 22)
-        productName.numberOfLines = 2
         productName.translatesAutoresizingMaskIntoConstraints = false
+        productName.font = MWFont.warrantyDetailsProductName
+        productName.numberOfLines = 2
         
-        warrantyStatusLabel.textAlignment = .center
-        warrantyStatusLabel.textColor = .white
-        warrantyStatusLabel.font = UIFont.systemFont(ofSize: 15, weight: .semibold)
-        warrantyStatusLabel.numberOfLines = 2
         warrantyStatusLabel.translatesAutoresizingMaskIntoConstraints = false
+        warrantyStatusLabel.textAlignment = .center
+        warrantyStatusLabel.textColor = MWColor.white
+        warrantyStatusLabel.font = MWFont.warrantyStatusLabel
+        warrantyStatusLabel.numberOfLines = 2
         
         warrantyStatusView.roundingViewCorners(radius: 8)
        // warrantyStatusView.addShadow()
@@ -129,7 +129,7 @@ extension WarrantyDetailsViewController {
         bottomBorder.setBottomBorder()
         
         invoicePhotoTitle.text = Strings.invoice
-        invoicePhotoTitle.font = UIFont.boldSystemFont(ofSize: 18)
+        invoicePhotoTitle.font = MWFont.invoicePhotoTitle
         
         invoiceImageView.contentMode = .scaleAspectFit
         invoiceImageView.isUserInteractionEnabled = true
@@ -142,17 +142,17 @@ extension WarrantyDetailsViewController {
         invoicePhotoStackView.addArrangedSubview(invoiceImageView)
         
         editWarrantyButton.setTitle(Strings.edit, for: .normal)
-        editWarrantyButton.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .medium)
-        editWarrantyButton.setTitleColor(.white, for: .normal)
+        editWarrantyButton.titleLabel?.font = MWFont.editWarrantyButton
+        editWarrantyButton.setTitleColor(MWColor.white, for: .normal)
         editWarrantyButton.backgroundColor = MWColor.bluegrey
         editWarrantyButton.roundingViewCorners(radius: 11)
        // editWarrantyButton.addShadow()
         editWarrantyButton.addTarget(self, action: #selector(editWarranty), for: .touchUpInside)
         
         deleteWarrantyButton.setTitle(Strings.delete, for: .normal)
-        deleteWarrantyButton.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .medium)
-        deleteWarrantyButton.setTitleColor(.white, for: .normal)
-        deleteWarrantyButton.backgroundColor = .red
+        deleteWarrantyButton.titleLabel?.font = MWFont.deleteWarrantyButton
+        deleteWarrantyButton.setTitleColor(MWColor.white, for: .normal)
+        deleteWarrantyButton.backgroundColor = MWColor.red
         deleteWarrantyButton.roundingViewCorners(radius: 11)
        // deleteWarrantyButton.addShadow()
         deleteWarrantyButton.addTarget(self, action: #selector(deleteWarranty), for: .touchUpInside)

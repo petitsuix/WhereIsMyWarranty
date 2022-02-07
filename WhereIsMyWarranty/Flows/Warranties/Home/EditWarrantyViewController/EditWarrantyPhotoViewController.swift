@@ -9,7 +9,7 @@ import UIKit
 
 class EditWarrantyPhotoViewController: UIViewController {
     
-    // MARK: - Properties
+    // MARK: - Internal properties
     
     var photoMode: PhotoMode = .productPhoto
     var viewModel: EditWarrantyViewModel?
@@ -17,7 +17,7 @@ class EditWarrantyPhotoViewController: UIViewController {
     // MARK: - Private properties
     
     private let parentStackView = UIStackView()
-    private let addAFileTitleLabel = UILabel()
+    private let addAPhotoTitleLabel = UILabel()
     private let imageView = UIImageView()
     private let selectImageButton = UIButton()
     private let endCurrentScreenButton = UIButton()
@@ -44,7 +44,6 @@ class EditWarrantyPhotoViewController: UIViewController {
     }
     
     @objc func saveWarranty() {
-        print("dans le ViewVontroller")
         photoDidChange()
         viewModel?.saveEditedWarranty()
     }
@@ -64,18 +63,18 @@ class EditWarrantyPhotoViewController: UIViewController {
     }
     
    private func setupAlert() {
-        let alert = UIAlertController(title: "Choose Image", message: nil, preferredStyle: .actionSheet)
-        alert.addAction(UIAlertAction(title: "Camera", style: .default, handler: { _ in
+       let alert = UIAlertController(title: Strings.selectAnImage, message: nil, preferredStyle: .actionSheet)
+       alert.addAction(UIAlertAction(title: Strings.camera, style: .default, handler: { _ in
             self.openCamera()
         }))
-        alert.addAction(UIAlertAction(title: "Gallery", style: .default, handler: { _ in
-            self.openPhotoGallery()
+       alert.addAction(UIAlertAction(title: Strings.galery, style: .default, handler: { _ in
+            self.openPhotoGalery()
         }))
-        alert.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction.init(title: "Annuler", style: .cancel, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
     
-    private func openPhotoGallery() {
+    private func openPhotoGalery() {
         if UIImagePickerController.isSourceTypeAvailable(UIImagePickerController.SourceType.photoLibrary) {
             let imagePicker = UIImagePickerController()
             imagePicker.delegate = self
@@ -83,7 +82,7 @@ class EditWarrantyPhotoViewController: UIViewController {
             imagePicker.sourceType = UIImagePickerController.SourceType.photoLibrary
             self.present(imagePicker, animated: true, completion: nil)
         } else {
-            let alert  = UIAlertController(title: "Oups...", message: "Impossible d'accéder à la galerie", preferredStyle: .alert)
+            let alert  = UIAlertController(title: Strings.oops, message: Strings.cantAccessLibrary, preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
             self.present(alert, animated: true, completion: nil)
         }
@@ -97,7 +96,7 @@ class EditWarrantyPhotoViewController: UIViewController {
             imagePicker.allowsEditing = false
             self.present(imagePicker, animated: true, completion: nil)
         } else {
-            let alert  = UIAlertController(title: "Oups...", message: "Aucune caméra détectée !", preferredStyle: .alert)
+            let alert  = UIAlertController(title: Strings.oops, message: Strings.noCameraDetected, preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
             self.present(alert, animated: true, completion: nil)
         }
@@ -117,24 +116,22 @@ extension EditWarrantyPhotoViewController: UIImagePickerControllerDelegate & UIN
     // MARK: - View configuration
     
     func setupUI() {
-        view.backgroundColor = .white
+        view.backgroundColor = MWColor.white
         
-        addAFileTitleLabel.textColor = .black
-        addAFileTitleLabel.font = UIFont.boldSystemFont(ofSize: 26)
-        addAFileTitleLabel.textAlignment = .center
-        addAFileTitleLabel.text = "Ajouter un fichier"
+        addAPhotoTitleLabel.textColor = MWColor.black
+        addAPhotoTitleLabel.font = MWFont.addAPhotoTitle
+        addAPhotoTitleLabel.textAlignment = .center
         
         imageView.layer.borderWidth = 1
-        imageView.layer.borderColor = UIColor.label.cgColor
+        imageView.layer.borderColor = MWColor.black.cgColor
         imageView.contentMode = .scaleAspectFill
         imageView.layer.masksToBounds = true
         
-        let buttonImage = UIImage(systemName: "plus.circle.fill", withConfiguration: UIImage.SymbolConfiguration(pointSize: 30, weight: .light, scale: .small))
-        selectImageButton.setImage(buttonImage, for: .normal)
-        selectImageButton.setTitle("Choisir une image", for: .normal)
+        selectImageButton.setImage(MWImages.selectAnImageButton, for: .normal)
+        selectImageButton.setTitle(Strings.selectAnImage, for: .normal)
         selectImageButton.arrangeButtonsImageAndText2(spacing: 6, contentYInset: 1.6)
         
-        selectImageButton.setTitleColor(.label, for: .normal)
+        selectImageButton.setTitleColor(MWColor.black, for: .normal)
         selectImageButton.tintColor = MWColor.paleOrange
         selectImageButton.addTarget(self, action: #selector(chooseAndDisplayImage), for: .touchUpInside)
         
@@ -142,14 +139,13 @@ extension EditWarrantyPhotoViewController: UIImagePickerControllerDelegate & UIN
         parentStackView.axis = .vertical
         parentStackView.spacing = 32
         
-        parentStackView.addArrangedSubview(addAFileTitleLabel)
+        parentStackView.addArrangedSubview(addAPhotoTitleLabel)
         parentStackView.addArrangedSubview(imageView)
         parentStackView.addArrangedSubview(selectImageButton)
         
         endCurrentScreenButton.translatesAutoresizingMaskIntoConstraints = false
         endCurrentScreenButton.backgroundColor = MWColor.paleOrange
         endCurrentScreenButton.roundingViewCorners(radius: 8)
-        endCurrentScreenButton.setTitle("Enregistrer", for: .normal)
         endCurrentScreenButton.isUserInteractionEnabled = true
         
         view.addSubview(parentStackView)
@@ -174,8 +170,8 @@ extension EditWarrantyPhotoViewController: UIImagePickerControllerDelegate & UIN
     
     private func setupForProductPhotoViewController() {
         if photoMode == .productPhoto {
-            addAFileTitleLabel.text = "Photo produit"
-            endCurrentScreenButton.setTitle("Suivant", for: .normal)
+            addAPhotoTitleLabel.text = Strings.addProductPhoto
+            endCurrentScreenButton.setTitle(Strings.nextStepButtonTitle, for: .normal)
             endCurrentScreenButton.addTarget(self, action: #selector(goToEditInvoicePhotoScreen), for: .touchUpInside)
             if let productPhoto = viewModel?.warranty.productPhoto {
                 imageView.image = UIImage(data: productPhoto)
@@ -185,8 +181,8 @@ extension EditWarrantyPhotoViewController: UIImagePickerControllerDelegate & UIN
     
     private func setupForInvoicePhotoViewController() {
         if photoMode == .invoicePhoto {
-            addAFileTitleLabel.text = "Ajouter une facture"
-            endCurrentScreenButton.setTitle("Enregistrer", for: .normal)
+            addAPhotoTitleLabel.text = Strings.addInvoicePhoto
+            endCurrentScreenButton.setTitle(Strings.saveButtonTitle, for: .normal)
             endCurrentScreenButton.addTarget(self, action: #selector(saveWarranty), for: .touchUpInside)
             if let invoicePhoto = viewModel?.warranty.invoicePhoto {
                 imageView.image = UIImage(data: invoicePhoto)

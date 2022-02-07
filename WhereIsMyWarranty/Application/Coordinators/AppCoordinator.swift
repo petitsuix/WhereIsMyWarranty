@@ -10,7 +10,7 @@ import UIKit
 
 class AppCoordinator: NSObject, Coordinator, UITabBarControllerDelegate {
     
-    // MARK: - Properties
+    // MARK: - Internal properties
     
     var navigationController: UINavigationController
     
@@ -36,10 +36,10 @@ class AppCoordinator: NSObject, Coordinator, UITabBarControllerDelegate {
         var tabBarControllers: [UIViewController] = []
         
         let warrantiesViewController = warrantiesCoordinator.rootViewController
-        warrantiesViewController.tabBarItem = UITabBarItem(title: "Garanties", image: UIImage(systemName: "newspaper"), selectedImage: UIImage(systemName: "newspaper.fill"))
+        warrantiesViewController.tabBarItem = UITabBarItem(title: Strings.warrantiesTitle, image: MWImages.warrantiesTabImage, selectedImage: MWImages.warrantiesTabImageSelected)
         
         let settingsViewController = settingsCoordinator.rootViewController
-        settingsViewController.tabBarItem = UITabBarItem(title: "Réglages", image: UIImage(systemName: "gearshape"), selectedImage: UIImage(systemName: "gearshape.fill"))
+        settingsViewController.tabBarItem = UITabBarItem(title: Strings.settingsTitle, image: MWImages.settingsTabImage, selectedImage: MWImages.settingsTabImageSelected)
         
         tabBarControllers.append(warrantiesViewController)
         tabBarControllers.append(settingsViewController)

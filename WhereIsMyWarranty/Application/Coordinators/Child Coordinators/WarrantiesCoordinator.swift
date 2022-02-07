@@ -10,10 +10,10 @@ import UIKit
 
 class WarrantiesCoordinator: Coordinator, WarrantiesCoordinatorProtocol {
     
-    // MARK: - Public properties
+    // MARK: - Internal properties
     
-    public var navigationController: UINavigationController
-    public var rootViewController: UIViewController {
+    var navigationController: UINavigationController
+    var rootViewController: UIViewController {
         return navigationController
     }
     
@@ -83,7 +83,7 @@ class WarrantiesCoordinator: Coordinator, WarrantiesCoordinatorProtocol {
         modalNavigationController.dismiss(animated: true) {
             self.newWarrantyViewModel = nil
         }
-        newWarrantyViewModel?.notifyWarrantiesListUpdated() // j'ai bien fait de déclarer notifyWarrantiesListUpdated dans le viewModel ?
+        newWarrantyViewModel?.notifyWarrantiesListUpdated() //FIXME: j'ai bien fait de déclarer notifyWarrantiesListUpdated dans le viewModel ? Et pour les tests si c'est dans le ViewModel il faut encore faire un mock ?
     }
     
     func showWarrantyDetailsScreen(warranty: Warranty) {
@@ -104,7 +104,6 @@ class WarrantiesCoordinator: Coordinator, WarrantiesCoordinatorProtocol {
         navigationController.present(modalNavigationController, animated: true, completion: nil)
     }
 
-    
     func showEditWarrantyProductInfoScreen(warranty: Warranty) {
         let editWarrantyProductInfoViewController = EditWarrantyProductInfoViewController()
         let viewModel = EditWarrantyViewModel(coordinator: self, storageService: storageService, warranty: warranty)

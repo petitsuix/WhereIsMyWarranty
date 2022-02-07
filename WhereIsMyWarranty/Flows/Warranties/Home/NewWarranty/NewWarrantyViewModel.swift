@@ -9,12 +9,10 @@ import Foundation
 
 class NewWarrantyViewModel: NSObject {
     
-    // MARK: - Properties
+    // MARK: - Internal properties
     
     weak var newWarrantyProductInfoViewDelegate: NewWarrantyProductInfoViewController?
     weak var newWarrantyPhotoViewDelegate: NewWarrantyPhotoViewController?
-    let coordinator: WarrantiesCoordinatorProtocol
-    let storageService: StorageServiceProtocol
     
     var name: String?
     var startDate: Date?
@@ -22,6 +20,11 @@ class NewWarrantyViewModel: NSObject {
     var isLifetimeWarranty: Bool?
     var productPhoto: Data?
     var invoicePhoto: Data?
+    
+    // MARK: - Private properties
+    
+    private let coordinator: WarrantiesCoordinatorProtocol
+    private let storageService: StorageServiceProtocol
     
     // MARK: - Methods
     
@@ -36,10 +39,6 @@ class NewWarrantyViewModel: NSObject {
         NotificationCenter.default.post(notification)
     }
     
-    func warrantySaved() {
-        coordinator.warrantySaved()// ne pas passer entre controleurs
-    }
-    
     func goToAddProductPhotoScreen() {
         coordinator.showNewWarrantyProductPhotoScreen()
     }
@@ -48,7 +47,6 @@ class NewWarrantyViewModel: NSObject {
         coordinator.showNewWarrantyInvoicePhotoScreen()
     }
     
-    // FIXME: pour que ce soit clean, peut être rajouter un loading icon sur le button
     func saveWarranty() {
         let newWarranty = Warranty(context: storageService.viewContext)
         newWarranty.name = name
@@ -59,5 +57,11 @@ class NewWarrantyViewModel: NSObject {
         newWarranty.productPhoto = productPhoto
         storageService.save()
         warrantySaved()
+    }
+    
+    // MARK: Private methods
+    
+    private func warrantySaved() {
+        coordinator.warrantySaved()// ne pas passer entre controleurs
     }
 }

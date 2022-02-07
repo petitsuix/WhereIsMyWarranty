@@ -15,14 +15,13 @@ enum State<Data> { // To execute particular actions according to the situation
 
 class HomeWarrantiesListViewController: UIViewController {
     
-    // MARK: - Properties
+    // MARK: - Internal properties
     
     var viewModel: HomeWarrantiesListViewModel?
     
     // MARK: - Private properties
     
     private weak var coordinator: AppCoordinator?
-    // private var warranties: [Warranty] = []
     
     private var categories: [Category] = []
     private var categoriesCollectionView: UICollectionView!
@@ -38,7 +37,6 @@ class HomeWarrantiesListViewController: UIViewController {
     private let noWarrantyTitleLabel = UILabel()
     private let noWarrantyBodyLabel = UILabel()
     private let noWarrantyImageView = UIImageView()
-    // private let noWarranty
     
     // MARK: - Computed properties
     
@@ -50,7 +48,7 @@ class HomeWarrantiesListViewController: UIViewController {
                 noWarrantyStackView.isHidden = false
                 noWarrantyImageView.isHidden = false
             case .error :
-                alert("Oops...", "Something went wrong, please try again.")
+                alert(Strings.oops, Strings.somethingWentWrong)
             case .showData :
                 warrantiesCollectionView.reloadData()
                 categoriesCollectionView.reloadData()
@@ -107,14 +105,12 @@ class HomeWarrantiesListViewController: UIViewController {
     
     // MARK: - Methods
     
-    func warrantyCellTapped(warranty: Warranty) {
+    private func warrantyCellTapped(warranty: Warranty) {
         viewModel?.showWarrantyDetailsScreen(warranty: warranty)
     }
     
-    func categoryCellTapped(category: Category) {
+    private func categoryCellTapped(category: Category) {
     }
-    
-    // MARK: - Private methods
     
     private func resetViewState() {
         warrantiesCollectionView.isHidden = true
@@ -175,7 +171,7 @@ extension HomeWarrantiesListViewController {
     func refresh() {
         viewState = .showData
     }
-  
+    
     func didFinishLoadingWarranties() {
         if viewModel?.warranties.isEmpty == true {
             viewState = .empty
@@ -190,9 +186,9 @@ extension HomeWarrantiesListViewController {
 extension HomeWarrantiesListViewController {
     private func setupView() {
         self.title = Strings.warrantiesTitle
-        view.backgroundColor = .white
+        view.backgroundColor = MWColor.white
         
-        navBarAppearance.titleTextAttributes = [.foregroundColor: MWColor.bluegrey, .font: MWFont.navBarFont]
+        navBarAppearance.titleTextAttributes = [.foregroundColor: MWColor.bluegrey, .font: MWFont.navBar]
         navBarAppearance.backgroundColor = MWColor.paleOrange
         navigationController?.navigationBar.standardAppearance = navBarAppearance
         navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
@@ -216,14 +212,14 @@ extension HomeWarrantiesListViewController {
         noWarrantyStackView.addArrangedSubview(noWarrantyBodyLabel)
         noWarrantyStackView.setCustomSpacing(8, after: noWarrantyBodyLabel)
         
-        addCategoryButton.backgroundColor = .white
+        addCategoryButton.backgroundColor = MWColor.white
         addCategoryButton.setImage(MWImages.addCategoryButtonImage, for: .normal)
         addCategoryButton.tintColor = MWColor.bluegrey
         categoriesStackView.addArrangedSubview(addCategoryButton)
         addCategoryButton.addTarget(self, action: #selector(showAlert), for: .touchUpInside)
         
         categoriesStackView.translatesAutoresizingMaskIntoConstraints = false
-        categoriesStackView.backgroundColor = .white
+        categoriesStackView.backgroundColor = MWColor.white
         categoriesStackView.spacing = 5.5
         
         bottomBorder.translatesAutoresizingMaskIntoConstraints = false
@@ -237,7 +233,7 @@ extension HomeWarrantiesListViewController {
         categoriesCollectionView.register(TopCategoriesCell.self, forCellWithReuseIdentifier: TopCategoriesCell.identifier)
         categoriesCollectionView.dataSource = self
         categoriesCollectionView.delegate = self
-        categoriesCollectionView.backgroundColor = .white
+        categoriesCollectionView.backgroundColor = MWColor.white
         categoriesStackView.addArrangedSubview(categoriesCollectionView)
         
         let warrantiesLayout = UICollectionViewFlowLayout()
@@ -295,4 +291,3 @@ extension HomeWarrantiesListViewController {
         ])
     }
 }
-

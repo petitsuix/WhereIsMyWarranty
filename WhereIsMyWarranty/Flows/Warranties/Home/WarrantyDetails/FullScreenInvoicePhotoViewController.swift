@@ -29,7 +29,7 @@ class FullScreenInvoicePhotoViewController: UIViewController {
     // MARK: - UI configuration
     
     func setup() {
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = MWColor.white
         
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFit

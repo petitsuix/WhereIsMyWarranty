@@ -10,30 +10,27 @@ import UIKit
 
 class EditWarrantyProductInfoViewController: UIViewController {
     
-    // MARK: - Properties
+    // MARK: - Internal properties
     
     var viewModel: EditWarrantyViewModel?
     
     // MARK: - Private properties
     
-    // 1
     private var parentStackView = UIStackView()
     
-    // 1.1
     private let nameAndStartDateStackView = UIStackView()
-    // 1.1.1
+
     private var nameStackView = UIStackView()
     private let nameTitle = UILabel()
     private var nameField = UITextField()
-    // 1.1.2
+
     private let startDateStackView = UIStackView()
     private let startDateTitle = UILabel()
     private var datePicker = UIDatePicker()
     
-    // 1.2
     private let customLengthStackView = UIStackView()
     private let validityLengthTitle = UILabel()
-    // 1.2.1
+
     private let lifetimeWarrantyStackView = UIStackView()
     private let lifetimeWarrantyTitle = UILabel()
     private let lifetimeWarrantySwitch = UISwitch()
@@ -41,10 +38,8 @@ class EditWarrantyProductInfoViewController: UIViewController {
     private let monthsView = TextWithStepperView()
     private let weeksView = TextWithStepperView()
     
-    // 1.3 endDate
     private let endDateLabel = UILabel()
-    
-    private var nextStepButton = UIButton()
+    private var goToPhotoScreenButton = UIButton()
 
     private var updatedDate: Date?
     
@@ -221,10 +216,10 @@ extension EditWarrantyProductInfoViewController {
     // MARK: - View configuration
     
     func setupView() {
-        view.backgroundColor = .white
+        view.backgroundColor = MWColor.white
         
-        nameTitle.text = "Nom du produit"
-        nameTitle.font = UIFont.boldSystemFont(ofSize: 30)
+        nameTitle.text = Strings.productName
+        nameTitle.font = MWFont.nameTitle
         nameTitle.textAlignment = .natural
         
         nameField.addTarget(self, action: #selector(nameTextfieldDidChange), for: .editingChanged)
@@ -235,8 +230,8 @@ extension EditWarrantyProductInfoViewController {
         nameStackView.axis = .vertical
         nameStackView.spacing = 16
         
-        startDateTitle.text = "Date de début de garantie"
-        startDateTitle.font = UIFont.boldSystemFont(ofSize: 16)
+        startDateTitle.text = Strings.warrantyStartDate
+        startDateTitle.font = MWFont.productInfoSubtitles
         startDateTitle.textAlignment = .left
         
         datePicker.datePickerMode = .date
@@ -254,10 +249,10 @@ extension EditWarrantyProductInfoViewController {
         nameAndStartDateStackView.addArrangedSubview(nameStackView)
         nameAndStartDateStackView.addArrangedSubview(startDateStackView)
         
-        validityLengthTitle.text = "Durée de validité"
-        validityLengthTitle.font = UIFont.boldSystemFont(ofSize: 16)
+        validityLengthTitle.text = Strings.validityLength
+        validityLengthTitle.font = MWFont.productInfoSubtitles
         
-        lifetimeWarrantyTitle.text = "garanti à vie"
+        lifetimeWarrantyTitle.text = Strings.lifetimeWarranty
         lifetimeWarrantySwitch.addTarget(self, action: #selector(switchAction), for: .valueChanged)
         
         lifetimeWarrantyStackView.axis = .horizontal
@@ -268,13 +263,13 @@ extension EditWarrantyProductInfoViewController {
         weeksView.setup()
         yearsView.setup()
         
-        yearsView.timeUnitTitle.text = "années"
+        yearsView.timeUnitTitle.text = Strings.years
         yearsView.addTarget(self, action: #selector(updateYearsWithStepper))
         
-        monthsView.timeUnitTitle.text = "mois"
+        monthsView.timeUnitTitle.text = Strings.months
         monthsView.addTarget(self, action: #selector(updateMonthsWithStepper))
         
-        weeksView.timeUnitTitle.text = "semaines"
+        weeksView.timeUnitTitle.text = Strings.weeks
         weeksView.addTarget(self, action: #selector(updateWeeksWithStepper))
         
         customLengthStackView.axis = .vertical
@@ -295,15 +290,15 @@ extension EditWarrantyProductInfoViewController {
         parentStackView.addArrangedSubview(customLengthStackView)
         parentStackView.addArrangedSubview(endDateLabel)
 
-        nextStepButton.backgroundColor = MWColor.paleOrange
-        nextStepButton.roundingViewCorners(radius: 8)
-        nextStepButton.setTitle("Suivant", for: .normal)
-        nextStepButton.addTarget(self, action: #selector(goToAddProductPhotoScreen), for: .touchUpInside)
-        nextStepButton.isUserInteractionEnabled = true
-        nextStepButton.translatesAutoresizingMaskIntoConstraints = false
+        goToPhotoScreenButton.backgroundColor = MWColor.paleOrange
+        goToPhotoScreenButton.roundingViewCorners(radius: 8)
+        goToPhotoScreenButton.setTitle(Strings.nextStepButtonTitle, for: .normal)
+        goToPhotoScreenButton.addTarget(self, action: #selector(goToAddProductPhotoScreen), for: .touchUpInside)
+        goToPhotoScreenButton.isUserInteractionEnabled = true
+        goToPhotoScreenButton.translatesAutoresizingMaskIntoConstraints = false
         
         view.addSubview(parentStackView)
-        view.addSubview(nextStepButton)
+        view.addSubview(goToPhotoScreenButton)
         
         NSLayoutConstraint.activate([
             endDateLabel.heightAnchor.constraint(equalToConstant: 60),
@@ -311,12 +306,12 @@ extension EditWarrantyProductInfoViewController {
             parentStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 24),
             parentStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
             parentStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
-            parentStackView.bottomAnchor.constraint(lessThanOrEqualTo: nextStepButton.topAnchor, constant: -16),
+            parentStackView.bottomAnchor.constraint(lessThanOrEqualTo: goToPhotoScreenButton.topAnchor, constant: -16),
             
-            nextStepButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            nextStepButton.bottomAnchor.constraint(lessThanOrEqualTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -24),
-            nextStepButton.heightAnchor.constraint(equalToConstant: 55),
-            nextStepButton.widthAnchor.constraint(equalToConstant: 170)
+            goToPhotoScreenButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            goToPhotoScreenButton.bottomAnchor.constraint(lessThanOrEqualTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -24),
+            goToPhotoScreenButton.heightAnchor.constraint(equalToConstant: 55),
+            goToPhotoScreenButton.widthAnchor.constraint(equalToConstant: 170)
         ])
     }
     

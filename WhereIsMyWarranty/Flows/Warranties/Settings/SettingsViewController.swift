@@ -9,6 +9,8 @@ import UIKit
 
 class SettingsViewController: UIViewController {
     
+    // MARK: - Properties
+    
     private let navBarAppearance = UINavigationBarAppearance()
     
     private let parentStackView = UIStackView()
@@ -34,6 +36,8 @@ class SettingsViewController: UIViewController {
     
     private let parentSettingsStackView = UIStackView()
     
+    // MARK: - View life cycle methods
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
@@ -45,10 +49,10 @@ extension SettingsViewController {
     // MARK: - View configuration
     
     func setup() {
-        view.backgroundColor = .white
+        view.backgroundColor = MWColor.white
         self.title = Strings.settingsTitle
         
-        navBarAppearance.titleTextAttributes = [.foregroundColor: MWColor.bluegrey, .font: UIFont.systemFont(ofSize: 19, weight: .semibold)]
+        navBarAppearance.titleTextAttributes = [.foregroundColor: MWColor.bluegrey, .font: MWFont.navBar]
         navBarAppearance.backgroundColor = MWColor.paleOrange
         navigationController?.navigationBar.standardAppearance = navBarAppearance
         navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
@@ -56,23 +60,23 @@ extension SettingsViewController {
         topPresentationLabel.translatesAutoresizingMaskIntoConstraints = false
         topPresentationLabel.text = Strings.settingsPresentationLabel
         topPresentationLabel.textAlignment = .center
-        topPresentationLabel.textColor = .white
+        topPresentationLabel.textColor = MWColor.white
         topPresentationLabel.numberOfLines = 0
         
-        topPresentationView.backgroundColor = #colorLiteral(red: 0.09810357541, green: 0.3023771942, blue: 0.3678480089, alpha: 1)
+        topPresentationView.backgroundColor = MWColor.bluegrey
         topPresentationView.roundingViewCorners(radius: 9)
         
         topPresentationView.addSubview(topPresentationLabel)
         
         notificationsLabel.text = Strings.notifications
-        notificationsLabel.textColor = #colorLiteral(red: 0.09810357541, green: 0.3023771942, blue: 0.3678480089, alpha: 1)
+        notificationsLabel.textColor = MWColor.bluegrey
         
         notificationsStackView.axis = .horizontal
         notificationsStackView.addArrangedSubview(notificationsLabel)
         notificationsStackView.addArrangedSubview(notificationsSwitch)
         
         cloudSyncLabel.text = Strings.cloudSync
-        cloudSyncLabel.textColor = #colorLiteral(red: 0.09810357541, green: 0.3023771942, blue: 0.3678480089, alpha: 1)
+        cloudSyncLabel.textColor = MWColor.bluegrey
         
         cloudSyncStackView.axis = .horizontal
         cloudSyncStackView.addArrangedSubview(cloudSyncLabel)
@@ -90,21 +94,21 @@ extension SettingsViewController {
         bottomBorder.setBottomBorder()
         
         aboutLabel.text = Strings.about
-        aboutLabel.font = UIFont.systemFont(ofSize: 18, weight: .regular)
+        aboutLabel.font = MWFont.aboutLabel
         aboutLabel.textColor = MWColor.bluegrey
         aboutLabel.textAlignment = .center
         
         privacyPolicyButton.setTitle(Strings.privacyPolicy, for: .normal)
-        privacyPolicyButton.setImage(UIImage(systemName: Strings.chevron), for: .normal)
+        privacyPolicyButton.setTitleColor(MWColor.bluegrey, for: .normal)
+        privacyPolicyButton.setImage(MWImages.chevron, for: .normal)
         privacyPolicyButton.tintColor = MWColor.bluegrey
         privacyPolicyButton.semanticContentAttribute = .forceRightToLeft
-        privacyPolicyButton.setTitleColor(MWColor.bluegrey, for: .normal)
         
         termsAndConditionsButton.setTitle(Strings.termsAndConditions, for: .normal)
-        termsAndConditionsButton.setImage(UIImage(systemName: Strings.chevron), for: .normal)
+        termsAndConditionsButton.setTitleColor(MWColor.bluegrey, for: .normal)
+        termsAndConditionsButton.setImage(MWImages.chevron, for: .normal)
         termsAndConditionsButton.tintColor = MWColor.bluegrey
         termsAndConditionsButton.semanticContentAttribute = .forceRightToLeft
-        termsAndConditionsButton.setTitleColor(MWColor.bluegrey, for: .normal)
         
         privacyAndTermsStackView.axis = .vertical
         privacyAndTermsStackView.spacing = 24
@@ -125,11 +129,11 @@ extension SettingsViewController {
         parentStackView.setCustomSpacing(32, after: parentSettingsStackView)
         parentStackView.setCustomSpacing(32, after: aboutLabel)
         
+        versionLabel.translatesAutoresizingMaskIntoConstraints = false
         versionLabel.text = Strings.version
-        versionLabel.font = UIFont.systemFont(ofSize: 16, weight: .regular)
+        versionLabel.font = MWFont.versionLabel
         versionLabel.textColor = MWColor.bluegrey
         versionLabel.numberOfLines = 0
-        versionLabel.translatesAutoresizingMaskIntoConstraints = false
         versionLabel.textAlignment = .center
         
         view.addSubview(parentStackView)

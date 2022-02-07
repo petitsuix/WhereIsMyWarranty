@@ -10,10 +10,10 @@ import UIKit
 
 class SettingsCoordinator: Coordinator {
     
-    // MARK: - Properties
+    // MARK: - Internal properties
     
-    public var navigationController: UINavigationController
-    public var rootViewController: UIViewController {
+    var navigationController: UINavigationController
+    var rootViewController: UIViewController {
         return navigationController
     }
     
@@ -21,7 +21,6 @@ class SettingsCoordinator: Coordinator {
     
     init() {
         self.navigationController = UINavigationController()
-        // FIXME: Est-ce que c'est normal de devoir placer showSettingsScreen ici ou ça a rien à faire dans le init ?
         showSettingsScreen()
     }
     

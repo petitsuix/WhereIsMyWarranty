@@ -10,39 +10,38 @@ import UIKit
 
 class NewWarrantyProductInfoViewController: UIViewController {
     
-    // MARK: - Properties
-    
-    // 1
-    let parentStackView = UIStackView()
-    
-    // 1.1
-    let nameAndStartDateStackView = UIStackView()
-    // 1.1.1
-    var nameStackView = UIStackView()
-    let nameTitle = UILabel()
-    let nameField = UITextField()
-    // 1.1.2
-    let startDateStackView = UIStackView()
-    let startDateTitle = UILabel()
-    let datePicker = UIDatePicker()
-    
-    // 1.2
-    let customLengthStackView = UIStackView()
-    let validityLengthTitle = UILabel()
-    // 1.2.1
-    let lifetimeWarrantyStackView = UIStackView()
-    let lifetimeWarrantyTitle = UILabel()
-    let lifetimeWarrantySwitch = UISwitch()
-    let yearsView = TextWithStepperView()
-    let monthsView = TextWithStepperView()
-    let weeksView = TextWithStepperView()
-    
-    let endDateLabel = UILabel()
-    let nextStepButton = UIButton()
-    
-    var updatedDate: Date?
+    // MARK: - Internal properties
     
     var viewModel: NewWarrantyViewModel?
+    
+    // MARK: - Private properties
+    
+    private let parentStackView = UIStackView()
+    
+    private let nameAndStartDateStackView = UIStackView()
+
+    private var nameStackView = UIStackView()
+    private let nameTitle = UILabel()
+    private let nameField = UITextField()
+    
+    private let startDateStackView = UIStackView()
+    private let startDateTitle = UILabel()
+    private let datePicker = UIDatePicker()
+    
+    private let customLengthStackView = UIStackView()
+    private let validityLengthTitle = UILabel()
+
+    private let lifetimeWarrantyStackView = UIStackView()
+    private let lifetimeWarrantyTitle = UILabel()
+    private let lifetimeWarrantySwitch = UISwitch()
+    private let yearsView = TextWithStepperView()
+    private let monthsView = TextWithStepperView()
+    private let weeksView = TextWithStepperView()
+    
+    private let endDateLabel = UILabel()
+    private let goToPhotoScreenButton = UIButton()
+    
+    private var updatedDate: Date?
     
     // MARK: - View life cycle methods
     
@@ -210,10 +209,8 @@ extension NewWarrantyProductInfoViewController {
     // MARK: - View configuration
     
     private func setupView() {
-        view.backgroundColor = .white
-        
-        nameTitle.text = "Nom du produit"
-        nameTitle.font = UIFont.boldSystemFont(ofSize: 29)
+        nameTitle.text = Strings.productName
+        nameTitle.font = MWFont.nameTitle
         nameTitle.textAlignment = .natural
         
         nameField.addTarget(self, action: #selector(nameTextfieldDidChange), for: .editingChanged)
@@ -224,8 +221,8 @@ extension NewWarrantyProductInfoViewController {
         nameStackView.axis = .vertical
         nameStackView.spacing = 12
         
-        startDateTitle.text = "Date de début de garantie"
-        startDateTitle.font = UIFont.boldSystemFont(ofSize: 16)
+        startDateTitle.text = Strings.warrantyStartDate
+        startDateTitle.font = MWFont.productInfoSubtitles
         startDateTitle.textAlignment = .natural
         
         datePicker.datePickerMode = .date
@@ -242,27 +239,28 @@ extension NewWarrantyProductInfoViewController {
         nameAndStartDateStackView.addArrangedSubview(nameStackView)
         nameAndStartDateStackView.addArrangedSubview(startDateStackView)
         
-        validityLengthTitle.text = "Durée de validité"
-        validityLengthTitle.font = UIFont.boldSystemFont(ofSize: 16)
+        validityLengthTitle.text = Strings.validityLength
+        validityLengthTitle.font = MWFont.productInfoSubtitles
+        
+        lifetimeWarrantyTitle.text = Strings.lifetimeWarranty
+        lifetimeWarrantySwitch.addTarget(self, action: #selector(switchAction), for: .valueChanged)
+        
+        lifetimeWarrantyStackView.axis = .horizontal
+        lifetimeWarrantyStackView.addArrangedSubview(lifetimeWarrantyTitle)
+        lifetimeWarrantyStackView.addArrangedSubview(lifetimeWarrantySwitch)
         
         monthsView.setup()
         weeksView.setup()
         yearsView.setup()
         
-        yearsView.timeUnitTitle.text = "années"
+        yearsView.timeUnitTitle.text = Strings.years
         yearsView.stepper.addTarget(self, action: #selector(updateYearsWithStepper), for: .valueChanged)
         
-        monthsView.timeUnitTitle.text = "mois"
+        monthsView.timeUnitTitle.text = Strings.months
         monthsView.stepper.addTarget(self, action: #selector(updateMonthsWithStepper), for: .valueChanged)
         
-        weeksView.timeUnitTitle.text = "semaines"
+        weeksView.timeUnitTitle.text = Strings.weeks
         weeksView.stepper.addTarget(self, action: #selector(updateWeeksWithStepper), for: .valueChanged)
-        
-        lifetimeWarrantyStackView.axis = .horizontal
-        lifetimeWarrantyTitle.text = "garanti à vie"
-        lifetimeWarrantySwitch.addTarget(self, action: #selector(switchAction), for: .valueChanged)
-        lifetimeWarrantyStackView.addArrangedSubview(lifetimeWarrantyTitle)
-        lifetimeWarrantyStackView.addArrangedSubview(lifetimeWarrantySwitch)
         
         customLengthStackView.axis = .vertical
         customLengthStackView.spacing = 16
@@ -287,15 +285,16 @@ extension NewWarrantyProductInfoViewController {
         //  parentStackView.setCustomSpacing(50, after: customLengthStackView)
         //  parentStackView.setCustomSpacing(40, after: endDateLabel)
         
-        nextStepButton.backgroundColor = MWColor.paleOrange
-        nextStepButton.roundingViewCorners(radius: 8)
-        nextStepButton.setTitle("Suivant", for: .normal)
-        nextStepButton.addTarget(self, action: #selector(goToAddProductPhotoScreen), for: .touchUpInside)
-        nextStepButton.isUserInteractionEnabled = true
-        nextStepButton.translatesAutoresizingMaskIntoConstraints = false
+        goToPhotoScreenButton.backgroundColor = MWColor.paleOrange
+        goToPhotoScreenButton.roundingViewCorners(radius: 8)
+        goToPhotoScreenButton.setTitle(Strings.nextStepButtonTitle, for: .normal)
+        goToPhotoScreenButton.addTarget(self, action: #selector(goToAddProductPhotoScreen), for: .touchUpInside)
+        goToPhotoScreenButton.isUserInteractionEnabled = true
+        goToPhotoScreenButton.translatesAutoresizingMaskIntoConstraints = false
         
+        view.backgroundColor = MWColor.white
         view.addSubview(parentStackView)
-        view.addSubview(nextStepButton)
+        view.addSubview(goToPhotoScreenButton)
         
         NSLayoutConstraint.activate([
             endDateLabel.heightAnchor.constraint(equalToConstant: 60),
@@ -303,12 +302,12 @@ extension NewWarrantyProductInfoViewController {
             parentStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 24),
             parentStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
             parentStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
-            parentStackView.bottomAnchor.constraint(lessThanOrEqualTo: nextStepButton.topAnchor, constant: -16),
+            parentStackView.bottomAnchor.constraint(lessThanOrEqualTo: goToPhotoScreenButton.topAnchor, constant: -16),
             
-            nextStepButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            nextStepButton.bottomAnchor.constraint(lessThanOrEqualTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -24),
-            nextStepButton.heightAnchor.constraint(equalToConstant: 55),
-            nextStepButton.widthAnchor.constraint(equalToConstant: 170)
+            goToPhotoScreenButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            goToPhotoScreenButton.bottomAnchor.constraint(lessThanOrEqualTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -24),
+            goToPhotoScreenButton.heightAnchor.constraint(equalToConstant: 55),
+            goToPhotoScreenButton.widthAnchor.constraint(equalToConstant: 170)
         ])
     }
 }

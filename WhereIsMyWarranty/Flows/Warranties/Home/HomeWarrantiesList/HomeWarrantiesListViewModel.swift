@@ -9,7 +9,7 @@ import UIKit
 
 class HomeWarrantiesListViewModel {
     
-    // MARK: - Properties
+    // MARK: - Internal properties
     
     weak var viewDelegate: HomeWarrantiesListViewController?
     
