@@ -5,7 +5,6 @@
 //  Created by Richardier on 13/12/2021.
 //
 
-import Foundation
 import UIKit
 
 class WarrantiesCoordinator: Coordinator, WarrantiesCoordinatorProtocol {
@@ -43,12 +42,6 @@ class WarrantiesCoordinator: Coordinator, WarrantiesCoordinatorProtocol {
         navigationController.setViewControllers([homeWarrantiesListViewController], animated: false)
     }
     
-    func testShowWarrantiesScreen() {
-     //   coordinator.showWarrantiesScreen()
-        // let topVC = navigationController.topViewController
-        // XCTAssert(topVC?.isKind(of: HomeWarrantiesListViewController.self)
-    }
-    
     func showNewWarrantyProductInfoScreen() {
         let newWarrantyViewController = NewWarrantyProductInfoViewController()
         let viewModel = NewWarrantyViewModel(coordinator: self, storageService: storageService)
@@ -79,7 +72,6 @@ class WarrantiesCoordinator: Coordinator, WarrantiesCoordinatorProtocol {
     }
     
     func warrantySaved() {
-        // navigationController.dismiss(animated: true, completion: nil) // repasser viewModel à nil
         modalNavigationController.dismiss(animated: true) {
             self.newWarrantyViewModel = nil
         }
@@ -91,7 +83,6 @@ class WarrantiesCoordinator: Coordinator, WarrantiesCoordinatorProtocol {
         let warrantyDetailsViewModel = WarrantyDetailsViewModel(coordinator: self, storageService: storageService, warranty: warranty)
         warrantyDetailsViewModel.viewDelegate = warrantyDetailsViewController
         warrantyDetailsViewController.viewModel = warrantyDetailsViewModel
-        // warrantyDetailsViewController.warranty = warranty
         navigationController.pushViewController(warrantyDetailsViewController, animated: true)
     }
     
@@ -118,7 +109,7 @@ class WarrantiesCoordinator: Coordinator, WarrantiesCoordinatorProtocol {
     
     func showEditWarrantyProductPhotoScreen() {
         let editWarrantyPhotoScreen = EditWarrantyPhotoViewController()
-        self.editWarrantyViewModel?.invoicePhotoViewDelegate = editWarrantyPhotoScreen
+        self.editWarrantyViewModel?.photoViewDelegate = editWarrantyPhotoScreen
         editWarrantyPhotoScreen.viewModel = editWarrantyViewModel
         editWarrantyPhotoScreen.photoMode = .productPhoto
         modalNavigationController.pushViewController(editWarrantyPhotoScreen, animated: true)
@@ -126,18 +117,17 @@ class WarrantiesCoordinator: Coordinator, WarrantiesCoordinatorProtocol {
     
     func showEditWarrantyInvoicePhotoScreen() {
         let editWarrantyPhotoScreen = EditWarrantyPhotoViewController()
-        self.editWarrantyViewModel?.invoicePhotoViewDelegate = editWarrantyPhotoScreen
+        self.editWarrantyViewModel?.photoViewDelegate = editWarrantyPhotoScreen
         editWarrantyPhotoScreen.viewModel = editWarrantyViewModel
         editWarrantyPhotoScreen.photoMode = .invoicePhoto
         modalNavigationController.pushViewController(editWarrantyPhotoScreen, animated: true)
     }
     
     func editedWarrantySaved() {
-        // navigationController.dismiss(animated: true, completion: nil) // repasser viewModel à nil
         modalNavigationController.dismiss(animated: true) {
             self.editWarrantyViewModel = nil
         }
-        editWarrantyViewModel?.notifyWarrantyUpdated() // j'ai bien fait de déclarer notifyWarrantiesListUpdated dans le viewModel ?
+        editWarrantyViewModel?.notifyWarrantyUpdated()
     }
     
 }

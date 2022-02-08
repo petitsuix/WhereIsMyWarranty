@@ -48,7 +48,7 @@ extension SettingsViewController {
     
     // MARK: - View configuration
     
-    func setup() {
+    private func setup() {
         view.backgroundColor = MWColor.white
         self.title = Strings.settingsTitle
         

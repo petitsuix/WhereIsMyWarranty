@@ -59,9 +59,19 @@ class EditWarrantyProductInfoViewController: UIViewController {
         navigationController?.isNavigationBarHidden = true
     }
     
+    func canGoToNextStep(canSave: Bool) {
+        if canSave {
+            goToPhotoScreenButton.isEnabled = true
+            goToPhotoScreenButton.alpha = 1
+        } else {
+            goToPhotoScreenButton.isEnabled = false
+            goToPhotoScreenButton.alpha = 0.5
+        }
+    }
+    
     // MARK: - objc methods
     
-    @objc func nameTextfieldDidChange(textfield: UITextField) { // comment le controller communique avec le viewmodel
+    @objc func nameTextfieldDidChange(textfield: UITextField) {
         viewModel?.name = textfield.text
     }
     
@@ -105,7 +115,7 @@ class EditWarrantyProductInfoViewController: UIViewController {
         }
         let formatter1 = DateFormatter()
         formatter1.dateStyle = .full
-        formatter1.locale = Locale(identifier: "fr_FR")
+        formatter1.locale = Locale(identifier: Strings.localeIdentifier)
         updatedDate = updatedDate?.adding(.day, value: (weeksView.didIncrementStepper ? 7 : -7))
         if let updatedDate = updatedDate {
             endDateLabel.text = Strings.productCoveredUntil + formatter1.string(from: updatedDate)
@@ -119,7 +129,7 @@ class EditWarrantyProductInfoViewController: UIViewController {
         }
         let formatter1 = DateFormatter()
         formatter1.dateStyle = .full
-        formatter1.locale = Locale(identifier: "fr_FR")
+        formatter1.locale = Locale(identifier: Strings.localeIdentifier)
         updatedDate = updatedDate?.adding(.month, value: (monthsView.didIncrementStepper ? 1 : -1))
         if let updatedDate = updatedDate {
             endDateLabel.text = Strings.productCoveredUntil + formatter1.string(from: updatedDate)
@@ -133,7 +143,7 @@ class EditWarrantyProductInfoViewController: UIViewController {
         }
         let formatter1 = DateFormatter()
         formatter1.dateStyle = .full
-        formatter1.locale = Locale(identifier: "fr_FR")
+        formatter1.locale = Locale(identifier: Strings.localeIdentifier)
         updatedDate = updatedDate?.adding(.year, value: (yearsView.didIncrementStepper ? 1 : -1))
         if let updatedDate = updatedDate {
             endDateLabel.text = Strings.productCoveredUntil + formatter1.string(from: updatedDate)
@@ -142,9 +152,6 @@ class EditWarrantyProductInfoViewController: UIViewController {
     }
     
     @objc func goToAddProductPhotoScreen() {
-        //        if viewModel?.name?.isEmpty == true {
-        //            alert("Son petit nom ?", "Il faut au moins un nom pour pouvoir continuer")
-        //        }
         viewModel?.name = nameField.text
         viewModel?.startDate = datePicker.date
         viewModel?.isLifetimeWarranty = (lifetimeWarrantySwitch.isOn ? true : false)
@@ -157,7 +164,7 @@ class EditWarrantyProductInfoViewController: UIViewController {
     private func updateWeeks() {
         let formatter1 = DateFormatter()
         formatter1.dateStyle = .full
-        formatter1.locale = Locale(identifier: "fr_FR")
+        formatter1.locale = Locale(identifier: Strings.localeIdentifier)
         if let timeUnitAmount = weeksView.timeUnitAmount.text {
             if let timeUnitAmountAsInt = Int(timeUnitAmount) {
                 updatedDate = updatedDate?.adding(.day, value: timeUnitAmountAsInt * 7)
@@ -172,7 +179,7 @@ class EditWarrantyProductInfoViewController: UIViewController {
     private func updateMonths() {
         let formatter1 = DateFormatter()
         formatter1.dateStyle = .full
-        formatter1.locale = Locale(identifier: "fr_FR")
+        formatter1.locale = Locale(identifier: Strings.localeIdentifier)
         if let timeUnitAmount = monthsView.timeUnitAmount.text {
             if let timeUnitAmountAsInt = Int(timeUnitAmount) {
                 updatedDate = updatedDate?.adding(.month, value: timeUnitAmountAsInt)
@@ -187,7 +194,7 @@ class EditWarrantyProductInfoViewController: UIViewController {
     private func updateYears() {
         let formatter1 = DateFormatter()
         formatter1.dateStyle = .full
-        formatter1.locale = Locale(identifier: "fr_FR")
+        formatter1.locale = Locale(identifier: Strings.localeIdentifier)
         if let timeUnitAmount = yearsView.timeUnitAmount.text {
             if let timeUnitAmountAsInt = Int(timeUnitAmount) {
                 updatedDate = updatedDate?.adding(.year, value: timeUnitAmountAsInt)
@@ -202,7 +209,7 @@ class EditWarrantyProductInfoViewController: UIViewController {
     private func updateDateAfterTurningSwitchOff() {
         let formatter1 = DateFormatter()
         formatter1.dateStyle = .full
-        formatter1.locale = Locale(identifier: "fr_FR")
+        formatter1.locale = Locale(identifier: Strings.localeIdentifier)
         if weeksView.timeUnitAmount.text == "0" && monthsView.timeUnitAmount.text == "0" && yearsView.timeUnitAmount.text == "0" {
             endDateLabel.text = Strings.productCoveredUntil
         } else {
@@ -215,7 +222,7 @@ extension EditWarrantyProductInfoViewController {
     
     // MARK: - View configuration
     
-    func setupView() {
+    private func setupView() {
         view.backgroundColor = MWColor.white
         
         nameTitle.text = Strings.productName
@@ -223,6 +230,7 @@ extension EditWarrantyProductInfoViewController {
         nameTitle.textAlignment = .natural
         
         nameField.addTarget(self, action: #selector(nameTextfieldDidChange), for: .editingChanged)
+        nameField.autocorrectionType = .no
         nameField.setBottomBorder()
         nameField.addDoneToolbar()
         
@@ -235,7 +243,7 @@ extension EditWarrantyProductInfoViewController {
         startDateTitle.textAlignment = .left
         
         datePicker.datePickerMode = .date
-        datePicker.locale = Locale(identifier: "fr_FR")
+        datePicker.locale = Locale(identifier: Strings.localeIdentifier)
         datePicker.addTarget(self, action: #selector(updateTimeIntervals), for: .editingDidEnd)
         
         startDateStackView.axis = .vertical
@@ -315,7 +323,7 @@ extension EditWarrantyProductInfoViewController {
         ])
     }
     
-    func setupData() {
+    private func setupData() {
         nameField.text = viewModel?.warranty.name
         if let startDate = viewModel?.warranty.warrantyStart {
             datePicker.date = startDate

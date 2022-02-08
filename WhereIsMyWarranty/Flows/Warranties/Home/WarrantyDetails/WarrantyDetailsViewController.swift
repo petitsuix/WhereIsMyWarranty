@@ -64,8 +64,20 @@ class WarrantyDetailsViewController: UIViewController {
         viewModel?.showFullScreenInvoicePhoto()
     }
     
-    @objc func deleteWarranty() {
+    func deleteWarranty() {
         viewModel?.deleteWarranty()
+    }
+    
+    @objc func aboutToDeleteAlert() {
+        let alertController = UIAlertController(title: Strings.delete, message: Strings.confirmDeletion, preferredStyle: .actionSheet)
+        let confirmAction = UIAlertAction(title: Strings.delete, style: .destructive, handler: { [unowned self] _ in
+            self.deleteWarranty()
+            navigationController?.popToRootViewController(animated: true)
+        })
+        let abortAction = UIAlertAction(title: Strings.cancel, style: .default, handler: nil)
+        alertController.addAction(confirmAction)
+        alertController.addAction(abortAction)
+        present(alertController, animated: true)
     }
     
     @objc func editWarranty() {
@@ -111,7 +123,6 @@ extension WarrantyDetailsViewController {
         warrantyStatusLabel.numberOfLines = 2
         
         warrantyStatusView.roundingViewCorners(radius: 8)
-       // warrantyStatusView.addShadow()
         warrantyStatusView.addSubview(warrantyStatusLabel)
         
         topRightStackView.axis = .vertical
@@ -146,7 +157,6 @@ extension WarrantyDetailsViewController {
         editWarrantyButton.setTitleColor(MWColor.white, for: .normal)
         editWarrantyButton.backgroundColor = MWColor.bluegrey
         editWarrantyButton.roundingViewCorners(radius: 11)
-       // editWarrantyButton.addShadow()
         editWarrantyButton.addTarget(self, action: #selector(editWarranty), for: .touchUpInside)
         
         deleteWarrantyButton.setTitle(Strings.delete, for: .normal)
@@ -154,8 +164,7 @@ extension WarrantyDetailsViewController {
         deleteWarrantyButton.setTitleColor(MWColor.white, for: .normal)
         deleteWarrantyButton.backgroundColor = MWColor.red
         deleteWarrantyButton.roundingViewCorners(radius: 11)
-       // deleteWarrantyButton.addShadow()
-        deleteWarrantyButton.addTarget(self, action: #selector(deleteWarranty), for: .touchUpInside)
+        deleteWarrantyButton.addTarget(self, action: #selector(aboutToDeleteAlert), for: .touchUpInside)
         
         bottomButtonsStackView.axis = .horizontal
         bottomButtonsStackView.alignment = .center
@@ -208,7 +217,7 @@ extension WarrantyDetailsViewController {
         productName.text = viewModel?.warranty.name
         let formatter1 = DateFormatter()
         formatter1.dateStyle = .long
-        formatter1.locale = Locale(identifier: "fr_FR")
+        formatter1.locale = Locale(identifier: Strings.localeIdentifier)
         if viewModel?.warranty.lifetimeWarranty == false {
             if Int(getRemainingDaysFromEndDate()) ?? 0 < 0 {
                 warrantyStatusLabel.text = Strings.warrantyExpired

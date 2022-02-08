@@ -28,21 +28,21 @@ class HomeWarrantiesListViewController: UIViewController {
     private var warrantiesCollectionView: UICollectionView!
     
     private let navBarAppearance = UINavigationBarAppearance()
-    private let newWarrantyButton = UIButton()
     private let addCategoryButton = UIButton()
     private let categoriesStackView = UIStackView()
     private let bottomBorder = UIView()
     
-    private let noWarrantyStackView = UIStackView()
+    private let newWarrantyButton = UIButton()
+    
     private let noWarrantyTitleLabel = UILabel()
     private let noWarrantyBodyLabel = UILabel()
     private let noWarrantyImageView = UIImageView()
+    private let noWarrantyStackView = UIStackView()
     
     // MARK: - Computed properties
     
     private var viewState: State<Void> = .showData {
         didSet {
-            resetViewState() // Hides tableview, stops activity indicator animation
             switch viewState {
             case .empty :
                 noWarrantyStackView.isHidden = false
@@ -111,10 +111,6 @@ class HomeWarrantiesListViewController: UIViewController {
     
     private func categoryCellTapped(category: Category) {
     }
-    
-    private func resetViewState() {
-        warrantiesCollectionView.isHidden = true
-    }
 }
 
 // MARK: - CollectionViews configuration
@@ -122,7 +118,6 @@ class HomeWarrantiesListViewController: UIViewController {
 extension HomeWarrantiesListViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // return user.categories.count
         if collectionView == categoriesCollectionView {
             return viewModel?.categories.count ?? 1 // On devrait pouvoir retourner user.categories.count
         } else {

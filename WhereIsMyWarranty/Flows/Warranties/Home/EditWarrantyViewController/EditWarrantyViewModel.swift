@@ -6,23 +6,30 @@
 //
 
 import Foundation
-import UIKit
 
 class EditWarrantyViewModel {
     
     // MARK: - Internal properties
     
     weak var productInfoViewDelegate: EditWarrantyProductInfoViewController?
-    weak var invoicePhotoViewDelegate: EditWarrantyPhotoViewController?
+    weak var photoViewDelegate: EditWarrantyPhotoViewController?
     
     var warranty: Warranty
     
-    var name: String?
+    var name: String? {
+        didSet {
+            productInfoViewDelegate?.canGoToNextStep(canSave: canSaveWarranty)
+        }
+    }
     var startDate: Date?
     var isLifetimeWarranty: Bool?
     var endDate: Date?
     var productPhoto: Data?
     var invoicePhoto: Data?
+    
+    var canSaveWarranty: Bool {
+            return name?.isEmpty == false
+    }
     
     // MARK: - Private properties
     
@@ -37,6 +44,7 @@ class EditWarrantyViewModel {
         self.warranty = warranty
     }
     
+    // FIXME: Comment tester ça ? Est-ce qu'il est a sa place dans le VM ?
     func notifyWarrantyUpdated() {
         let notificationName = NSNotification.Name(rawValue: Strings.warrantyUpdatedNotif)
         let notification = Notification(name: notificationName)
@@ -49,10 +57,6 @@ class EditWarrantyViewModel {
     
     func goToEditInvoicePhotoScreen() {
         coordinator.showEditWarrantyInvoicePhotoScreen()
-    }
-    
-    func warrantySaved() {
-        coordinator.editedWarrantySaved()// ne pas passer entre controleurs
     }
     
     func saveEditedWarranty() {
@@ -85,5 +89,11 @@ class EditWarrantyViewModel {
         guard let warrantyStart = warranty.warrantyStart, let warrantyEnd = warranty.warrantyEnd else { return 0.0 }
         let components = calendar.dateComponents([.year, .month, .day], from: warrantyStart.startOfDay, to: warrantyEnd)
         return Double(components.day ?? 0) / 7
+    }
+    
+    // MARK: - Private methods
+    
+    private func warrantySaved() {
+        coordinator.editedWarrantySaved()
     }
 }

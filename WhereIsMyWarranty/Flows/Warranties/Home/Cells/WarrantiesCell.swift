@@ -52,7 +52,7 @@ class WarrantiesCell: UICollectionViewCell {
         
         let formatter1 = DateFormatter()
         formatter1.dateStyle = .short
-        formatter1.locale = Locale(identifier: "fr_FR")
+        formatter1.locale = Locale(identifier: Strings.localeIdentifier)
         warrantyName.text = warranty?.name
         
         if warranty?.lifetimeWarranty == false {

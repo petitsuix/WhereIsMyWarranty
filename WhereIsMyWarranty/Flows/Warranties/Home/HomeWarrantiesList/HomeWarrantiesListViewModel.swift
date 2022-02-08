@@ -5,8 +5,6 @@
 //  Created by Richardier on 10/12/2021.
 //
 
-import UIKit
-
 class HomeWarrantiesListViewModel {
     
     // MARK: - Internal properties

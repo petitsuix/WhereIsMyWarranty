@@ -39,7 +39,6 @@ enum Strings {
     static let camera = "Appareil photo"
     static let galery = "Galerie"
     static let saveButtonTitle = "Enregistrer"
-   // static let
     // Warranty details VC
     static let edit = "  Modifier  "
     static let delete = "  Supprimer  "
@@ -57,10 +56,13 @@ enum Strings {
     static let warrantiesListUpdatedNotif = "warranties list updated"
     static let dequeueCellIsOfUnknownType = "The dequeue collection view cell was of an unknown type!"
     static let cellIdentifier = "WarrantiesCollectionViewCell"
+    static let localeIdentifier = "fr_FR"
     // Alerts & errors
     static let initCoderNotImplemented = "init(coder:) has not been implemented"
     static let oops = "Oups..."
     static let somethingWentWrong = "Quelque chose s'est mal passé !"
     static let cantAccessLibrary = "Impossible d'accéder à la galerie"
     static let noCameraDetected = "Aucune caméra détectée !"
+    static let confirmDeletion = "Êtes-vous sûr de vouloir définitivement supprimer cette garantie ?"
+    static let cancel = "Annuler"
 }

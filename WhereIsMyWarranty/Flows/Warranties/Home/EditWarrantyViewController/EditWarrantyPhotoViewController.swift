@@ -115,7 +115,7 @@ extension EditWarrantyPhotoViewController: UIImagePickerControllerDelegate & UIN
     
     // MARK: - View configuration
     
-    func setupUI() {
+    private func setupUI() {
         view.backgroundColor = MWColor.white
         
         addAPhotoTitleLabel.textColor = MWColor.black

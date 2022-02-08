@@ -5,7 +5,6 @@
 //  Created by Richardier on 06/12/2021.
 //
 
-import Foundation
 import UIKit
 
 class AppCoordinator: NSObject, Coordinator, UITabBarControllerDelegate {

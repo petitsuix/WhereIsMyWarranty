@@ -14,19 +14,27 @@ class NewWarrantyViewModel: NSObject {
     weak var newWarrantyProductInfoViewDelegate: NewWarrantyProductInfoViewController?
     weak var newWarrantyPhotoViewDelegate: NewWarrantyPhotoViewController?
     
-    var name: String?
+    var name: String? {
+        didSet {
+            newWarrantyProductInfoViewDelegate?.canGoToNextStep(canSave: canSaveWarranty)
+        }
+    }
     var startDate: Date?
     var endDate: Date?
     var isLifetimeWarranty: Bool?
     var productPhoto: Data?
     var invoicePhoto: Data?
     
+    var canSaveWarranty: Bool {
+            return name?.isEmpty == false
+        }
+    
     // MARK: - Private properties
     
     private let coordinator: WarrantiesCoordinatorProtocol
     private let storageService: StorageServiceProtocol
     
-    // MARK: - Methods
+    // MARK: - Internal methods
     
     init(coordinator: WarrantiesCoordinatorProtocol, storageService: StorageServiceProtocol) {
         self.coordinator = coordinator
@@ -59,9 +67,9 @@ class NewWarrantyViewModel: NSObject {
         warrantySaved()
     }
     
-    // MARK: Private methods
+    // MARK: - Private methods
     
     private func warrantySaved() {
-        coordinator.warrantySaved()// ne pas passer entre controleurs
+        coordinator.warrantySaved()
     }
 }

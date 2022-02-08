@@ -5,8 +5,6 @@
 //  Created by Richardier on 22/12/2021.
 //
 
-import Foundation
-
 class WarrantyDetailsViewModel {
     
     // MARK: - Internal properties

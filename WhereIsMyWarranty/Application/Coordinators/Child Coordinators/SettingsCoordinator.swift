@@ -5,7 +5,6 @@
 //  Created by Richardier on 13/12/2021.
 //
 
-import Foundation
 import UIKit
 
 class SettingsCoordinator: Coordinator {

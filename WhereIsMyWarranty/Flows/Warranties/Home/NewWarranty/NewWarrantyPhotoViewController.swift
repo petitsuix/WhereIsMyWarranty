@@ -50,6 +50,13 @@ class NewWarrantyPhotoViewController: UIViewController {
     
     @objc func saveWarranty() {
         photoDidChange()
+        if imageView.image == nil {
+            // FIXME: temporary image c'est un double-optionnel
+            let temporaryImage = MWImages.doggos.randomElement()
+            guard let temp = temporaryImage else { return }
+            guard let temp2 = temp else { return }
+            viewModel?.productPhoto = temp2.pngData()
+        }
         viewModel?.saveWarranty()
     }
     
