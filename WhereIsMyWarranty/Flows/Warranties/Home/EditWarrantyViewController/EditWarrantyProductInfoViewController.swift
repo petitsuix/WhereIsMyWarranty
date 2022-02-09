@@ -57,6 +57,7 @@ class EditWarrantyProductInfoViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.isNavigationBarHidden = true
+        self.hideKeyboardWhenTappedAround()
     }
     
     func canGoToNextStep(canSave: Bool) {

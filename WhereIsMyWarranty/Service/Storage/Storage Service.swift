@@ -66,12 +66,3 @@ class StorageService: StorageServiceProtocol {
         }
     }
 }
-
-// FIXME: faire un fichier a part pour protocols ?
-protocol StorageServiceProtocol {
-    var viewContext: NSManagedObjectContext { get }
-    func loadWarranties() throws -> [Warranty]
-    func loadCategories() throws -> [Category]
-    func save()
-    func deleteWarranty(_ object: NSManagedObject) throws
-}

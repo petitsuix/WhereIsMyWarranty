@@ -20,10 +20,9 @@ class SettingsCoordinator: Coordinator {
     
     init() {
         self.navigationController = UINavigationController()
-        showSettingsScreen()
+        start()
     }
     
-    // FIXME: Pourquoi lui il est jamais lu ?
     func start() {
         showSettingsScreen()
     }

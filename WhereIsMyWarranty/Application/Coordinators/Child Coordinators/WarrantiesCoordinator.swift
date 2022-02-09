@@ -75,7 +75,7 @@ class WarrantiesCoordinator: Coordinator, WarrantiesCoordinatorProtocol {
         modalNavigationController.dismiss(animated: true) {
             self.newWarrantyViewModel = nil
         }
-        newWarrantyViewModel?.notifyWarrantiesListUpdated() //FIXME: j'ai bien fait de déclarer notifyWarrantiesListUpdated dans le viewModel ? Et pour les tests si c'est dans le ViewModel il faut encore faire un mock ?
+        newWarrantyViewModel?.notifyWarrantiesListUpdated()
     }
     
     func showWarrantyDetailsScreen(warranty: Warranty) {

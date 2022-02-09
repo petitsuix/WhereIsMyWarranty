@@ -55,8 +55,6 @@ class WarrantyDetailsViewController: UIViewController {
     // MARK: - @objc methods
     
     @objc func warrantyUpdated() {
-        // FIXME: peut être au lieu de re-setup la view juste pour refresh le controller, juste mettre à jour les textfields ?
-        setupView()
         setupData()
     }
     
@@ -108,12 +106,14 @@ extension WarrantyDetailsViewController {
         view.backgroundColor = MWColor.white
         
         productImageView.translatesAutoresizingMaskIntoConstraints = false
+        productImageView.isAccessibilityElement = false
         productImageView.roundingViewCorners(radius: 64)
         productImageView.layer.borderWidth = 1.5
         productImageView.layer.borderColor = MWColor.bluegrey.cgColor
         
         productName.translatesAutoresizingMaskIntoConstraints = false
         productName.font = MWFont.warrantyDetailsProductName
+        productName.accessibilityLabel = Strings.warrantyName
         productName.numberOfLines = 2
         
         warrantyStatusLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -215,6 +215,7 @@ extension WarrantyDetailsViewController {
             productImageView.image = UIImage(data: image)
         }
         productName.text = viewModel?.warranty.name
+        productName.accessibilityValue = productName.text
         let formatter1 = DateFormatter()
         formatter1.dateStyle = .long
         formatter1.locale = Locale(identifier: Strings.localeIdentifier)

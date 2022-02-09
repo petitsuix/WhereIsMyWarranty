@@ -27,7 +27,7 @@ class EditWarrantyViewModel {
     var productPhoto: Data?
     var invoicePhoto: Data?
     
-    var canSaveWarranty: Bool {
+    private var canSaveWarranty: Bool {
             return name?.isEmpty == false
     }
     
@@ -44,7 +44,6 @@ class EditWarrantyViewModel {
         self.warranty = warranty
     }
     
-    // FIXME: Comment tester ça ? Est-ce qu'il est a sa place dans le VM ?
     func notifyWarrantyUpdated() {
         let notificationName = NSNotification.Name(rawValue: Strings.warrantyUpdatedNotif)
         let notification = Notification(name: notificationName)

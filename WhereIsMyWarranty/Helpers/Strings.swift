@@ -65,4 +65,6 @@ enum Strings {
     static let noCameraDetected = "Aucune caméra détectée !"
     static let confirmDeletion = "Êtes-vous sûr de vouloir définitivement supprimer cette garantie ?"
     static let cancel = "Annuler"
+    // Accessibility
+    static let warrantyName = "Nom de la garantie"
 }

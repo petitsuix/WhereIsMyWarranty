@@ -54,6 +54,7 @@ class NewWarrantyProductInfoViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.isNavigationBarHidden = true
+        self.hideKeyboardWhenTappedAround()
     }
     
     // MARK: - objc methods

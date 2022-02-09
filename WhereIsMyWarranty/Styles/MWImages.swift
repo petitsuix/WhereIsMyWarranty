@@ -9,7 +9,8 @@ import UIKit
 
 enum MWImages {
     static let arrow = #imageLiteral(resourceName: "fancy-arrow")
-    static let doggos = [UIImage(named: "labrador"), UIImage(named: "king charles"), UIImage(named: "golden retriever"), UIImage(named: "Pug")]
+
+    static let doggos = [#imageLiteral(resourceName: "golden retriever"), #imageLiteral(resourceName: "labrador"), #imageLiteral(resourceName: "Pug"), #imageLiteral(resourceName: "king charles")]
     
     static let addCategoryButtonImage = UIImage(systemName: "plus.circle.fill", withConfiguration: UIImage.SymbolConfiguration(pointSize: 38, weight: .light, scale: .small))
     static let newWarrantyButtonImage = UIImage(systemName: "plus.circle.fill", withConfiguration: UIImage.SymbolConfiguration(pointSize: 50, weight: .light, scale: .small))

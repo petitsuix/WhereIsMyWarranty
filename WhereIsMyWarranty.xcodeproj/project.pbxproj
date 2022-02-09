@@ -11,6 +11,8 @@
 		970B02AF27A848CE00EC4163 /* WarrantyDetailsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 970B02AE27A848CE00EC4163 /* WarrantyDetailsViewModelTests.swift */; };
 		970D86A3278F30FD00216ED7 /* ResizeImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 970D86A2278F30FD00216ED7 /* ResizeImage.swift */; };
 		971AE69A277B382D00C970E3 /* TextWithStepperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 971AE699277B382D00C970E3 /* TextWithStepperView.swift */; };
+		972660A627B3E37000A8F7E9 /* HideKeyboardWithTap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972660A527B3E37000A8F7E9 /* HideKeyboardWithTap.swift */; };
+		972660A827B3FD5200A8F7E9 /* StorageServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972660A727B3FD5200A8F7E9 /* StorageServiceProtocol.swift */; };
 		97630447275A68B200688DDB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97630446275A68B200688DDB /* AppDelegate.swift */; };
 		97630449275A68B200688DDB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97630448275A68B200688DDB /* SceneDelegate.swift */; };
 		97630451275A68B200688DDB /* WhereIsMyWarranty.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9763044F275A68B200688DDB /* WhereIsMyWarranty.xcdatamodeld */; };
@@ -99,6 +101,8 @@
 		970B02AE27A848CE00EC4163 /* WarrantyDetailsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarrantyDetailsViewModelTests.swift; sourceTree = "<group>"; };
 		970D86A2278F30FD00216ED7 /* ResizeImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResizeImage.swift; sourceTree = "<group>"; };
 		971AE699277B382D00C970E3 /* TextWithStepperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextWithStepperView.swift; sourceTree = "<group>"; };
+		972660A527B3E37000A8F7E9 /* HideKeyboardWithTap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HideKeyboardWithTap.swift; sourceTree = "<group>"; };
+		972660A727B3FD5200A8F7E9 /* StorageServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageServiceProtocol.swift; sourceTree = "<group>"; };
 		97630443275A68B200688DDB /* WhereIsMyWarranty.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WhereIsMyWarranty.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		97630446275A68B200688DDB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		97630448275A68B200688DDB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -346,6 +350,7 @@
 				970D86A2278F30FD00216ED7 /* ResizeImage.swift */,
 				97FE356D2791C9AA009CEF78 /* AddingTimeInterval.swift */,
 				97999EFA2796E2E200C8184C /* StartOfDay.swift */,
+				972660A527B3E37000A8F7E9 /* HideKeyboardWithTap.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -384,6 +389,7 @@
 			isa = PBXGroup;
 			children = (
 				9769C952276A299100BAC736 /* Storage Service.swift */,
+				972660A727B3FD5200A8F7E9 /* StorageServiceProtocol.swift */,
 			);
 			path = Storage;
 			sourceTree = "<group>";
@@ -645,6 +651,7 @@
 				97630447275A68B200688DDB /* AppDelegate.swift in Sources */,
 				97F1D307277345F400D0C52C /* WarrantyDetailsViewModel.swift in Sources */,
 				97FE356E2791C9AA009CEF78 /* AddingTimeInterval.swift in Sources */,
+				972660A627B3E37000A8F7E9 /* HideKeyboardWithTap.swift in Sources */,
 				976304BA275F80B900688DDB /* NewWarrantyProductInfoViewController.swift in Sources */,
 				976304A4275A6EB100688DDB /* Strings.swift in Sources */,
 				97ECFC28277E235600CA973D /* NewWarrantyPhotoViewController.swift in Sources */,
@@ -671,6 +678,7 @@
 				97630451275A68B200688DDB /* WhereIsMyWarranty.xcdatamodeld in Sources */,
 				97E03BDB2767A6EE00EFEE79 /* SettingsViewModel.swift in Sources */,
 				97F1D3052773448D00D0C52C /* WarrantyDetailsViewController.swift in Sources */,
+				972660A827B3FD5200A8F7E9 /* StorageServiceProtocol.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
