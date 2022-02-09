@@ -69,7 +69,7 @@ class NewWarrantyViewModel: NSObject {
     
     // MARK: - Private methods
     
-    private func warrantySaved() {
+    func warrantySaved() {
         coordinator.warrantySaved()
     }
 }

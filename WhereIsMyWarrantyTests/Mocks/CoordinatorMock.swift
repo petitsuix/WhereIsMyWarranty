@@ -72,5 +72,8 @@ class CoordinatorMock: WarrantiesCoordinatorProtocol {
         editedWarrantySavedCalled = true
     }
     
-    func showFullScreenInvoicePhoto(invoicePhoto: Data) {}
+    var showFullScreenInvoicePhotoCalled = false
+    func showFullScreenInvoicePhoto(invoicePhoto: Data) {
+        showFullScreenInvoicePhotoCalled = true
+    }
 }

@@ -93,7 +93,7 @@ class EditWarrantyViewModel {
     
     // MARK: - Private methods
     
-    private func warrantySaved() {
+    func warrantySaved() {
         coordinator.editedWarrantySaved()
     }
 }

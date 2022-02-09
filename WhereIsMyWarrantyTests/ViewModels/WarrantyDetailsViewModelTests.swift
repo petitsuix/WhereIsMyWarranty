@@ -10,7 +10,7 @@ import XCTest
 
 class WarrantyDetailsViewModelTests: XCTestCase {
 
-    //private let warranty1 = Warranty()
+    var warranty1: Warranty!
     
     var viewModel: WarrantyDetailsViewModel!
     var coordinatorMock: CoordinatorMock!
@@ -19,7 +19,8 @@ class WarrantyDetailsViewModelTests: XCTestCase {
     override func setUp() {
         storageServiceMock = StorageServiceMock()
         coordinatorMock = CoordinatorMock()
-        viewModel = WarrantyDetailsViewModel(coordinator: coordinatorMock, storageService: storageServiceMock, warranty: FakeData.warranty1)
+        warranty1 = Warranty(context: storageServiceMock.viewContext)
+        viewModel = WarrantyDetailsViewModel(coordinator: coordinatorMock, storageService: storageServiceMock, warranty: warranty1)
     }
 
     override func tearDown() {
@@ -37,5 +38,15 @@ class WarrantyDetailsViewModelTests: XCTestCase {
         XCTAssertFalse(coordinatorMock.showEditWarrantyProductInfoCalled)
         viewModel.editWarranty()
         XCTAssertTrue(coordinatorMock.showEditWarrantyProductInfoCalled)
+    }
+    
+    func testShowFullScreenInvoicePhoto() {
+        XCTAssertFalse(coordinatorMock.showFullScreenInvoicePhotoCalled)
+        // Given
+        warranty1.invoicePhoto = MWImages.chevron?.pngData()
+        // When
+        viewModel.showFullScreenInvoicePhoto()
+        // Then
+        XCTAssertTrue(coordinatorMock.showFullScreenInvoicePhotoCalled)
     }
 }
