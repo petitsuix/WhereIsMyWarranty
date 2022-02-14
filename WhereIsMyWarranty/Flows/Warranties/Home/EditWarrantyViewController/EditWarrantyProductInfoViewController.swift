@@ -60,16 +60,6 @@ class EditWarrantyProductInfoViewController: UIViewController {
         self.hideKeyboardWhenTappedAround()
     }
     
-    func canGoToNextStep(canSave: Bool) {
-        if canSave {
-            goToPhotoScreenButton.isEnabled = true
-            goToPhotoScreenButton.alpha = 1
-        } else {
-            goToPhotoScreenButton.isEnabled = false
-            goToPhotoScreenButton.alpha = 0.5
-        }
-    }
-    
     // MARK: - objc methods
     
     @objc func nameTextfieldDidChange(textfield: UITextField) {
@@ -110,7 +100,7 @@ class EditWarrantyProductInfoViewController: UIViewController {
         }
     }
     
-    @objc func updateWeeksWithStepper() {
+    @objc func weeksStepperTapped() {
         if updatedDate == nil {
             updatedDate = datePicker.date
         }
@@ -124,7 +114,7 @@ class EditWarrantyProductInfoViewController: UIViewController {
         }
     }
     
-    @objc func updateMonthsWithStepper() {
+    @objc func monthsStepperTapped() {
         if updatedDate == nil {
             updatedDate = datePicker.date
         }
@@ -138,7 +128,7 @@ class EditWarrantyProductInfoViewController: UIViewController {
         }
     }
     
-    @objc func updateYearsWithStepper() {
+    @objc func yearsStepperTapped() {
         if updatedDate == nil {
             updatedDate = datePicker.date
         }
@@ -158,6 +148,18 @@ class EditWarrantyProductInfoViewController: UIViewController {
         viewModel?.isLifetimeWarranty = (lifetimeWarrantySwitch.isOn ? true : false)
         viewModel?.endDate = updatedDate
         viewModel?.goToEditProductPhotoScreen()
+    }
+    
+    // MARK: - Methods
+    
+    func canGoToNextStep(canSave: Bool) {
+        if canSave {
+            goToPhotoScreenButton.isEnabled = true
+            goToPhotoScreenButton.alpha = 1
+        } else {
+            goToPhotoScreenButton.isEnabled = false
+            goToPhotoScreenButton.alpha = 0.5
+        }
     }
     
     // MARK: - Private methods
@@ -273,13 +275,13 @@ extension EditWarrantyProductInfoViewController {
         yearsView.setup()
         
         yearsView.timeUnitTitle.text = Strings.years
-        yearsView.addTarget(self, action: #selector(updateYearsWithStepper))
+        yearsView.addTarget(self, action: #selector(yearsStepperTapped))
         
         monthsView.timeUnitTitle.text = Strings.months
-        monthsView.addTarget(self, action: #selector(updateMonthsWithStepper))
+        monthsView.addTarget(self, action: #selector(monthsStepperTapped))
         
         weeksView.timeUnitTitle.text = Strings.weeks
-        weeksView.addTarget(self, action: #selector(updateWeeksWithStepper))
+        weeksView.addTarget(self, action: #selector(weeksStepperTapped))
         
         customLengthStackView.axis = .vertical
         customLengthStackView.spacing = 16

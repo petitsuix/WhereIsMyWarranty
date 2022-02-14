@@ -10,7 +10,6 @@ import UIKit
 extension UITextField {
     // ⬇︎ Adds "Done" to keyboard
     func addDoneToolbar() {
-        
         let toolbar: UIToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 44)) // Defining toolbar and its boundaries
         toolbar.barStyle = .default
         toolbar.items = [
@@ -26,7 +25,6 @@ extension UITextField {
 
 extension UITextView {
     func addDoneToolbar() {
-        
         let toolbar: UIToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 44))
         toolbar.barStyle = .default
         toolbar.items = [

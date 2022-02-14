@@ -62,8 +62,8 @@ class WarrantyDetailsViewController: UIViewController {
         viewModel?.showFullScreenInvoicePhoto()
     }
     
-    func deleteWarranty() {
-        viewModel?.deleteWarranty()
+    @objc func editWarranty() {
+        viewModel?.editWarranty()
     }
     
     @objc func aboutToDeleteAlert() {
@@ -78,11 +78,11 @@ class WarrantyDetailsViewController: UIViewController {
         present(alertController, animated: true)
     }
     
-    @objc func editWarranty() {
-        viewModel?.editWarranty()
-    }
-    
     // MARK: - Methods
+    
+    private func deleteWarranty() {
+        viewModel?.deleteWarranty()
+    }
     
     private func getRemainingDaysFromEndDate() -> String {
         let calendar = NSCalendar.current

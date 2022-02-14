@@ -129,7 +129,7 @@ extension EditWarrantyPhotoViewController: UIImagePickerControllerDelegate & UIN
         
         selectImageButton.setImage(MWImages.selectAnImageButton, for: .normal)
         selectImageButton.setTitle(Strings.selectAnImage, for: .normal)
-        selectImageButton.arrangeButtonsImageAndText2(spacing: 6, contentYInset: 1.6)
+        selectImageButton.arrangeButtonsImageAndTextY(spacing: 6, contentYInset: 1.6)
         
         selectImageButton.setTitleColor(MWColor.black, for: .normal)
         selectImageButton.tintColor = MWColor.paleOrange

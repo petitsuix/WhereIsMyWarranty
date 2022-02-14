@@ -60,7 +60,7 @@ class HomeWarrantiesListViewModel {
         do {
             categories = try storageService.loadCategories()
         } catch {
-            print(error) }
-        // categories = ["Electroménager", "Pro", "Informatique"]
+            print(error)
+        }
     }
 }

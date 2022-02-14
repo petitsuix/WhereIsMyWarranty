@@ -100,7 +100,7 @@ class NewWarrantyProductInfoViewController: UIViewController {
         viewModel?.goToAddProductPhotoScreen()
     }
     
-    @objc func updateWeeksWithStepper() {
+    @objc func weeksStepperTapped() {
         if updatedDate == nil {
             updatedDate = datePicker.date
         }
@@ -114,7 +114,7 @@ class NewWarrantyProductInfoViewController: UIViewController {
         }
     }
     
-    @objc func updateMonthsWithStepper() {
+    @objc func monthsStepperTapped() {
         if updatedDate == nil {
             updatedDate = datePicker.date
         }
@@ -128,7 +128,7 @@ class NewWarrantyProductInfoViewController: UIViewController {
         }
     }
     
-    @objc func updateYearsWithStepper() {
+    @objc func yearsStepperTapped() {
         if updatedDate == nil {
             updatedDate = datePicker.date
         }
@@ -153,6 +153,8 @@ class NewWarrantyProductInfoViewController: UIViewController {
             goToPhotoScreenButton.alpha = 0.5
         }
     }
+    
+    // MARK: - Private methods
     
     private func updateWeeks() {
         let formatter1 = DateFormatter()
@@ -267,13 +269,13 @@ extension NewWarrantyProductInfoViewController {
         yearsView.setup()
         
         yearsView.timeUnitTitle.text = Strings.years
-        yearsView.stepper.addTarget(self, action: #selector(updateYearsWithStepper), for: .valueChanged)
+        yearsView.stepper.addTarget(self, action: #selector(yearsStepperTapped), for: .valueChanged)
         
         monthsView.timeUnitTitle.text = Strings.months
-        monthsView.stepper.addTarget(self, action: #selector(updateMonthsWithStepper), for: .valueChanged)
+        monthsView.stepper.addTarget(self, action: #selector(monthsStepperTapped), for: .valueChanged)
         
         weeksView.timeUnitTitle.text = Strings.weeks
-        weeksView.stepper.addTarget(self, action: #selector(updateWeeksWithStepper), for: .valueChanged)
+        weeksView.stepper.addTarget(self, action: #selector(weeksStepperTapped), for: .valueChanged)
         
         customLengthStackView.axis = .vertical
         customLengthStackView.spacing = 16

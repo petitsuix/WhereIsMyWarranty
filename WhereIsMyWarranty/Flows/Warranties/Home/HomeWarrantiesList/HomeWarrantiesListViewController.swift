@@ -62,18 +62,18 @@ class HomeWarrantiesListViewController: UIViewController {
     
     // MARK: - View life cycle methods
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        let notificationName = NSNotification.Name(rawValue: Strings.warrantiesListUpdatedNotif)
-        NotificationCenter.default.addObserver(self, selector: #selector(warrantiesUpdated), name: notificationName, object: nil)
-        setupView()
-    }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         viewModel?.fetchCategoriesFromDatabase()
         viewModel?.fetchWarrantiesFromDatabase()
         didFinishLoadingWarranties()
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        let notificationName = NSNotification.Name(rawValue: Strings.warrantiesListUpdatedNotif)
+        NotificationCenter.default.addObserver(self, selector: #selector(warrantiesUpdated), name: notificationName, object: nil)
+        setupView()
     }
     
     // MARK: - objc methods
@@ -88,18 +88,17 @@ class HomeWarrantiesListViewController: UIViewController {
     }
     
     @objc func showAlert() {
-        let alert = UIAlertController(title: "Nouvelle categorie", message: "Donnez lui un nom", preferredStyle: .alert)
-        let saveAction = UIAlertAction(title: "ajouter", style: .default) { [unowned self] _ in
+        let alert = UIAlertController(title: Strings.newCategory, message: Strings.giveItAName, preferredStyle: .alert)
+        let saveAction = UIAlertAction(title: Strings.add, style: .default) { [unowned self] _ in
             guard let textfield = alert.textFields?.first, let categoryToSave = textfield.text else { return }
             viewModel?.saveCategory(categoryToSave: categoryToSave)
             viewModel?.fetchCategoriesFromDatabase()
             refresh()
         }
-        let cancelAction = UIAlertAction(title: "annuler", style: .cancel)
+        let cancelAction = UIAlertAction(title: Strings.cancel, style: .cancel)
         alert.addTextField()
         alert.addAction(saveAction)
         alert.addAction(cancelAction)
-        
         present(alert, animated: true)
     }
     
@@ -119,7 +118,7 @@ extension HomeWarrantiesListViewController: UICollectionViewDataSource, UICollec
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == categoriesCollectionView {
-            return viewModel?.categories.count ?? 1 // On devrait pouvoir retourner user.categories.count
+            return viewModel?.categories.count ?? 1
         } else {
             return viewModel?.warranties.count ?? 1
         }
@@ -155,7 +154,6 @@ extension HomeWarrantiesListViewController: UICollectionViewDataSource, UICollec
             guard let selectedCategory = viewModel?.categories[indexPath.row] else { return }
             categoryCellTapped(category: selectedCategory)
         }
-        // displayWarrantiesFor(selectedCategory)
     }
 }
 
@@ -210,8 +208,9 @@ extension HomeWarrantiesListViewController {
         addCategoryButton.backgroundColor = MWColor.white
         addCategoryButton.setImage(MWImages.addCategoryButtonImage, for: .normal)
         addCategoryButton.tintColor = MWColor.bluegrey
-        categoriesStackView.addArrangedSubview(addCategoryButton)
         addCategoryButton.addTarget(self, action: #selector(showAlert), for: .touchUpInside)
+        addCategoryButton.isUserInteractionEnabled = false
+        addCategoryButton.alpha = 0.4
         
         categoriesStackView.translatesAutoresizingMaskIntoConstraints = false
         categoriesStackView.backgroundColor = MWColor.white
@@ -229,6 +228,8 @@ extension HomeWarrantiesListViewController {
         categoriesCollectionView.dataSource = self
         categoriesCollectionView.delegate = self
         categoriesCollectionView.backgroundColor = MWColor.white
+        
+        categoriesStackView.addArrangedSubview(addCategoryButton)
         categoriesStackView.addArrangedSubview(categoriesCollectionView)
         
         let warrantiesLayout = UICollectionViewFlowLayout()

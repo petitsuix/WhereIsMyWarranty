@@ -51,7 +51,7 @@ class WhereIsMyWarrantyTests: XCTestCase {
         storageService.save()
         
         do {
-            loadedWarranties = try storageService.loadWarranties() // peut etre passer try avec point d'interrogation 
+            loadedWarranties = try storageService.loadWarranties()
         } catch {
             XCTFail("error loading \(error.localizedDescription)")
         }

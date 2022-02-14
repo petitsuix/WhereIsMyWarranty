@@ -55,7 +55,8 @@ enum Strings {
     static let warrantyUpdatedNotif = "warranty updated"
     static let warrantiesListUpdatedNotif = "warranties list updated"
     static let dequeueCellIsOfUnknownType = "The dequeue collection view cell was of an unknown type!"
-    static let cellIdentifier = "WarrantiesCollectionViewCell"
+    static let warrantyCellIdentifier = "WarrantiesCollectionViewCell"
+    static let categoryCellIdentifier = "CategoriesCollectionViewCell"
     static let localeIdentifier = "fr_FR"
     // Alerts & errors
     static let initCoderNotImplemented = "init(coder:) has not been implemented"
@@ -65,6 +66,9 @@ enum Strings {
     static let noCameraDetected = "Aucune caméra détectée !"
     static let confirmDeletion = "Êtes-vous sûr de vouloir définitivement supprimer cette garantie ?"
     static let cancel = "Annuler"
+    static let add = "Ajouter"
+    static let newCategory = "Nouvelle catégorie"
+    static let giveItAName = "Donnez lui un nom"
     // Accessibility
     static let warrantyName = "Nom de la garantie"
 }

@@ -11,7 +11,7 @@ class WarrantiesCell: UICollectionViewCell {
     
     // MARK: - Internal properties
     
-    static let identifier = Strings.cellIdentifier
+    static let identifier = Strings.warrantyCellIdentifier
     
     var warranty: Warranty? {
         didSet {

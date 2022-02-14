@@ -11,11 +11,10 @@ class TopCategoriesCell: UICollectionViewCell {
     
     // MARK: - Internal properties
     
-    static let identifier = "CustomCollectionViewCell"
-
+    static let identifier = Strings.categoryCellIdentifier
+    
     let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "éléctroniques"
         return label
     }()
     
@@ -29,44 +28,44 @@ class TopCategoriesCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        contentView.backgroundColor = .white
-        contentView.layer.borderColor = MWColor.bluegrey.cgColor
-        contentView.layer.borderWidth = 1
-        titleLabel.textColor = MWColor.bluegrey
-        titleLabel.textAlignment = .center
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        roundingCellCorners(radius: 15)
-        contentView.addSubview(titleLabel)
-        activateConstraints()
+        
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(Strings.initCoderNotImplemented)
     }
     
     func refreshCategoryData() {
         titleLabel.text = category?.name
     }
     
-    func configureCell() {
-        
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        titleLabel.text = nil
     }
-    /* func refreshData() {
-     title.text = category?.name
-     } */
+}
+
+// MARK: - View configuration
+
+extension TopCategoriesCell {
     
-    func activateConstraints() {
+    func setup() {
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        titleLabel.textColor = MWColor.bluegrey
+        titleLabel.textAlignment = .center
+        
+        roundingCellCorners(radius: 15)
+        contentView.backgroundColor = MWColor.white
+        contentView.layer.borderColor = MWColor.bluegrey.cgColor
+        contentView.layer.borderWidth = 1
+        contentView.addSubview(titleLabel)
+        
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 0),
             titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 0),
             titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 0),
             titleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 0)
         ])
-    }
-    
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        titleLabel.text = nil
     }
     
 }
