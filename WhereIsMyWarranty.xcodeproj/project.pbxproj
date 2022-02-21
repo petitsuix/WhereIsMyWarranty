@@ -44,6 +44,8 @@
 		9769C955276A32C600BAC736 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9769C954276A32C600BAC736 /* Alert.swift */; };
 		9769C957276A429900BAC736 /* NewWarrantyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9769C956276A429900BAC736 /* NewWarrantyViewModel.swift */; };
 		976C0C6327AC1E620038E942 /* FullScreenInvoicePhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976C0C6227AC1E620038E942 /* FullScreenInvoicePhotoViewController.swift */; };
+		9792550A27C39181008EB997 /* CategoriesSliderChildViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9792550927C39181008EB997 /* CategoriesSliderChildViewController.swift */; };
+		9792550D27C392A4008EB997 /* ManageChildViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9792550C27C392A4008EB997 /* ManageChildViewController.swift */; };
 		9795D6CF27BBE0E40091FA9F /* UICollectionViewDiffableDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9795D6CE27BBE0E40091FA9F /* UICollectionViewDiffableDataSource.swift */; };
 		97999EFB2796E2E200C8184C /* StartOfDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97999EFA2796E2E200C8184C /* StartOfDay.swift */; };
 		97999EFE27982C2900C8184C /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97999EFD27982C2900C8184C /* CloudKit.framework */; };
@@ -141,6 +143,8 @@
 		9769C954276A32C600BAC736 /* Alert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		9769C956276A429900BAC736 /* NewWarrantyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWarrantyViewModel.swift; sourceTree = "<group>"; };
 		976C0C6227AC1E620038E942 /* FullScreenInvoicePhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullScreenInvoicePhotoViewController.swift; sourceTree = "<group>"; };
+		9792550927C39181008EB997 /* CategoriesSliderChildViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesSliderChildViewController.swift; sourceTree = "<group>"; };
+		9792550C27C392A4008EB997 /* ManageChildViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageChildViewController.swift; sourceTree = "<group>"; };
 		9795D6CE27BBE0E40091FA9F /* UICollectionViewDiffableDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UICollectionViewDiffableDataSource.swift; sourceTree = "<group>"; };
 		97999EFA2796E2E200C8184C /* StartOfDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartOfDay.swift; sourceTree = "<group>"; };
 		97999EFC27982AA800C8184C /* WhereIsMyWarranty.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WhereIsMyWarranty.entitlements; sourceTree = "<group>"; };
@@ -346,6 +350,7 @@
 		97630499275A6AEB00688DDB /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				9792550B27C39235008EB997 /* UIViewController */,
 				9769C954276A32C600BAC736 /* Alert.swift */,
 				9763049D275A6C1E00688DDB /* CornerRadius.swift */,
 				976304C32763A73D00688DDB /* AddShadow.swift */,
@@ -413,6 +418,14 @@
 			path = NewWarranty;
 			sourceTree = "<group>";
 		};
+		9792550B27C39235008EB997 /* UIViewController */ = {
+			isa = PBXGroup;
+			children = (
+				9792550C27C392A4008EB997 /* ManageChildViewController.swift */,
+			);
+			path = UIViewController;
+			sourceTree = "<group>";
+		};
 		97961EAE276B75300003883C /* Cells */ = {
 			isa = PBXGroup;
 			children = (
@@ -463,6 +476,7 @@
 			isa = PBXGroup;
 			children = (
 				976304A1275A6DAE00688DDB /* HomeWarrantiesListViewController.swift */,
+				9792550927C39181008EB997 /* CategoriesSliderChildViewController.swift */,
 				976304BF276365F700688DDB /* HomeWarrantiesListViewModel.swift */,
 			);
 			path = HomeWarrantiesList;
@@ -654,6 +668,7 @@
 				9769C953276A299100BAC736 /* Storage Service.swift in Sources */,
 				97FE356A2791C606009CEF78 /* EditWarrantyProductInfoViewController.swift in Sources */,
 				97999EFB2796E2E200C8184C /* StartOfDay.swift in Sources */,
+				9792550D27C392A4008EB997 /* ManageChildViewController.swift in Sources */,
 				97FE356C2791C619009CEF78 /* EditWarrantyViewModel.swift in Sources */,
 				976304B6275E38A300688DDB /* Coordinator.swift in Sources */,
 				972660AA27B43CD800A8F7E9 /* WarrantiesCoordinatorProtocol.swift in Sources */,
@@ -684,6 +699,7 @@
 				976304A2275A6DAE00688DDB /* HomeWarrantiesListViewController.swift in Sources */,
 				976304AA275A6ECC00688DDB /* MWFont.swift in Sources */,
 				9769C955276A32C600BAC736 /* Alert.swift in Sources */,
+				9792550A27C39181008EB997 /* CategoriesSliderChildViewController.swift in Sources */,
 				97E03BD32767638700EFEE79 /* WarrantiesCoordinator.swift in Sources */,
 				976304C42763A73D00688DDB /* AddShadow.swift in Sources */,
 				97630449275A68B200688DDB /* SceneDelegate.swift in Sources */,
