@@ -65,4 +65,13 @@ class StorageService: StorageServiceProtocol {
             throw error
         }
     }
+    
+    func deleteCategory(_ object: NSManagedObject) throws {
+        do {
+            viewContext.delete(object)
+            try viewContext.save()
+        } catch {
+            throw error
+        }
+    }
 }

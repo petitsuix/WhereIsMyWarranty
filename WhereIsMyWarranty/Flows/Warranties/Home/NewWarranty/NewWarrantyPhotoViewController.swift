@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import VisionKit
 
 public enum PhotoMode {
     case productPhoto
@@ -74,40 +75,24 @@ class NewWarrantyPhotoViewController: UIViewController {
     private func setupAlert() {
         let alert = UIAlertController(title: Strings.selectAnImage, message: nil, preferredStyle: .actionSheet)
         alert.addAction(UIAlertAction(title: Strings.camera, style: .default, handler: { _ in
-            self.openCamera()
+            self.open(sourceType: .camera)
         }))
         alert.addAction(UIAlertAction(title: Strings.galery, style: .default, handler: { _ in
-            self.openPhotoGalery()
+            self.open(sourceType: .photoLibrary)
         }))
         alert.addAction(UIAlertAction.init(title: "Annuler", style: .cancel, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
     
-    private func openPhotoGalery() {
-        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerController.SourceType.photoLibrary) {
+    private func open(sourceType: UIImagePickerController.SourceType) {
+        if UIImagePickerController.isSourceTypeAvailable(sourceType) {
             let imagePicker = UIImagePickerController()
             imagePicker.delegate = self
+            imagePicker.sourceType = sourceType
             imagePicker.allowsEditing = true
-            imagePicker.sourceType = UIImagePickerController.SourceType.photoLibrary
             self.present(imagePicker, animated: true, completion: nil)
         } else {
-            let alert  = UIAlertController(title: Strings.oops, message: Strings.cantAccessLibrary, preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
-        }
-    }
-    
-    private func openCamera() {
-        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerController.SourceType.camera) {
-            let imagePicker = UIImagePickerController()
-            imagePicker.delegate = self
-            imagePicker.sourceType = UIImagePickerController.SourceType.camera
-            imagePicker.allowsEditing = false
-            self.present(imagePicker, animated: true, completion: nil)
-        } else {
-            let alert  = UIAlertController(title: Strings.oops, message: Strings.noCameraDetected, preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
+            alert(Strings.oops, "La caméra n'est pas détectée, ou l'accès à cette source de données n'est pas autorisé")
         }
     }
     

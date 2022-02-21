@@ -16,12 +16,8 @@ class HomeWarrantiesListViewModel {
             viewDelegate?.didFinishLoadingWarranties()
         }
     }
-    
-    var categories: [Category] = [] {
-        didSet {
-            viewDelegate?.refresh()
-        }
-    }
+
+    var categories: [Category] = []
     
     // MARK: - Private properties
     
@@ -56,7 +52,10 @@ class HomeWarrantiesListViewModel {
         storageService.save()
     }
     
+    var categoriesWithStaticElement: [Category] = []
+    
     func fetchCategoriesFromDatabase() {
+        
         do {
             categories = try storageService.loadCategories()
         } catch {

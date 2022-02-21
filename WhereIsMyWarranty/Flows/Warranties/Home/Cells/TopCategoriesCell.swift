@@ -28,7 +28,7 @@ class TopCategoriesCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
+        setup()
     }
     
     required init?(coder: NSCoder) {
@@ -36,7 +36,8 @@ class TopCategoriesCell: UICollectionViewCell {
     }
     
     func refreshCategoryData() {
-        titleLabel.text = category?.name
+        guard let name = category?.name else { return }
+        titleLabel.text = "  \(name)  "
     }
     
     override func prepareForReuse() {
@@ -52,9 +53,10 @@ extension TopCategoriesCell {
     func setup() {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.textColor = MWColor.bluegrey
-        titleLabel.textAlignment = .center
-        
-        roundingCellCorners(radius: 15)
+        titleLabel.textAlignment = .natural
+        let titleLabelHeightConstraint = titleLabel.heightAnchor.constraint(equalToConstant: 30)
+        titleLabelHeightConstraint.priority = .defaultHigh
+        roundingCellCorners(radius: 14.8)
         contentView.backgroundColor = MWColor.white
         contentView.layer.borderColor = MWColor.bluegrey.cgColor
         contentView.layer.borderWidth = 1
@@ -64,7 +66,8 @@ extension TopCategoriesCell {
             titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 0),
             titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 0),
             titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 0),
-            titleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 0)
+            titleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 0),
+            titleLabelHeightConstraint
         ])
     }
     

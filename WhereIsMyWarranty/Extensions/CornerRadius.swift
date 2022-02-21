@@ -9,14 +9,14 @@ import UIKit
 
 // ⬇︎ Rounds the corresponding item's corners, based on a given radius
 extension UICollectionViewCell {
-    func roundingCellCorners(radius: Int) {
+    func roundingCellCorners(radius: Float) {
         self.layer.masksToBounds = true
         self.contentView.layer.cornerRadius = CGFloat(radius)
     }
 }
 
 extension UIView {
-    func roundingViewCorners(radius: Int) {
+    func roundingViewCorners(radius: Float) {
         self.layer.masksToBounds = true
         self.layer.cornerRadius = CGFloat(radius)
     }
