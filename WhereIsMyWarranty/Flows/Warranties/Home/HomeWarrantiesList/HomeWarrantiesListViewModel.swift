@@ -55,7 +55,6 @@ class HomeWarrantiesListViewModel {
     var categoriesWithStaticElement: [Category] = []
     
     func fetchCategoriesFromDatabase() {
-        
         do {
             categories = try storageService.loadCategories()
         } catch {

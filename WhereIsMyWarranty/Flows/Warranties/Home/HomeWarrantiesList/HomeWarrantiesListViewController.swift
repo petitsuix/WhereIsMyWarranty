@@ -25,14 +25,6 @@ class HomeWarrantiesListViewController: UIViewController {
         case warranty(Warranty, id: UUID = UUID())
     }
     
-    private enum CategoriesSection {
-        case main
-    }
-    
-    private enum CategoryItem: Hashable {
-        case category(Category, id: UUID = UUID())
-    }
-    
     // MARK: - Internal properties
     
     var viewModel: HomeWarrantiesListViewModel?
@@ -41,19 +33,13 @@ class HomeWarrantiesListViewController: UIViewController {
     
     private weak var coordinator: AppCoordinator?
     private var warrantiesCVDiffableDataSource: UICollectionViewDiffableDataSource<WarrantiesSection, WarrantyItem>!
-    private var categoriesCVDiffableDataSource: UICollectionViewDiffableDataSource<CategoriesSection, CategoryItem>!
     
-    private var categories: [Category] = []
-    private var categoriesCollectionView: UICollectionView!
     private var warrantiesCollectionView: UICollectionView!
     
     private let navBarAppearance = UINavigationBarAppearance()
-    private let addCategoryButton = UIButton()
     
-    // TODO: 
+    // TODO:
     private let editCategoriesButton = UIButton()
-    private let categoriesStackView = UIStackView()
-    private let bottomBorder = UIView()
     
     private let newWarrantyButton = UIButton()
     
@@ -73,10 +59,6 @@ class HomeWarrantiesListViewController: UIViewController {
             case .error :
                 alert(Strings.oops, Strings.somethingWentWrong)
             case .showData :
-               
-//                categoriesCollectionView.reloadData()
-               // warrantiesCollectionView.isHidden = false
-               // categoriesCollectionView.isHidden = false
                 noWarrantyStackView.isHidden = true
                 noWarrantyImageView.isHidden = true
             }
@@ -87,9 +69,7 @@ class HomeWarrantiesListViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        viewModel?.fetchCategoriesFromDatabase()
         viewModel?.fetchWarrantiesFromDatabase()
-        configureCategoriesCollectionViewDataSource()
         configureWarrantiesCollectionViewDataSource()
     }
     
@@ -97,6 +77,7 @@ class HomeWarrantiesListViewController: UIViewController {
         super.viewDidLoad()
         let notificationName = NSNotification.Name(rawValue: Strings.warrantiesListUpdatedNotif)
         NotificationCenter.default.addObserver(self, selector: #selector(warrantiesUpdated), name: notificationName, object: nil)
+        
         setupView()
     }
     
@@ -113,26 +94,6 @@ class HomeWarrantiesListViewController: UIViewController {
     
     @objc func newWarrantyButtonAction() {
         viewModel?.showNewWarrantyScreen()
-    }
-    
-    @objc func showAlert() {
-        let alert = UIAlertController(title: Strings.newCategory, message: Strings.giveItAName, preferredStyle: .alert)
-        let saveAction = UIAlertAction(title: Strings.add, style: .default) { [unowned self] _ in
-            guard let textfield = alert.textFields?.first, let categoryToSave = textfield.text else { return }
-            viewModel?.saveCategory(categoryToSave: categoryToSave)
-            viewModel?.fetchCategoriesFromDatabase()
-            if let categories = viewModel?.categories {
-                let snapshot = createCategoriesSnapshot(array: categories)
-                if let categoriesDiffDataSource = categoriesCVDiffableDataSource {
-                categoriesDiffDataSource.apply(snapshot)
-                }
-            }
-        }
-        let cancelAction = UIAlertAction(title: Strings.cancel, style: .cancel)
-        alert.addTextField()
-        alert.addAction(saveAction)
-        alert.addAction(cancelAction)
-        present(alert, animated: true)
     }
     
     // MARK: - Methods
@@ -154,23 +115,6 @@ class HomeWarrantiesListViewController: UIViewController {
         }
     }
     
-    private func configureCategoriesCollectionViewDataSource() {
-        categoriesCVDiffableDataSource =
-        UICollectionViewDiffableDataSource<CategoriesSection, CategoryItem>(collectionView: categoriesCollectionView, cellProvider: { collectionView, indexPath, itemIdentifier in
-            switch itemIdentifier {
-            case .category(let result, _):
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Strings.categoryCellIdentifier, for: indexPath) as? TopCategoriesCell
-                cell?.category = result
-                return cell
-            }
-        })
-        // Apply initial snapshot
-        if let categories = viewModel?.categories {
-            let snapshot = createCategoriesSnapshot(array: categories)
-            categoriesCVDiffableDataSource.apply(snapshot)
-        }
-    }
-    
     private func createWarrantiesSnapshot(array: [Warranty]) -> NSDiffableDataSourceSnapshot<WarrantiesSection, WarrantyItem> {
         var snapshot = NSDiffableDataSourceSnapshot<WarrantiesSection, WarrantyItem>()
         snapshot.appendSections([WarrantiesSection.main])
@@ -181,22 +125,8 @@ class HomeWarrantiesListViewController: UIViewController {
         return snapshot
     }
     
-    private func createCategoriesSnapshot(array: [Category]) -> NSDiffableDataSourceSnapshot<CategoriesSection, CategoryItem> {
-        var snapshot = NSDiffableDataSourceSnapshot<CategoriesSection, CategoryItem>()
-        snapshot.appendSections([CategoriesSection.main])
-        let items = array.map { value in
-            CategoryItem.category(value)
-        }
-        snapshot.appendItems(items, toSection: .main)
-        return snapshot
-    }
-    
     private func warrantyCellTapped(warranty: Warranty) {
         viewModel?.showWarrantyDetailsScreen(warranty: warranty)
-    }
-    
-    private func categoryCellTapped(category: Category) {
-        print("CategoriesCV cell tapped")
     }
 }
 
@@ -205,13 +135,8 @@ class HomeWarrantiesListViewController: UIViewController {
 extension HomeWarrantiesListViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if collectionView == warrantiesCollectionView {
-            guard let selectedWarranty = viewModel?.warranties[indexPath.row] else { return }
-            warrantyCellTapped(warranty: selectedWarranty)
-        } else {
-            guard let selectedCategory = viewModel?.categories[indexPath.row] else { return }
-            categoryCellTapped(category: selectedCategory)
-        }
+        guard let selectedWarranty = viewModel?.warranties[indexPath.row] else { return }
+        warrantyCellTapped(warranty: selectedWarranty)
     }
 }
 
@@ -263,38 +188,13 @@ extension HomeWarrantiesListViewController {
         noWarrantyStackView.addArrangedSubview(noWarrantyBodyLabel)
         noWarrantyStackView.setCustomSpacing(8, after: noWarrantyBodyLabel)
         
-        addCategoryButton.backgroundColor = MWColor.white
-        addCategoryButton.setImage(MWImages.addCategoryButtonImage, for: .normal)
-        addCategoryButton.tintColor = MWColor.bluegrey
-        addCategoryButton.addTarget(self, action: #selector(showAlert), for: .touchUpInside)
+        //        showAllWarrantiesCategoryButton.setTitle("  Tout  ", for: .normal)
+        //        showAllWarrantiesCategoryButton.setTitleColor(MWColor.bluegrey, for: .normal)
+        //        showAllWarrantiesCategoryButton.setTitleColor(MWColor.red, for: .selected)
+        //        showAllWarrantiesCategoryButton.layer.borderColor = MWColor.bluegrey.cgColor
+        //        showAllWarrantiesCategoryButton.layer.borderWidth = 1
+        //        showAllWarrantiesCategoryButton.roundingViewCorners(radius: 14.8)
         
-//        showAllWarrantiesCategoryButton.setTitle("  Tout  ", for: .normal)
-//        showAllWarrantiesCategoryButton.setTitleColor(MWColor.bluegrey, for: .normal)
-//        showAllWarrantiesCategoryButton.setTitleColor(MWColor.red, for: .selected)
-//        showAllWarrantiesCategoryButton.layer.borderColor = MWColor.bluegrey.cgColor
-//        showAllWarrantiesCategoryButton.layer.borderWidth = 1
-//        showAllWarrantiesCategoryButton.roundingViewCorners(radius: 14.8)
-        
-        let categoriesLayout = UICollectionViewFlowLayout()
-        categoriesLayout.scrollDirection = .horizontal
-        categoriesLayout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
-        categoriesCollectionView = UICollectionView(frame: .zero, collectionViewLayout: categoriesLayout)
-        categoriesCollectionView.register(TopCategoriesCell.self, forCellWithReuseIdentifier: TopCategoriesCell.identifier)
-        categoriesCollectionView.delegate = self
-        categoriesCollectionView.backgroundColor = MWColor.white
-        
-        categoriesStackView.translatesAutoresizingMaskIntoConstraints = false
-        categoriesStackView.backgroundColor = MWColor.white
-        categoriesStackView.spacing = 5.5
-        categoriesStackView.alignment = .center
-        
-        categoriesStackView.addArrangedSubview(addCategoryButton)
-       // categoriesStackView.addArrangedSubview(showAllWarrantiesCategoryButton)
-        categoriesStackView.addArrangedSubview(categoriesCollectionView)
-//        categoriesStackView.setCustomSpacing(10, after: showAllWarrantiesCategoryButton)
-        
-        bottomBorder.translatesAutoresizingMaskIntoConstraints = false
-        bottomBorder.backgroundColor = MWColor.bluegrey
         
         let warrantiesLayout = UICollectionViewFlowLayout()
         warrantiesLayout.scrollDirection = .vertical
@@ -310,12 +210,16 @@ extension HomeWarrantiesListViewController {
         newWarrantyButton.tintColor = MWColor.bluegrey
         newWarrantyButton.addTarget(self, action: #selector(newWarrantyButtonAction), for: .touchUpInside)
         
-        view.addSubview(categoriesStackView)
-        view.addSubview(bottomBorder)
+        let categoriesSliderChildVC = CategoriesSliderChildViewController()
+        categoriesSliderChildVC.view.translatesAutoresizingMaskIntoConstraints = false
+        categoriesSliderChildVC.viewModel = viewModel
+        add(categoriesSliderChildVC)
         view.addSubview(warrantiesCollectionView)
         view.addSubview(newWarrantyButton)
         view.addSubview(noWarrantyStackView)
         view.addSubview(noWarrantyImageView)
+        
+        colorization()
         
         NSLayoutConstraint.activate([
             noWarrantyStackView.bottomAnchor.constraint(equalTo: noWarrantyImageView.topAnchor, constant: -8),
@@ -326,29 +230,28 @@ extension HomeWarrantiesListViewController {
             noWarrantyImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 36),
             noWarrantyImageView.bottomAnchor.constraint(equalTo: newWarrantyButton.topAnchor, constant: 0),
             
-         //   showAllWarrantiesCategoryButton.heightAnchor.constraint(equalToConstant: 30),
+            //   showAllWarrantiesCategoryButton.heightAnchor.constraint(equalToConstant: 30),
             
-            categoriesStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
-            categoriesStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 6),
-            categoriesStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
-            
-            categoriesCollectionView.heightAnchor.constraint(equalToConstant: 60),
+            categoriesSliderChildVC.view.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            categoriesSliderChildVC.view.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            categoriesSliderChildVC.view.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            warrantiesCollectionView.topAnchor.constraint(equalTo: categoriesSliderChildVC.view.bottomAnchor),
+            //warrantiesCollectionView.topAnchor.constraint(equalTo: categoriesSliderChildVC.view.bottomAnchor, constant: 14),
+            warrantiesCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
+            warrantiesCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
+            warrantiesCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0),
             
             newWarrantyButton.bottomAnchor.constraint(equalToSystemSpacingBelow: view.safeAreaLayoutGuide.bottomAnchor, multiplier: 0),
             newWarrantyButton.heightAnchor.constraint(equalToConstant: 50),
             newWarrantyButton.widthAnchor.constraint(equalToConstant: 50),
             newWarrantyButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            
-            bottomBorder.heightAnchor.constraint(equalToConstant: 0.4),
-            bottomBorder.leadingAnchor.constraint(equalToSystemSpacingAfter: view.leadingAnchor, multiplier: 0),
-            bottomBorder.trailingAnchor.constraint(equalToSystemSpacingAfter: view.trailingAnchor, multiplier: 0),
-            bottomBorder.topAnchor.constraint(equalToSystemSpacingBelow: categoriesStackView.bottomAnchor, multiplier: 0),
-            
-            warrantiesCollectionView.topAnchor.constraint(equalTo: bottomBorder.bottomAnchor, constant: 14),
-            warrantiesCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
-            warrantiesCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
-            warrantiesCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0)
         ])
     }
 }
 
+extension HomeWarrantiesListViewController {
+    func colorization() {
+        //categoriesSliderChildVC.view.backgroundColor = .yellow
+        warrantiesCollectionView.backgroundColor = .orange
+    }
+}

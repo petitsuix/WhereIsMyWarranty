@@ -54,8 +54,9 @@ extension TopCategoriesCell {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.textColor = MWColor.bluegrey
         titleLabel.textAlignment = .natural
-        let titleLabelHeightConstraint = titleLabel.heightAnchor.constraint(equalToConstant: 30)
-        titleLabelHeightConstraint.priority = .defaultHigh
+       // titleLabel.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
+        //let titleLabelHeightConstraint = titleLabel.heightAnchor.constraint(equalToConstant: 30)
+      //  titleLabelHeightConstraint.priority = .defaultHigh
         roundingCellCorners(radius: 14.8)
         contentView.backgroundColor = MWColor.white
         contentView.layer.borderColor = MWColor.bluegrey.cgColor
@@ -67,7 +68,8 @@ extension TopCategoriesCell {
             titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 0),
             titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 0),
             titleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 0),
-            titleLabelHeightConstraint
+           
+            titleLabel.heightAnchor.constraint(equalToConstant: 20)
         ])
     }
     

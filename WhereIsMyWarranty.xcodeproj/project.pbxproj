@@ -44,6 +44,7 @@
 		9769C955276A32C600BAC736 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9769C954276A32C600BAC736 /* Alert.swift */; };
 		9769C957276A429900BAC736 /* NewWarrantyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9769C956276A429900BAC736 /* NewWarrantyViewModel.swift */; };
 		976C0C6327AC1E620038E942 /* FullScreenInvoicePhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976C0C6227AC1E620038E942 /* FullScreenInvoicePhotoViewController.swift */; };
+		976CD67E27C8E694003D1EEC /* WarrantyExtraInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976CD67D27C8E694003D1EEC /* WarrantyExtraInfoViewController.swift */; };
 		9792550A27C39181008EB997 /* CategoriesSliderChildViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9792550927C39181008EB997 /* CategoriesSliderChildViewController.swift */; };
 		9792550D27C392A4008EB997 /* ManageChildViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9792550C27C392A4008EB997 /* ManageChildViewController.swift */; };
 		9795D6CF27BBE0E40091FA9F /* UICollectionViewDiffableDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9795D6CE27BBE0E40091FA9F /* UICollectionViewDiffableDataSource.swift */; };
@@ -143,6 +144,7 @@
 		9769C954276A32C600BAC736 /* Alert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		9769C956276A429900BAC736 /* NewWarrantyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWarrantyViewModel.swift; sourceTree = "<group>"; };
 		976C0C6227AC1E620038E942 /* FullScreenInvoicePhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullScreenInvoicePhotoViewController.swift; sourceTree = "<group>"; };
+		976CD67D27C8E694003D1EEC /* WarrantyExtraInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarrantyExtraInfoViewController.swift; sourceTree = "<group>"; };
 		9792550927C39181008EB997 /* CategoriesSliderChildViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesSliderChildViewController.swift; sourceTree = "<group>"; };
 		9792550C27C392A4008EB997 /* ManageChildViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageChildViewController.swift; sourceTree = "<group>"; };
 		9795D6CE27BBE0E40091FA9F /* UICollectionViewDiffableDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UICollectionViewDiffableDataSource.swift; sourceTree = "<group>"; };
@@ -384,7 +386,7 @@
 				97ECFC2D2785ABC300CA973D /* HomeWarrantiesList */,
 				9769C958276A52AA00BAC736 /* NewWarranty */,
 				97F1D3032773446B00D0C52C /* WarrantyDetails */,
-				97FE35662791C5B5009CEF78 /* EditWarrantyViewController */,
+				97FE35662791C5B5009CEF78 /* EditWarranty */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -414,6 +416,7 @@
 				9769C956276A429900BAC736 /* NewWarrantyViewModel.swift */,
 				97ECFC27277E235600CA973D /* NewWarrantyPhotoViewController.swift */,
 				971AE699277B382D00C970E3 /* TextWithStepperView.swift */,
+				976CD67D27C8E694003D1EEC /* WarrantyExtraInfoViewController.swift */,
 			);
 			path = NewWarranty;
 			sourceTree = "<group>";
@@ -500,14 +503,14 @@
 			path = CoreData;
 			sourceTree = "<group>";
 		};
-		97FE35662791C5B5009CEF78 /* EditWarrantyViewController */ = {
+		97FE35662791C5B5009CEF78 /* EditWarranty */ = {
 			isa = PBXGroup;
 			children = (
 				97FE35692791C606009CEF78 /* EditWarrantyProductInfoViewController.swift */,
 				97FE356B2791C619009CEF78 /* EditWarrantyViewModel.swift */,
 				97FE356F2791CA59009CEF78 /* EditWarrantyPhotoViewController.swift */,
 			);
-			path = EditWarrantyViewController;
+			path = EditWarranty;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -689,6 +692,7 @@
 				976304C2276393CF00688DDB /* WarrantiesCell.swift in Sources */,
 				9769C957276A429900BAC736 /* NewWarrantyViewModel.swift in Sources */,
 				97ECFC26277E014600CA973D /* TruncateDecimals.swift in Sources */,
+				976CD67E27C8E694003D1EEC /* WarrantyExtraInfoViewController.swift in Sources */,
 				976304C0276365F700688DDB /* HomeWarrantiesListViewModel.swift in Sources */,
 				97FE35702791CA59009CEF78 /* EditWarrantyPhotoViewController.swift in Sources */,
 				976C0C6327AC1E620038E942 /* FullScreenInvoicePhotoViewController.swift in Sources */,
