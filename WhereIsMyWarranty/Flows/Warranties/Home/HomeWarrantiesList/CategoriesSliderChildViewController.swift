@@ -33,7 +33,6 @@ class CategoriesSliderChildViewController: UIViewController {
     private let categoriesStackView = UIStackView()
     private let bottomBorder = UIView()
     
-    
     // MARK: - View life cycle methods
     
     override func viewWillAppear(_ animated: Bool) {
@@ -83,9 +82,7 @@ class CategoriesSliderChildViewController: UIViewController {
                 return cell
             }
         })
-        
-       
-        
+
         // Apply initial snapshot
         if let categories = viewModel?.categories {
             let snapshot = createCategoriesSnapshot(array: categories)
@@ -122,6 +119,32 @@ extension CategoriesSliderChildViewController: UICollectionViewDelegate {
 
 extension CategoriesSliderChildViewController {
     
+    private func layout() -> UICollectionViewLayout {
+        let layout = UICollectionViewCompositionalLayout { (sectionIndex: Int, _ : NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
+            
+            guard let sectionKind = self.categoriesCVDiffableDataSource.sectionIdentifier(for: sectionIndex) else { return nil }
+            let section: NSCollectionLayoutSection
+            
+            switch sectionKind {
+            case .main:
+                let item = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(
+                    widthDimension: .estimated(20),
+                    heightDimension: .absolute(30)))
+                
+                let group = NSCollectionLayoutGroup.horizontal(layoutSize: NSCollectionLayoutSize(
+                    widthDimension: .fractionalWidth(1.18),
+                    heightDimension: .fractionalHeight(1)),
+                                                               subitems: [item])
+                group.interItemSpacing = .fixed(8)
+
+                section = NSCollectionLayoutSection(group: group)
+                section.orthogonalScrollingBehavior = .continuous
+            }
+            return section
+        }
+        return layout
+    }
+    
     private func setupView() {
         view.backgroundColor = MWColor.white
         
@@ -130,14 +153,16 @@ extension CategoriesSliderChildViewController {
         addCategoryButton.tintColor = MWColor.bluegrey
         addCategoryButton.addTarget(self, action: #selector(showAlert), for: .touchUpInside)
         
-        let categoriesLayout = UICollectionViewFlowLayout()
-        categoriesLayout.scrollDirection = .horizontal
-        categoriesLayout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
-        categoriesCollectionView = UICollectionView(frame: .zero, collectionViewLayout: categoriesLayout)
+//        let categoriesLayout = UICollectionViewFlowLayout()
+//        categoriesLayout.scrollDirection = .horizontal
+//        categoriesLayout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
+        categoriesCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout())
         categoriesCollectionView.register(TopCategoriesCell.self, forCellWithReuseIdentifier: TopCategoriesCell.identifier)
         categoriesCollectionView.delegate = self
         categoriesCollectionView.backgroundColor = MWColor.white
         categoriesCollectionView.showsHorizontalScrollIndicator = false
+        categoriesCollectionView.alwaysBounceVertical = false
+        categoriesCollectionView.contentInset = UIEdgeInsets(top: 2.5, left: 0, bottom: 2, right: 0)
         
         categoriesStackView.translatesAutoresizingMaskIntoConstraints = false
         categoriesStackView.backgroundColor = MWColor.white
@@ -154,48 +179,24 @@ extension CategoriesSliderChildViewController {
         view.addSubview(categoriesStackView)
         view.addSubview(bottomBorder)
          
-      
-        colorization()
+        //colorization()
         
         NSLayoutConstraint.activate([
-           // categoriesStackView.leadingAnchor.constraint(equalToSystemSpacingAfter: view.safeAreaLayoutGuide.leadingAnchor, multiplier: 0),
-           // categoriesStackView.trailingAnchor.constraint(equalToSystemSpacingAfter: view.safeAreaLayoutGuide.trailingAnchor, multiplier: 0),
-            
             categoriesStackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             categoriesStackView.leadingAnchor.constraint(equalToSystemSpacingAfter: view.safeAreaLayoutGuide.leadingAnchor, multiplier: 1.0),
             categoriesStackView.topAnchor.constraint(equalToSystemSpacingBelow: view.safeAreaLayoutGuide.topAnchor, multiplier: 1.5),
             bottomBorder.topAnchor.constraint(equalToSystemSpacingBelow: categoriesStackView.bottomAnchor, multiplier: 1.5),
-            //categoriesStackView.bottomAnchor.constraint(equalTo: bottomBorder.topAnchor),
-            
             bottomBorder.heightAnchor.constraint(equalToConstant: 0.4),
             bottomBorder.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             bottomBorder.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            bottomBorder.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            //bottomBorder.topAnchor.constraint(equalToSystemSpacingBelow: categoriesStackView.bottomAnchor, multiplier: 0),
-            //bottomBorder.bottomAnchor.constraint(equalToSystemSpacingBelow: view.safeAreaLayoutGuide.bottomAnchor, multiplier: 0)
-            //view.heightAnchor.constraint(equalToConstant: 60)
+            bottomBorder.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
-         
-        
-        /*
-        categoriesCollectionView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(categoriesCollectionView)
-        
-        NSLayoutConstraint.activate([
-            categoriesCollectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            categoriesCollectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            categoriesCollectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            categoriesCollectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-        
-            view.heightAnchor.constraint(equalToConstant: 60)
-        ])
-         
-         */
     }
 }
 
 extension CategoriesSliderChildViewController {
     func colorization() {
-       
+        categoriesCollectionView.backgroundColor = .orange
+        categoriesStackView.backgroundColor = .yellow
     }
 }

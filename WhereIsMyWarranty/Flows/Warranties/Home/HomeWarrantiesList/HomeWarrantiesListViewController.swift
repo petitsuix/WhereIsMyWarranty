@@ -195,7 +195,6 @@ extension HomeWarrantiesListViewController {
         //        showAllWarrantiesCategoryButton.layer.borderWidth = 1
         //        showAllWarrantiesCategoryButton.roundingViewCorners(radius: 14.8)
         
-        
         let warrantiesLayout = UICollectionViewFlowLayout()
         warrantiesLayout.scrollDirection = .vertical
         warrantiesLayout.itemSize = CGSize(width: view.frame.size.width-16, height: view.frame.size.width/3.3)
@@ -230,8 +229,6 @@ extension HomeWarrantiesListViewController {
             noWarrantyImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 36),
             noWarrantyImageView.bottomAnchor.constraint(equalTo: newWarrantyButton.topAnchor, constant: 0),
             
-            //   showAllWarrantiesCategoryButton.heightAnchor.constraint(equalToConstant: 30),
-            
             categoriesSliderChildVC.view.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             categoriesSliderChildVC.view.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             categoriesSliderChildVC.view.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
@@ -244,7 +241,7 @@ extension HomeWarrantiesListViewController {
             newWarrantyButton.bottomAnchor.constraint(equalToSystemSpacingBelow: view.safeAreaLayoutGuide.bottomAnchor, multiplier: 0),
             newWarrantyButton.heightAnchor.constraint(equalToConstant: 50),
             newWarrantyButton.widthAnchor.constraint(equalToConstant: 50),
-            newWarrantyButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            newWarrantyButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
     }
 }
@@ -252,6 +249,6 @@ extension HomeWarrantiesListViewController {
 extension HomeWarrantiesListViewController {
     func colorization() {
         //categoriesSliderChildVC.view.backgroundColor = .yellow
-        warrantiesCollectionView.backgroundColor = .orange
+        // warrantiesCollectionView.backgroundColor = .orange
     }
 }

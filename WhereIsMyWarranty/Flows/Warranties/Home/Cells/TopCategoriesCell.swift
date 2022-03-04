@@ -67,9 +67,7 @@ extension TopCategoriesCell {
             titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 0),
             titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 0),
             titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 0),
-            titleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 0),
-           
-            titleLabel.heightAnchor.constraint(equalToConstant: 20)
+            titleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 0)
         ])
     }
     

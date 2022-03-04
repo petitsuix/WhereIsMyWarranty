@@ -39,7 +39,7 @@ class NewWarrantyProductInfoViewController: UIViewController {
     private let weeksView = TextWithStepperView()
     
     private let endDateLabel = UILabel()
-    private let goToPhotoScreenButton = UIButton()
+    private let goToPhotoScreenButton = WarrantyModalNextStepButton()
     
     private var updatedDate: Date?
     
@@ -296,12 +296,8 @@ extension NewWarrantyProductInfoViewController {
         parentStackView.addArrangedSubview(customLengthStackView)
         parentStackView.addArrangedSubview(endDateLabel)
         
-        goToPhotoScreenButton.translatesAutoresizingMaskIntoConstraints = false
-        goToPhotoScreenButton.backgroundColor = MWColor.paleOrange
-        goToPhotoScreenButton.roundingViewCorners(radius: 8)
-        goToPhotoScreenButton.setTitle(Strings.nextStepButtonTitle, for: .normal)
+        goToPhotoScreenButton.setup(title: Strings.nextStepButtonTitle)
         goToPhotoScreenButton.addTarget(self, action: #selector(goToAddProductPhotoScreen), for: .touchUpInside)
-        goToPhotoScreenButton.isUserInteractionEnabled = true
         
         view.backgroundColor = MWColor.white
         view.addSubview(parentStackView)

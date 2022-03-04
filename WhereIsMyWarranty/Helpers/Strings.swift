@@ -57,6 +57,7 @@ enum Strings {
     static let dequeueCellIsOfUnknownType = "The dequeue collection view cell was of an unknown type!"
     static let warrantyCellIdentifier = "WarrantiesCollectionViewCell"
     static let categoryCellIdentifier = "CategoriesCollectionViewCell"
+    static let extraInfoCellIdentifier = "ExtraInfoTableViewCell"
     static let localeIdentifier = "fr_FR"
     // Alerts & errors
     static let initCoderNotImplemented = "init(coder:) has not been implemented"
