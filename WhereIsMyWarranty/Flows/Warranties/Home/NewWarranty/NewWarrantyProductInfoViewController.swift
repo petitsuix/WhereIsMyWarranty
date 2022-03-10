@@ -21,7 +21,7 @@ class NewWarrantyProductInfoViewController: UIViewController {
     private let nameAndStartDateStackView = UIStackView()
     
     private var nameStackView = UIStackView()
-    private let nameTitle = UILabel()
+    private let screenTitle = UILabel()
     private let nameField = UITextField()
     
     private let startDateStackView = UIStackView()
@@ -39,7 +39,7 @@ class NewWarrantyProductInfoViewController: UIViewController {
     private let weeksView = TextWithStepperView()
     
     private let endDateLabel = UILabel()
-    private let goToPhotoScreenButton = WarrantyModalNextStepButton()
+    private let endCurrentScreenButton = WarrantyModalNextStepButton()
     
     private var updatedDate: Date?
     
@@ -146,11 +146,11 @@ class NewWarrantyProductInfoViewController: UIViewController {
     
     func canGoToNextStep(canSave: Bool) {
         if canSave {
-            goToPhotoScreenButton.isEnabled = true
-            goToPhotoScreenButton.alpha = 1
+            endCurrentScreenButton.isEnabled = true
+            endCurrentScreenButton.alpha = 1
         } else {
-            goToPhotoScreenButton.isEnabled = false
-            goToPhotoScreenButton.alpha = 0.5
+            endCurrentScreenButton.isEnabled = false
+            endCurrentScreenButton.alpha = 0.5
         }
     }
     
@@ -223,16 +223,17 @@ extension NewWarrantyProductInfoViewController {
     // MARK: - View configuration
     
     private func setupView() {
-        nameTitle.text = Strings.productName
-        nameTitle.font = MWFont.nameTitle
-        nameTitle.textAlignment = .natural
+        screenTitle.text = Strings.screenTitle
+        screenTitle.font = MWFont.screenTitle
+        screenTitle.textAlignment = .natural
         
         nameField.addTarget(self, action: #selector(nameTextfieldDidChange), for: .editingChanged)
         nameField.autocorrectionType = .no
+        nameField.placeholder = Strings.productNamePlaceHolder
         nameField.setBottomBorder()
         nameField.addDoneToolbar()
         
-        nameStackView = UIStackView(arrangedSubviews: [nameTitle, nameField])
+        nameStackView = UIStackView(arrangedSubviews: [screenTitle, nameField])
         nameStackView.axis = .vertical
         nameStackView.spacing = 12
         
@@ -296,12 +297,12 @@ extension NewWarrantyProductInfoViewController {
         parentStackView.addArrangedSubview(customLengthStackView)
         parentStackView.addArrangedSubview(endDateLabel)
         
-        goToPhotoScreenButton.setup(title: Strings.nextStepButtonTitle)
-        goToPhotoScreenButton.addTarget(self, action: #selector(goToAddProductPhotoScreen), for: .touchUpInside)
+        endCurrentScreenButton.setup(title: Strings.nextStepButtonTitle)
+        endCurrentScreenButton.addTarget(self, action: #selector(goToAddProductPhotoScreen), for: .touchUpInside)
         
         view.backgroundColor = MWColor.white
         view.addSubview(parentStackView)
-        view.addSubview(goToPhotoScreenButton)
+        view.addSubview(endCurrentScreenButton)
         
         NSLayoutConstraint.activate([
             endDateLabel.heightAnchor.constraint(equalToConstant: 60),
@@ -309,12 +310,12 @@ extension NewWarrantyProductInfoViewController {
             parentStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 24),
             parentStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
             parentStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
-            parentStackView.bottomAnchor.constraint(lessThanOrEqualTo: goToPhotoScreenButton.topAnchor, constant: -16),
+            parentStackView.bottomAnchor.constraint(lessThanOrEqualTo: endCurrentScreenButton.topAnchor, constant: -16),
             
-            goToPhotoScreenButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            goToPhotoScreenButton.bottomAnchor.constraint(lessThanOrEqualTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -24),
-            goToPhotoScreenButton.heightAnchor.constraint(equalToConstant: 55),
-            goToPhotoScreenButton.widthAnchor.constraint(equalToConstant: 170)
+            endCurrentScreenButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            endCurrentScreenButton.bottomAnchor.constraint(lessThanOrEqualTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -24),
+            endCurrentScreenButton.heightAnchor.constraint(equalToConstant: 55),
+            endCurrentScreenButton.widthAnchor.constraint(equalToConstant: 170)
         ])
     }
 }

@@ -24,7 +24,8 @@ enum Strings {
     static let coveredUntil = "Couvert jusqu'au "
     static let remainingDays = " jours restants"
     // Warranty product Info
-    static let productName = "Nom du produit"
+    static let screenTitle = "Informations garantie"
+    static let productNamePlaceHolder = "Ordinateur, Machine à laver..."
     static let warrantyStartDate = "Date de début de garantie"
     static let validityLength = "Durée de validité"
     static let lifetimeWarranty = "garanti à vie"
@@ -58,6 +59,7 @@ enum Strings {
     static let warrantyCellIdentifier = "WarrantiesCollectionViewCell"
     static let categoryCellIdentifier = "CategoriesCollectionViewCell"
     static let extraInfoCellIdentifier = "ExtraInfoTableViewCell"
+    static let additionalNotesCellIdentifier = "AdditionalNotesTableViewCell"
     static let localeIdentifier = "fr_FR"
     // Alerts & errors
     static let initCoderNotImplemented = "init(coder:) has not been implemented"

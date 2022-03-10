@@ -13,6 +13,7 @@ class NewWarrantyViewModel: NSObject {
     
     weak var newWarrantyProductInfoViewDelegate: NewWarrantyProductInfoViewController?
     weak var newWarrantyPhotoViewDelegate: NewWarrantyPhotoViewController?
+    weak var newWarrantyExtraInfoViewDelegate: ExtraInfoViewController?
     
     var name: String? {
         didSet {
@@ -53,6 +54,10 @@ class NewWarrantyViewModel: NSObject {
     
     func goToAddInvoicePhotoScreen() {
         coordinator.showNewWarrantyInvoicePhotoScreen()
+    }
+    
+    func goToExtraInfoScreen() {
+        coordinator.showNewWarrantyExtraInfoScreen()
     }
     
     func saveWarranty() {

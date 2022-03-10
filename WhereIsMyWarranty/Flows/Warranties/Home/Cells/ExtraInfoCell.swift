@@ -13,6 +13,11 @@ class ExtraInfoCell: UITableViewCell {
     
     var textField = UITextField()
     
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        setup()
+    }
+    
     required init?(coder: NSCoder) {
         fatalError(Strings.initCoderNotImplemented)
     }
@@ -21,7 +26,6 @@ class ExtraInfoCell: UITableViewCell {
         super.prepareForReuse()
         textField.text = nil
     }
-    
 }
 
 extension ExtraInfoCell {
@@ -32,10 +36,11 @@ extension ExtraInfoCell {
         contentView.addSubview(textField)
         
         NSLayoutConstraint.activate([
-            textField.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 0),
-            textField.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 0),
-            textField.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 0),
-            textField.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 0)
+            textField.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
+            textField.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
+            textField.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
+            textField.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16)
+            //textField.heightAnchor.constraint(equalToConstant: 50)
         ])
     }
 }

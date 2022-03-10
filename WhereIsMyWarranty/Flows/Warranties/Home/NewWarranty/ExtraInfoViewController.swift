@@ -13,40 +13,57 @@ class ExtraInfoViewController: UIViewController {
         case additionalProductInfo, sellersInfo, additionalNotes
     }
     
-    enum ItemType {
-        case textFieldItem, textViewItem
+    enum ItemType: Hashable {
+        case textFieldItem(id: UUID = UUID()), textViewItem
     }
     
-    struct Item: Hashable {
-        let placeHolder: String
-        let type: ItemType
-        
-        init(placeHolder: String, type: ItemType) {
-            self.placeHolder = placeHolder
-            self.type = type
-            self.identifier = UUID()
-        }
-        
-        private let identifier: UUID
-        func hash(into hasher: inout Hasher) {
-            hasher.combine(self.identifier)
-        }
-    }
+//    struct Item: Hashable {
+//        let placeHolder: String
+//        let type: ItemType
+//
+//        init(placeHolder: String, type: ItemType) {
+//            self.placeHolder = placeHolder
+//            self.type = type
+//            self.identifier = UUID()
+//        }
+//
+//        private let identifier: UUID
+//        func hash(into hasher: inout Hasher) {
+//            hasher.combine(self.identifier)
+//        }
+//    }
+    
+    var viewModel: NewWarrantyViewModel?
     
     let tableView = UITableView(frame: .zero, style: .insetGrouped)
     let endCurrentScreenButton = WarrantyModalNextStepButton()
 
     var extraInfoTableViewDiffableDataSource: UITableViewDiffableDataSource<Section, ItemType>! = nil
-    var currentSnapshot: NSDiffableDataSourceSnapshot<Section, Item>! = nil
-    lazy var itemsList: [ItemType] = [ItemType.textFieldItem, ItemType.textFieldItem, ItemType.textFieldItem]
+    var currentSnapshot: NSDiffableDataSourceSnapshot<Section, ItemType>! = nil
+    var itemsList: [ItemType] = [.textFieldItem(), .textFieldItem()]
+    var sellersInfoItems: [ItemType] = [.textFieldItem(), .textFieldItem()]
+    var additionalNotesItem: [ItemType] = [.textViewItem]
+
     
     // MARK: - View life cycle methods
 
+    override func viewWillAppear(_ animated: Bool) {
+        configureExtraInfoTableViewDataSource()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+       // view.backgroundColor = .orange
+       setup()
     }
+    
+    // MARK: - objc methods
+    
+    @objc func saveWarranty() {
+        viewModel?.saveWarranty()
+    }
+    
+    // MARK: - Methods
     
     func configureExtraInfoTableViewDataSource() {
         extraInfoTableViewDiffableDataSource = UITableViewDiffableDataSource
@@ -58,7 +75,7 @@ class ExtraInfoViewController: UIViewController {
                 return cell
             case .textViewItem:
                 let cell = tableView.dequeueReusableCell(withIdentifier: Strings.extraInfoCellIdentifier, for: indexPath) as? ExtraInfoCell
-                cell?.textField.placeholder = "Bonjour"
+                cell?.textField.placeholder = "Notes"
                 return cell
             }
         })
@@ -68,74 +85,96 @@ class ExtraInfoViewController: UIViewController {
     
     func createExtraInfosSnapshot() -> NSDiffableDataSourceSnapshot<Section, ItemType> {
         var snapshot = NSDiffableDataSourceSnapshot<Section, ItemType>()
-        snapshot.appendSections([Section.additionalProductInfo, Section.sellersInfo, Section.additionalNotes])
+        snapshot.appendSections([.additionalProductInfo, .sellersInfo, .additionalNotes])
         let items = itemsList
         snapshot.appendItems(items, toSection: .additionalProductInfo)
+        snapshot.appendItems(sellersInfoItems, toSection: .sellersInfo)
+        snapshot.appendItems(additionalNotesItem, toSection: .additionalNotes)
         return snapshot
+    }
+    
+    private func extraInfoCellTapped() {
+        print("CategoriesCV cell tapped")
+    }
+}
+
+extension ExtraInfoViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        extraInfoCellTapped()
     }
 }
 
 extension ExtraInfoViewController {
     
-    private func layoutWithMultipleSections() -> UICollectionViewLayout {
-        let layout = UICollectionViewCompositionalLayout { (sectionIndex: Int, _ : NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
-            
-            guard let sectionKind = self.extraInfoTableViewDiffableDataSource.sectionIdentifier(for: sectionIndex) else { return nil }
-            let section: NSCollectionLayoutSection
-            
-            switch sectionKind {
-            case .additionalProductInfo:
-                let item = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(
-                    widthDimension: .fractionalWidth(1),
-                    heightDimension: .fractionalWidth(1/10)))
-                
-                let group = NSCollectionLayoutGroup.vertical(layoutSize: NSCollectionLayoutSize(
-                    widthDimension: .fractionalWidth(1),
-                    heightDimension: .fractionalWidth(1/10)),
-                                                               subitems: [item])
-
-                section = NSCollectionLayoutSection(group: group)
-                section.orthogonalScrollingBehavior = .none
-            case .sellersInfo:
-                let item = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(
-                    widthDimension: .fractionalWidth(1),
-                    heightDimension: .fractionalWidth(1/10)))
-                
-                let group = NSCollectionLayoutGroup.vertical(layoutSize: NSCollectionLayoutSize(
-                    widthDimension: .fractionalWidth(1),
-                    heightDimension: .fractionalWidth(1/10)),
-                                                               subitems: [item])
-
-                section = NSCollectionLayoutSection(group: group)
-                section.orthogonalScrollingBehavior = .none
-            case .additionalNotes:
-                let item = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(
-                    widthDimension: .fractionalWidth(1),
-                    heightDimension: .fractionalWidth(1/10)))
-                
-                let group = NSCollectionLayoutGroup.vertical(layoutSize: NSCollectionLayoutSize(
-                    widthDimension: .fractionalWidth(1),
-                    heightDimension: .fractionalWidth(1/10)),
-                                                               subitems: [item])
-
-                section = NSCollectionLayoutSection(group: group)
-                section.orthogonalScrollingBehavior = .none
-            }
-            return section
-        }
-        return layout
-    }
-    
-    func configureExtraInfoTableView() {
-        view.addSubview(tableView)
+    func setup() {
+        view.backgroundColor = MWColor.white
         tableView.translatesAutoresizingMaskIntoConstraints = false
+        endCurrentScreenButton.setup(title: Strings.saveButtonTitle)
+        endCurrentScreenButton.addTarget(self, action: #selector(saveWarranty), for: .touchUpInside)
+        view.addSubview(tableView)
+        view.addSubview(endCurrentScreenButton)
+        
         NSLayoutConstraint.activate([
-            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.topAnchor.constraint(equalTo: view.topAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            tableView.bottomAnchor.constraint(equalTo: endCurrentScreenButton.topAnchor, constant: -16),
+            endCurrentScreenButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            endCurrentScreenButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -24),
+            endCurrentScreenButton.heightAnchor.constraint(equalToConstant: 55),
+            endCurrentScreenButton.widthAnchor.constraint(equalToConstant: 170)
             ])
         tableView.register(ExtraInfoCell.self, forCellReuseIdentifier: ExtraInfoCell.identifier)
+        tableView.register(AdditionalNotesCell.self, forCellReuseIdentifier: AdditionalNotesCell.identifier)
     }
     
+//    private func layoutWithMultipleSections() -> UICollectionViewLayout {
+//        let layout = UICollectionViewCompositionalLayout { (sectionIndex: Int, _ : NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
+//
+//            guard let sectionKind = self.extraInfoTableViewDiffableDataSource.sectionIdentifier(for: sectionIndex) else { return nil }
+//            let section: NSCollectionLayoutSection
+//
+//            switch sectionKind {
+//            case .additionalProductInfo:
+//                let item = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(
+//                    widthDimension: .fractionalWidth(1),
+//                    heightDimension: .fractionalWidth(1/10)))
+//
+//                let group = NSCollectionLayoutGroup.vertical(layoutSize: NSCollectionLayoutSize(
+//                    widthDimension: .fractionalWidth(1),
+//                    heightDimension: .fractionalWidth(1/10)),
+//                                                               subitems: [item])
+//
+//                section = NSCollectionLayoutSection(group: group)
+//                section.orthogonalScrollingBehavior = .none
+//            case .sellersInfo:
+//                let item = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(
+//                    widthDimension: .fractionalWidth(1),
+//                    heightDimension: .fractionalWidth(1/10)))
+//
+//                let group = NSCollectionLayoutGroup.vertical(layoutSize: NSCollectionLayoutSize(
+//                    widthDimension: .fractionalWidth(1),
+//                    heightDimension: .fractionalWidth(1/10)),
+//                                                               subitems: [item])
+//
+//                section = NSCollectionLayoutSection(group: group)
+//                section.orthogonalScrollingBehavior = .none
+//            case .additionalNotes:
+//                let item = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(
+//                    widthDimension: .fractionalWidth(1),
+//                    heightDimension: .fractionalWidth(1/10)))
+//
+//                let group = NSCollectionLayoutGroup.vertical(layoutSize: NSCollectionLayoutSize(
+//                    widthDimension: .fractionalWidth(1),
+//                    heightDimension: .fractionalWidth(1/10)),
+//                                                               subitems: [item])
+//
+//                section = NSCollectionLayoutSection(group: group)
+//                section.orthogonalScrollingBehavior = .none
+//            }
+//            return section
+//        }
+//        return layout
+//    }
 }

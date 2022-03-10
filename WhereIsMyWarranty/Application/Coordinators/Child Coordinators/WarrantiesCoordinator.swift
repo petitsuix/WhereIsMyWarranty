@@ -71,6 +71,13 @@ class WarrantiesCoordinator: Coordinator, WarrantiesCoordinatorProtocol {
         modalNavigationController.pushViewController(newWarrantyPhotoViewController, animated: true)
     }
     
+    func showNewWarrantyExtraInfoScreen() {
+        let newWarrantyExtraInfoViewController = ExtraInfoViewController()
+        self.newWarrantyViewModel?.newWarrantyExtraInfoViewDelegate = newWarrantyExtraInfoViewController
+        newWarrantyExtraInfoViewController.viewModel = newWarrantyViewModel
+        modalNavigationController.pushViewController(newWarrantyExtraInfoViewController, animated: true)
+    }
+    
     func warrantySaved() {
         modalNavigationController.dismiss(animated: true) {
             self.newWarrantyViewModel = nil

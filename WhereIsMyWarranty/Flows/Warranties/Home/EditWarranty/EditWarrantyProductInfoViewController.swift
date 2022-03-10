@@ -21,7 +21,7 @@ class EditWarrantyProductInfoViewController: UIViewController {
     private let nameAndStartDateStackView = UIStackView()
 
     private var nameStackView = UIStackView()
-    private let nameTitle = UILabel()
+    private let screenTitle = UILabel()
     private var nameField = UITextField()
 
     private let startDateStackView = UIStackView()
@@ -228,16 +228,16 @@ extension EditWarrantyProductInfoViewController {
     private func setupView() {
         view.backgroundColor = MWColor.white
         
-        nameTitle.text = Strings.productName
-        nameTitle.font = MWFont.nameTitle
-        nameTitle.textAlignment = .natural
+        screenTitle.text = Strings.screenTitle
+        screenTitle.font = MWFont.screenTitle
+        screenTitle.textAlignment = .natural
         
         nameField.addTarget(self, action: #selector(nameTextfieldDidChange), for: .editingChanged)
         nameField.autocorrectionType = .no
         nameField.setBottomBorder()
         nameField.addDoneToolbar()
         
-        nameStackView = UIStackView(arrangedSubviews: [nameTitle, nameField])
+        nameStackView = UIStackView(arrangedSubviews: [screenTitle, nameField])
         nameStackView.axis = .vertical
         nameStackView.spacing = 16
         

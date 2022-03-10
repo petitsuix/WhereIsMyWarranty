@@ -11,6 +11,7 @@
 		970B02AF27A848CE00EC4163 /* WarrantyDetailsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 970B02AE27A848CE00EC4163 /* WarrantyDetailsViewModelTests.swift */; };
 		970D86A3278F30FD00216ED7 /* ResizeImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 970D86A2278F30FD00216ED7 /* ResizeImage.swift */; };
 		971AE69A277B382D00C970E3 /* TextWithStepperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 971AE699277B382D00C970E3 /* TextWithStepperView.swift */; };
+		971F6FBD27DA44AA0074A80A /* AdditionalNotesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 971F6FBC27DA44AA0074A80A /* AdditionalNotesCell.swift */; };
 		972660A627B3E37000A8F7E9 /* HideKeyboardWithTap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972660A527B3E37000A8F7E9 /* HideKeyboardWithTap.swift */; };
 		972660A827B3FD5200A8F7E9 /* StorageServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972660A727B3FD5200A8F7E9 /* StorageServiceProtocol.swift */; };
 		972660AA27B43CD800A8F7E9 /* WarrantiesCoordinatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972660A927B43CD800A8F7E9 /* WarrantiesCoordinatorProtocol.swift */; };
@@ -109,6 +110,7 @@
 		970B02AE27A848CE00EC4163 /* WarrantyDetailsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarrantyDetailsViewModelTests.swift; sourceTree = "<group>"; };
 		970D86A2278F30FD00216ED7 /* ResizeImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResizeImage.swift; sourceTree = "<group>"; };
 		971AE699277B382D00C970E3 /* TextWithStepperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextWithStepperView.swift; sourceTree = "<group>"; };
+		971F6FBC27DA44AA0074A80A /* AdditionalNotesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdditionalNotesCell.swift; sourceTree = "<group>"; };
 		972660A527B3E37000A8F7E9 /* HideKeyboardWithTap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HideKeyboardWithTap.swift; sourceTree = "<group>"; };
 		972660A727B3FD5200A8F7E9 /* StorageServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageServiceProtocol.swift; sourceTree = "<group>"; };
 		972660A927B43CD800A8F7E9 /* WarrantiesCoordinatorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarrantiesCoordinatorProtocol.swift; sourceTree = "<group>"; };
@@ -440,6 +442,7 @@
 				976304B1275A6F3F00688DDB /* TopCategoriesCell.swift */,
 				976304C1276393CF00688DDB /* WarrantiesCell.swift */,
 				97EE92F627D22D0900FACF4F /* ExtraInfoCell.swift */,
+				971F6FBC27DA44AA0074A80A /* AdditionalNotesCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -679,6 +682,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				971F6FBD27DA44AA0074A80A /* AdditionalNotesCell.swift in Sources */,
 				97ECFC24277DD93600CA973D /* BottomBorder.swift in Sources */,
 				972660AC27B554A400A8F7E9 /* Bundle.swift in Sources */,
 				97E03BD52767639800EFEE79 /* SettingsCoordinator.swift in Sources */,

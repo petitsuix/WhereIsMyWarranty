@@ -49,13 +49,13 @@ class NewWarrantyPhotoViewController: UIViewController {
         viewModel?.goToAddInvoicePhotoScreen()
     }
     
-    @objc func saveWarranty() {
+    @objc func goToExtraInfoScreen() {
         photoDidChange()
         if imageView.image == nil {
             guard let randomImage = MWImages.doggos.randomElement() else { return }
             viewModel?.productPhoto = randomImage.pngData()
         }
-        viewModel?.saveWarranty()
+        viewModel?.goToExtraInfoScreen()
     }
     
     @objc func chooseAndDisplayImage() {
@@ -173,8 +173,8 @@ extension NewWarrantyPhotoViewController: UIImagePickerControllerDelegate & UINa
     private func setupForInvoicePhotoViewController() {
         if photoMode == .invoicePhoto {
             addAPhotoTitleLabel.text = Strings.addInvoicePhoto
-            endCurrentScreenButton.setTitle(Strings.saveButtonTitle, for: .normal)
-            endCurrentScreenButton.addTarget(self, action: #selector(saveWarranty), for: .touchUpInside)
+            endCurrentScreenButton.setTitle(Strings.nextStepButtonTitle, for: .normal)
+            endCurrentScreenButton.addTarget(self, action: #selector(goToExtraInfoScreen), for: .touchUpInside)
         }
     }
 }
