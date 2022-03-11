@@ -10,51 +10,59 @@ import UIKit
 class ExtraInfoViewController: UIViewController {
     
     enum Section: CaseIterable {
-        case additionalProductInfo, sellersInfo, additionalNotes
+        case additionalProductInfo
+        case sellersInfo
+        case additionalNotes
     }
     
-    enum ItemType: Hashable {
-        case textFieldItem(id: UUID = UUID()), textViewItem
+    enum Item: Hashable {
+        case price
+        case model
+        case serialNumber
+        case sellersName
+        case sellersLocation
+        case sellersContact
+        case sellersWebsite
+        case notes
     }
     
-//    struct Item: Hashable {
-//        let placeHolder: String
-//        let type: ItemType
-//
-//        init(placeHolder: String, type: ItemType) {
-//            self.placeHolder = placeHolder
-//            self.type = type
-//            self.identifier = UUID()
-//        }
-//
-//        private let identifier: UUID
-//        func hash(into hasher: inout Hasher) {
-//            hasher.combine(self.identifier)
-//        }
-//    }
+    //    struct Item: Hashable {
+    //        let placeHolder: String
+    //        let type: ItemType
+    //
+    //        init(placeHolder: String, type: ItemType) {
+    //            self.placeHolder = placeHolder
+    //            self.type = type
+    //            self.identifier = UUID()
+    //        }
+    //
+    //        private let identifier: UUID
+    //        func hash(into hasher: inout Hasher) {
+    //            hasher.combine(self.identifier)
+    //        }
+    //    }
     
     var viewModel: NewWarrantyViewModel?
     
     let tableView = UITableView(frame: .zero, style: .insetGrouped)
     let endCurrentScreenButton = WarrantyModalNextStepButton()
-
-    var extraInfoTableViewDiffableDataSource: UITableViewDiffableDataSource<Section, ItemType>! = nil
-    var currentSnapshot: NSDiffableDataSourceSnapshot<Section, ItemType>! = nil
-    var itemsList: [ItemType] = [.textFieldItem(), .textFieldItem()]
-    var sellersInfoItems: [ItemType] = [.textFieldItem(), .textFieldItem()]
-    var additionalNotesItem: [ItemType] = [.textViewItem]
-
+    
+    var extraInfoTableViewDiffableDataSource: UITableViewDiffableDataSource<Section, Item>! = nil
+    var currentSnapshot: NSDiffableDataSourceSnapshot<Section, Item>! = nil
+    var productInfoList: [Item] = [.price, .model, .serialNumber]
+    var sellersInfoItems: [Item] = [.sellersName, .sellersLocation, .sellersContact, .sellersWebsite]
+    var additionalNotesItem: [Item] = [.notes]
     
     // MARK: - View life cycle methods
-
+    
     override func viewWillAppear(_ animated: Bool) {
         configureExtraInfoTableViewDataSource()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-       // view.backgroundColor = .orange
-       setup()
+        // view.backgroundColor = .orange
+        setup()
     }
     
     // MARK: - objc methods
@@ -67,15 +75,40 @@ class ExtraInfoViewController: UIViewController {
     
     func configureExtraInfoTableViewDataSource() {
         extraInfoTableViewDiffableDataSource = UITableViewDiffableDataSource
-        <Section, ItemType>(tableView: tableView, cellProvider: { tableView, indexPath, itemIdentifier in
+        <Section, Item>(tableView: tableView, cellProvider: { tableView, indexPath, itemIdentifier in
             switch itemIdentifier {
-            case .textFieldItem:
-                let cell = tableView.dequeueReusableCell(withIdentifier: Strings.extraInfoCellIdentifier, for: indexPath) as? ExtraInfoCell
-                cell?.textField.placeholder = "Bonjour"
+            case .price :
+                let cell = tableView.dequeueReusableCell(withIdentifier: Constant.extraInfoCellIdentifier, for: indexPath) as? TextFieldTableViewCell
+                cell?.placeholder = "Prix"
                 return cell
-            case .textViewItem:
-                let cell = tableView.dequeueReusableCell(withIdentifier: Strings.extraInfoCellIdentifier, for: indexPath) as? ExtraInfoCell
-                cell?.textField.placeholder = "Notes"
+            case .model:
+                let cell = tableView.dequeueReusableCell(withIdentifier: Constant.extraInfoCellIdentifier, for: indexPath) as? TextFieldTableViewCell
+                cell?.placeholder = "Modèle"
+                return cell
+            case .serialNumber:
+                // FIXME: changer l'identifier
+                let cell = tableView.dequeueReusableCell(withIdentifier: Constant.extraInfoCellIdentifier, for: indexPath) as? TextFieldTableViewCell
+                cell?.placeholder = "Numéro de série"
+                return cell
+            case .sellersName:
+                let cell = tableView.dequeueReusableCell(withIdentifier: Constant.extraInfoCellIdentifier, for: indexPath) as? TextFieldTableViewCell
+                cell?.placeholder = "Nom"
+                return cell
+            case .sellersLocation:
+                let cell = tableView.dequeueReusableCell(withIdentifier: Constant.extraInfoCellIdentifier, for: indexPath) as? TextFieldTableViewCell
+                cell?.placeholder = "Adresse"
+                return cell
+            case .sellersContact:
+                let cell = tableView.dequeueReusableCell(withIdentifier: Constant.extraInfoCellIdentifier, for: indexPath) as? TextFieldTableViewCell
+                cell?.placeholder = "Contact"
+                return cell
+            case .sellersWebsite:
+                let cell = tableView.dequeueReusableCell(withIdentifier: Constant.extraInfoCellIdentifier, for: indexPath) as? TextFieldTableViewCell
+                cell?.placeholder = "Site web"
+                return cell
+            case .notes:
+                let cell = tableView.dequeueReusableCell(withIdentifier: Constant.notesCellIdentifier, for: indexPath) as? TextViewTableViewCell
+                cell?.placeholder = "Notes"
                 return cell
             }
         })
@@ -83,11 +116,10 @@ class ExtraInfoViewController: UIViewController {
         extraInfoTableViewDiffableDataSource.apply(snapshot)
     }
     
-    func createExtraInfosSnapshot() -> NSDiffableDataSourceSnapshot<Section, ItemType> {
-        var snapshot = NSDiffableDataSourceSnapshot<Section, ItemType>()
+    func createExtraInfosSnapshot() -> NSDiffableDataSourceSnapshot<Section, Item> {
+        var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
         snapshot.appendSections([.additionalProductInfo, .sellersInfo, .additionalNotes])
-        let items = itemsList
-        snapshot.appendItems(items, toSection: .additionalProductInfo)
+        snapshot.appendItems(productInfoList, toSection: .additionalProductInfo)
         snapshot.appendItems(sellersInfoItems, toSection: .sellersInfo)
         snapshot.appendItems(additionalNotesItem, toSection: .additionalNotes)
         return snapshot
@@ -103,13 +135,32 @@ extension ExtraInfoViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         extraInfoCellTapped()
     }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        // FIXME: trouver un moyen d'appeler le type de section plutôt pour que ce soit plus stable si jamais on rajoute une 4eme section
+        if indexPath.section == 2 {
+            return 120
+        } else {
+            return 50
+        }
+    }
+    
+    private func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return "Section \(section)"
+    }
 }
 
 extension ExtraInfoViewController {
     
+    private enum Constant {
+        static let notesCellIdentifier = "AdditionalNotesTableViewCell"
+        static let extraInfoCellIdentifier = "ExtraInfoTableViewCell"
+    }
+    
     func setup() {
         view.backgroundColor = MWColor.white
         tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.delegate = self
         endCurrentScreenButton.setup(title: Strings.saveButtonTitle)
         endCurrentScreenButton.addTarget(self, action: #selector(saveWarranty), for: .touchUpInside)
         view.addSubview(tableView)
@@ -124,57 +175,8 @@ extension ExtraInfoViewController {
             endCurrentScreenButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -24),
             endCurrentScreenButton.heightAnchor.constraint(equalToConstant: 55),
             endCurrentScreenButton.widthAnchor.constraint(equalToConstant: 170)
-            ])
-        tableView.register(ExtraInfoCell.self, forCellReuseIdentifier: ExtraInfoCell.identifier)
-        tableView.register(AdditionalNotesCell.self, forCellReuseIdentifier: AdditionalNotesCell.identifier)
+        ])
+        tableView.register(TextFieldTableViewCell.self, forCellReuseIdentifier: Constant.extraInfoCellIdentifier)
+        tableView.register(TextViewTableViewCell.self, forCellReuseIdentifier: Constant.notesCellIdentifier)
     }
-    
-//    private func layoutWithMultipleSections() -> UICollectionViewLayout {
-//        let layout = UICollectionViewCompositionalLayout { (sectionIndex: Int, _ : NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
-//
-//            guard let sectionKind = self.extraInfoTableViewDiffableDataSource.sectionIdentifier(for: sectionIndex) else { return nil }
-//            let section: NSCollectionLayoutSection
-//
-//            switch sectionKind {
-//            case .additionalProductInfo:
-//                let item = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(
-//                    widthDimension: .fractionalWidth(1),
-//                    heightDimension: .fractionalWidth(1/10)))
-//
-//                let group = NSCollectionLayoutGroup.vertical(layoutSize: NSCollectionLayoutSize(
-//                    widthDimension: .fractionalWidth(1),
-//                    heightDimension: .fractionalWidth(1/10)),
-//                                                               subitems: [item])
-//
-//                section = NSCollectionLayoutSection(group: group)
-//                section.orthogonalScrollingBehavior = .none
-//            case .sellersInfo:
-//                let item = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(
-//                    widthDimension: .fractionalWidth(1),
-//                    heightDimension: .fractionalWidth(1/10)))
-//
-//                let group = NSCollectionLayoutGroup.vertical(layoutSize: NSCollectionLayoutSize(
-//                    widthDimension: .fractionalWidth(1),
-//                    heightDimension: .fractionalWidth(1/10)),
-//                                                               subitems: [item])
-//
-//                section = NSCollectionLayoutSection(group: group)
-//                section.orthogonalScrollingBehavior = .none
-//            case .additionalNotes:
-//                let item = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(
-//                    widthDimension: .fractionalWidth(1),
-//                    heightDimension: .fractionalWidth(1/10)))
-//
-//                let group = NSCollectionLayoutGroup.vertical(layoutSize: NSCollectionLayoutSize(
-//                    widthDimension: .fractionalWidth(1),
-//                    heightDimension: .fractionalWidth(1/10)),
-//                                                               subitems: [item])
-//
-//                section = NSCollectionLayoutSection(group: group)
-//                section.orthogonalScrollingBehavior = .none
-//            }
-//            return section
-//        }
-//        return layout
-//    }
 }
