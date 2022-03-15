@@ -7,12 +7,27 @@
 
 import UIKit
 
+public enum WarrantyModalType {
+    case newWarrantyModal
+    case editWarrantyModal
+}
+
 class ExtraInfoViewController: UIViewController {
     
-    enum Section: CaseIterable {
+    enum Section: Int, CaseIterable {
         case additionalProductInfo
         case sellersInfo
         case additionalNotes
+        func description() -> String {
+            switch self {
+            case .additionalProductInfo:
+                return "Infos produit"
+            case .sellersInfo:
+                return "Infos vendeur"
+            case .additionalNotes:
+                return ""
+            }
+        }
     }
     
     enum Item: Hashable {
@@ -26,28 +41,22 @@ class ExtraInfoViewController: UIViewController {
         case notes
     }
     
-    //    struct Item: Hashable {
-    //        let placeHolder: String
-    //        let type: ItemType
-    //
-    //        init(placeHolder: String, type: ItemType) {
-    //            self.placeHolder = placeHolder
-    //            self.type = type
-    //            self.identifier = UUID()
-    //        }
-    //
-    //        private let identifier: UUID
-    //        func hash(into hasher: inout Hasher) {
-    //            hasher.combine(self.identifier)
-    //        }
-    //    }
+    class DataSource: UITableViewDiffableDataSource<Section, Item> {
+        override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+            let sectionKind = Section(rawValue: section)
+            return sectionKind?.description()
+        }
+    }
     
+    var warrantyModalType: WarrantyModalType = .newWarrantyModal
     var viewModel: NewWarrantyViewModel?
     
+    private let extraInfoTitleLabel = UILabel()
     let tableView = UITableView(frame: .zero, style: .insetGrouped)
+    let parentStackView = UIStackView()
     let endCurrentScreenButton = WarrantyModalNextStepButton()
     
-    var extraInfoTableViewDiffableDataSource: UITableViewDiffableDataSource<Section, Item>! = nil
+    var extraInfoTableViewDiffableDataSource: DataSource! = nil
     var currentSnapshot: NSDiffableDataSourceSnapshot<Section, Item>! = nil
     var productInfoList: [Item] = [.price, .model, .serialNumber]
     var sellersInfoItems: [Item] = [.sellersName, .sellersLocation, .sellersContact, .sellersWebsite]
@@ -61,7 +70,6 @@ class ExtraInfoViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // view.backgroundColor = .orange
         setup()
     }
     
@@ -74,8 +82,7 @@ class ExtraInfoViewController: UIViewController {
     // MARK: - Methods
     
     func configureExtraInfoTableViewDataSource() {
-        extraInfoTableViewDiffableDataSource = UITableViewDiffableDataSource
-        <Section, Item>(tableView: tableView, cellProvider: { tableView, indexPath, itemIdentifier in
+        extraInfoTableViewDiffableDataSource = DataSource(tableView: tableView, cellProvider: { tableView, indexPath, itemIdentifier in
             switch itemIdentifier {
             case .price :
                 let cell = tableView.dequeueReusableCell(withIdentifier: Constant.extraInfoCellIdentifier, for: indexPath) as? TextFieldTableViewCell
@@ -86,7 +93,6 @@ class ExtraInfoViewController: UIViewController {
                 cell?.placeholder = "Modèle"
                 return cell
             case .serialNumber:
-                // FIXME: changer l'identifier
                 let cell = tableView.dequeueReusableCell(withIdentifier: Constant.extraInfoCellIdentifier, for: indexPath) as? TextFieldTableViewCell
                 cell?.placeholder = "Numéro de série"
                 return cell
@@ -145,7 +151,17 @@ extension ExtraInfoViewController: UITableViewDelegate {
         }
     }
     
-    private func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+//        let view = UIView()
+//        view.backgroundColor = .orange
+//        return view
+//    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 30
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return "Section \(section)"
     }
 }
@@ -158,19 +174,28 @@ extension ExtraInfoViewController {
     }
     
     func setup() {
-        view.backgroundColor = MWColor.white
-        tableView.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = #colorLiteral(red: 0.8973447084, green: 0.9166073203, blue: 0.9072605968, alpha: 1)
+        extraInfoTitleLabel.text = "\tInfos complémentaires"
+        extraInfoTitleLabel.textColor = MWColor.black
+        extraInfoTitleLabel.font = MWFont.modalMainTitle
+        extraInfoTitleLabel.textAlignment = .natural
         tableView.delegate = self
+        tableView.backgroundColor = #colorLiteral(red: 0.8973447084, green: 0.9166073203, blue: 0.9072605968, alpha: 1)
         endCurrentScreenButton.setup(title: Strings.saveButtonTitle)
         endCurrentScreenButton.addTarget(self, action: #selector(saveWarranty), for: .touchUpInside)
-        view.addSubview(tableView)
+        parentStackView.translatesAutoresizingMaskIntoConstraints = false
+        parentStackView.axis = .vertical
+        parentStackView.spacing = 20
+        parentStackView.addArrangedSubview(extraInfoTitleLabel)
+        parentStackView.addArrangedSubview(tableView)
+        view.addSubview(parentStackView)
         view.addSubview(endCurrentScreenButton)
         
         NSLayoutConstraint.activate([
-            tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            tableView.bottomAnchor.constraint(equalTo: endCurrentScreenButton.topAnchor, constant: -16),
+            parentStackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            parentStackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            parentStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            parentStackView.bottomAnchor.constraint(equalTo: endCurrentScreenButton.topAnchor, constant: -16),
             endCurrentScreenButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             endCurrentScreenButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -24),
             endCurrentScreenButton.heightAnchor.constraint(equalToConstant: 55),

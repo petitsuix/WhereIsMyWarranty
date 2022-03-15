@@ -229,7 +229,7 @@ extension EditWarrantyProductInfoViewController {
         view.backgroundColor = MWColor.white
         
         screenTitle.text = Strings.screenTitle
-        screenTitle.font = MWFont.screenTitle
+        screenTitle.font = MWFont.modalMainTitle
         screenTitle.textAlignment = .natural
         
         nameField.addTarget(self, action: #selector(nameTextfieldDidChange), for: .editingChanged)
@@ -242,7 +242,7 @@ extension EditWarrantyProductInfoViewController {
         nameStackView.spacing = 16
         
         startDateTitle.text = Strings.warrantyStartDate
-        startDateTitle.font = MWFont.productInfoSubtitles
+        startDateTitle.font = MWFont.modalSubtitles
         startDateTitle.textAlignment = .left
         
         datePicker.datePickerMode = .date
@@ -261,7 +261,7 @@ extension EditWarrantyProductInfoViewController {
         nameAndStartDateStackView.addArrangedSubview(startDateStackView)
         
         validityLengthTitle.text = Strings.validityLength
-        validityLengthTitle.font = MWFont.productInfoSubtitles
+        validityLengthTitle.font = MWFont.modalSubtitles
         
         lifetimeWarrantyTitle.text = Strings.lifetimeWarranty
         lifetimeWarrantySwitch.addTarget(self, action: #selector(switchAction), for: .valueChanged)

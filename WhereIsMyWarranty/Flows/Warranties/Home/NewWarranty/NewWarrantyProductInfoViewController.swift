@@ -224,7 +224,7 @@ extension NewWarrantyProductInfoViewController {
     
     private func setupView() {
         screenTitle.text = Strings.screenTitle
-        screenTitle.font = MWFont.screenTitle
+        screenTitle.font = MWFont.modalMainTitle
         screenTitle.textAlignment = .natural
         
         nameField.addTarget(self, action: #selector(nameTextfieldDidChange), for: .editingChanged)
@@ -238,7 +238,7 @@ extension NewWarrantyProductInfoViewController {
         nameStackView.spacing = 12
         
         startDateTitle.text = Strings.warrantyStartDate
-        startDateTitle.font = MWFont.productInfoSubtitles
+        startDateTitle.font = MWFont.modalSubtitles
         startDateTitle.textAlignment = .natural
         
         datePicker.datePickerMode = .date
@@ -256,7 +256,7 @@ extension NewWarrantyProductInfoViewController {
         nameAndStartDateStackView.addArrangedSubview(startDateStackView)
         
         validityLengthTitle.text = Strings.validityLength
-        validityLengthTitle.font = MWFont.productInfoSubtitles
+        validityLengthTitle.font = MWFont.modalSubtitles
         
         lifetimeWarrantyTitle.text = Strings.lifetimeWarranty
         lifetimeWarrantySwitch.addTarget(self, action: #selector(switchAction), for: .valueChanged)

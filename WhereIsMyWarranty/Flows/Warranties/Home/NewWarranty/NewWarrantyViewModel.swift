@@ -25,6 +25,14 @@ class NewWarrantyViewModel: NSObject {
     var isLifetimeWarranty: Bool?
     var productPhoto: Data?
     var invoicePhoto: Data?
+    var price: Double?
+    var model: String?
+    var serialNumber: String?
+    var sellersName: String?
+    var sellersLocation: String?
+    var sellersContact: String?
+    var sellersWebsite: String?
+    var notes: String?
     
     var canSaveWarranty: Bool {
             return name?.isEmpty == false
@@ -68,6 +76,14 @@ class NewWarrantyViewModel: NSObject {
         newWarranty.lifetimeWarranty = isLifetimeWarranty ?? false
         newWarranty.invoicePhoto = invoicePhoto
         newWarranty.productPhoto = productPhoto
+        newWarranty.price = price ?? 0
+        newWarranty.model = model
+        newWarranty.serialNumber = serialNumber
+        newWarranty.sellersName = sellersName
+        newWarranty.sellersLocation = sellersLocation
+        newWarranty.sellersContact = sellersContact
+        newWarranty.sellersWebsite = sellersWebsite
+        newWarranty.notes = notes
         storageService.save()
         warrantySaved()
     }

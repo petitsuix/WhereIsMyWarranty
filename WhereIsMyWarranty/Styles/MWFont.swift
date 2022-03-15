@@ -20,8 +20,8 @@ enum MWFont {
     static let deleteWarrantyButton = UIFont.systemFont(ofSize: 15, weight: .medium)
     
     // New & EditWarranty screens
-    static let screenTitle = UIFont.boldSystemFont(ofSize: 27)
-    static let productInfoSubtitles = UIFont.boldSystemFont(ofSize: 16)
+    static let modalMainTitle = UIFont.boldSystemFont(ofSize: 24)
+    static let modalSubtitles = UIFont.boldSystemFont(ofSize: 16)
     static let addAPhotoTitle = UIFont.boldSystemFont(ofSize: 26)
     
     // Settings screen
