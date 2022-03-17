@@ -74,7 +74,8 @@ class WarrantiesCoordinator: Coordinator, WarrantiesCoordinatorProtocol {
     func showNewWarrantyExtraInfoScreen() {
         let newWarrantyExtraInfoViewController = ExtraInfoViewController()
         self.newWarrantyViewModel?.newWarrantyExtraInfoViewDelegate = newWarrantyExtraInfoViewController
-        newWarrantyExtraInfoViewController.viewModel = newWarrantyViewModel
+        newWarrantyExtraInfoViewController.newWarrantyViewModel = newWarrantyViewModel
+        newWarrantyExtraInfoViewController.warrantyModalType = .newWarrantyModal
         modalNavigationController.pushViewController(newWarrantyExtraInfoViewController, animated: true)
     }
     
@@ -128,6 +129,14 @@ class WarrantiesCoordinator: Coordinator, WarrantiesCoordinatorProtocol {
         editWarrantyPhotoScreen.viewModel = editWarrantyViewModel
         editWarrantyPhotoScreen.photoMode = .invoicePhoto
         modalNavigationController.pushViewController(editWarrantyPhotoScreen, animated: true)
+    }
+    
+    func showEditWarrantyExtraInfoScreen() {
+        let editWarrantyExtraInfoViewController = ExtraInfoViewController()
+        self.editWarrantyViewModel?.extraInfoViewDelegate = editWarrantyExtraInfoViewController
+        editWarrantyExtraInfoViewController.editWarrantyViewModel = editWarrantyViewModel
+        editWarrantyExtraInfoViewController.warrantyModalType = .editWarrantyModal
+        modalNavigationController.pushViewController(editWarrantyExtraInfoViewController, animated: true)
     }
     
     func editedWarrantySaved() {

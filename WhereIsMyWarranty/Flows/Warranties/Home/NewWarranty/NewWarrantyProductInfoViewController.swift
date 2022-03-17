@@ -232,6 +232,7 @@ extension NewWarrantyProductInfoViewController {
         nameField.placeholder = Strings.productNamePlaceHolder
         nameField.setBottomBorder()
         nameField.addDoneToolbar()
+        nameField.becomeFirstResponder()
         
         nameStackView = UIStackView(arrangedSubviews: [screenTitle, nameField])
         nameStackView.axis = .vertical

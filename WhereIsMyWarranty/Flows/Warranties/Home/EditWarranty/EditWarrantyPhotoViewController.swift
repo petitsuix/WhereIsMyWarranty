@@ -43,9 +43,9 @@ class EditWarrantyPhotoViewController: UIViewController {
         viewModel?.goToEditInvoicePhotoScreen()
     }
     
-    @objc func saveWarranty() {
+    @objc func goToEditExtraInfoScreen() {
         photoDidChange()
-        viewModel?.saveEditedWarranty()
+        viewModel?.goToEditExtraInfoScreen()
     }
     
     @objc func chooseAndDisplayImage() {
@@ -182,8 +182,8 @@ extension EditWarrantyPhotoViewController: UIImagePickerControllerDelegate & UIN
     private func setupForInvoicePhotoViewController() {
         if photoMode == .invoicePhoto {
             addAPhotoTitleLabel.text = Strings.addInvoicePhoto
-            endCurrentScreenButton.setTitle(Strings.saveButtonTitle, for: .normal)
-            endCurrentScreenButton.addTarget(self, action: #selector(saveWarranty), for: .touchUpInside)
+            endCurrentScreenButton.setTitle(Strings.nextStepButtonTitle, for: .normal)
+            endCurrentScreenButton.addTarget(self, action: #selector(goToEditExtraInfoScreen), for: .touchUpInside)
             if let invoicePhoto = viewModel?.warranty.invoicePhoto {
                 imageView.image = UIImage(data: invoicePhoto)
             }

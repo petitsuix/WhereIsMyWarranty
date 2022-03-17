@@ -18,6 +18,7 @@ protocol WarrantiesCoordinatorProtocol: Coordinator {
     func showEditWarrantyProductInfoScreen(warranty: Warranty)
     func showEditWarrantyProductPhotoScreen()
     func showEditWarrantyInvoicePhotoScreen()
+    func showEditWarrantyExtraInfoScreen()
     func editedWarrantySaved()
     func showFullScreenInvoicePhoto(invoicePhoto: Data)
 }

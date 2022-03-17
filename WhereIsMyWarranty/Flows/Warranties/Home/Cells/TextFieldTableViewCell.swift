@@ -23,7 +23,7 @@ final class TextFieldTableViewCell: UITableViewCell { // Exprime l'intention com
     
     static let identifier = Strings.extraInfoCellIdentifier
     
-    private let textField = UITextField()
+    let textField = UITextField()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -46,6 +46,7 @@ extension TextFieldTableViewCell {
         textField.clearButtonMode = .whileEditing
         textField.enablesReturnKeyAutomatically = true
         textField.textColor = .label
+        textField.addDoneToolbar()
         // textField.font = UIFont.systemFont(ofSize: <#T##CGFloat#>)
        // textField.keyboardType = .namePhonePad A exposer car c'est pas très générique
        // textField.textContentType = .emailAddress

@@ -15,9 +15,9 @@ public enum WarrantyModalType {
 class ExtraInfoViewController: UIViewController {
     
     enum Section: Int, CaseIterable {
-        case additionalProductInfo
-        case sellersInfo
-        case additionalNotes
+        case additionalProductInfo = 0
+        case sellersInfo = 1
+        case additionalNotes = 2
         func description() -> String {
             switch self {
             case .additionalProductInfo:
@@ -39,28 +39,25 @@ class ExtraInfoViewController: UIViewController {
         case sellersContact
         case sellersWebsite
         case notes
-    }
-    
-    class DataSource: UITableViewDiffableDataSource<Section, Item> {
-        override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-            let sectionKind = Section(rawValue: section)
-            return sectionKind?.description()
-        }
+//        var placeholder: String {
+//            // switch self etc
+//        }
     }
     
     var warrantyModalType: WarrantyModalType = .newWarrantyModal
-    var viewModel: NewWarrantyViewModel?
+    var newWarrantyViewModel: NewWarrantyViewModel?
+    var editWarrantyViewModel: EditWarrantyViewModel?
     
     private let extraInfoTitleLabel = UILabel()
-    let tableView = UITableView(frame: .zero, style: .insetGrouped)
-    let parentStackView = UIStackView()
-    let endCurrentScreenButton = WarrantyModalNextStepButton()
+    private let tableView = UITableView(frame: .zero, style: .insetGrouped)
+    private let parentStackView = UIStackView()
+    private let endCurrentScreenButton = WarrantyModalNextStepButton()
     
-    var extraInfoTableViewDiffableDataSource: DataSource! = nil
-    var currentSnapshot: NSDiffableDataSourceSnapshot<Section, Item>! = nil
-    var productInfoList: [Item] = [.price, .model, .serialNumber]
-    var sellersInfoItems: [Item] = [.sellersName, .sellersLocation, .sellersContact, .sellersWebsite]
-    var additionalNotesItem: [Item] = [.notes]
+    private var extraInfoTableViewDiffableDataSource: DataSource! = nil
+    private var currentSnapshot: NSDiffableDataSourceSnapshot<Section, Item>! = nil
+    private var productInfoList: [Item] = [.price, .model, .serialNumber]
+    private var sellersInfoItems: [Item] = [.sellersName, .sellersLocation, .sellersContact, .sellersWebsite]
+    private var additionalNotesItem: [Item] = [.notes]
     
     // MARK: - View life cycle methods
     
@@ -70,23 +67,51 @@ class ExtraInfoViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setup()
+        setupView()
     }
     
     // MARK: - objc methods
     
+    var currentObject: NSObject?
+    var row = 0
+    
+    // faire une méthode et passer en paramètre indexpath, passer en paramètre le type de variable (price, model, serial number...)
     @objc func saveWarranty() {
-        viewModel?.saveWarranty()
+        let cell = tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? TextFieldTableViewCell
+        if let textFieldText = cell?.textField.text {
+            if warrantyModalType == .newWarrantyModal {
+                newWarrantyViewModel?.price = Double(textFieldText)
+              //  newWarrantyViewModel?.model =
+                newWarrantyViewModel?.saveWarranty()
+            } else {
+                editWarrantyViewModel?.price = Double(textFieldText)
+                editWarrantyViewModel?.saveEditedWarranty()
+            }
+        }
     }
     
     // MARK: - Methods
     
-    func configureExtraInfoTableViewDataSource() {
+    @objc func priceDidchange(textField: UITextField) {
+        newWarrantyViewModel?.price = Double(textField.text!)
+        print("\(newWarrantyViewModel?.price)")
+    }
+    private func configureExtraInfoTableViewDataSource() {
         extraInfoTableViewDiffableDataSource = DataSource(tableView: tableView, cellProvider: { tableView, indexPath, itemIdentifier in
+//            let cell = tableView.dequeueReusableCell(withIdentifier: Constant.extraInfoCellIdentifier, for: indexPath) as? TextFieldTableViewCell
+//           // cell?.placeholder = itemIdentifier.placeholder
+//            if itemIdentifier == .price, self.warrantyModalType == .editWarrantyModal {
+//                cell?.textField.text = String(self.editWarrantyViewModel?.warranty.price ?? 0)
+//            }
+//            return cell
             switch itemIdentifier {
             case .price :
                 let cell = tableView.dequeueReusableCell(withIdentifier: Constant.extraInfoCellIdentifier, for: indexPath) as? TextFieldTableViewCell
                 cell?.placeholder = "Prix"
+                if self.warrantyModalType == .editWarrantyModal {
+                    cell?.textField.text = String(self.editWarrantyViewModel?.warranty.price ?? 0)
+                }
+                cell?.textField.addTarget(self, action:#selector(self.priceDidchange), for: .editingChanged)
                 return cell
             case .model:
                 let cell = tableView.dequeueReusableCell(withIdentifier: Constant.extraInfoCellIdentifier, for: indexPath) as? TextFieldTableViewCell
@@ -122,7 +147,7 @@ class ExtraInfoViewController: UIViewController {
         extraInfoTableViewDiffableDataSource.apply(snapshot)
     }
     
-    func createExtraInfosSnapshot() -> NSDiffableDataSourceSnapshot<Section, Item> {
+    private func createExtraInfosSnapshot() -> NSDiffableDataSourceSnapshot<Section, Item> {
         var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
         snapshot.appendSections([.additionalProductInfo, .sellersInfo, .additionalNotes])
         snapshot.appendItems(productInfoList, toSection: .additionalProductInfo)
@@ -132,30 +157,44 @@ class ExtraInfoViewController: UIViewController {
     }
     
     private func extraInfoCellTapped() {
-        print("CategoriesCV cell tapped")
+        print("cell tapped")
     }
 }
 
 extension ExtraInfoViewController: UITableViewDelegate {
+//
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        extraInfoCellTapped()
+//    }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        extraInfoCellTapped()
-    }
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        let cell = tableView.cellForRow(at: indexPath)
+//        if let textFieldText = cell?.textField.text {
+//            if warrantyModalType == .newWarrantyModal {
+//                newWarrantyViewModel?.price = Double(textFieldText)
+//              //  newWarrantyViewModel?.model =
+//                newWarrantyViewModel?.saveWarranty()
+//            } else {
+//                editWarrantyViewModel?.price = Double(textFieldText)
+//                editWarrantyViewModel?.saveEditedWarranty()
+//            }
+//        }
+//    }
+    
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        // FIXME: trouver un moyen d'appeler le type de section plutôt pour que ce soit plus stable si jamais on rajoute une 4eme section
-        if indexPath.section == 2 {
+        if indexPath.section == Section.additionalNotes.rawValue {
             return 120
         } else {
             return 50
         }
     }
     
-//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-//        let view = UIView()
-//        view.backgroundColor = .orange
-//        return view
-//    }
+    //    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    //        let view = UIView()
+    //        view.backgroundColor = .orange
+    //        return view
+    //    }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 30
@@ -166,14 +205,15 @@ extension ExtraInfoViewController: UITableViewDelegate {
     }
 }
 
-extension ExtraInfoViewController {
+private extension ExtraInfoViewController {
     
-    private enum Constant {
+    // FIXME: Est-ce que ça se range avec les helpers ?
+    enum Constant {
         static let notesCellIdentifier = "AdditionalNotesTableViewCell"
         static let extraInfoCellIdentifier = "ExtraInfoTableViewCell"
     }
     
-    func setup() {
+    func setupView() {
         view.backgroundColor = #colorLiteral(red: 0.8973447084, green: 0.9166073203, blue: 0.9072605968, alpha: 1)
         extraInfoTitleLabel.text = "\tInfos complémentaires"
         extraInfoTitleLabel.textColor = MWColor.black
@@ -203,5 +243,19 @@ extension ExtraInfoViewController {
         ])
         tableView.register(TextFieldTableViewCell.self, forCellReuseIdentifier: Constant.extraInfoCellIdentifier)
         tableView.register(TextViewTableViewCell.self, forCellReuseIdentifier: Constant.notesCellIdentifier)
+    }
+    
+    func setupData() {
+        
+    }
+}
+
+// peut etre faire un fichier a part-entiere extrainfodatasource
+extension ExtraInfoViewController {
+    class DataSource: UITableViewDiffableDataSource<Section, Item> {
+        override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+            let sectionKind = Section(rawValue: section)
+            return sectionKind?.description()
+        }
     }
 }
