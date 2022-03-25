@@ -110,7 +110,8 @@ extension NewWarrantyPhotoViewController: UIImagePickerControllerDelegate & UINa
     // MARK: - View configuration
     
     private func setupView() {
-        view.backgroundColor = MWColor.white
+        navigationController?.isNavigationBarHidden = false
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .close, target: self, action: #selector(deletionAlert))
         
         addAPhotoTitleLabel.textColor = MWColor.black
         addAPhotoTitleLabel.font = MWFont.addAPhotoTitle
@@ -142,6 +143,7 @@ extension NewWarrantyPhotoViewController: UIImagePickerControllerDelegate & UINa
         endCurrentScreenButton.roundingViewCorners(radius: 8)
         endCurrentScreenButton.isUserInteractionEnabled = true
         
+        view.backgroundColor = MWColor.white
         view.addSubview(parentStackView)
         view.addSubview(endCurrentScreenButton)
         

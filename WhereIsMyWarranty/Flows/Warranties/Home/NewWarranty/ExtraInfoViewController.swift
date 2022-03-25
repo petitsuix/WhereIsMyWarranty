@@ -111,7 +111,7 @@ class ExtraInfoViewController: UIViewController {
                 if self.warrantyModalType == .editWarrantyModal {
                     cell?.textField.text = String(self.editWarrantyViewModel?.warranty.price ?? 0)
                 }
-                cell?.textField.addTarget(self, action:#selector(self.priceDidchange), for: .editingChanged)
+                cell?.textField.addTarget(self, action: #selector(self.priceDidchange), for: .editingChanged)
                 return cell
             case .model:
                 let cell = tableView.dequeueReusableCell(withIdentifier: Constant.extraInfoCellIdentifier, for: indexPath) as? TextFieldTableViewCell
@@ -214,7 +214,9 @@ private extension ExtraInfoViewController {
     }
     
     func setupView() {
-        view.backgroundColor = #colorLiteral(red: 0.8973447084, green: 0.9166073203, blue: 0.9072605968, alpha: 1)
+        navigationController?.isNavigationBarHidden = false
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .close, target: self, action: #selector(deletionAlert))
+        
         extraInfoTitleLabel.text = "\tInfos complémentaires"
         extraInfoTitleLabel.textColor = MWColor.black
         extraInfoTitleLabel.font = MWFont.modalMainTitle
@@ -228,6 +230,8 @@ private extension ExtraInfoViewController {
         parentStackView.spacing = 20
         parentStackView.addArrangedSubview(extraInfoTitleLabel)
         parentStackView.addArrangedSubview(tableView)
+        
+        view.backgroundColor = #colorLiteral(red: 0.8973447084, green: 0.9166073203, blue: 0.9072605968, alpha: 1)
         view.addSubview(parentStackView)
         view.addSubview(endCurrentScreenButton)
         

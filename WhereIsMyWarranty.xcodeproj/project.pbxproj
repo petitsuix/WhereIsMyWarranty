@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9706C96227EE089900DBD876 /* DeletionAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9706C96127EE089900DBD876 /* DeletionAlert.swift */; };
 		970B02AD27A8387E00EC4163 /* StorageServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 970B02AC27A8387E00EC4163 /* StorageServiceMock.swift */; };
 		970B02AF27A848CE00EC4163 /* WarrantyDetailsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 970B02AE27A848CE00EC4163 /* WarrantyDetailsViewModelTests.swift */; };
 		970D86A3278F30FD00216ED7 /* ResizeImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 970D86A2278F30FD00216ED7 /* ResizeImage.swift */; };
@@ -106,6 +107,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		9706C96127EE089900DBD876 /* DeletionAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeletionAlert.swift; sourceTree = "<group>"; };
 		970B02AC27A8387E00EC4163 /* StorageServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageServiceMock.swift; sourceTree = "<group>"; };
 		970B02AE27A848CE00EC4163 /* WarrantyDetailsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarrantyDetailsViewModelTests.swift; sourceTree = "<group>"; };
 		970D86A2278F30FD00216ED7 /* ResizeImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResizeImage.swift; sourceTree = "<group>"; };
@@ -361,6 +363,7 @@
 				97EE92F827D2385F00FACF4F /* UIButton */,
 				9792550B27C39235008EB997 /* UIViewController */,
 				9769C954276A32C600BAC736 /* Alert.swift */,
+				9706C96127EE089900DBD876 /* DeletionAlert.swift */,
 				9763049D275A6C1E00688DDB /* CornerRadius.swift */,
 				976304C32763A73D00688DDB /* AddShadow.swift */,
 				97ECFC23277DD93600CA973D /* BottomBorder.swift */,
@@ -696,6 +699,7 @@
 				971AE69A277B382D00C970E3 /* TextWithStepperView.swift in Sources */,
 				976304B8275E396300688DDB /* AppCoordinator.swift in Sources */,
 				97630447275A68B200688DDB /* AppDelegate.swift in Sources */,
+				9706C96227EE089900DBD876 /* DeletionAlert.swift in Sources */,
 				97F1D307277345F400D0C52C /* WarrantyDetailsViewModel.swift in Sources */,
 				97FE356E2791C9AA009CEF78 /* AddingTimeInterval.swift in Sources */,
 				972660A627B3E37000A8F7E9 /* HideKeyboardWithTap.swift in Sources */,

@@ -226,7 +226,8 @@ extension EditWarrantyProductInfoViewController {
     // MARK: - View configuration
     
     private func setupView() {
-        view.backgroundColor = MWColor.white
+        navigationController?.isNavigationBarHidden = false
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .close, target: self, action: #selector(deletionAlert))
         
         screenTitle.text = Strings.screenTitle
         screenTitle.font = MWFont.modalMainTitle
@@ -308,6 +309,7 @@ extension EditWarrantyProductInfoViewController {
         goToPhotoScreenButton.isUserInteractionEnabled = true
         goToPhotoScreenButton.translatesAutoresizingMaskIntoConstraints = false
         
+        view.backgroundColor = MWColor.white
         view.addSubview(parentStackView)
         view.addSubview(goToPhotoScreenButton)
         
