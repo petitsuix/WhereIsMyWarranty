@@ -27,13 +27,41 @@ class EditWarrantyViewModel {
     var endDate: Date?
     var productPhoto: Data?
     var invoicePhoto: Data?
-    var price: Double?
-    var model: String?
-    var serialNumber: String?
-    var sellersName: String?
-    var sellersLocation: String?
-    var sellersContact: String?
-    var sellersWebsite: String?
+    var price: Double? {
+        didSet {
+            warranty.price = price ?? 0
+        }
+    }
+    var model: String? {
+        didSet {
+            warranty.model = model
+        }
+    }
+    var serialNumber: String? {
+        didSet {
+            warranty.serialNumber = serialNumber
+        }
+    }
+    var sellersName: String? {
+        didSet {
+            warranty.sellersName = sellersName
+        }
+    }
+    var sellersLocation: String? {
+        didSet {
+            warranty.sellersLocation = sellersLocation
+        }
+    }
+    var sellersContact: String? {
+        didSet {
+            warranty.sellersContact = sellersContact
+        }
+    }
+    var sellersWebsite: String? {
+        didSet {
+            warranty.sellersWebsite = sellersWebsite
+        }
+    }
     var notes: String?
     
     private var canSaveWarranty: Bool {
@@ -78,14 +106,14 @@ class EditWarrantyViewModel {
         warranty.warrantyEnd = endDate
         warranty.productPhoto = productPhoto
         warranty.invoicePhoto = invoicePhoto
-        warranty.price = price ?? 0
-        warranty.model = model
-        warranty.serialNumber = serialNumber
-        warranty.sellersName = sellersName
-        warranty.sellersLocation = sellersLocation
-        warranty.sellersContact = sellersContact
-        warranty.sellersWebsite = sellersWebsite
-        warranty.notes = notes
+//        warranty.price = price ?? 0
+//        warranty.model = model
+//        warranty.serialNumber = serialNumber
+//        warranty.sellersName = sellersName
+//        warranty.sellersLocation = sellersLocation
+//        warranty.sellersContact = sellersContact
+//        warranty.sellersWebsite = sellersWebsite
+//        warranty.notes = notes
         storageService.save()
         warrantySaved()
     }

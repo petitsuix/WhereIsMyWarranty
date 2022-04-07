@@ -39,9 +39,26 @@ class ExtraInfoViewController: UIViewController {
         case sellersContact
         case sellersWebsite
         case notes
-//        var placeholder: String {
-//            // switch self etc
-//        }
+        var placeholder: String {
+            switch self {
+            case .model:
+                return "Modèle"
+            case .serialNumber:
+                return "Numéro de série"
+            case .price:
+                return "Prix"
+            case .sellersName:
+                return "Nom"
+            case .sellersLocation:
+                return "Adresse"
+            case .sellersWebsite:
+                return "Contact"
+            case .sellersContact:
+                return "Site web"
+            case .notes:
+                return "Notes"
+            }
+        }
     }
     
     var warrantyModalType: WarrantyModalType = .newWarrantyModal
@@ -75,73 +92,164 @@ class ExtraInfoViewController: UIViewController {
     var currentObject: NSObject?
     var row = 0
     
-    // faire une méthode et passer en paramètre indexpath, passer en paramètre le type de variable (price, model, serial number...)
     @objc func saveWarranty() {
-        let cell = tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? TextFieldTableViewCell
-        if let textFieldText = cell?.textField.text {
             if warrantyModalType == .newWarrantyModal {
-                newWarrantyViewModel?.price = Double(textFieldText)
-              //  newWarrantyViewModel?.model =
                 newWarrantyViewModel?.saveWarranty()
             } else {
-                editWarrantyViewModel?.price = Double(textFieldText)
                 editWarrantyViewModel?.saveEditedWarranty()
             }
-        }
     }
     
     // MARK: - Methods
     
     @objc func priceDidchange(textField: UITextField) {
-        newWarrantyViewModel?.price = Double(textField.text!)
-        print("\(newWarrantyViewModel?.price)")
+       // newWarrantyViewModel?.price = Double(textField.text!)
+        editWarrantyViewModel?.price = Double(textField.text!)
+        print("\(newWarrantyViewModel?.price ?? 0)")
+        print("\(editWarrantyViewModel?.price ?? 0)")
     }
+    
+    @objc func modelDidChange(textField: UITextField) {
+        newWarrantyViewModel?.model = textField.text
+        editWarrantyViewModel?.model = textField.text
+        print("\(newWarrantyViewModel?.model ?? "")")
+        print("\(editWarrantyViewModel?.model ?? "")")
+    }
+    
+    @objc func serialNumberDidChange(textField: UITextField) {
+        newWarrantyViewModel?.serialNumber = textField.text
+        editWarrantyViewModel?.serialNumber = textField.text
+        print("\(newWarrantyViewModel?.serialNumber ?? "")")
+        print("\(editWarrantyViewModel?.serialNumber ?? "")")
+    }
+    
+    @objc func sellersNameDidChange(textField: UITextField) {
+        newWarrantyViewModel?.sellersName = textField.text
+        editWarrantyViewModel?.sellersName = textField.text
+        print("\(newWarrantyViewModel?.sellersName ?? "")")
+        print("\(editWarrantyViewModel?.sellersName ?? "")")
+    }
+    
+    @objc func sellersLocationDidChange(textField: UITextField) {
+        newWarrantyViewModel?.sellersLocation = textField.text
+        editWarrantyViewModel?.sellersLocation = textField.text
+        print("\(newWarrantyViewModel?.sellersLocation ?? "")")
+        print("\(editWarrantyViewModel?.sellersLocation ?? "")")
+    }
+    
+    @objc func sellersContactDidChange(textField: UITextField) {
+        newWarrantyViewModel?.sellersContact = textField.text
+        editWarrantyViewModel?.sellersContact = textField.text
+        print("\(newWarrantyViewModel?.sellersContact ?? "")")
+        print("\(editWarrantyViewModel?.sellersContact ?? "")")
+    }
+    
+    @objc func sellersWebsiteDidChange(textField: UITextField) {
+        newWarrantyViewModel?.sellersWebsite = textField.text
+        editWarrantyViewModel?.sellersWebsite = textField.text
+        print("\(newWarrantyViewModel?.sellersWebsite ?? "")")
+        print("\(editWarrantyViewModel?.sellersWebsite ?? "")")
+    }
+    
     private func configureExtraInfoTableViewDataSource() {
         extraInfoTableViewDiffableDataSource = DataSource(tableView: tableView, cellProvider: { tableView, indexPath, itemIdentifier in
-//            let cell = tableView.dequeueReusableCell(withIdentifier: Constant.extraInfoCellIdentifier, for: indexPath) as? TextFieldTableViewCell
-//           // cell?.placeholder = itemIdentifier.placeholder
-//            if itemIdentifier == .price, self.warrantyModalType == .editWarrantyModal {
-//                cell?.textField.text = String(self.editWarrantyViewModel?.warranty.price ?? 0)
-//            }
-//            return cell
-            switch itemIdentifier {
-            case .price :
-                let cell = tableView.dequeueReusableCell(withIdentifier: Constant.extraInfoCellIdentifier, for: indexPath) as? TextFieldTableViewCell
-                cell?.placeholder = "Prix"
-                if self.warrantyModalType == .editWarrantyModal {
-                    cell?.textField.text = String(self.editWarrantyViewModel?.warranty.price ?? 0)
-                }
+            let cell = tableView.dequeueReusableCell(withIdentifier: Constant.extraInfoCellIdentifier, for: indexPath) as? TextFieldTableViewCell
+            cell?.placeholder = itemIdentifier.placeholder
+            
+            if itemIdentifier == .price, self.warrantyModalType == .editWarrantyModal {
+                cell?.textField.text = String(self.editWarrantyViewModel?.warranty.price ?? 0)
                 cell?.textField.addTarget(self, action: #selector(self.priceDidchange), for: .editingChanged)
-                return cell
-            case .model:
-                let cell = tableView.dequeueReusableCell(withIdentifier: Constant.extraInfoCellIdentifier, for: indexPath) as? TextFieldTableViewCell
-                cell?.placeholder = "Modèle"
-                return cell
-            case .serialNumber:
-                let cell = tableView.dequeueReusableCell(withIdentifier: Constant.extraInfoCellIdentifier, for: indexPath) as? TextFieldTableViewCell
-                cell?.placeholder = "Numéro de série"
-                return cell
-            case .sellersName:
-                let cell = tableView.dequeueReusableCell(withIdentifier: Constant.extraInfoCellIdentifier, for: indexPath) as? TextFieldTableViewCell
-                cell?.placeholder = "Nom"
-                return cell
-            case .sellersLocation:
-                let cell = tableView.dequeueReusableCell(withIdentifier: Constant.extraInfoCellIdentifier, for: indexPath) as? TextFieldTableViewCell
-                cell?.placeholder = "Adresse"
-                return cell
-            case .sellersContact:
-                let cell = tableView.dequeueReusableCell(withIdentifier: Constant.extraInfoCellIdentifier, for: indexPath) as? TextFieldTableViewCell
-                cell?.placeholder = "Contact"
-                return cell
-            case .sellersWebsite:
-                let cell = tableView.dequeueReusableCell(withIdentifier: Constant.extraInfoCellIdentifier, for: indexPath) as? TextFieldTableViewCell
-                cell?.placeholder = "Site web"
-                return cell
-            case .notes:
-                let cell = tableView.dequeueReusableCell(withIdentifier: Constant.notesCellIdentifier, for: indexPath) as? TextViewTableViewCell
-                cell?.placeholder = "Notes"
-                return cell
             }
+             else if itemIdentifier == .price, self.warrantyModalType == .newWarrantyModal {
+                cell?.textField.addTarget(self, action: #selector(self.priceDidchange), for: .editingChanged)
+            }
+            if itemIdentifier == .model, self.warrantyModalType == .editWarrantyModal {
+                cell?.textField.text = String(self.editWarrantyViewModel?.warranty.model ?? "")
+                cell?.textField.addTarget(self, action: #selector(self.modelDidChange), for: .editingChanged)
+            }
+             else if itemIdentifier == .model, self.warrantyModalType == .newWarrantyModal {
+                cell?.textField.addTarget(self, action: #selector(self.modelDidChange), for: .editingChanged)
+            }
+            if itemIdentifier == .serialNumber, self.warrantyModalType == .editWarrantyModal {
+                cell?.textField.text = String(self.editWarrantyViewModel?.warranty.serialNumber ?? "")
+                cell?.textField.addTarget(self, action: #selector(self.serialNumberDidChange), for: .editingChanged)
+            }
+             else if itemIdentifier == .serialNumber, self.warrantyModalType == .newWarrantyModal {
+                cell?.textField.addTarget(self, action: #selector(self.serialNumberDidChange), for: .editingChanged)
+            }
+            if itemIdentifier == .sellersName, self.warrantyModalType == .editWarrantyModal {
+                cell?.textField.text = String(self.editWarrantyViewModel?.warranty.sellersName ?? "")
+                cell?.textField.addTarget(self, action: #selector(self.sellersNameDidChange), for: .editingChanged)
+            }
+             else if itemIdentifier == .sellersName, self.warrantyModalType == .newWarrantyModal {
+                cell?.textField.addTarget(self, action: #selector(self.sellersNameDidChange), for: .editingChanged)
+            }
+            if itemIdentifier == .sellersLocation, self.warrantyModalType == .editWarrantyModal {
+                cell?.textField.text = String(self.editWarrantyViewModel?.warranty.sellersLocation ?? "")
+                cell?.textField.addTarget(self, action: #selector(self.sellersLocationDidChange), for: .editingChanged)
+            }
+             else if itemIdentifier == .sellersLocation, self.warrantyModalType == .newWarrantyModal {
+                cell?.textField.addTarget(self, action: #selector(self.sellersLocationDidChange), for: .editingChanged)
+            }
+            if itemIdentifier == .sellersContact, self.warrantyModalType == .editWarrantyModal {
+                cell?.textField.text = String(self.editWarrantyViewModel?.warranty.sellersContact ?? "")
+                cell?.textField.addTarget(self, action: #selector(self.sellersContactDidChange), for: .editingChanged)
+            }
+             else if itemIdentifier == .sellersContact, self.warrantyModalType == .newWarrantyModal {
+                cell?.textField.addTarget(self, action: #selector(self.sellersContactDidChange), for: .editingChanged)
+            }
+            if itemIdentifier == .sellersWebsite, self.warrantyModalType == .editWarrantyModal {
+                cell?.textField.text = String(self.editWarrantyViewModel?.warranty.sellersWebsite ?? "")
+                cell?.textField.addTarget(self, action: #selector(self.sellersWebsiteDidChange), for: .editingChanged)
+            }
+             else if itemIdentifier == .sellersWebsite, self.warrantyModalType == .newWarrantyModal {
+                cell?.textField.addTarget(self, action: #selector(self.sellersWebsiteDidChange), for: .editingChanged)
+            }
+            
+//            if itemIdentifier == .notes, self.warrantyModalType == .editWarrantyModal {
+//                cell?.textField.text = String(self.editWarrantyViewModel?.warranty.notes ?? "")
+//            }
+            
+            return cell
+            
+//            switch itemIdentifier {
+//            case .price :
+//                let cell = tableView.dequeueReusableCell(withIdentifier: Constant.extraInfoCellIdentifier, for: indexPath) as? TextFieldTableViewCell
+//                cell?.placeholder = "Prix"
+//                if self.warrantyModalType == .editWarrantyModal {
+//                    cell?.textField.text = String(self.editWarrantyViewModel?.warranty.price ?? 0)
+//                }
+//
+//                return cell
+//            case .model:
+//                let cell = tableView.dequeueReusableCell(withIdentifier: Constant.extraInfoCellIdentifier, for: indexPath) as? TextFieldTableViewCell
+//                cell?.placeholder = "Modèle"
+//                return cell
+//            case .serialNumber:
+//                let cell = tableView.dequeueReusableCell(withIdentifier: Constant.extraInfoCellIdentifier, for: indexPath) as? TextFieldTableViewCell
+//                cell?.placeholder = "Numéro de série"
+//                return cell
+//            case .sellersName:
+//                let cell = tableView.dequeueReusableCell(withIdentifier: Constant.extraInfoCellIdentifier, for: indexPath) as? TextFieldTableViewCell
+//                cell?.placeholder = "Nom"
+//                return cell
+//            case .sellersLocation:
+//                let cell = tableView.dequeueReusableCell(withIdentifier: Constant.extraInfoCellIdentifier, for: indexPath) as? TextFieldTableViewCell
+//                cell?.placeholder = "Adresse"
+//                return cell
+//            case .sellersContact:
+//                let cell = tableView.dequeueReusableCell(withIdentifier: Constant.extraInfoCellIdentifier, for: indexPath) as? TextFieldTableViewCell
+//                cell?.placeholder = "Contact"
+//                return cell
+//            case .sellersWebsite:
+//                let cell = tableView.dequeueReusableCell(withIdentifier: Constant.extraInfoCellIdentifier, for: indexPath) as? TextFieldTableViewCell
+//                cell?.placeholder = "Site web"
+//                return cell
+//            case .notes:
+//                let cell = tableView.dequeueReusableCell(withIdentifier: Constant.notesCellIdentifier, for: indexPath) as? TextViewTableViewCell
+//                cell?.placeholder = "Notes"
+//                return cell
+//            }
         })
         let snapshot = createExtraInfosSnapshot()
         extraInfoTableViewDiffableDataSource.apply(snapshot)
