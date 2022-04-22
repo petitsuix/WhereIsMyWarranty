@@ -89,167 +89,116 @@ class ExtraInfoViewController: UIViewController {
     
     // MARK: - objc methods
     
-    var currentObject: NSObject?
-    var row = 0
-    
     @objc func saveWarranty() {
-            if warrantyModalType == .newWarrantyModal {
-                newWarrantyViewModel?.saveWarranty()
-            } else {
-                editWarrantyViewModel?.saveEditedWarranty()
-            }
+        let notesCell = tableView.cellForRow(at: IndexPath(row: 0, section: 2)) as? TextViewTableViewCell // Unlike other cells, notes is a text view and cannot profit from the addTarget method to update the viewModel. Workaround found so far is to save its value here, when saving the warranty.
+        if warrantyModalType == .newWarrantyModal {
+            newWarrantyViewModel?.notes = notesCell?.textView.text
+            newWarrantyViewModel?.saveWarranty()
+        } else {
+            editWarrantyViewModel?.notes = notesCell?.textView.text
+            editWarrantyViewModel?.saveEditedWarranty()
+        }
     }
     
-    // MARK: - Methods
-    
     @objc func priceDidchange(textField: UITextField) {
-       // newWarrantyViewModel?.price = Double(textField.text!)
+        newWarrantyViewModel?.price = Double(textField.text!)
         editWarrantyViewModel?.price = Double(textField.text!)
-        print("\(newWarrantyViewModel?.price ?? 0)")
-        print("\(editWarrantyViewModel?.price ?? 0)")
     }
     
     @objc func modelDidChange(textField: UITextField) {
         newWarrantyViewModel?.model = textField.text
         editWarrantyViewModel?.model = textField.text
-        print("\(newWarrantyViewModel?.model ?? "")")
-        print("\(editWarrantyViewModel?.model ?? "")")
     }
     
     @objc func serialNumberDidChange(textField: UITextField) {
         newWarrantyViewModel?.serialNumber = textField.text
         editWarrantyViewModel?.serialNumber = textField.text
-        print("\(newWarrantyViewModel?.serialNumber ?? "")")
-        print("\(editWarrantyViewModel?.serialNumber ?? "")")
     }
     
     @objc func sellersNameDidChange(textField: UITextField) {
         newWarrantyViewModel?.sellersName = textField.text
         editWarrantyViewModel?.sellersName = textField.text
-        print("\(newWarrantyViewModel?.sellersName ?? "")")
-        print("\(editWarrantyViewModel?.sellersName ?? "")")
     }
     
     @objc func sellersLocationDidChange(textField: UITextField) {
         newWarrantyViewModel?.sellersLocation = textField.text
         editWarrantyViewModel?.sellersLocation = textField.text
-        print("\(newWarrantyViewModel?.sellersLocation ?? "")")
-        print("\(editWarrantyViewModel?.sellersLocation ?? "")")
     }
     
     @objc func sellersContactDidChange(textField: UITextField) {
         newWarrantyViewModel?.sellersContact = textField.text
         editWarrantyViewModel?.sellersContact = textField.text
-        print("\(newWarrantyViewModel?.sellersContact ?? "")")
-        print("\(editWarrantyViewModel?.sellersContact ?? "")")
     }
     
     @objc func sellersWebsiteDidChange(textField: UITextField) {
         newWarrantyViewModel?.sellersWebsite = textField.text
         editWarrantyViewModel?.sellersWebsite = textField.text
-        print("\(newWarrantyViewModel?.sellersWebsite ?? "")")
-        print("\(editWarrantyViewModel?.sellersWebsite ?? "")")
     }
     
+    // MARK: - Methods
+    //swiftlint:disable cyclomatic_complexity
+    /// FIXME : data source configuration method bellow initially created cells by switching on itemIdentifier. Depending on the case (.model, .price...), a cell was returned. But we needed to find a way to save the values held inside each cell's textField : both when creating and editing a warranty. Delegate method didSelectRowAt doesn't work, it is never called (probably because the interaction is handled by the textField right away, not the cell itself). Best way found so far is to add a target to the textField, create @objc methods that will be called upon editing. Another benefit is that while edtiting a warranty, only edited values are saved, instead of saving all values once again. But this method is very heavy.
     private func configureExtraInfoTableViewDataSource() {
         extraInfoTableViewDiffableDataSource = DataSource(tableView: tableView, cellProvider: { tableView, indexPath, itemIdentifier in
-            let cell = tableView.dequeueReusableCell(withIdentifier: Constant.extraInfoCellIdentifier, for: indexPath) as? TextFieldTableViewCell
-            cell?.placeholder = itemIdentifier.placeholder
             
-            if itemIdentifier == .price, self.warrantyModalType == .editWarrantyModal {
-                cell?.textField.text = String(self.editWarrantyViewModel?.warranty.price ?? 0)
-                cell?.textField.addTarget(self, action: #selector(self.priceDidchange), for: .editingChanged)
+            switch itemIdentifier {
+            case .notes :
+                let cell = tableView.dequeueReusableCell(withIdentifier: Constant.notesCellIdentifier, for: indexPath) as? TextViewTableViewCell
+                cell?.placeholder = itemIdentifier.placeholder
+                if self.warrantyModalType == .editWarrantyModal {
+                    cell?.textView.text = self.editWarrantyViewModel?.warranty.notes
+                }
+                return cell
+            default :
+                let cell = tableView.dequeueReusableCell(withIdentifier: Constant.extraInfoCellIdentifier, for: indexPath) as? TextFieldTableViewCell
+                cell?.placeholder = itemIdentifier.placeholder
+                
+                if itemIdentifier == .price, self.warrantyModalType == .editWarrantyModal {
+                    cell?.textField.text = String(self.editWarrantyViewModel?.warranty.price ?? 0)
+                    cell?.textField.addTarget(self, action: #selector(self.priceDidchange), for: .editingChanged)
+                    cell?.textField.keyboardType = .decimalPad
+                } else if itemIdentifier == .price, self.warrantyModalType == .newWarrantyModal {
+                    cell?.textField.addTarget(self, action: #selector(self.priceDidchange), for: .editingChanged)
+                    cell?.textField.keyboardType = .decimalPad
+                }
+                if itemIdentifier == .model, self.warrantyModalType == .editWarrantyModal {
+                    cell?.textField.text = self.editWarrantyViewModel?.warranty.model
+                    cell?.textField.addTarget(self, action: #selector(self.modelDidChange), for: .editingChanged)
+                } else if itemIdentifier == .model, self.warrantyModalType == .newWarrantyModal {
+                    cell?.textField.addTarget(self, action: #selector(self.modelDidChange), for: .editingChanged)
+                }
+                if itemIdentifier == .serialNumber, self.warrantyModalType == .editWarrantyModal {
+                    cell?.textField.text = self.editWarrantyViewModel?.warranty.serialNumber
+                    cell?.textField.addTarget(self, action: #selector(self.serialNumberDidChange), for: .editingChanged)
+                } else if itemIdentifier == .serialNumber, self.warrantyModalType == .newWarrantyModal {
+                    cell?.textField.addTarget(self, action: #selector(self.serialNumberDidChange), for: .editingChanged)
+                }
+                if itemIdentifier == .sellersName, self.warrantyModalType == .editWarrantyModal {
+                    cell?.textField.text = self.editWarrantyViewModel?.warranty.sellersName
+                    cell?.textField.addTarget(self, action: #selector(self.sellersNameDidChange), for: .editingChanged)
+                } else if itemIdentifier == .sellersName, self.warrantyModalType == .newWarrantyModal {
+                    cell?.textField.addTarget(self, action: #selector(self.sellersNameDidChange), for: .editingChanged)
+                }
+                if itemIdentifier == .sellersLocation, self.warrantyModalType == .editWarrantyModal {
+                    cell?.textField.text = self.editWarrantyViewModel?.warranty.sellersLocation
+                    cell?.textField.addTarget(self, action: #selector(self.sellersLocationDidChange), for: .editingChanged)
+                } else if itemIdentifier == .sellersLocation, self.warrantyModalType == .newWarrantyModal {
+                    cell?.textField.addTarget(self, action: #selector(self.sellersLocationDidChange), for: .editingChanged)
+                }
+                if itemIdentifier == .sellersContact, self.warrantyModalType == .editWarrantyModal {
+                    cell?.textField.text = self.editWarrantyViewModel?.warranty.sellersContact
+                    cell?.textField.addTarget(self, action: #selector(self.sellersContactDidChange), for: .editingChanged)
+                } else if itemIdentifier == .sellersContact, self.warrantyModalType == .newWarrantyModal {
+                    cell?.textField.addTarget(self, action: #selector(self.sellersContactDidChange), for: .editingChanged)
+                }
+                if itemIdentifier == .sellersWebsite, self.warrantyModalType == .editWarrantyModal {
+                    cell?.textField.text = self.editWarrantyViewModel?.warranty.sellersWebsite
+                    cell?.textField.addTarget(self, action: #selector(self.sellersWebsiteDidChange), for: .editingChanged)
+                } else if itemIdentifier == .sellersWebsite, self.warrantyModalType == .newWarrantyModal {
+                    cell?.textField.addTarget(self, action: #selector(self.sellersWebsiteDidChange), for: .editingChanged)
+                }
+                return cell
             }
-             else if itemIdentifier == .price, self.warrantyModalType == .newWarrantyModal {
-                cell?.textField.addTarget(self, action: #selector(self.priceDidchange), for: .editingChanged)
-            }
-            if itemIdentifier == .model, self.warrantyModalType == .editWarrantyModal {
-                cell?.textField.text = String(self.editWarrantyViewModel?.warranty.model ?? "")
-                cell?.textField.addTarget(self, action: #selector(self.modelDidChange), for: .editingChanged)
-            }
-             else if itemIdentifier == .model, self.warrantyModalType == .newWarrantyModal {
-                cell?.textField.addTarget(self, action: #selector(self.modelDidChange), for: .editingChanged)
-            }
-            if itemIdentifier == .serialNumber, self.warrantyModalType == .editWarrantyModal {
-                cell?.textField.text = String(self.editWarrantyViewModel?.warranty.serialNumber ?? "")
-                cell?.textField.addTarget(self, action: #selector(self.serialNumberDidChange), for: .editingChanged)
-            }
-             else if itemIdentifier == .serialNumber, self.warrantyModalType == .newWarrantyModal {
-                cell?.textField.addTarget(self, action: #selector(self.serialNumberDidChange), for: .editingChanged)
-            }
-            if itemIdentifier == .sellersName, self.warrantyModalType == .editWarrantyModal {
-                cell?.textField.text = String(self.editWarrantyViewModel?.warranty.sellersName ?? "")
-                cell?.textField.addTarget(self, action: #selector(self.sellersNameDidChange), for: .editingChanged)
-            }
-             else if itemIdentifier == .sellersName, self.warrantyModalType == .newWarrantyModal {
-                cell?.textField.addTarget(self, action: #selector(self.sellersNameDidChange), for: .editingChanged)
-            }
-            if itemIdentifier == .sellersLocation, self.warrantyModalType == .editWarrantyModal {
-                cell?.textField.text = String(self.editWarrantyViewModel?.warranty.sellersLocation ?? "")
-                cell?.textField.addTarget(self, action: #selector(self.sellersLocationDidChange), for: .editingChanged)
-            }
-             else if itemIdentifier == .sellersLocation, self.warrantyModalType == .newWarrantyModal {
-                cell?.textField.addTarget(self, action: #selector(self.sellersLocationDidChange), for: .editingChanged)
-            }
-            if itemIdentifier == .sellersContact, self.warrantyModalType == .editWarrantyModal {
-                cell?.textField.text = String(self.editWarrantyViewModel?.warranty.sellersContact ?? "")
-                cell?.textField.addTarget(self, action: #selector(self.sellersContactDidChange), for: .editingChanged)
-            }
-             else if itemIdentifier == .sellersContact, self.warrantyModalType == .newWarrantyModal {
-                cell?.textField.addTarget(self, action: #selector(self.sellersContactDidChange), for: .editingChanged)
-            }
-            if itemIdentifier == .sellersWebsite, self.warrantyModalType == .editWarrantyModal {
-                cell?.textField.text = String(self.editWarrantyViewModel?.warranty.sellersWebsite ?? "")
-                cell?.textField.addTarget(self, action: #selector(self.sellersWebsiteDidChange), for: .editingChanged)
-            }
-             else if itemIdentifier == .sellersWebsite, self.warrantyModalType == .newWarrantyModal {
-                cell?.textField.addTarget(self, action: #selector(self.sellersWebsiteDidChange), for: .editingChanged)
-            }
-            
-//            if itemIdentifier == .notes, self.warrantyModalType == .editWarrantyModal {
-//                cell?.textField.text = String(self.editWarrantyViewModel?.warranty.notes ?? "")
-//            }
-            
-            return cell
-            
-//            switch itemIdentifier {
-//            case .price :
-//                let cell = tableView.dequeueReusableCell(withIdentifier: Constant.extraInfoCellIdentifier, for: indexPath) as? TextFieldTableViewCell
-//                cell?.placeholder = "Prix"
-//                if self.warrantyModalType == .editWarrantyModal {
-//                    cell?.textField.text = String(self.editWarrantyViewModel?.warranty.price ?? 0)
-//                }
-//
-//                return cell
-//            case .model:
-//                let cell = tableView.dequeueReusableCell(withIdentifier: Constant.extraInfoCellIdentifier, for: indexPath) as? TextFieldTableViewCell
-//                cell?.placeholder = "Modèle"
-//                return cell
-//            case .serialNumber:
-//                let cell = tableView.dequeueReusableCell(withIdentifier: Constant.extraInfoCellIdentifier, for: indexPath) as? TextFieldTableViewCell
-//                cell?.placeholder = "Numéro de série"
-//                return cell
-//            case .sellersName:
-//                let cell = tableView.dequeueReusableCell(withIdentifier: Constant.extraInfoCellIdentifier, for: indexPath) as? TextFieldTableViewCell
-//                cell?.placeholder = "Nom"
-//                return cell
-//            case .sellersLocation:
-//                let cell = tableView.dequeueReusableCell(withIdentifier: Constant.extraInfoCellIdentifier, for: indexPath) as? TextFieldTableViewCell
-//                cell?.placeholder = "Adresse"
-//                return cell
-//            case .sellersContact:
-//                let cell = tableView.dequeueReusableCell(withIdentifier: Constant.extraInfoCellIdentifier, for: indexPath) as? TextFieldTableViewCell
-//                cell?.placeholder = "Contact"
-//                return cell
-//            case .sellersWebsite:
-//                let cell = tableView.dequeueReusableCell(withIdentifier: Constant.extraInfoCellIdentifier, for: indexPath) as? TextFieldTableViewCell
-//                cell?.placeholder = "Site web"
-//                return cell
-//            case .notes:
-//                let cell = tableView.dequeueReusableCell(withIdentifier: Constant.notesCellIdentifier, for: indexPath) as? TextViewTableViewCell
-//                cell?.placeholder = "Notes"
-//                return cell
-//            }
         })
         let snapshot = createExtraInfosSnapshot()
         extraInfoTableViewDiffableDataSource.apply(snapshot)
@@ -263,32 +212,9 @@ class ExtraInfoViewController: UIViewController {
         snapshot.appendItems(additionalNotesItem, toSection: .additionalNotes)
         return snapshot
     }
-    
-    private func extraInfoCellTapped() {
-        print("cell tapped")
-    }
 }
 
 extension ExtraInfoViewController: UITableViewDelegate {
-//
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        extraInfoCellTapped()
-//    }
-    
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        let cell = tableView.cellForRow(at: indexPath)
-//        if let textFieldText = cell?.textField.text {
-//            if warrantyModalType == .newWarrantyModal {
-//                newWarrantyViewModel?.price = Double(textFieldText)
-//              //  newWarrantyViewModel?.model =
-//                newWarrantyViewModel?.saveWarranty()
-//            } else {
-//                editWarrantyViewModel?.price = Double(textFieldText)
-//                editWarrantyViewModel?.saveEditedWarranty()
-//            }
-//        }
-//    }
-    
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.section == Section.additionalNotes.rawValue {
@@ -298,18 +224,8 @@ extension ExtraInfoViewController: UITableViewDelegate {
         }
     }
     
-    //    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-    //        let view = UIView()
-    //        view.backgroundColor = .orange
-    //        return view
-    //    }
-    
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 30
-    }
-    
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "Section \(section)"
     }
 }
 
@@ -355,10 +271,6 @@ private extension ExtraInfoViewController {
         ])
         tableView.register(TextFieldTableViewCell.self, forCellReuseIdentifier: Constant.extraInfoCellIdentifier)
         tableView.register(TextViewTableViewCell.self, forCellReuseIdentifier: Constant.notesCellIdentifier)
-    }
-    
-    func setupData() {
-        
     }
 }
 

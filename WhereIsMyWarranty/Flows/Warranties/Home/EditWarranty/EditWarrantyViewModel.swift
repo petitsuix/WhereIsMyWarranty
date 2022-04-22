@@ -106,14 +106,7 @@ class EditWarrantyViewModel {
         warranty.warrantyEnd = endDate
         warranty.productPhoto = productPhoto
         warranty.invoicePhoto = invoicePhoto
-//        warranty.price = price ?? 0
-//        warranty.model = model
-//        warranty.serialNumber = serialNumber
-//        warranty.sellersName = sellersName
-//        warranty.sellersLocation = sellersLocation
-//        warranty.sellersContact = sellersContact
-//        warranty.sellersWebsite = sellersWebsite
-//        warranty.notes = notes
+        warranty.notes = notes
         storageService.save()
         warrantySaved()
     }

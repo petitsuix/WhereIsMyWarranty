@@ -11,6 +11,8 @@ class NewWarrantyViewModel: NSObject {
     
     // MARK: - Internal properties
     
+    let newWarranty: Warranty
+    
     weak var newWarrantyProductInfoViewDelegate: NewWarrantyProductInfoViewController?
     weak var newWarrantyPhotoViewDelegate: NewWarrantyPhotoViewController?
     weak var newWarrantyExtraInfoViewDelegate: ExtraInfoViewController?
@@ -25,13 +27,41 @@ class NewWarrantyViewModel: NSObject {
     var isLifetimeWarranty: Bool?
     var productPhoto: Data?
     var invoicePhoto: Data?
-    var price: Double?
-    var model: String?
-    var serialNumber: String?
-    var sellersName: String?
-    var sellersLocation: String?
-    var sellersContact: String?
-    var sellersWebsite: String?
+    var price: Double? {
+        didSet {
+            newWarranty.price = price ?? 0
+        }
+    }
+    var model: String? {
+        didSet {
+            newWarranty.model = model
+        }
+    }
+    var serialNumber: String? {
+        didSet {
+            newWarranty.serialNumber = serialNumber
+        }
+    }
+    var sellersName: String? {
+        didSet {
+            newWarranty.sellersName = sellersName
+        }
+    }
+    var sellersLocation: String? {
+        didSet {
+            newWarranty.sellersLocation = sellersLocation
+        }
+    }
+    var sellersContact: String? {
+        didSet {
+            newWarranty.sellersContact = sellersContact
+        }
+    }
+    var sellersWebsite: String? {
+        didSet {
+            newWarranty.sellersWebsite = sellersWebsite
+        }
+    }
     var notes: String?
     
     var canSaveWarranty: Bool {
@@ -48,6 +78,7 @@ class NewWarrantyViewModel: NSObject {
     init(coordinator: WarrantiesCoordinatorProtocol, storageService: StorageServiceProtocol) {
         self.coordinator = coordinator
         self.storageService = storageService
+        newWarranty = Warranty(context: storageService.viewContext)
     }
     
     func notifyWarrantiesListUpdated() {
@@ -69,20 +100,13 @@ class NewWarrantyViewModel: NSObject {
     }
     
     func saveWarranty() {
-        let newWarranty = Warranty(context: storageService.viewContext)
+       // let newWarranty = Warranty(context: storageService.viewContext)
         newWarranty.name = name
         newWarranty.warrantyStart = startDate
         newWarranty.warrantyEnd = endDate
         newWarranty.lifetimeWarranty = isLifetimeWarranty ?? false
         newWarranty.invoicePhoto = invoicePhoto
         newWarranty.productPhoto = productPhoto
-        newWarranty.price = price ?? 0
-        newWarranty.model = model
-        newWarranty.serialNumber = serialNumber
-        newWarranty.sellersName = sellersName
-        newWarranty.sellersLocation = sellersLocation
-        newWarranty.sellersContact = sellersContact
-        newWarranty.sellersWebsite = sellersWebsite
         newWarranty.notes = notes
         storageService.save()
         warrantySaved()

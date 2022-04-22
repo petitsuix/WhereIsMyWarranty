@@ -232,7 +232,7 @@ extension HomeWarrantiesListViewController {
             categoriesSliderChildVC.view.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             categoriesSliderChildVC.view.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             categoriesSliderChildVC.view.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            warrantiesCollectionView.topAnchor.constraint(equalTo: categoriesSliderChildVC.view.bottomAnchor),
+            warrantiesCollectionView.topAnchor.constraint(equalTo: categoriesSliderChildVC.view.bottomAnchor, constant: 8),
             //warrantiesCollectionView.topAnchor.constraint(equalTo: categoriesSliderChildVC.view.bottomAnchor, constant: 14),
             warrantiesCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
             warrantiesCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),

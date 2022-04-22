@@ -65,7 +65,7 @@ class TextViewTableViewCell: UITableViewCell {
     
     static let identifier = Strings.additionalNotesCellIdentifier
     
-    private let textView = FormTextView()
+    let textView = FormTextView()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
