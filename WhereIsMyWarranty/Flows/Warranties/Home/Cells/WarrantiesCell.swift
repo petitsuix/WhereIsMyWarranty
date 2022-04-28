@@ -107,7 +107,7 @@ extension WarrantiesCell {
         
         contentView.backgroundColor = MWColor.white
         contentView.layer.borderColor = MWColor.bluegrey.cgColor
-        contentView.layer.borderWidth = 1.7
+        contentView.layer.borderWidth = 1
         roundingCellCorners(radius: 10)
         addShadow()
         contentView.addSubview(warrantyProductImageView)

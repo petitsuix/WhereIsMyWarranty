@@ -188,12 +188,12 @@ extension HomeWarrantiesListViewController {
         noWarrantyStackView.addArrangedSubview(noWarrantyBodyLabel)
         noWarrantyStackView.setCustomSpacing(8, after: noWarrantyBodyLabel)
         
-        //        showAllWarrantiesCategoryButton.setTitle("  Tout  ", for: .normal)
-        //        showAllWarrantiesCategoryButton.setTitleColor(MWColor.bluegrey, for: .normal)
-        //        showAllWarrantiesCategoryButton.setTitleColor(MWColor.red, for: .selected)
-        //        showAllWarrantiesCategoryButton.layer.borderColor = MWColor.bluegrey.cgColor
-        //        showAllWarrantiesCategoryButton.layer.borderWidth = 1
-        //        showAllWarrantiesCategoryButton.roundingViewCorners(radius: 14.8)
+//        showAllWarrantiesCategoryButton.setTitle("  Tout  ", for: .normal)
+//        showAllWarrantiesCategoryButton.setTitleColor(MWColor.bluegrey, for: .normal)
+//        showAllWarrantiesCategoryButton.setTitleColor(MWColor.red, for: .selected)
+//        showAllWarrantiesCategoryButton.layer.borderColor = MWColor.bluegrey.cgColor
+//        showAllWarrantiesCategoryButton.layer.borderWidth = 1
+//        showAllWarrantiesCategoryButton.roundingViewCorners(radius: 14.8)
         
         let warrantiesLayout = UICollectionViewFlowLayout()
         warrantiesLayout.scrollDirection = .vertical
