@@ -10,6 +10,7 @@ import UIKit
 @testable import WhereIsMyWarranty
 
 class CoordinatorMock: WarrantiesCoordinatorProtocol {
+   
     
     var navigationController = UINavigationController()
     
@@ -76,4 +77,15 @@ class CoordinatorMock: WarrantiesCoordinatorProtocol {
     func showFullScreenInvoicePhoto(invoicePhoto: Data) {
         showFullScreenInvoicePhotoCalled = true
     }
+    
+    var showNewWarrantyExtraInfoCalled = false
+    func showNewWarrantyExtraInfoScreen() {
+        showNewWarrantyExtraInfoCalled = true
+    }
+    
+    var showEditWarrantyExtraInfoCalled = false
+    func showEditWarrantyExtraInfoScreen() {
+        showEditWarrantyExtraInfoCalled = true
+    }
+    
 }

@@ -73,4 +73,10 @@ class EditWarrantyViewModelTests: XCTestCase {
         let numberOfWeeks = viewModel.calculateNumberOfWeeks()
         XCTAssertEqual(numberOfWeeks, 1.0)
     }
+    
+    func testGoToEditExtraInfoScreen() {
+        XCTAssertFalse(coordinatorMock.showEditWarrantyExtraInfoCalled)
+        viewModel.goToEditExtraInfoScreen()
+        XCTAssertTrue(coordinatorMock.showEditWarrantyExtraInfoCalled)
+    }
 }

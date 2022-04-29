@@ -188,13 +188,6 @@ extension HomeWarrantiesListViewController {
         noWarrantyStackView.addArrangedSubview(noWarrantyBodyLabel)
         noWarrantyStackView.setCustomSpacing(8, after: noWarrantyBodyLabel)
         
-//        showAllWarrantiesCategoryButton.setTitle("  Tout  ", for: .normal)
-//        showAllWarrantiesCategoryButton.setTitleColor(MWColor.bluegrey, for: .normal)
-//        showAllWarrantiesCategoryButton.setTitleColor(MWColor.red, for: .selected)
-//        showAllWarrantiesCategoryButton.layer.borderColor = MWColor.bluegrey.cgColor
-//        showAllWarrantiesCategoryButton.layer.borderWidth = 1
-//        showAllWarrantiesCategoryButton.roundingViewCorners(radius: 14.8)
-        
         let warrantiesLayout = UICollectionViewFlowLayout()
         warrantiesLayout.scrollDirection = .vertical
         warrantiesLayout.itemSize = CGSize(width: view.frame.size.width-16, height: view.frame.size.width/3.3)
@@ -212,7 +205,7 @@ extension HomeWarrantiesListViewController {
         let categoriesSliderChildVC = CategoriesSliderChildViewController()
         categoriesSliderChildVC.view.translatesAutoresizingMaskIntoConstraints = false
         categoriesSliderChildVC.viewModel = viewModel
-        add(categoriesSliderChildVC)
+        // add(categoriesSliderChildVC)
         view.addSubview(warrantiesCollectionView)
         view.addSubview(newWarrantyButton)
         view.addSubview(noWarrantyStackView)
@@ -229,11 +222,8 @@ extension HomeWarrantiesListViewController {
             noWarrantyImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 36),
             noWarrantyImageView.bottomAnchor.constraint(equalTo: newWarrantyButton.topAnchor, constant: 0),
             
-            categoriesSliderChildVC.view.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            categoriesSliderChildVC.view.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            categoriesSliderChildVC.view.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            warrantiesCollectionView.topAnchor.constraint(equalTo: categoriesSliderChildVC.view.bottomAnchor, constant: 8),
-            //warrantiesCollectionView.topAnchor.constraint(equalTo: categoriesSliderChildVC.view.bottomAnchor, constant: 14),
+            warrantiesCollectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8),
+
             warrantiesCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
             warrantiesCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
             warrantiesCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0),
@@ -248,7 +238,5 @@ extension HomeWarrantiesListViewController {
 
 extension HomeWarrantiesListViewController {
     func colorization() {
-        //categoriesSliderChildVC.view.backgroundColor = .yellow
-        // warrantiesCollectionView.backgroundColor = .orange
     }
 }
