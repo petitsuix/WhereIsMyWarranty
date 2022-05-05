@@ -10,6 +10,7 @@ import UIKit
 public enum WarrantyModalType {
     case newWarrantyModal
     case editWarrantyModal
+    case showExtraInfo
 }
 
 class ExtraInfoViewController: UIViewController {
@@ -61,7 +62,7 @@ class ExtraInfoViewController: UIViewController {
         }
     }
     
-    var warrantyModalType: WarrantyModalType = .newWarrantyModal
+    var warrantyModalType: WarrantyModalType = .showExtraInfo
     var newWarrantyViewModel: NewWarrantyViewModel?
     var editWarrantyViewModel: EditWarrantyViewModel?
     
@@ -71,7 +72,6 @@ class ExtraInfoViewController: UIViewController {
     private let endCurrentScreenButton = WarrantyModalNextStepButton()
     
     private var extraInfoTableViewDiffableDataSource: DataSource! = nil
-    private var currentSnapshot: NSDiffableDataSourceSnapshot<Section, Item>! = nil
     private var productInfoList: [Item] = [.price, .model, .serialNumber]
     private var sellersInfoItems: [Item] = [.sellersName, .sellersLocation, .sellersContact, .sellersWebsite]
     private var additionalNotesItem: [Item] = [.notes]
@@ -79,12 +79,12 @@ class ExtraInfoViewController: UIViewController {
     // MARK: - View life cycle methods
     
     override func viewWillAppear(_ animated: Bool) {
-        configureExtraInfoTableViewDataSource()
+        setupView() // Setting up the view before configuring data source in viewDidLoad: doing the other way around causes crashes on versions before iOS 15
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupView()
+        configureExtraInfoTableViewDataSource()
     }
     
     // MARK: - objc methods
@@ -260,7 +260,7 @@ private extension ExtraInfoViewController {
         NSLayoutConstraint.activate([
             parentStackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             parentStackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            parentStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            parentStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8),
             parentStackView.bottomAnchor.constraint(equalTo: endCurrentScreenButton.topAnchor, constant: -16),
             endCurrentScreenButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             endCurrentScreenButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -24),
@@ -278,6 +278,9 @@ extension ExtraInfoViewController {
         override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
             let sectionKind = Section(rawValue: section)
             return sectionKind?.description()
+        }
+        override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+            return false
         }
     }
 }

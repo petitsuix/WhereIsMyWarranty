@@ -9,11 +9,40 @@ import UIKit
 
 class WarrantyDetailsViewController: UIViewController {
     
+    private enum Section: Int, CaseIterable {
+        case additionalProductInfo
+        case sellersInfo
+        case additionalNotes
+        func description() -> String {
+            switch self {
+            case .additionalProductInfo:
+                return "Infos produit"
+            case .sellersInfo:
+                return "Infos vendeur"
+            case .additionalNotes:
+                return "Notes"
+            }
+        }
+    }
+    
+    private enum Item: Hashable {
+        case price
+        case model
+        case serialNumber
+        case sellersName
+        case sellersLocation
+        case sellersContact
+        case sellersWebsite
+        case notes
+    }
+    
     // MARK: - Internal properties
     
     var viewModel: WarrantyDetailsViewModel?
     
     // MARK: - Private properties
+    
+    private var extraInfoTVDiffableDataSource: DataSource! = nil
     
     private let parentStackView = UIStackView()
     
@@ -26,17 +55,21 @@ class WarrantyDetailsViewController: UIViewController {
     
     private let bottomBorder = UIView()
     
-    private  let invoicePhotoStackView = UIStackView()
+    private let invoicePhotoStackView = UIStackView()
     private let invoicePhotoTitle = UILabel()
     private let invoiceImageView = UIImageView()
     
-    private let notesStackView = UIStackView()
-    private let notesSectionTitle = UILabel()
-    private let notes = UITextView()
+    private let extraWarrantyInfoStackView = UIStackView()
+    private let extraWarrantyInfoTitle = UILabel()
+    private let extraInfoTableView = UITableView(frame: .zero, style: .plain)
     
     private let bottomButtonsStackView = UIStackView()
     private let editWarrantyButton = UIButton()
     private let deleteWarrantyButton = UIButton()
+    
+    private var productInfoList: [Item] = [.price, .model, .serialNumber]
+    private var sellersInfoItems: [Item] = [.sellersName, .sellersLocation, .sellersContact, .sellersWebsite]
+    private var additionalNotesItem: [Item] = [.notes]
     
     // MARK: - View life cycle methods
     
@@ -44,10 +77,10 @@ class WarrantyDetailsViewController: UIViewController {
         super.viewDidLoad()
         let notificationName = NSNotification.Name(rawValue: Strings.warrantyUpdatedNotif)
         NotificationCenter.default.addObserver(self, selector: #selector(warrantyUpdated), name: notificationName, object: nil)
+        configureExtraInfoTableViewDataSource()
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
         setupView()
         setupData()
     }
@@ -80,6 +113,64 @@ class WarrantyDetailsViewController: UIViewController {
     
     // MARK: - Methods
     
+    private func configureExtraInfoTableViewDataSource() {
+        extraInfoTVDiffableDataSource = DataSource(tableView: extraInfoTableView, cellProvider: { tableView, indexPath, itemIdentifier in
+            switch itemIdentifier {
+            case .price:
+                let cell = tableView.dequeueReusableCell(withIdentifier: "WarrantyDetailsExtraInfoCell", for: indexPath) as? WarrantyDetailsExtraInfoCell
+                cell?.title.text = "Prix"
+                cell?.body.text = String(self.viewModel?.warranty.price ?? 0)
+                return cell
+            case .model:
+                let cell = tableView.dequeueReusableCell(withIdentifier: "WarrantyDetailsExtraInfoCell", for: indexPath) as? WarrantyDetailsExtraInfoCell
+                cell?.title.text = "Modèle"
+                cell?.body.text = self.viewModel?.warranty.model
+                return cell
+            case .serialNumber:
+                let cell = tableView.dequeueReusableCell(withIdentifier: "WarrantyDetailsExtraInfoCell", for: indexPath) as? WarrantyDetailsExtraInfoCell
+                cell?.title.text = "Numéro de série"
+                cell?.body.text = self.viewModel?.warranty.serialNumber
+                return cell
+            case .sellersName:
+                let cell = tableView.dequeueReusableCell(withIdentifier: "WarrantyDetailsExtraInfoCell", for: indexPath) as? WarrantyDetailsExtraInfoCell
+                cell?.title.text = "Nom"
+                cell?.body.text = self.viewModel?.warranty.sellersName
+                return cell
+            case .sellersLocation:
+                let cell = tableView.dequeueReusableCell(withIdentifier: "WarrantyDetailsExtraInfoCell", for: indexPath) as? WarrantyDetailsExtraInfoCell
+                cell?.title.text = "Adresse"
+                cell?.body.text = self.viewModel?.warranty.sellersLocation
+                return cell
+            case .sellersWebsite:
+                let cell = tableView.dequeueReusableCell(withIdentifier: "WarrantyDetailsExtraInfoCell", for: indexPath) as? WarrantyDetailsExtraInfoCell
+                cell?.title.text = "Site web"
+                cell?.body.text = self.viewModel?.warranty.sellersWebsite
+                return cell
+            case .sellersContact:
+                let cell = tableView.dequeueReusableCell(withIdentifier: "WarrantyDetailsExtraInfoCell", for: indexPath) as? WarrantyDetailsExtraInfoCell
+                cell?.title.text = "Contact"
+                cell?.body.text = self.viewModel?.warranty.sellersContact
+                return cell
+            case .notes:
+                let cell = tableView.dequeueReusableCell(withIdentifier: "WarrantyDetailsExtraInfoCell", for: indexPath) as? WarrantyDetailsExtraInfoCell
+                cell?.title.text = "Notes"
+                cell?.body.text = self.viewModel?.warranty.notes
+                return cell
+            }
+        })
+        let snapshot = createExtraInfosSnapshot()
+        extraInfoTVDiffableDataSource.apply(snapshot)
+    }
+    
+    private func createExtraInfosSnapshot() -> NSDiffableDataSourceSnapshot<Section, Item> {
+        var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
+        snapshot.appendSections([.additionalProductInfo, .sellersInfo, .additionalNotes])
+        snapshot.appendItems(productInfoList, toSection: .additionalProductInfo)
+        snapshot.appendItems(sellersInfoItems, toSection: .sellersInfo)
+        snapshot.appendItems(additionalNotesItem, toSection: .additionalNotes)
+        return snapshot
+    }
+    
     private func deleteWarranty() {
         viewModel?.deleteWarranty()
     }
@@ -102,7 +193,6 @@ class WarrantyDetailsViewController: UIViewController {
 extension WarrantyDetailsViewController {
     
     private func setupView() {
-        self.title = Strings.warrantiesTitle
         view.backgroundColor = MWColor.white
         
         productImageView.translatesAutoresizingMaskIntoConstraints = false
@@ -151,6 +241,32 @@ extension WarrantyDetailsViewController {
         invoicePhotoStackView.alignment = .leading
         invoicePhotoStackView.addArrangedSubview(invoicePhotoTitle)
         invoicePhotoStackView.addArrangedSubview(invoiceImageView)
+        invoicePhotoStackView.backgroundColor = .green
+        
+        extraWarrantyInfoTitle.text = "Informations additionnelles"
+        extraWarrantyInfoTitle.font = MWFont.invoicePhotoTitle
+        
+        extraInfoTableView.translatesAutoresizingMaskIntoConstraints = false
+        extraInfoTableView.backgroundColor = .blue
+        extraInfoTableView.register(WarrantyDetailsExtraInfoCell.self, forCellReuseIdentifier: "WarrantyDetailsExtraInfoCell")
+        extraInfoTableView.delegate = self
+
+        extraWarrantyInfoStackView.axis = .vertical
+        extraWarrantyInfoStackView.spacing = 8
+        extraWarrantyInfoStackView.alignment = .leading
+//        extraWarrantyInfoStackView.addArrangedSubview(extraWarrantyInfoTitle)
+//        extraWarrantyInfoStackView.addArrangedSubview(extraInfoTableView)
+        extraWarrantyInfoStackView.backgroundColor = .orange
+        
+        
+        parentStackView.axis = .vertical
+        parentStackView.translatesAutoresizingMaskIntoConstraints = false
+        parentStackView.spacing = 24
+        parentStackView.addArrangedSubview(topParentStackView)
+        parentStackView.addArrangedSubview(bottomBorder)
+        parentStackView.addArrangedSubview(invoicePhotoStackView)
+        parentStackView.addArrangedSubview(extraWarrantyInfoStackView)
+        parentStackView.backgroundColor = .red
         
         editWarrantyButton.setTitle(Strings.edit, for: .normal)
         editWarrantyButton.titleLabel?.font = MWFont.editWarrantyButton
@@ -173,20 +289,23 @@ extension WarrantyDetailsViewController {
         bottomButtonsStackView.addArrangedSubview(editWarrantyButton)
         bottomButtonsStackView.addArrangedSubview(deleteWarrantyButton)
         
-        parentStackView.axis = .vertical
-        parentStackView.translatesAutoresizingMaskIntoConstraints = false
-        parentStackView.spacing = 24
-        parentStackView.addArrangedSubview(topParentStackView)
-        parentStackView.addArrangedSubview(bottomBorder)
-        parentStackView.addArrangedSubview(invoicePhotoStackView)
         view.addSubview(parentStackView)
+        view.addSubview(extraInfoTableView)
         view.addSubview(bottomButtonsStackView)
         
         NSLayoutConstraint.activate([
+            invoiceImageView.heightAnchor.constraint(equalToConstant: 190),
+            invoiceImageView.centerXAnchor.constraint(equalTo: invoicePhotoStackView.centerXAnchor),
+
             parentStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 24),
             parentStackView.bottomAnchor.constraint(lessThanOrEqualTo: bottomButtonsStackView.topAnchor, constant: -8),
             parentStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
             parentStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
+            
+            extraInfoTableView.topAnchor.constraint(equalTo: parentStackView.bottomAnchor),
+            extraInfoTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
+            extraInfoTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
+            extraInfoTableView.heightAnchor.constraint(equalToConstant: 700),
     
             bottomButtonsStackView.heightAnchor.constraint(equalToConstant: 60),
             bottomButtonsStackView.centerXAnchor.constraint(equalTo: parentStackView.centerXAnchor),
@@ -211,6 +330,7 @@ extension WarrantyDetailsViewController {
     }
     
     func setupData() {
+        self.title = viewModel?.warranty.name
         if let image = viewModel?.warranty.productPhoto {
             productImageView.image = UIImage(data: image)
         }
@@ -235,6 +355,32 @@ extension WarrantyDetailsViewController {
         }
         if let invoicePhotoAsData = viewModel?.warranty.invoicePhoto {
             invoiceImageView.image = UIImage(data: invoicePhotoAsData)
+        }
+    }
+}
+
+extension WarrantyDetailsViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.section == Section.additionalNotes.rawValue {
+            return 120
+        } else {
+            return 50
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 30
+    }
+}
+
+extension WarrantyDetailsViewController {
+    private class DataSource: UITableViewDiffableDataSource<Section, Item> {
+        override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+            let sectionKind = Section(rawValue: section)
+            return sectionKind?.description()
+        }
+        override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+            return false
         }
     }
 }

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SettingsCoordinator: Coordinator {
+class SettingsCoordinator: Coordinator, SettingsCoordinatorProtocol {
     
     // MARK: - Internal properties
     
@@ -29,9 +29,29 @@ class SettingsCoordinator: Coordinator {
     
     // MARK: - Private methods
     
-   private func showSettingsScreen() {
+    internal func showSettingsScreen() {
         let settingsVC = SettingsViewController()
-        // let settingsViewModel = SettingsViewModel(coordinator: self)
+        let settingsViewModel = SettingsViewModel(coordinator: self)
+        settingsViewModel.settingsVCViewDelegate = settingsVC
+        settingsVC.viewModel = settingsViewModel
         navigationController.setViewControllers([settingsVC], animated: false)
+    }
+    
+    func showPrivacyPolicyScreen() {
+        let privacyPolicyViewController = TextViewController()
+        let privacyPolicyViewModel = SettingsViewModel(coordinator: self)
+        privacyPolicyViewModel.textVCViewDelegate = privacyPolicyViewController
+        privacyPolicyViewController.viewModel = privacyPolicyViewModel
+        privacyPolicyViewController.controllerType = .privacyPolicy
+        navigationController.pushViewController(privacyPolicyViewController, animated: true)
+    }
+    
+    func showTermsAndConditionsScreen() {
+        let termsAndConditionsViewController = TextViewController()
+        let termsAndConditionsViewModel = SettingsViewModel(coordinator: self)
+        termsAndConditionsViewModel.textVCViewDelegate = termsAndConditionsViewController
+        termsAndConditionsViewController.viewModel = termsAndConditionsViewModel
+        termsAndConditionsViewController.controllerType = .termsAndConditions
+        navigationController.pushViewController(termsAndConditionsViewController, animated: true)
     }
 }

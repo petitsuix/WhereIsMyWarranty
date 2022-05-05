@@ -32,6 +32,7 @@ class HomeWarrantiesListViewController: UIViewController {
     // MARK: - Private properties
     
     private weak var coordinator: AppCoordinator?
+    
     private var warrantiesCVDiffableDataSource: UICollectionViewDiffableDataSource<WarrantiesSection, WarrantyItem>!
     
     private var warrantiesCollectionView: UICollectionView!
@@ -193,6 +194,7 @@ extension HomeWarrantiesListViewController {
         warrantiesLayout.itemSize = CGSize(width: view.frame.size.width-16, height: view.frame.size.width/3.3)
         warrantiesLayout.minimumLineSpacing = 24
         warrantiesCollectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: warrantiesLayout)
+        warrantiesCollectionView.backgroundColor = MWColor.white
         warrantiesCollectionView.translatesAutoresizingMaskIntoConstraints = false
         warrantiesCollectionView.register(WarrantiesCell.self, forCellWithReuseIdentifier: WarrantiesCell.identifier)
         warrantiesCollectionView.delegate = self

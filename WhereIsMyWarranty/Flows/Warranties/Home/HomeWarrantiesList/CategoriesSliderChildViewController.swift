@@ -43,7 +43,7 @@ class CategoriesSliderChildViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupView()
+       // setupView()
         
         // Do any additional setup after loading the view.
     }
@@ -119,6 +119,7 @@ extension CategoriesSliderChildViewController: UICollectionViewDelegate {
 
 extension CategoriesSliderChildViewController {
     
+    @available(iOS 15.0, *)
     private func layout() -> UICollectionViewLayout {
         let layout = UICollectionViewCompositionalLayout { (sectionIndex: Int, _ : NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
             
@@ -156,7 +157,7 @@ extension CategoriesSliderChildViewController {
 //        let categoriesLayout = UICollectionViewFlowLayout()
 //        categoriesLayout.scrollDirection = .horizontal
 //        categoriesLayout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
-        categoriesCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout())
+//        categoriesCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout())
         categoriesCollectionView.register(TopCategoriesCell.self, forCellWithReuseIdentifier: TopCategoriesCell.identifier)
         categoriesCollectionView.delegate = self
         categoriesCollectionView.backgroundColor = MWColor.white

@@ -16,6 +16,14 @@ extension UIViewController {
             child.didMove(toParent: self)
         }
     
+    func add2(_ child: UIViewController) {
+            addChild(child)
+            child.view.frame = view.bounds
+            view.addSubview(child.view)
+            child.didMove(toParent: self)
+        }
+    
+    
     func remove() {
             guard parent != nil else { return }
             willMove(toParent: nil)

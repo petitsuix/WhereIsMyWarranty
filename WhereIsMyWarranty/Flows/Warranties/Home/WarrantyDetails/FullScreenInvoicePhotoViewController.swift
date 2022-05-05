@@ -26,9 +26,14 @@ class FullScreenInvoicePhotoViewController: UIViewController {
         super.viewWillAppear(animated)
     }
     
+    @objc func dismissInvoicePhotoModal() {
+        dismiss(animated: true)
+    }
+    
     // MARK: - UI configuration
     
     private func setup() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .close, target: self, action: #selector(dismissInvoicePhotoModal))
         view.backgroundColor = MWColor.white
         
         imageView.translatesAutoresizingMaskIntoConstraints = false

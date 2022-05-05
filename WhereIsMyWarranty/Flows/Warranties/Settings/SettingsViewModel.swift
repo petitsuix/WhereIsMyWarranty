@@ -11,12 +11,21 @@ class SettingsViewModel: NSObject {
     
     // MARK: - Properties
     
-    weak var viewDelegate: SettingsViewController?
-    private let coordinator: AppCoordinator
+    weak var settingsVCViewDelegate: SettingsViewController?
+    weak var textVCViewDelegate: TextViewController?
+    private let coordinator: SettingsCoordinator
     
     // MARK: - Methods
     
-    init(coordinator: AppCoordinator) {
+    init(coordinator: SettingsCoordinator) {
         self.coordinator = coordinator
+    }
+    
+    func showPrivacyPolicyScreen() {
+        coordinator.showPrivacyPolicyScreen()
+    }
+    
+    func showTermsAndConditionsScreen() {
+        coordinator.showTermsAndConditionsScreen()
     }
 }

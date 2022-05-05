@@ -10,6 +10,8 @@ import UIKit
 class SettingsViewController: UIViewController {
     
     // MARK: - Properties
+    var viewModel: SettingsViewModel?
+    private weak var coordinator: SettingsCoordinator?
     
     private let navBarAppearance = UINavigationBarAppearance()
     
@@ -41,6 +43,14 @@ class SettingsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
+    }
+    
+    @objc func goToPrivacyPolicyScreen() {
+        viewModel?.showPrivacyPolicyScreen()
+    }
+    
+    @objc func goToTermsAndConditionsScreen() {
+        viewModel?.showTermsAndConditionsScreen()
     }
 }
 
@@ -84,7 +94,7 @@ extension SettingsViewController {
         
         parentSettingsStackView.axis = .vertical
         parentSettingsStackView.spacing = 24
-        parentSettingsStackView.isUserInteractionEnabled = false
+        parentSettingsStackView.isUserInteractionEnabled = true
         parentSettingsStackView.alpha = 0.5
         
         parentSettingsStackView.addArrangedSubview(notificationsStackView)
@@ -103,17 +113,19 @@ extension SettingsViewController {
         privacyPolicyButton.setImage(MWImages.chevron, for: .normal)
         privacyPolicyButton.tintColor = MWColor.bluegrey
         privacyPolicyButton.semanticContentAttribute = .forceRightToLeft
+        privacyPolicyButton.addTarget(self, action: #selector(goToPrivacyPolicyScreen), for: .touchUpInside)
         
         termsAndConditionsButton.setTitle(Strings.termsAndConditions, for: .normal)
         termsAndConditionsButton.setTitleColor(MWColor.bluegrey, for: .normal)
         termsAndConditionsButton.setImage(MWImages.chevron, for: .normal)
         termsAndConditionsButton.tintColor = MWColor.bluegrey
         termsAndConditionsButton.semanticContentAttribute = .forceRightToLeft
+        termsAndConditionsButton.addTarget(self, action: #selector(goToTermsAndConditionsScreen), for: .touchUpInside)
         
         privacyAndTermsStackView.axis = .vertical
         privacyAndTermsStackView.spacing = 24
         privacyAndTermsStackView.alignment = .leading
-        privacyAndTermsStackView.alpha = 0.5
+       // privacyAndTermsStackView.alpha = 0.5
         
         privacyAndTermsStackView.addArrangedSubview(privacyPolicyButton)
         privacyAndTermsStackView.addArrangedSubview(termsAndConditionsButton)

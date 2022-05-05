@@ -49,6 +49,7 @@ class AppCoordinator: NSObject, Coordinator, UITabBarControllerDelegate {
         tabBarController.viewControllers = tabBarControllers
         tabBarController.tabBar.isTranslucent = false
         tabBarController.tabBar.backgroundColor = MWColor.paleOrange
+        tabBarController.tabBar.barTintColor = MWColor.paleOrange
     }
     
     // MARK: - Methods
