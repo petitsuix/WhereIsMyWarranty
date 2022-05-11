@@ -91,6 +91,17 @@ class TextViewTableViewCell: UITableViewCell {
 extension TextViewTableViewCell {
     
     func setup() {
+        textView.autocapitalizationType = .none
+        textView.enablesReturnKeyAutomatically = true
+        textView.textColor = .label
+        textView.addDoneToolbar()
+        // textField.font = UIFont.systemFont(ofSize: <#T##CGFloat#>)
+       // textField.keyboardType = .namePhonePad A exposer car c'est pas très générique
+       // textField.textContentType = .emailAddress
+        textView.spellCheckingType = .no
+        textView.autocorrectionType = .no
+       // textField.isEnabled
+        
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.textColor = UIColor.lightGray
         backgroundColor = MWColor.white

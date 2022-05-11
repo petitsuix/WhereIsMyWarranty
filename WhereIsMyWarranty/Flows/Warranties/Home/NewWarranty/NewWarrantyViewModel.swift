@@ -11,7 +11,7 @@ class NewWarrantyViewModel: NSObject {
     
     // MARK: - Internal properties
     
-    let newWarranty: Warranty
+    var newWarranty: Warranty?
     
     weak var newWarrantyProductInfoViewDelegate: NewWarrantyProductInfoViewController?
     weak var newWarrantyPhotoViewDelegate: NewWarrantyPhotoViewController?
@@ -29,37 +29,37 @@ class NewWarrantyViewModel: NSObject {
     var invoicePhoto: Data?
     var price: Double? {
         didSet {
-            newWarranty.price = price ?? 0
+            newWarranty?.price = price ?? 0
         }
     }
     var model: String? {
         didSet {
-            newWarranty.model = model
+            newWarranty?.model = model
         }
     }
     var serialNumber: String? {
         didSet {
-            newWarranty.serialNumber = serialNumber
+            newWarranty?.serialNumber = serialNumber
         }
     }
     var sellersName: String? {
         didSet {
-            newWarranty.sellersName = sellersName
+            newWarranty?.sellersName = sellersName
         }
     }
     var sellersLocation: String? {
         didSet {
-            newWarranty.sellersLocation = sellersLocation
+            newWarranty?.sellersLocation = sellersLocation
         }
     }
     var sellersContact: String? {
         didSet {
-            newWarranty.sellersContact = sellersContact
+            newWarranty?.sellersContact = sellersContact
         }
     }
     var sellersWebsite: String? {
         didSet {
-            newWarranty.sellersWebsite = sellersWebsite
+            newWarranty?.sellersWebsite = sellersWebsite
         }
     }
     var notes: String?
@@ -78,7 +78,7 @@ class NewWarrantyViewModel: NSObject {
     init(coordinator: WarrantiesCoordinatorProtocol, storageService: StorageServiceProtocol) {
         self.coordinator = coordinator
         self.storageService = storageService
-        newWarranty = Warranty(context: storageService.viewContext)
+       // newWarranty = Warranty(context: storageService.viewContext)
     }
     
     func notifyWarrantiesListUpdated() {
@@ -100,14 +100,14 @@ class NewWarrantyViewModel: NSObject {
     }
     
     func saveWarranty() {
-       // let newWarranty = Warranty(context: storageService.viewContext)
-        newWarranty.name = name
-        newWarranty.warrantyStart = startDate
-        newWarranty.warrantyEnd = endDate
-        newWarranty.lifetimeWarranty = isLifetimeWarranty ?? false
-        newWarranty.invoicePhoto = invoicePhoto
-        newWarranty.productPhoto = productPhoto
-        newWarranty.notes = notes
+        newWarranty = Warranty(context: storageService.viewContext)
+        newWarranty?.name = name
+        newWarranty?.warrantyStart = startDate
+        newWarranty?.warrantyEnd = endDate
+        newWarranty?.lifetimeWarranty = isLifetimeWarranty ?? false
+        newWarranty?.invoicePhoto = invoicePhoto
+        newWarranty?.productPhoto = productPhoto
+        newWarranty?.notes = notes
         storageService.save()
         warrantySaved()
     }

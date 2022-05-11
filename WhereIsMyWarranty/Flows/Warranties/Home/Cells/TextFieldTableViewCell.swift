@@ -44,7 +44,7 @@ final class TextFieldTableViewCell: UITableViewCell { // Exprime l'intention com
 // TODO:
 extension TextFieldTableViewCell {
     func setup() {
-        textField.autocapitalizationType = .words
+        textField.autocapitalizationType = .none
         textField.clearButtonMode = .whileEditing
         textField.enablesReturnKeyAutomatically = true
         textField.textColor = .label

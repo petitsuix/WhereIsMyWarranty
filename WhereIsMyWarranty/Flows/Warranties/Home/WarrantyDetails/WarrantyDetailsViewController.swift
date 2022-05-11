@@ -89,6 +89,8 @@ class WarrantyDetailsViewController: UIViewController {
     
     @objc func warrantyUpdated() {
         setupData()
+        let snapshot = createExtraInfosSnapshot()
+        extraInfoTVDiffableDataSource.apply(snapshot)
     }
     
     @objc func showFullScreenImage() {
@@ -241,23 +243,22 @@ extension WarrantyDetailsViewController {
         invoicePhotoStackView.alignment = .leading
         invoicePhotoStackView.addArrangedSubview(invoicePhotoTitle)
         invoicePhotoStackView.addArrangedSubview(invoiceImageView)
-        invoicePhotoStackView.backgroundColor = .green
+     //   invoicePhotoStackView.backgroundColor = .green
         
         extraWarrantyInfoTitle.text = "Informations additionnelles"
         extraWarrantyInfoTitle.font = MWFont.invoicePhotoTitle
         
         extraInfoTableView.translatesAutoresizingMaskIntoConstraints = false
-        extraInfoTableView.backgroundColor = .blue
+      //  extraInfoTableView.backgroundColor = .blue
         extraInfoTableView.register(WarrantyDetailsExtraInfoCell.self, forCellReuseIdentifier: "WarrantyDetailsExtraInfoCell")
         extraInfoTableView.delegate = self
 
         extraWarrantyInfoStackView.axis = .vertical
         extraWarrantyInfoStackView.spacing = 8
         extraWarrantyInfoStackView.alignment = .leading
-//        extraWarrantyInfoStackView.addArrangedSubview(extraWarrantyInfoTitle)
-//        extraWarrantyInfoStackView.addArrangedSubview(extraInfoTableView)
-        extraWarrantyInfoStackView.backgroundColor = .orange
-        
+        extraWarrantyInfoStackView.addArrangedSubview(extraWarrantyInfoTitle)
+        extraWarrantyInfoStackView.addArrangedSubview(extraInfoTableView)
+       // extraWarrantyInfoStackView.backgroundColor = .orange
         
         parentStackView.axis = .vertical
         parentStackView.translatesAutoresizingMaskIntoConstraints = false
@@ -266,7 +267,7 @@ extension WarrantyDetailsViewController {
         parentStackView.addArrangedSubview(bottomBorder)
         parentStackView.addArrangedSubview(invoicePhotoStackView)
         parentStackView.addArrangedSubview(extraWarrantyInfoStackView)
-        parentStackView.backgroundColor = .red
+      //  parentStackView.backgroundColor = .red
         
         editWarrantyButton.setTitle(Strings.edit, for: .normal)
         editWarrantyButton.titleLabel?.font = MWFont.editWarrantyButton
@@ -294,7 +295,7 @@ extension WarrantyDetailsViewController {
         view.addSubview(bottomButtonsStackView)
         
         NSLayoutConstraint.activate([
-            invoiceImageView.heightAnchor.constraint(equalToConstant: 190),
+            invoiceImageView.heightAnchor.constraint(equalToConstant: 150),
             invoiceImageView.centerXAnchor.constraint(equalTo: invoicePhotoStackView.centerXAnchor),
 
             parentStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 24),
@@ -302,10 +303,11 @@ extension WarrantyDetailsViewController {
             parentStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
             parentStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
             
-            extraInfoTableView.topAnchor.constraint(equalTo: parentStackView.bottomAnchor),
-            extraInfoTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
-            extraInfoTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
-            extraInfoTableView.heightAnchor.constraint(equalToConstant: 700),
+            extraInfoTableView.topAnchor.constraint(equalTo: extraWarrantyInfoTitle.bottomAnchor),
+            extraInfoTableView.leadingAnchor.constraint(equalTo: parentStackView.leadingAnchor, constant: 0),
+            extraInfoTableView.trailingAnchor.constraint(equalTo: parentStackView.trailingAnchor, constant: 0),
+            // extraInfoTableView.heightAnchor.constraint(equalToConstant: 200),
+            extraInfoTableView.bottomAnchor.constraint(equalTo: bottomButtonsStackView.topAnchor, constant: -8),
     
             bottomButtonsStackView.heightAnchor.constraint(equalToConstant: 60),
             bottomButtonsStackView.centerXAnchor.constraint(equalTo: parentStackView.centerXAnchor),
@@ -364,12 +366,12 @@ extension WarrantyDetailsViewController: UITableViewDelegate {
         if indexPath.section == Section.additionalNotes.rawValue {
             return 120
         } else {
-            return 50
+            return 60
         }
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 30
+        return 20
     }
 }
 

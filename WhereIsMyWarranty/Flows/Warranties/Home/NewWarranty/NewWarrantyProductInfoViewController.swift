@@ -141,6 +141,16 @@ class NewWarrantyProductInfoViewController: UIViewController {
         }
     }
     
+//    @objc func deletionAlert2() {
+//        let alertVC = UIAlertController(title: "Voulez-vous fermer cette page ?", message: "Les modifications apportées ne seront pas enregistrées", preferredStyle: .actionSheet)
+//        alertVC.addAction(UIAlertAction(title: "Oui", style: .destructive, handler: { _ in
+//            self.dismiss(animated: true)
+//            self.viewModel?.newWarranty = nil
+//        }))
+//        alertVC.addAction(UIAlertAction(title: "Annuler", style: .cancel, handler: nil))
+//        present(alertVC, animated: true, completion: nil)
+//    }
+    
     // MARK: - Methods
     
     func canGoToNextStep(canSave: Bool) {

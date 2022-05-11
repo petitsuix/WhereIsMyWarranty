@@ -41,19 +41,20 @@ class WarrantyDetailsExtraInfoCell: UITableViewCell {
 
 extension WarrantyDetailsExtraInfoCell {
     func setup() {
-        title.font = UIFont.preferredFont(forTextStyle: .title1)
+        title.font = UIFont.preferredFont(forTextStyle: .headline)
         parentStackView.translatesAutoresizingMaskIntoConstraints = false
         parentStackView.axis = .vertical
         parentStackView.addArrangedSubview(title)
         parentStackView.addArrangedSubview(body)
         backgroundColor = .white
+        self.isUserInteractionEnabled = false
         contentView.addSubview(parentStackView)
         
         NSLayoutConstraint.activate([
-            parentStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 0),
+            parentStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
             parentStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 0),
             parentStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 0),
-            parentStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 0)
+            parentStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 4)
         ])
     }
 }
