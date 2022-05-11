@@ -254,8 +254,9 @@ extension WarrantyDetailsViewController {
         extraInfoTableView.delegate = self
 
         extraWarrantyInfoStackView.axis = .vertical
-        extraWarrantyInfoStackView.spacing = 8
-        extraWarrantyInfoStackView.alignment = .leading
+       // extraWarrantyInfoStackView.spacing = 124
+        //extraWarrantyInfoStackView.alignment = .leading
+        //extraWarrantyInfoStackView.distribution = .fillProportionally
         extraWarrantyInfoStackView.addArrangedSubview(extraWarrantyInfoTitle)
         extraWarrantyInfoStackView.addArrangedSubview(extraInfoTableView)
        // extraWarrantyInfoStackView.backgroundColor = .orange
@@ -295,29 +296,9 @@ extension WarrantyDetailsViewController {
         view.addSubview(bottomButtonsStackView)
         
         NSLayoutConstraint.activate([
-            invoiceImageView.heightAnchor.constraint(equalToConstant: 150),
+            invoiceImageView.heightAnchor.constraint(lessThanOrEqualToConstant: 150),
             invoiceImageView.centerXAnchor.constraint(equalTo: invoicePhotoStackView.centerXAnchor),
-
-            parentStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 24),
-            parentStackView.bottomAnchor.constraint(lessThanOrEqualTo: bottomButtonsStackView.topAnchor, constant: -8),
-            parentStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
-            parentStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
-            
-            extraInfoTableView.topAnchor.constraint(equalTo: extraWarrantyInfoTitle.bottomAnchor),
-            extraInfoTableView.leadingAnchor.constraint(equalTo: parentStackView.leadingAnchor, constant: 0),
-            extraInfoTableView.trailingAnchor.constraint(equalTo: parentStackView.trailingAnchor, constant: 0),
-            // extraInfoTableView.heightAnchor.constraint(equalToConstant: 200),
-            extraInfoTableView.bottomAnchor.constraint(equalTo: bottomButtonsStackView.topAnchor, constant: -8),
-    
-            bottomButtonsStackView.heightAnchor.constraint(equalToConstant: 60),
-            bottomButtonsStackView.centerXAnchor.constraint(equalTo: parentStackView.centerXAnchor),
-            bottomButtonsStackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -8),
-            
-            deleteWarrantyButton.widthAnchor.constraint(equalToConstant: 140),
-            deleteWarrantyButton.heightAnchor.constraint(equalToConstant: 37),
-            
-            editWarrantyButton.widthAnchor.constraint(equalToConstant: 140),
-            editWarrantyButton.heightAnchor.constraint(equalToConstant: 37),
+           
             
             warrantyStatusLabel.leadingAnchor.constraint(equalTo: warrantyStatusView.leadingAnchor, constant: 8),
             warrantyStatusLabel.trailingAnchor.constraint(equalTo: warrantyStatusView.trailingAnchor, constant: -8),
@@ -327,7 +308,28 @@ extension WarrantyDetailsViewController {
             bottomBorder.heightAnchor.constraint(equalToConstant: 1),
 
             productImageView.heightAnchor.constraint(equalToConstant: 130),
-            productImageView.widthAnchor.constraint(equalToConstant: 130)
+            productImageView.widthAnchor.constraint(equalToConstant: 130),
+            
+            extraInfoTableView.topAnchor.constraint(equalTo: extraWarrantyInfoTitle.bottomAnchor, constant: 0),
+            extraInfoTableView.leadingAnchor.constraint(equalTo: parentStackView.leadingAnchor, constant: 0),
+            extraInfoTableView.trailingAnchor.constraint(equalTo: parentStackView.trailingAnchor, constant: 0),
+            // extraInfoTableView.heightAnchor.constraint(equalToConstant: 200),
+            extraInfoTableView.bottomAnchor.constraint(equalTo: bottomButtonsStackView.topAnchor, constant: -8),
+            
+            parentStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 24),
+            parentStackView.bottomAnchor.constraint(lessThanOrEqualTo: bottomButtonsStackView.topAnchor, constant: -8),
+            parentStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
+            parentStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
+            
+            editWarrantyButton.widthAnchor.constraint(equalToConstant: 140),
+            editWarrantyButton.heightAnchor.constraint(equalToConstant: 37),
+            
+            deleteWarrantyButton.widthAnchor.constraint(equalToConstant: 140),
+            deleteWarrantyButton.heightAnchor.constraint(equalToConstant: 37),
+            
+            bottomButtonsStackView.heightAnchor.constraint(equalToConstant: 60),
+            bottomButtonsStackView.centerXAnchor.constraint(equalTo: parentStackView.centerXAnchor),
+            bottomButtonsStackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -8)
         ])
     }
     

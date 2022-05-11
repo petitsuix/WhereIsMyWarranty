@@ -51,7 +51,7 @@ class NewWarrantyPhotoViewController: UIViewController {
     
     @objc func goToExtraInfoScreen() {
         photoDidChange()
-        if imageView.image == nil {
+        if imageView.image == nil && photoMode == .productPhoto {
             guard let randomImage = MWImages.doggos.randomElement() else { return }
             viewModel?.productPhoto = randomImage.pngData()
         }
