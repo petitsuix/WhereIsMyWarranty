@@ -85,9 +85,31 @@ class ExtraInfoViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureExtraInfoTableViewDataSource()
+//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
+//    override func viewWillDisappear(_ animated: Bool) {
+//        super.viewWillDisappear(animated)
+////        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+////        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+//    }
+    
     // MARK: - objc methods
+    
+    // FIXME: 
+//    @objc func keyboardWillHide() {
+//        self.view.frame.origin.y = 0
+//    }
+//
+//    @objc func keyboardWillChange(notification: NSNotification) {
+//        let notesCell = tableView.cellForRow(at: IndexPath(row: 0, section: 2)) as? TextViewTableViewCell
+//        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+//            if tableView.cellForRow(at: IndexPath(row: 0, section: 2))?.isFirstResponder {
+//                self.view.frame.origin.y = -keyboardSize.height
+//            }
+//        }
+//    }
     
     @objc func saveWarranty() {
         let notesCell = tableView.cellForRow(at: IndexPath(row: 0, section: 2)) as? TextViewTableViewCell // Unlike other cells, notes is a text view and cannot profit from the addTarget method to update the viewModel. Workaround found so far is to save its value here, when saving the warranty.
