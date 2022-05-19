@@ -7,7 +7,7 @@
 
 import UIKit
 
-class WarrantyModalNextStepButton: UIButton {
+class EndCurrentScreenButton: UIButton {
     
     func setup(title: String) {
         translatesAutoresizingMaskIntoConstraints = false
