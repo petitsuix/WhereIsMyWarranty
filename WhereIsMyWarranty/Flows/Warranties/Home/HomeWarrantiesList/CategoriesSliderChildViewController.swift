@@ -147,11 +147,11 @@ extension CategoriesSliderChildViewController {
     }
     
     private func setupView() {
-        view.backgroundColor = MWColor.white
+        view.backgroundColor = MWColor.systemBackground
         
-        addCategoryButton.backgroundColor = MWColor.white
+        addCategoryButton.backgroundColor = MWColor.systemBackground
         addCategoryButton.setImage(MWImages.addCategoryButtonImage, for: .normal)
-        addCategoryButton.tintColor = MWColor.bluegrey
+        addCategoryButton.tintColor = MWColor.bluegreyElement
         addCategoryButton.addTarget(self, action: #selector(showAlert), for: .touchUpInside)
         
 //        let categoriesLayout = UICollectionViewFlowLayout()
@@ -160,13 +160,13 @@ extension CategoriesSliderChildViewController {
 //        categoriesCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout())
         categoriesCollectionView.register(TopCategoriesCell.self, forCellWithReuseIdentifier: TopCategoriesCell.identifier)
         categoriesCollectionView.delegate = self
-        categoriesCollectionView.backgroundColor = MWColor.white
+        categoriesCollectionView.backgroundColor = MWColor.systemBackground
         categoriesCollectionView.showsHorizontalScrollIndicator = false
         categoriesCollectionView.alwaysBounceVertical = false
         categoriesCollectionView.contentInset = UIEdgeInsets(top: 2.5, left: 0, bottom: 2, right: 0)
         
         categoriesStackView.translatesAutoresizingMaskIntoConstraints = false
-        categoriesStackView.backgroundColor = MWColor.white
+        categoriesStackView.backgroundColor = MWColor.systemBackground
         categoriesStackView.spacing = 6
         categoriesStackView.alignment = .fill
         categoriesStackView.distribution = .fill
@@ -175,7 +175,7 @@ extension CategoriesSliderChildViewController {
         categoriesStackView.addArrangedSubview(categoriesCollectionView)
         
         bottomBorder.translatesAutoresizingMaskIntoConstraints = false
-        bottomBorder.backgroundColor = MWColor.bluegrey
+        bottomBorder.backgroundColor = MWColor.bluegreyElement
         
         view.addSubview(categoriesStackView)
         view.addSubview(bottomBorder)

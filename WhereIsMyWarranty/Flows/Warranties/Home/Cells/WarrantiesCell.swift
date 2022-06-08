@@ -96,6 +96,11 @@ extension WarrantiesCell {
         warrantyProductImageView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMinXMaxYCorner] // to round specific corners (top left and bottom left)
         
         warrantyName.font = MWFont.cellWarrantyName
+        warrantyName.textColor = .systemBackground
+        
+        remainingTime.textColor = .systemBackground
+        
+        warrantyEnd.textColor = .systemBackground
         
         infoStackView.translatesAutoresizingMaskIntoConstraints = false
         infoStackView.axis = .vertical
@@ -105,11 +110,11 @@ extension WarrantiesCell {
         infoStackView.addArrangedSubview(remainingTime)
         infoStackView.addArrangedSubview(warrantyEnd)
         
-        contentView.backgroundColor = MWColor.white
-        contentView.layer.borderColor = MWColor.bluegrey.cgColor
-        contentView.layer.borderWidth = 1
+        contentView.backgroundColor = MWColor.bluegreyDarkTheme
+       // contentView.layer.borderColor = MWColor.bluegrey.cgColor //MWColor.white.cgColor
+        // contentView.layer.borderWidth = 1.6
         roundingCellCorners(radius: 10)
-        addShadow()
+        //addShadow()
         contentView.addSubview(warrantyProductImageView)
         contentView.addSubview(infoStackView)
         

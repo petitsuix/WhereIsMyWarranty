@@ -59,34 +59,34 @@ extension SettingsViewController {
     // MARK: - View configuration
     
     private func setup() {
-        view.backgroundColor = MWColor.white
+        view.backgroundColor = MWColor.systemBackground
         self.title = Strings.settingsTitle
         
-        navBarAppearance.titleTextAttributes = [.foregroundColor: MWColor.bluegrey, .font: MWFont.navBar]
-        navBarAppearance.backgroundColor = MWColor.paleOrange
+        navBarAppearance.titleTextAttributes = [.foregroundColor: MWColor.bluegreyElement, .font: MWFont.navBar]
+        navBarAppearance.backgroundColor = MWColor.systemBackground
         navigationController?.navigationBar.standardAppearance = navBarAppearance
         navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
         
         topPresentationLabel.translatesAutoresizingMaskIntoConstraints = false
         topPresentationLabel.text = Strings.settingsPresentationLabel
         topPresentationLabel.textAlignment = .center
-        topPresentationLabel.textColor = MWColor.white
+        topPresentationLabel.textColor = MWColor.systemBackground
         topPresentationLabel.numberOfLines = 0
         
-        topPresentationView.backgroundColor = MWColor.bluegrey
+        topPresentationView.backgroundColor = MWColor.bluegreyElement
         topPresentationView.roundingViewCorners(radius: 9)
         
         topPresentationView.addSubview(topPresentationLabel)
         
         notificationsLabel.text = Strings.notifications
-        notificationsLabel.textColor = MWColor.bluegrey
+        notificationsLabel.textColor = MWColor.bluegreyElement
         
         notificationsStackView.axis = .horizontal
         notificationsStackView.addArrangedSubview(notificationsLabel)
         notificationsStackView.addArrangedSubview(notificationsSwitch)
         
         cloudSyncLabel.text = Strings.cloudSync
-        cloudSyncLabel.textColor = MWColor.bluegrey
+        cloudSyncLabel.textColor = MWColor.bluegreyElement
         
         cloudSyncStackView.axis = .horizontal
         cloudSyncStackView.addArrangedSubview(cloudSyncLabel)
@@ -105,20 +105,20 @@ extension SettingsViewController {
         
         aboutLabel.text = Strings.about
         aboutLabel.font = MWFont.aboutLabel
-        aboutLabel.textColor = MWColor.bluegrey
+        aboutLabel.textColor = MWColor.bluegreyElement
         aboutLabel.textAlignment = .center
         
         privacyPolicyButton.setTitle(Strings.privacyPolicy, for: .normal)
-        privacyPolicyButton.setTitleColor(MWColor.bluegrey, for: .normal)
+        privacyPolicyButton.setTitleColor(MWColor.bluegreyElement, for: .normal)
         privacyPolicyButton.setImage(MWImages.chevron, for: .normal)
-        privacyPolicyButton.tintColor = MWColor.bluegrey
+        privacyPolicyButton.tintColor = MWColor.bluegreyElement
         privacyPolicyButton.semanticContentAttribute = .forceRightToLeft
         privacyPolicyButton.addTarget(self, action: #selector(goToPrivacyPolicyScreen), for: .touchUpInside)
         
         termsAndConditionsButton.setTitle(Strings.termsAndConditions, for: .normal)
-        termsAndConditionsButton.setTitleColor(MWColor.bluegrey, for: .normal)
+        termsAndConditionsButton.setTitleColor(MWColor.bluegreyElement, for: .normal)
         termsAndConditionsButton.setImage(MWImages.chevron, for: .normal)
-        termsAndConditionsButton.tintColor = MWColor.bluegrey
+        termsAndConditionsButton.tintColor = MWColor.bluegreyElement
         termsAndConditionsButton.semanticContentAttribute = .forceRightToLeft
         termsAndConditionsButton.addTarget(self, action: #selector(goToTermsAndConditionsScreen), for: .touchUpInside)
         
@@ -144,7 +144,7 @@ extension SettingsViewController {
         versionLabel.translatesAutoresizingMaskIntoConstraints = false
         versionLabel.text = Bundle.main.prettyVersionString
         versionLabel.font = MWFont.versionLabel
-        versionLabel.textColor = MWColor.bluegrey
+        versionLabel.textColor = MWColor.bluegreyElement
         versionLabel.numberOfLines = 0
         versionLabel.textAlignment = .center
         

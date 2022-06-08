@@ -34,7 +34,7 @@ class FullScreenInvoicePhotoViewController: UIViewController {
     
     private func setup() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .close, target: self, action: #selector(dismissInvoicePhotoModal))
-        view.backgroundColor = MWColor.white
+        view.backgroundColor = MWColor.systemBackground
         
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFit

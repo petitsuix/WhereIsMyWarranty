@@ -52,14 +52,14 @@ extension TopCategoriesCell {
     
     func setup() {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        titleLabel.textColor = MWColor.bluegrey
+        titleLabel.textColor = MWColor.bluegreyElement
         titleLabel.textAlignment = .natural
        // titleLabel.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
         //let titleLabelHeightConstraint = titleLabel.heightAnchor.constraint(equalToConstant: 30)
       //  titleLabelHeightConstraint.priority = .defaultHigh
         roundingCellCorners(radius: 14.8)
-        contentView.backgroundColor = MWColor.white
-        contentView.layer.borderColor = MWColor.bluegrey.cgColor
+        contentView.backgroundColor = MWColor.systemBackground
+        contentView.layer.borderColor = MWColor.bluegreyElement.cgColor
         contentView.layer.borderWidth = 1
         contentView.addSubview(titleLabel)
         

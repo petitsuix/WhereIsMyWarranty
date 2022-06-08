@@ -195,13 +195,13 @@ class WarrantyDetailsViewController: UIViewController {
 extension WarrantyDetailsViewController {
     
     private func setupView() {
-        view.backgroundColor = MWColor.white
+        view.backgroundColor = MWColor.systemBackground
         
         productImageView.translatesAutoresizingMaskIntoConstraints = false
         productImageView.isAccessibilityElement = false
         productImageView.roundingViewCorners(radius: 64)
         productImageView.layer.borderWidth = 1.5
-        productImageView.layer.borderColor = MWColor.bluegrey.cgColor
+        productImageView.layer.borderColor = MWColor.bluegreyElement.cgColor
         
         productName.translatesAutoresizingMaskIntoConstraints = false
         productName.font = MWFont.warrantyDetailsProductName
@@ -210,7 +210,7 @@ extension WarrantyDetailsViewController {
         
         warrantyStatusLabel.translatesAutoresizingMaskIntoConstraints = false
         warrantyStatusLabel.textAlignment = .center
-        warrantyStatusLabel.textColor = MWColor.white
+        warrantyStatusLabel.textColor = MWColor.systemBackground
         warrantyStatusLabel.font = MWFont.warrantyStatusLabel
         warrantyStatusLabel.numberOfLines = 2
         
@@ -272,14 +272,14 @@ extension WarrantyDetailsViewController {
         
         editWarrantyButton.setTitle(Strings.edit, for: .normal)
         editWarrantyButton.titleLabel?.font = MWFont.editWarrantyButton
-        editWarrantyButton.setTitleColor(MWColor.white, for: .normal)
-        editWarrantyButton.backgroundColor = MWColor.bluegrey
+        editWarrantyButton.setTitleColor(MWColor.systemBackground, for: .normal)
+        editWarrantyButton.backgroundColor = MWColor.bluegreyElement
         editWarrantyButton.roundingViewCorners(radius: 11)
         editWarrantyButton.addTarget(self, action: #selector(editWarranty), for: .touchUpInside)
         
         deleteWarrantyButton.setTitle(Strings.delete, for: .normal)
         deleteWarrantyButton.titleLabel?.font = MWFont.deleteWarrantyButton
-        deleteWarrantyButton.setTitleColor(MWColor.white, for: .normal)
+        deleteWarrantyButton.setTitleColor(MWColor.systemBackground, for: .normal)
         deleteWarrantyButton.backgroundColor = MWColor.red
         deleteWarrantyButton.roundingViewCorners(radius: 11)
         deleteWarrantyButton.addTarget(self, action: #selector(aboutToDeleteAlert), for: .touchUpInside)

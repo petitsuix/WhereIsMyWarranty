@@ -166,7 +166,7 @@ extension NewWarrantyPhotoViewController {
         
         endCurrentScreenButton.setup(title: Strings.nextStepButtonTitle)
         
-        view.backgroundColor = MWColor.white
+        view.backgroundColor = MWColor.systemBackground
         view.addSubview(parentStackView)
         view.addSubview(endCurrentScreenButton)
         

@@ -163,10 +163,10 @@ extension HomeWarrantiesListViewController {
 extension HomeWarrantiesListViewController {
     private func setupView() {
         self.title = Strings.warrantiesTitle
-        view.backgroundColor = MWColor.white
+        view.backgroundColor = MWColor.systemBackground
         
-        navBarAppearance.titleTextAttributes = [.foregroundColor: MWColor.bluegrey, .font: MWFont.navBar]
-        navBarAppearance.backgroundColor = MWColor.paleOrange
+        navBarAppearance.titleTextAttributes = [.foregroundColor: MWColor.bluegreyElement, .font: MWFont.navBar]
+        navBarAppearance.backgroundColor = MWColor.systemBackground
         navigationController?.navigationBar.standardAppearance = navBarAppearance
         navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
         
@@ -191,17 +191,17 @@ extension HomeWarrantiesListViewController {
         
         let warrantiesLayout = UICollectionViewFlowLayout()
         warrantiesLayout.scrollDirection = .vertical
-        warrantiesLayout.itemSize = CGSize(width: view.frame.size.width-16, height: view.frame.size.width/3.3)
+        warrantiesLayout.itemSize = CGSize(width: view.frame.size.width-40, height: view.frame.size.width/3.3)
         warrantiesLayout.minimumLineSpacing = 24
         warrantiesCollectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: warrantiesLayout)
-        warrantiesCollectionView.backgroundColor = MWColor.white
+        warrantiesCollectionView.backgroundColor = MWColor.systemBackground
         warrantiesCollectionView.translatesAutoresizingMaskIntoConstraints = false
         warrantiesCollectionView.register(WarrantiesCell.self, forCellWithReuseIdentifier: WarrantiesCell.identifier)
         warrantiesCollectionView.delegate = self
         
         newWarrantyButton.translatesAutoresizingMaskIntoConstraints = false
         newWarrantyButton.setImage(MWImages.newWarrantyButtonImage, for: .normal)
-        newWarrantyButton.tintColor = MWColor.bluegrey
+        newWarrantyButton.tintColor = MWColor.bluegreyElement
         newWarrantyButton.addTarget(self, action: #selector(newWarrantyButtonAction), for: .touchUpInside)
         
         let categoriesSliderChildVC = CategoriesSliderChildViewController()
@@ -224,13 +224,12 @@ extension HomeWarrantiesListViewController {
             noWarrantyImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 36),
             noWarrantyImageView.bottomAnchor.constraint(equalTo: newWarrantyButton.topAnchor, constant: 0),
             
-            warrantiesCollectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8),
-
-            warrantiesCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
-            warrantiesCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
-            warrantiesCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0),
+            warrantiesCollectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 32),
+            warrantiesCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            warrantiesCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             
-            newWarrantyButton.bottomAnchor.constraint(equalToSystemSpacingBelow: view.safeAreaLayoutGuide.bottomAnchor, multiplier: 0),
+            newWarrantyButton.topAnchor.constraint(equalTo: warrantiesCollectionView.bottomAnchor, constant: 4),
+            newWarrantyButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -8),
             newWarrantyButton.heightAnchor.constraint(equalToConstant: 50),
             newWarrantyButton.widthAnchor.constraint(equalToConstant: 50),
             newWarrantyButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)

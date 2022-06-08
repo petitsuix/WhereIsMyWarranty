@@ -56,7 +56,7 @@ extension TextFieldTableViewCell {
         textField.autocorrectionType = .no
        // textField.isEnabled
         textField.translatesAutoresizingMaskIntoConstraints = false
-        backgroundColor = MWColor.white
+        backgroundColor = MWColor.systemBackground
         contentView.addSubview(textField)
         
         NSLayoutConstraint.activate([

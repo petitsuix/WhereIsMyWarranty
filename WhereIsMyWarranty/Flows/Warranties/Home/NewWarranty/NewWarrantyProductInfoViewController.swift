@@ -314,7 +314,7 @@ extension NewWarrantyProductInfoViewController {
         endCurrentScreenButton.setup(title: Strings.nextStepButtonTitle)
         endCurrentScreenButton.addTarget(self, action: #selector(goToAddProductPhotoScreen), for: .touchUpInside)
         
-        view.backgroundColor = MWColor.white
+        view.backgroundColor = MWColor.systemBackground
         view.addSubview(parentStackView)
         view.addSubview(endCurrentScreenButton)
         

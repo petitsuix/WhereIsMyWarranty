@@ -104,7 +104,7 @@ extension TextViewTableViewCell {
         
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.textColor = UIColor.lightGray
-        backgroundColor = MWColor.white
+        backgroundColor = MWColor.systemBackground
         contentView.addSubview(textView)
         
         NSLayoutConstraint.activate([

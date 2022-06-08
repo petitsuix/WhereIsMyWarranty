@@ -35,7 +35,7 @@ enum Strings {
     static let nextStepButtonTitle = "Suivant"
     // Warranty photo VC
     static let addProductPhoto = "Photo produit"
-    static let addWarrantyProof = "Ajouter une preuve de garantie"
+    static let addWarrantyProof = "Preuve de garantie"
     static let selectAnImage = " Choisir une image"
     static let camera = "Appareil photo"
     static let galery = "Galerie"
