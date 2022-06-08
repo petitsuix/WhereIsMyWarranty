@@ -5,6 +5,12 @@
 //  Created by Richardier on 15/12/2021.
 //
 
+extension Warranty {
+    convenience init() {
+        self.init()
+    }
+}
+
 import Foundation
 
 class NewWarrantyViewModel: NSObject {
@@ -100,7 +106,18 @@ class NewWarrantyViewModel: NSObject {
     }
     
     func saveWarranty() {
+// Initializing newWarranty here, upon saving, because if it's initialized in init(), it automatically saves a newWarranty,
+// even though the user cancels warranty creation
         newWarranty = Warranty(context: storageService.viewContext)
+        // FIXME: losing interest of each value's didSet by "manually" saving them below
+        newWarranty?.price = price ?? 0
+        newWarranty?.model = model
+        newWarranty?.serialNumber = serialNumber
+        newWarranty?.sellersName = sellersName
+        newWarranty?.sellersLocation = sellersLocation
+        newWarranty?.sellersWebsite = sellersWebsite
+        newWarranty?.sellersContact = sellersContact
+        newWarranty?.notes = notes
         newWarranty?.name = name
         newWarranty?.warrantyStart = startDate
         newWarranty?.warrantyEnd = endDate

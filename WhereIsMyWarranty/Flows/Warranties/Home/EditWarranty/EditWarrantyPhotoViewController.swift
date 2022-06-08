@@ -20,7 +20,7 @@ class EditWarrantyPhotoViewController: UIViewController {
     private let addAPhotoTitleLabel = UILabel()
     private let imageView = UIImageView()
     private let selectImageButton = UIButton()
-    private let endCurrentScreenButton = UIButton()
+    private let endCurrentScreenButton = ActionButton()
     
     // MARK: - View life cycle methods
     
@@ -143,10 +143,7 @@ extension EditWarrantyPhotoViewController: UIImagePickerControllerDelegate & UIN
         parentStackView.addArrangedSubview(imageView)
         parentStackView.addArrangedSubview(selectImageButton)
         
-        endCurrentScreenButton.translatesAutoresizingMaskIntoConstraints = false
-        endCurrentScreenButton.backgroundColor = MWColor.paleOrange
-        endCurrentScreenButton.roundingViewCorners(radius: 8)
-        endCurrentScreenButton.isUserInteractionEnabled = true
+        endCurrentScreenButton.setup(title: Strings.nextStepButtonTitle)
         
         view.backgroundColor = MWColor.white
         view.addSubview(parentStackView)
@@ -172,7 +169,6 @@ extension EditWarrantyPhotoViewController: UIImagePickerControllerDelegate & UIN
     private func setupForProductPhotoViewController() {
         if photoMode == .productPhoto {
             addAPhotoTitleLabel.text = Strings.addProductPhoto
-            endCurrentScreenButton.setTitle(Strings.nextStepButtonTitle, for: .normal)
             endCurrentScreenButton.addTarget(self, action: #selector(goToEditInvoicePhotoScreen), for: .touchUpInside)
             if let productPhoto = viewModel?.warranty.productPhoto {
                 imageView.image = UIImage(data: productPhoto)
@@ -183,7 +179,6 @@ extension EditWarrantyPhotoViewController: UIImagePickerControllerDelegate & UIN
     private func setupForInvoicePhotoViewController() {
         if photoMode == .invoicePhoto {
             addAPhotoTitleLabel.text = Strings.addInvoicePhoto
-            endCurrentScreenButton.setTitle(Strings.nextStepButtonTitle, for: .normal)
             endCurrentScreenButton.addTarget(self, action: #selector(goToEditExtraInfoScreen), for: .touchUpInside)
             if let invoicePhoto = viewModel?.warranty.invoicePhoto {
                 imageView.image = UIImage(data: invoicePhoto)

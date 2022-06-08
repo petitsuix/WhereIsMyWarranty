@@ -41,7 +41,7 @@ class WarrantyDetailsExtraInfoCell: UITableViewCell {
 
 extension WarrantyDetailsExtraInfoCell {
     func setup() {
-        title.font = UIFont.preferredFont(forTextStyle: .headline)
+        title.font = UIFont.preferredFont(forTextStyle: .subheadline)
         parentStackView.translatesAutoresizingMaskIntoConstraints = false
         parentStackView.axis = .vertical
         parentStackView.addArrangedSubview(title)

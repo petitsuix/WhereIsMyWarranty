@@ -69,7 +69,7 @@ class ExtraInfoViewController: UIViewController {
     private let extraInfoTitleLabel = UILabel()
     private let tableView = UITableView(frame: .zero, style: .insetGrouped)
     private let parentStackView = UIStackView()
-    private let endCurrentScreenButton = WarrantyModalNextStepButton()
+    private let endCurrentScreenButton = ActionButton()
     
     private var extraInfoTableViewDiffableDataSource: DataSource! = nil
     private var productInfoList: [Item] = [.price, .model, .serialNumber]
@@ -80,36 +80,20 @@ class ExtraInfoViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         setupView() // Setting up the view before configuring data source in viewDidLoad: doing the other way around causes crashes on versions before iOS 15
+        startDodgingKeyboard()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureExtraInfoTableViewDataSource()
-//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
-//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
-//    override func viewWillDisappear(_ animated: Bool) {
-//        super.viewWillDisappear(animated)
-////        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
-////        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
-//    }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        stopDodgingKeyboard()
+    }
     
     // MARK: - objc methods
-    
-    // FIXME: 
-//    @objc func keyboardWillHide() {
-//        self.view.frame.origin.y = 0
-//    }
-//
-//    @objc func keyboardWillChange(notification: NSNotification) {
-//        let notesCell = tableView.cellForRow(at: IndexPath(row: 0, section: 2)) as? TextViewTableViewCell
-//        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-//            if tableView.cellForRow(at: IndexPath(row: 0, section: 2))?.isFirstResponder {
-//                self.view.frame.origin.y = -keyboardSize.height
-//            }
-//        }
-//    }
     
     @objc func saveWarranty() {
         let notesCell = tableView.cellForRow(at: IndexPath(row: 0, section: 2)) as? TextViewTableViewCell // Unlike other cells, notes is a text view and cannot profit from the addTarget method to update the viewModel. Workaround found so far is to save its value here, when saving the warranty.
@@ -159,7 +143,9 @@ class ExtraInfoViewController: UIViewController {
     
     // MARK: - Methods
     //swiftlint:disable cyclomatic_complexity
-    /// FIX ME : data source configuration method bellow initially created cells by switching on itemIdentifier. Depending on the case (.model, .price...), a cell was returned. But we needed to find a way to save the values held inside each cell's textField : both when creating and editing a warranty. Delegate method didSelectRowAt doesn't work, it is never called (probably because the interaction is handled by the textField right away, not the cell itself). Best way found so far is to add a target to the textField, create @objc methods that will be called upon editing. Another benefit is that while edtiting a warranty, only edited values are saved, instead of saving all values once again. But this method is very heavy.
+    /// FIX ME : data source configuration method bellow initially created cells by switching on itemIdentifier. Depending on the case (.model, .price...), a cell was returned. But we needed to find a way to save the values held inside each
+    /// cell's textField : both when creating and editing a warranty. Delegate method didSelectRowAt doesn't work, it is never called (probably because the interaction is handled by the textField right away, not the cell itself). Best way found
+    /// so far is to add a target to the textField, create @objc methods that will be called upon editing. Another benefit is that while edtiting a warranty, only edited values are saved, instead of saving all values once again. But this method is very heavy.
     private func configureExtraInfoTableViewDataSource() {
         extraInfoTableViewDiffableDataSource = DataSource(tableView: tableView, cellProvider: { tableView, indexPath, itemIdentifier in
             
@@ -170,6 +156,7 @@ class ExtraInfoViewController: UIViewController {
                 if self.warrantyModalType == .editWarrantyModal {
                     cell?.textView.text = self.editWarrantyViewModel?.warranty.notes
                 }
+                cell?.textView.delegate = self
                 return cell
             default :
                 let cell = tableView.dequeueReusableCell(withIdentifier: Constant.extraInfoCellIdentifier, for: indexPath) as? TextFieldTableViewCell
@@ -178,6 +165,7 @@ class ExtraInfoViewController: UIViewController {
                 if itemIdentifier == .price, self.warrantyModalType == .editWarrantyModal {
                     cell?.textField.text = String(self.editWarrantyViewModel?.warranty.price ?? 0)
                     cell?.textField.addTarget(self, action: #selector(self.priceDidchange), for: .editingChanged)
+//                    cell?.textField.delegate = self
                     cell?.textField.keyboardType = .decimalPad
                 } else if itemIdentifier == .price, self.warrantyModalType == .newWarrantyModal {
                     cell?.textField.addTarget(self, action: #selector(self.priceDidchange), for: .editingChanged)
@@ -236,7 +224,7 @@ class ExtraInfoViewController: UIViewController {
     }
 }
 
-extension ExtraInfoViewController: UITableViewDelegate {
+extension ExtraInfoViewController: UITableViewDelegate, UITextViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.section == Section.additionalNotes.rawValue {
             return 120
@@ -248,10 +236,14 @@ extension ExtraInfoViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 30
     }
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        self.tableView.scrollToRow(at: IndexPath(row: 0, section: 2), at: .top, animated: true)
+    }
 }
 
 private extension ExtraInfoViewController {
-    // FIXME: Est-ce que ça se range avec les helpers ?
+    
     enum Constant {
         static let notesCellIdentifier = "AdditionalNotesTableViewCell"
         static let extraInfoCellIdentifier = "ExtraInfoTableViewCell"
@@ -267,8 +259,10 @@ private extension ExtraInfoViewController {
         extraInfoTitleLabel.textAlignment = .natural
         tableView.delegate = self
         tableView.backgroundColor = #colorLiteral(red: 0.8973447084, green: 0.9166073203, blue: 0.9072605968, alpha: 1)
+        
         endCurrentScreenButton.setup(title: Strings.saveButtonTitle)
         endCurrentScreenButton.addTarget(self, action: #selector(saveWarranty), for: .touchUpInside)
+        
         parentStackView.translatesAutoresizingMaskIntoConstraints = false
         parentStackView.axis = .vertical
         parentStackView.spacing = 20
@@ -294,8 +288,7 @@ private extension ExtraInfoViewController {
     }
 }
 
-// peut etre faire un fichier a part-entiere extrainfodatasource
-extension ExtraInfoViewController {
+private extension ExtraInfoViewController {
     class DataSource: UITableViewDiffableDataSource<Section, Item> {
         override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
             let sectionKind = Section(rawValue: section)

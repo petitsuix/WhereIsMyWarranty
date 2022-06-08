@@ -50,6 +50,7 @@ class WarrantiesCoordinator: Coordinator, WarrantiesCoordinatorProtocol {
         newWarrantyViewController.viewModel = newWarrantyViewModel
         newWarrantyViewController.modalPresentationStyle = .popover
         newWarrantyViewController.modalTransitionStyle = .coverVertical
+        newWarrantyViewController.isModalInPresentation = true
         modalNavigationController = UINavigationController(rootViewController: newWarrantyViewController)
         navigationController.present(modalNavigationController, animated: true, completion: nil)
         
@@ -111,6 +112,7 @@ class WarrantiesCoordinator: Coordinator, WarrantiesCoordinatorProtocol {
         editWarrantyProductInfoViewController.viewModel = editWarrantyViewModel
         editWarrantyProductInfoViewController.modalPresentationStyle = .popover
         editWarrantyProductInfoViewController.modalTransitionStyle = .coverVertical
+        editWarrantyProductInfoViewController.isModalInPresentation = true
         modalNavigationController = UINavigationController(rootViewController: editWarrantyProductInfoViewController)
         navigationController.present(modalNavigationController, animated: true, completion: nil)
     }

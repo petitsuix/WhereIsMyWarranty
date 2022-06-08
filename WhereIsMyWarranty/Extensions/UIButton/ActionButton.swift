@@ -1,5 +1,5 @@
 //
-//  WarrantyModalNextStepButton.swift
+//  ActionButton.swift
 //  WhereIsMyWarranty
 //
 //  Created by Richardier on 04/03/2022.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class EndCurrentScreenButton: UIButton {
+class ActionButton: UIButton {
     
     func setup(title: String) {
         translatesAutoresizingMaskIntoConstraints = false

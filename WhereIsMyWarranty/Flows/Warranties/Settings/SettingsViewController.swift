@@ -82,7 +82,6 @@ extension SettingsViewController {
         notificationsLabel.textColor = MWColor.bluegrey
         
         notificationsStackView.axis = .horizontal
-        notificationsStackView.isUserInteractionEnabled = false
         notificationsStackView.addArrangedSubview(notificationsLabel)
         notificationsStackView.addArrangedSubview(notificationsSwitch)
         
@@ -95,7 +94,7 @@ extension SettingsViewController {
         
         parentSettingsStackView.axis = .vertical
         parentSettingsStackView.spacing = 24
-        //parentSettingsStackView.isUserInteractionEnabled = false
+        parentSettingsStackView.isUserInteractionEnabled = false
         parentSettingsStackView.alpha = 0.5
         
         parentSettingsStackView.addArrangedSubview(notificationsStackView)
