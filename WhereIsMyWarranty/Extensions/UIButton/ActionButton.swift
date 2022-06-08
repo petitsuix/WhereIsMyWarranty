@@ -14,6 +14,7 @@ class ActionButton: UIButton {
         backgroundColor = MWColor.paleOrange
         roundingViewCorners(radius: 8)
         setTitle(title, for: .normal)
+        self.titleLabel?.font = UIFont.preferredFont(forTextStyle: .title3)
         isUserInteractionEnabled = true
     }
 }

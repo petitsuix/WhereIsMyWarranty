@@ -35,10 +35,11 @@ enum Strings {
     static let nextStepButtonTitle = "Suivant"
     // Warranty photo VC
     static let addProductPhoto = "Photo produit"
-    static let addInvoicePhoto = "Ajouter une facture"
+    static let addWarrantyProof = "Ajouter une preuve de garantie"
     static let selectAnImage = " Choisir une image"
     static let camera = "Appareil photo"
     static let galery = "Galerie"
+    static let scan = "Scan"
     static let saveButtonTitle = "Enregistrer"
     // Warranty details VC
     static let edit = "  Modifier  "
@@ -72,6 +73,7 @@ enum Strings {
     static let add = "Ajouter"
     static let newCategory = "Nouvelle catégorie"
     static let giveItAName = "Donnez lui un nom"
+    static let accessingCameraFailed = "La caméra n'est pas détectée, ou l'accès à cette source de données n'est pas autorisé"
     // Accessibility
     static let warrantyName = "Nom de la garantie"
 }

@@ -80,7 +80,12 @@ class NewWarrantyPhotoViewController: UIViewController {
         alert.addAction(UIAlertAction(title: Strings.galery, style: .default, handler: { _ in
             self.open(sourceType: .photoLibrary)
         }))
-        alert.addAction(UIAlertAction.init(title: "Annuler", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: Strings.scan, style: .default, handler: { _ in
+            let scannerViewController = VNDocumentCameraViewController()
+            scannerViewController.delegate = self
+            self.present(scannerViewController, animated: true)
+        }))
+        alert.addAction(UIAlertAction.init(title: Strings.cancel, style: .cancel, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
     
@@ -92,8 +97,29 @@ class NewWarrantyPhotoViewController: UIViewController {
             imagePicker.allowsEditing = true
             self.present(imagePicker, animated: true, completion: nil)
         } else {
-            alert(Strings.oops, "La caméra n'est pas détectée, ou l'accès à cette source de données n'est pas autorisé")
+            alert(Strings.oops, Strings.accessingCameraFailed)
         }
+    }
+    
+    func documentCameraViewController(_ controller: VNDocumentCameraViewController, didFinishWith scan: VNDocumentCameraScan) {
+        let image = scan.imageOfPage(at: 0)
+        guard let currentCGImage = image.cgImage else { return }
+        let currentCIImage = CIImage(cgImage: currentCGImage)
+
+        let filter = CIFilter(name: "CIColorMonochrome")
+        filter?.setValue(currentCIImage, forKey: "inputImage")
+        filter?.setValue(CIColor(red: 0.7, green: 0.7, blue: 0.7), forKey: "inputColor")
+        filter?.setValue(1.0, forKey: "inputIntensity")
+        guard let outputImage = filter?.outputImage else { return }
+
+        let context = CIContext()
+
+        if let cgimg = context.createCGImage(outputImage, from: outputImage.extent) {
+            let processedImage = UIImage(cgImage: cgimg)
+            imageView.image = processedImage
+            print(processedImage.size)
+        }
+        controller.dismiss(animated: true)
     }
     
     // MARK: - Image Picker Configuration
@@ -105,7 +131,7 @@ class NewWarrantyPhotoViewController: UIViewController {
     }
 }
 
-extension NewWarrantyPhotoViewController: UIImagePickerControllerDelegate & UINavigationControllerDelegate {
+extension NewWarrantyPhotoViewController {
     
     // MARK: - View configuration
     
@@ -116,6 +142,7 @@ extension NewWarrantyPhotoViewController: UIImagePickerControllerDelegate & UINa
         addAPhotoTitleLabel.textColor = MWColor.black
         addAPhotoTitleLabel.font = MWFont.addAPhotoTitle
         addAPhotoTitleLabel.textAlignment = .center
+        addAPhotoTitleLabel.numberOfLines = 0
         
         imageView.layer.borderWidth = 1
         imageView.layer.borderColor = MWColor.black.cgColor
@@ -169,8 +196,10 @@ extension NewWarrantyPhotoViewController: UIImagePickerControllerDelegate & UINa
     
     private func setupForInvoicePhotoViewController() {
         if photoMode == .invoicePhoto {
-            addAPhotoTitleLabel.text = Strings.addInvoicePhoto
+            addAPhotoTitleLabel.text = Strings.addWarrantyProof
             endCurrentScreenButton.addTarget(self, action: #selector(goToExtraInfoScreen), for: .touchUpInside)
         }
     }
 }
+
+extension NewWarrantyPhotoViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate, VNDocumentCameraViewControllerDelegate {}

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import VisionKit
 
 class EditWarrantyPhotoViewController: UIViewController {
     
@@ -65,42 +66,53 @@ class EditWarrantyPhotoViewController: UIViewController {
    private func setupAlert() {
        let alert = UIAlertController(title: Strings.selectAnImage, message: nil, preferredStyle: .actionSheet)
        alert.addAction(UIAlertAction(title: Strings.camera, style: .default, handler: { _ in
-            self.openCamera()
+            self.open(sourceType: .camera)
         }))
        alert.addAction(UIAlertAction(title: Strings.galery, style: .default, handler: { _ in
-            self.openPhotoGalery()
+            self.open(sourceType: .photoLibrary)
         }))
-        alert.addAction(UIAlertAction.init(title: "Annuler", style: .cancel, handler: nil))
+       alert.addAction(UIAlertAction(title: Strings.scan, style: .default, handler: { _ in
+           let scannerViewController = VNDocumentCameraViewController()
+           scannerViewController.delegate = self
+           self.present(scannerViewController, animated: true)
+       }))
+       alert.addAction(UIAlertAction.init(title: Strings.cancel, style: .cancel, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
     
-    private func openPhotoGalery() {
-        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerController.SourceType.photoLibrary) {
+    private func open(sourceType: UIImagePickerController.SourceType) {
+        if UIImagePickerController.isSourceTypeAvailable(sourceType) {
             let imagePicker = UIImagePickerController()
             imagePicker.delegate = self
+            imagePicker.sourceType = sourceType
             imagePicker.allowsEditing = true
-            imagePicker.sourceType = UIImagePickerController.SourceType.photoLibrary
             self.present(imagePicker, animated: true, completion: nil)
         } else {
-            let alert  = UIAlertController(title: Strings.oops, message: Strings.cantAccessLibrary, preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
+            alert(Strings.oops, Strings.accessingCameraFailed)
         }
     }
     
-    private func openCamera() {
-        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerController.SourceType.camera) {
-            let imagePicker = UIImagePickerController()
-            imagePicker.delegate = self
-            imagePicker.sourceType = UIImagePickerController.SourceType.camera
-            imagePicker.allowsEditing = false
-            self.present(imagePicker, animated: true, completion: nil)
-        } else {
-            let alert  = UIAlertController(title: Strings.oops, message: Strings.noCameraDetected, preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
+    func documentCameraViewController(_ controller: VNDocumentCameraViewController, didFinishWith scan: VNDocumentCameraScan) {
+        let image = scan.imageOfPage(at: 0)
+        guard let currentCGImage = image.cgImage else { return }
+        let currentCIImage = CIImage(cgImage: currentCGImage)
+
+        let filter = CIFilter(name: "CIColorMonochrome")
+        filter?.setValue(currentCIImage, forKey: "inputImage")
+        filter?.setValue(CIColor(red: 0.7, green: 0.7, blue: 0.7), forKey: "inputColor")
+        filter?.setValue(1.0, forKey: "inputIntensity")
+        guard let outputImage = filter?.outputImage else { return }
+
+        let context = CIContext()
+
+        if let cgimg = context.createCGImage(outputImage, from: outputImage.extent) {
+            let processedImage = UIImage(cgImage: cgimg)
+            imageView.image = processedImage
+            print(processedImage.size)
         }
+        controller.dismiss(animated: true)
     }
+    
     
     // MARK: - Image Picker Configuration
     
@@ -111,7 +123,7 @@ class EditWarrantyPhotoViewController: UIViewController {
     }
 }
 
-extension EditWarrantyPhotoViewController: UIImagePickerControllerDelegate & UINavigationControllerDelegate {
+extension EditWarrantyPhotoViewController {
     
     // MARK: - View configuration
     
@@ -122,6 +134,7 @@ extension EditWarrantyPhotoViewController: UIImagePickerControllerDelegate & UIN
         addAPhotoTitleLabel.textColor = MWColor.black
         addAPhotoTitleLabel.font = MWFont.addAPhotoTitle
         addAPhotoTitleLabel.textAlignment = .center
+        addAPhotoTitleLabel.numberOfLines = 0
         
         imageView.layer.borderWidth = 1
         imageView.layer.borderColor = MWColor.black.cgColor
@@ -178,7 +191,7 @@ extension EditWarrantyPhotoViewController: UIImagePickerControllerDelegate & UIN
     
     private func setupForInvoicePhotoViewController() {
         if photoMode == .invoicePhoto {
-            addAPhotoTitleLabel.text = Strings.addInvoicePhoto
+            addAPhotoTitleLabel.text = Strings.addWarrantyProof
             endCurrentScreenButton.addTarget(self, action: #selector(goToEditExtraInfoScreen), for: .touchUpInside)
             if let invoicePhoto = viewModel?.warranty.invoicePhoto {
                 imageView.image = UIImage(data: invoicePhoto)
@@ -186,3 +199,5 @@ extension EditWarrantyPhotoViewController: UIImagePickerControllerDelegate & UIN
         }
     }
 }
+
+extension EditWarrantyPhotoViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate, VNDocumentCameraViewControllerDelegate {}
