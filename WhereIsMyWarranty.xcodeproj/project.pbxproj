@@ -20,6 +20,8 @@
 		974F1FF928227300000238E7 /* privacy_policy.txt in Resources */ = {isa = PBXBuildFile; fileRef = 974F1FF828227300000238E7 /* privacy_policy.txt */; };
 		974F1FFD2822837E000238E7 /* terms_and_conditions.txt in Resources */ = {isa = PBXBuildFile; fileRef = 974F1FFC2822837E000238E7 /* terms_and_conditions.txt */; };
 		974F20052823C999000238E7 /* WarrantyDetailsExtraInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 974F20042823C999000238E7 /* WarrantyDetailsExtraInfoCell.swift */; };
+		975006AD2852258500D4E51E /* TopPresentationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 975006AC2852258500D4E51E /* TopPresentationCell.swift */; };
+		975006AF285227F400D4E51E /* InvoicePhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 975006AE285227F300D4E51E /* InvoicePhotoCell.swift */; };
 		97630447275A68B200688DDB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97630446275A68B200688DDB /* AppDelegate.swift */; };
 		97630449275A68B200688DDB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97630448275A68B200688DDB /* SceneDelegate.swift */; };
 		97630451275A68B200688DDB /* WhereIsMyWarranty.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9763044F275A68B200688DDB /* WhereIsMyWarranty.xcdatamodeld */; };
@@ -124,6 +126,8 @@
 		974F1FF828227300000238E7 /* privacy_policy.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = privacy_policy.txt; sourceTree = "<group>"; };
 		974F1FFC2822837E000238E7 /* terms_and_conditions.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = terms_and_conditions.txt; sourceTree = "<group>"; };
 		974F20042823C999000238E7 /* WarrantyDetailsExtraInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarrantyDetailsExtraInfoCell.swift; sourceTree = "<group>"; };
+		975006AC2852258500D4E51E /* TopPresentationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopPresentationCell.swift; sourceTree = "<group>"; };
+		975006AE285227F300D4E51E /* InvoicePhotoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvoicePhotoCell.swift; sourceTree = "<group>"; };
 		97630443275A68B200688DDB /* WhereIsMyWarranty.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WhereIsMyWarranty.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		97630446275A68B200688DDB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		97630448275A68B200688DDB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -234,6 +238,16 @@
 				97F7F5F727A9523000C4A50E /* EditWarrantyViewModelTests.swift */,
 			);
 			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		975006AB285224D300D4E51E /* WarrantyDetails */ = {
+			isa = PBXGroup;
+			children = (
+				974F20042823C999000238E7 /* WarrantyDetailsExtraInfoCell.swift */,
+				975006AC2852258500D4E51E /* TopPresentationCell.swift */,
+				975006AE285227F300D4E51E /* InvoicePhotoCell.swift */,
+			);
+			path = WarrantyDetails;
 			sourceTree = "<group>";
 		};
 		9763043A275A68B200688DDB = {
@@ -452,11 +466,11 @@
 		97961EAE276B75300003883C /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				975006AB285224D300D4E51E /* WarrantyDetails */,
 				976304B1275A6F3F00688DDB /* TopCategoriesCell.swift */,
 				976304C1276393CF00688DDB /* WarrantiesCell.swift */,
 				97EE92F627D22D0900FACF4F /* TextFieldTableViewCell.swift */,
 				971F6FBC27DA44AA0074A80A /* TextViewTableViewCell.swift */,
-				974F20042823C999000238E7 /* WarrantyDetailsExtraInfoCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -725,6 +739,7 @@
 				974F20052823C999000238E7 /* WarrantyDetailsExtraInfoCell.swift in Sources */,
 				976304A9275A6ECC00688DDB /* MWImages.swift in Sources */,
 				976304B2275A6F4000688DDB /* TopCategoriesCell.swift in Sources */,
+				975006AF285227F400D4E51E /* InvoicePhotoCell.swift in Sources */,
 				97ECFC3127870C4100CA973D /* AddDoneButtonToKeyboard.swift in Sources */,
 				976304C2276393CF00688DDB /* WarrantiesCell.swift in Sources */,
 				9769C957276A429900BAC736 /* NewWarrantyViewModel.swift in Sources */,
@@ -750,6 +765,7 @@
 				97E03BDB2767A6EE00EFEE79 /* SettingsViewModel.swift in Sources */,
 				97F1D3052773448D00D0C52C /* WarrantyDetailsViewController.swift in Sources */,
 				97EE92F727D22D0900FACF4F /* TextFieldTableViewCell.swift in Sources */,
+				975006AD2852258500D4E51E /* TopPresentationCell.swift in Sources */,
 				972660A827B3FD5200A8F7E9 /* StorageServiceProtocol.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
