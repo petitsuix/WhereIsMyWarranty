@@ -32,7 +32,7 @@ final class FormTextView: UITextView {
     // MARK: - Private methods
 
     private func setupView() {
-        backgroundColor = .systemBackground
+        backgroundColor = MWColor.systemBackground
         font = UIFont.preferredFont(forTextStyle: .body)
         textColor = .label
         adjustsFontForContentSizeCategory = true
@@ -93,18 +93,15 @@ extension TextViewTableViewCell {
     func setup() {
         textView.autocapitalizationType = .none
         textView.enablesReturnKeyAutomatically = true
-        textView.textColor = .label
+        textView.textColor = MWColor.label
+        textView.backgroundColor = MWColor.extraInfoCellBackground
         textView.addDoneToolbar()
-        // textField.font = UIFont.systemFont(ofSize: <#T##CGFloat#>)
-       // textField.keyboardType = .namePhonePad A exposer car c'est pas très générique
-       // textField.textContentType = .emailAddress
         textView.spellCheckingType = .no
         textView.autocorrectionType = .no
-       // textField.isEnabled
-        
         textView.translatesAutoresizingMaskIntoConstraints = false
-        textView.textColor = UIColor.lightGray
-        backgroundColor = MWColor.systemBackground
+        textView.textColor = MWColor.systemBackground
+        
+        backgroundColor = MWColor.extraInfoCellBackground
         contentView.addSubview(textView)
         
         NSLayoutConstraint.activate([

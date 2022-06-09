@@ -30,10 +30,17 @@ class FullScreenInvoicePhotoViewController: UIViewController {
         dismiss(animated: true)
     }
     
+    @objc func openActivityViewController() {
+        let items = [invoicePhoto]
+        let ac = UIActivityViewController(activityItems: items as [Any], applicationActivities: nil)
+        present(ac, animated: true)
+    }
+    
     // MARK: - UI configuration
     
     private func setup() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .close, target: self, action: #selector(dismissInvoicePhotoModal))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(openActivityViewController))
         view.backgroundColor = MWColor.systemBackground
         
         imageView.translatesAutoresizingMaskIntoConstraints = false

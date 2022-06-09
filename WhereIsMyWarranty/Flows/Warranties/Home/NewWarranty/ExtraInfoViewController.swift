@@ -240,6 +240,12 @@ extension ExtraInfoViewController: UITableViewDelegate, UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
         self.tableView.scrollToRow(at: IndexPath(row: 0, section: 2), at: .top, animated: true)
     }
+    
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        if let view = view as? UITableViewHeaderFooterView {
+            view.textLabel?.textColor = UIColor.label
+            }
+    }
 }
 
 private extension ExtraInfoViewController {
@@ -254,11 +260,11 @@ private extension ExtraInfoViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .close, target: self, action: #selector(deletionAlert))
         
         extraInfoTitleLabel.text = "\tInfos complémentaires"
-        extraInfoTitleLabel.textColor = MWColor.black
+        extraInfoTitleLabel.textColor = MWColor.label
         extraInfoTitleLabel.font = MWFont.modalMainTitle
         extraInfoTitleLabel.textAlignment = .natural
         tableView.delegate = self
-        tableView.backgroundColor = #colorLiteral(red: 0.8973447084, green: 0.9166073203, blue: 0.9072605968, alpha: 1)
+        tableView.backgroundColor = MWColor.background
         
         endCurrentScreenButton.setup(title: Strings.saveButtonTitle)
         endCurrentScreenButton.addTarget(self, action: #selector(saveWarranty), for: .touchUpInside)
@@ -269,7 +275,7 @@ private extension ExtraInfoViewController {
         parentStackView.addArrangedSubview(extraInfoTitleLabel)
         parentStackView.addArrangedSubview(tableView)
         
-        view.backgroundColor = #colorLiteral(red: 0.8973447084, green: 0.9166073203, blue: 0.9072605968, alpha: 1)
+        view.backgroundColor = MWColor.background
         view.addSubview(parentStackView)
         view.addSubview(endCurrentScreenButton)
         

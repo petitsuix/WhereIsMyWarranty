@@ -61,7 +61,7 @@ class WarrantyDetailsViewController: UIViewController {
     
     private let extraWarrantyInfoStackView = UIStackView()
     private let extraWarrantyInfoTitle = UILabel()
-    private let extraInfoTableView = UITableView(frame: .zero, style: .plain)
+    private let extraInfoTableView = UITableView(frame: .zero, style: .insetGrouped)
     
     private let bottomButtonsStackView = UIStackView()
     private let editWarrantyButton = UIButton()
@@ -195,13 +195,13 @@ class WarrantyDetailsViewController: UIViewController {
 extension WarrantyDetailsViewController {
     
     private func setupView() {
-        view.backgroundColor = MWColor.systemBackground
+        view.backgroundColor = MWColor.background
         
         productImageView.translatesAutoresizingMaskIntoConstraints = false
         productImageView.isAccessibilityElement = false
         productImageView.roundingViewCorners(radius: 64)
         productImageView.layer.borderWidth = 1.5
-        productImageView.layer.borderColor = MWColor.bluegreyElement.cgColor
+        productImageView.layer.borderColor = MWColor.background.cgColor
         
         productName.translatesAutoresizingMaskIntoConstraints = false
         productName.font = MWFont.warrantyDetailsProductName
@@ -210,7 +210,7 @@ extension WarrantyDetailsViewController {
         
         warrantyStatusLabel.translatesAutoresizingMaskIntoConstraints = false
         warrantyStatusLabel.textAlignment = .center
-        warrantyStatusLabel.textColor = MWColor.systemBackground
+        warrantyStatusLabel.textColor = MWColor.white
         warrantyStatusLabel.font = MWFont.warrantyStatusLabel
         warrantyStatusLabel.numberOfLines = 2
         
@@ -249,16 +249,17 @@ extension WarrantyDetailsViewController {
         extraWarrantyInfoTitle.font = MWFont.invoicePhotoTitle
         
         extraInfoTableView.translatesAutoresizingMaskIntoConstraints = false
-      //  extraInfoTableView.backgroundColor = .blue
+        extraInfoTableView.backgroundColor = MWColor.background
         extraInfoTableView.register(WarrantyDetailsExtraInfoCell.self, forCellReuseIdentifier: "WarrantyDetailsExtraInfoCell")
         extraInfoTableView.delegate = self
 
         extraWarrantyInfoStackView.axis = .vertical
-       // extraWarrantyInfoStackView.spacing = 124
+//        extraWarrantyInfoStackView.spacing = 8
         //extraWarrantyInfoStackView.alignment = .leading
         //extraWarrantyInfoStackView.distribution = .fillProportionally
         extraWarrantyInfoStackView.addArrangedSubview(extraWarrantyInfoTitle)
         extraWarrantyInfoStackView.addArrangedSubview(extraInfoTableView)
+        //extraWarrantyInfoStackView.setCustomSpacing(8, after: extraWarrantyInfoTitle)
        // extraWarrantyInfoStackView.backgroundColor = .orange
         
         parentStackView.axis = .vertical
@@ -268,18 +269,19 @@ extension WarrantyDetailsViewController {
         parentStackView.addArrangedSubview(bottomBorder)
         parentStackView.addArrangedSubview(invoicePhotoStackView)
         parentStackView.addArrangedSubview(extraWarrantyInfoStackView)
-      //  parentStackView.backgroundColor = .red
+        parentStackView.setCustomSpacing(16, after: bottomBorder)
+      //  parentStackView.backgroundColor = in
         
         editWarrantyButton.setTitle(Strings.edit, for: .normal)
         editWarrantyButton.titleLabel?.font = MWFont.editWarrantyButton
-        editWarrantyButton.setTitleColor(MWColor.systemBackground, for: .normal)
+        editWarrantyButton.setTitleColor(MWColor.label, for: .normal)
         editWarrantyButton.backgroundColor = MWColor.bluegreyElement
         editWarrantyButton.roundingViewCorners(radius: 11)
         editWarrantyButton.addTarget(self, action: #selector(editWarranty), for: .touchUpInside)
         
         deleteWarrantyButton.setTitle(Strings.delete, for: .normal)
         deleteWarrantyButton.titleLabel?.font = MWFont.deleteWarrantyButton
-        deleteWarrantyButton.setTitleColor(MWColor.systemBackground, for: .normal)
+        deleteWarrantyButton.setTitleColor(MWColor.label, for: .normal)
         deleteWarrantyButton.backgroundColor = MWColor.red
         deleteWarrantyButton.roundingViewCorners(radius: 11)
         deleteWarrantyButton.addTarget(self, action: #selector(aboutToDeleteAlert), for: .touchUpInside)
@@ -296,10 +298,9 @@ extension WarrantyDetailsViewController {
         view.addSubview(bottomButtonsStackView)
         
         NSLayoutConstraint.activate([
-            invoiceImageView.heightAnchor.constraint(lessThanOrEqualToConstant: 150),
+            invoiceImageView.heightAnchor.constraint(equalToConstant: 90),
             invoiceImageView.centerXAnchor.constraint(equalTo: invoicePhotoStackView.centerXAnchor),
            
-            
             warrantyStatusLabel.leadingAnchor.constraint(equalTo: warrantyStatusView.leadingAnchor, constant: 8),
             warrantyStatusLabel.trailingAnchor.constraint(equalTo: warrantyStatusView.trailingAnchor, constant: -8),
             warrantyStatusLabel.topAnchor.constraint(equalTo: warrantyStatusView.topAnchor, constant: 4),
@@ -310,9 +311,9 @@ extension WarrantyDetailsViewController {
             productImageView.heightAnchor.constraint(equalToConstant: 130),
             productImageView.widthAnchor.constraint(equalToConstant: 130),
             
-            extraInfoTableView.topAnchor.constraint(equalTo: extraWarrantyInfoTitle.bottomAnchor, constant: 0),
-            extraInfoTableView.leadingAnchor.constraint(equalTo: parentStackView.leadingAnchor, constant: 0),
-            extraInfoTableView.trailingAnchor.constraint(equalTo: parentStackView.trailingAnchor, constant: 0),
+            extraInfoTableView.topAnchor.constraint(equalTo: extraWarrantyInfoTitle.bottomAnchor, constant: 8),
+            extraInfoTableView.leadingAnchor.constraint(equalTo: parentStackView.leadingAnchor, constant: -16),
+            extraInfoTableView.trailingAnchor.constraint(equalTo: parentStackView.trailingAnchor, constant: 16),
             // extraInfoTableView.heightAnchor.constraint(equalToConstant: 200),
             extraInfoTableView.bottomAnchor.constraint(equalTo: bottomButtonsStackView.topAnchor, constant: -8),
             

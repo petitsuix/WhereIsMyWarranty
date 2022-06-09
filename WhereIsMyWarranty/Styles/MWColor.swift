@@ -27,8 +27,28 @@ enum MWColor {
                 }
             }
     }()
+    
+    static var extraInfoCellBackground: UIColor = {
+            return UIColor { (UITraitCollection: UITraitCollection) -> UIColor in
+                if UITraitCollection.userInterfaceStyle == .dark {
+                    return systemGray4
+                } else {
+                    return white
+                }
+            }
+    }()
+    
+    static var background: UIColor = {
+            return UIColor { (UITraitCollection: UITraitCollection) -> UIColor in
+                if UITraitCollection.userInterfaceStyle == .dark {
+                    return systemBackground
+                } else {
+                    return lightGrayBlue
+                }
+            }
+    }()
     static let bluegreyDarkTheme = #colorLiteral(red: 0.568555057, green: 0.7904096842, blue: 0.7742930055, alpha: 1)
-
+    static let systemGray4 = UIColor.systemGray4
     static let bluegrey = #colorLiteral(red: 0.254899621, green: 0.337256074, blue: 0.3607835174, alpha: 1)
     static let colorTest1 = #colorLiteral(red: 0.8981259477, green: 0.7173939888, blue: 0.333548257, alpha: 1)
     static let paleOrange = #colorLiteral(red: 0.9683179259, green: 0.7787390351, blue: 0.5379128456, alpha: 1)
@@ -37,4 +57,7 @@ enum MWColor {
     static let black = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
     static let systemBackground = UIColor.systemBackground
     static let red = #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1)
+    static let label = UIColor.label
+    static let white = UIColor.white
+    static let lightGrayBlue = #colorLiteral(red: 0.8980389237, green: 0.9176473618, blue: 0.9058824182, alpha: 1)
 }

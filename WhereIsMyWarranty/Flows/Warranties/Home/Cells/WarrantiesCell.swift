@@ -51,7 +51,7 @@ class WarrantiesCell: UICollectionViewCell {
         }
         
         let formatter1 = DateFormatter()
-        formatter1.dateStyle = .short
+        formatter1.dateStyle = .medium
         formatter1.locale = Locale(identifier: Strings.localeIdentifier)
         warrantyName.text = warranty?.name
         
@@ -64,7 +64,7 @@ class WarrantiesCell: UICollectionViewCell {
             } else {
                 remainingTime.text = getRemainingDaysFromEndDate() + Strings.remainingDays
                 if let warrantyEndDate = warranty?.warrantyEnd {
-                    warrantyEnd.text = Strings.coveredUntil + "\(formatter1.string(from: warrantyEndDate))"
+                    warrantyEnd.text = Strings.coveredUntil + "\n\(formatter1.string(from: warrantyEndDate))"
                 }
             }
         } else {
@@ -96,39 +96,38 @@ extension WarrantiesCell {
         warrantyProductImageView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMinXMaxYCorner] // to round specific corners (top left and bottom left)
         
         warrantyName.font = MWFont.cellWarrantyName
-        warrantyName.textColor = .systemBackground
+        warrantyName.textColor = MWColor.systemBackground
         
-        remainingTime.textColor = .systemBackground
+        remainingTime.font = UIFont.preferredFont(forTextStyle: .body)
+        remainingTime.textColor = MWColor.systemBackground
         
-        warrantyEnd.textColor = .systemBackground
+        remainingTime.font = UIFont.preferredFont(forTextStyle: .body)
+        warrantyEnd.textColor = MWColor.systemBackground
+        warrantyEnd.numberOfLines = 0
         
         infoStackView.translatesAutoresizingMaskIntoConstraints = false
         infoStackView.axis = .vertical
-        infoStackView.spacing = 8
-        
+        infoStackView.distribution = .fillProportionally
         infoStackView.addArrangedSubview(warrantyName)
         infoStackView.addArrangedSubview(remainingTime)
         infoStackView.addArrangedSubview(warrantyEnd)
+        infoStackView.setCustomSpacing(4, after: warrantyName)
         
-        contentView.backgroundColor = MWColor.bluegreyDarkTheme
-       // contentView.layer.borderColor = MWColor.bluegrey.cgColor //MWColor.white.cgColor
-        // contentView.layer.borderWidth = 1.6
         roundingCellCorners(radius: 10)
-        //addShadow()
+        contentView.backgroundColor = MWColor.bluegreyDarkTheme
         contentView.addSubview(warrantyProductImageView)
         contentView.addSubview(infoStackView)
         
         NSLayoutConstraint.activate([
-            warrantyProductImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0),
             warrantyProductImageView.topAnchor.constraint(equalTo: topAnchor, constant: 0),
+            warrantyProductImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0),
             warrantyProductImageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0),
             warrantyProductImageView.widthAnchor.constraint(equalTo: warrantyProductImageView.heightAnchor),
             
-            warrantyName.heightAnchor.constraint(equalToConstant: 40),
-            
             infoStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 4),
-            infoStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
-            infoStackView.leadingAnchor.constraint(equalTo: warrantyProductImageView.trailingAnchor, constant: 16)
+            infoStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -18),
+            infoStackView.leadingAnchor.constraint(equalTo: warrantyProductImageView.trailingAnchor, constant: 18),
+            infoStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5)
         ])
     }
 }

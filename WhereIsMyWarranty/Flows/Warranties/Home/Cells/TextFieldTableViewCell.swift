@@ -47,7 +47,7 @@ extension TextFieldTableViewCell {
         textField.autocapitalizationType = .none
         textField.clearButtonMode = .whileEditing
         textField.enablesReturnKeyAutomatically = true
-        textField.textColor = .label
+        textField.textColor = MWColor.label
         textField.addDoneToolbar()
         // textField.font = UIFont.systemFont(ofSize: <#T##CGFloat#>)
        // textField.keyboardType = .namePhonePad A exposer car c'est pas très générique
@@ -56,7 +56,7 @@ extension TextFieldTableViewCell {
         textField.autocorrectionType = .no
        // textField.isEnabled
         textField.translatesAutoresizingMaskIntoConstraints = false
-        backgroundColor = MWColor.systemBackground
+        backgroundColor = MWColor.extraInfoCellBackground
         contentView.addSubview(textField)
         
         NSLayoutConstraint.activate([

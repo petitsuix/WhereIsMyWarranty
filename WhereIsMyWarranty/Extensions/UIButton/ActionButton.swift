@@ -11,7 +11,7 @@ class ActionButton: UIButton {
     
     func setup(title: String) {
         translatesAutoresizingMaskIntoConstraints = false
-        backgroundColor = MWColor.paleOrange
+        backgroundColor = MWColor.bluegreyElement
         roundingViewCorners(radius: 8)
         setTitle(title, for: .normal)
         self.titleLabel?.font = UIFont.preferredFont(forTextStyle: .title3)

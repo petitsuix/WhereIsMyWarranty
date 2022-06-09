@@ -27,7 +27,7 @@ class EditWarrantyPhotoViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupUI()
+        setupView()
         setupForProductPhotoViewController()
         setupForInvoicePhotoViewController()
     }
@@ -127,24 +127,24 @@ extension EditWarrantyPhotoViewController {
     
     // MARK: - View configuration
     
-    private func setupUI() {
+    private func setupView() {
         navigationController?.isNavigationBarHidden = false
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .close, target: self, action: #selector(deletionAlert))
         
-        addAPhotoTitleLabel.textColor = MWColor.black
+        addAPhotoTitleLabel.textColor = MWColor.label
         addAPhotoTitleLabel.font = MWFont.addAPhotoTitle
         addAPhotoTitleLabel.textAlignment = .center
         addAPhotoTitleLabel.numberOfLines = 0
         
         imageView.layer.borderWidth = 1
-        imageView.layer.borderColor = MWColor.black.cgColor
+        imageView.layer.borderColor = MWColor.label.cgColor
         imageView.contentMode = .scaleAspectFill
         imageView.layer.masksToBounds = true
         
         selectImageButton.setImage(MWImages.selectAnImageButton, for: .normal)
         selectImageButton.setTitle(Strings.selectAnImage, for: .normal)
         
-        selectImageButton.setTitleColor(MWColor.black, for: .normal)
+        selectImageButton.setTitleColor(MWColor.label, for: .normal)
         selectImageButton.tintColor = MWColor.paleOrange
         selectImageButton.addTarget(self, action: #selector(chooseAndDisplayImage), for: .touchUpInside)
         
@@ -158,7 +158,7 @@ extension EditWarrantyPhotoViewController {
         
         endCurrentScreenButton.setup(title: Strings.nextStepButtonTitle)
         
-        view.backgroundColor = MWColor.systemBackground
+        view.backgroundColor = MWColor.background
         view.addSubview(parentStackView)
         view.addSubview(endCurrentScreenButton)
         

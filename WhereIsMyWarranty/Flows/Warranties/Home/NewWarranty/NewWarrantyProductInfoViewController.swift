@@ -240,16 +240,16 @@ extension NewWarrantyProductInfoViewController {
         screenTitle.font = MWFont.modalMainTitle
         screenTitle.textAlignment = .natural
         
-        nameField.addTarget(self, action: #selector(nameTextfieldDidChange), for: .editingChanged)
         nameField.autocorrectionType = .no
         nameField.placeholder = Strings.productNamePlaceHolder
         nameField.setBottomBorder()
         nameField.addDoneToolbar()
+        nameField.addTarget(self, action: #selector(nameTextfieldDidChange), for: .editingChanged)
         nameField.becomeFirstResponder()
         
         nameStackView = UIStackView(arrangedSubviews: [screenTitle, nameField])
         nameStackView.axis = .vertical
-        nameStackView.spacing = 12
+        nameStackView.spacing = 20
         
         startDateTitle.text = Strings.warrantyStartDate
         startDateTitle.font = MWFont.modalSubtitles
@@ -314,14 +314,14 @@ extension NewWarrantyProductInfoViewController {
         endCurrentScreenButton.setup(title: Strings.nextStepButtonTitle)
         endCurrentScreenButton.addTarget(self, action: #selector(goToAddProductPhotoScreen), for: .touchUpInside)
         
-        view.backgroundColor = MWColor.systemBackground
+        view.backgroundColor = MWColor.background
         view.addSubview(parentStackView)
         view.addSubview(endCurrentScreenButton)
         
         NSLayoutConstraint.activate([
             endDateLabel.heightAnchor.constraint(equalToConstant: 60),
             
-            parentStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 24),
+            parentStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
             parentStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
             parentStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
             parentStackView.bottomAnchor.constraint(lessThanOrEqualTo: endCurrentScreenButton.topAnchor, constant: -16),
