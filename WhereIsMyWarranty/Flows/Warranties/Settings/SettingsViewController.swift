@@ -101,7 +101,7 @@ extension SettingsViewController {
         parentSettingsStackView.addArrangedSubview(cloudSyncStackView)
         parentSettingsStackView.addArrangedSubview(bottomBorder)
         
-        bottomBorder.setBottomBorder()
+        bottomBorder.backgroundColor = MWColor.bluegreyElement
         
         aboutLabel.text = Strings.about
         aboutLabel.font = MWFont.aboutLabel

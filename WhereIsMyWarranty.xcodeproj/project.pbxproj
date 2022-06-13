@@ -57,12 +57,12 @@
 		9792550D27C392A4008EB997 /* ManageChildViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9792550C27C392A4008EB997 /* ManageChildViewController.swift */; };
 		97999EFB2796E2E200C8184C /* StartOfDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97999EFA2796E2E200C8184C /* StartOfDay.swift */; };
 		97999EFE27982C2900C8184C /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97999EFD27982C2900C8184C /* CloudKit.framework */; };
+		97C0DCB82857637100499002 /* BottomBorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C0DCB72857637100499002 /* BottomBorder.swift */; };
 		97D74007281BE152009DC461 /* TextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D74006281BE152009DC461 /* TextViewController.swift */; };
 		97D74009281BE709009DC461 /* SettingsCoordinatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D74008281BE709009DC461 /* SettingsCoordinatorProtocol.swift */; };
 		97E03BD32767638700EFEE79 /* WarrantiesCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E03BD22767638700EFEE79 /* WarrantiesCoordinator.swift */; };
 		97E03BD52767639800EFEE79 /* SettingsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E03BD42767639800EFEE79 /* SettingsCoordinator.swift */; };
 		97E03BDB2767A6EE00EFEE79 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E03BDA2767A6EE00EFEE79 /* SettingsViewModel.swift */; };
-		97ECFC24277DD93600CA973D /* BottomBorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97ECFC23277DD93600CA973D /* BottomBorder.swift */; };
 		97ECFC26277E014600CA973D /* TruncateDecimals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97ECFC25277E014600CA973D /* TruncateDecimals.swift */; };
 		97ECFC28277E235600CA973D /* NewWarrantyPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97ECFC27277E235600CA973D /* NewWarrantyPhotoViewController.swift */; };
 		97ECFC3127870C4100CA973D /* AddDoneButtonToKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97ECFC3027870C4100CA973D /* AddDoneButtonToKeyboard.swift */; };
@@ -168,12 +168,12 @@
 		97999EFA2796E2E200C8184C /* StartOfDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartOfDay.swift; sourceTree = "<group>"; };
 		97999EFC27982AA800C8184C /* WhereIsMyWarranty.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WhereIsMyWarranty.entitlements; sourceTree = "<group>"; };
 		97999EFD27982C2900C8184C /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
+		97C0DCB72857637100499002 /* BottomBorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomBorder.swift; sourceTree = "<group>"; };
 		97D74006281BE152009DC461 /* TextViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextViewController.swift; sourceTree = "<group>"; };
 		97D74008281BE709009DC461 /* SettingsCoordinatorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCoordinatorProtocol.swift; sourceTree = "<group>"; };
 		97E03BD22767638700EFEE79 /* WarrantiesCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarrantiesCoordinator.swift; sourceTree = "<group>"; };
 		97E03BD42767639800EFEE79 /* SettingsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCoordinator.swift; sourceTree = "<group>"; };
 		97E03BDA2767A6EE00EFEE79 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
-		97ECFC23277DD93600CA973D /* BottomBorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomBorder.swift; sourceTree = "<group>"; };
 		97ECFC25277E014600CA973D /* TruncateDecimals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TruncateDecimals.swift; sourceTree = "<group>"; };
 		97ECFC27277E235600CA973D /* NewWarrantyPhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWarrantyPhotoViewController.swift; sourceTree = "<group>"; };
 		97ECFC3027870C4100CA973D /* AddDoneButtonToKeyboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddDoneButtonToKeyboard.swift; sourceTree = "<group>"; };
@@ -243,9 +243,9 @@
 		975006AB285224D300D4E51E /* WarrantyDetails */ = {
 			isa = PBXGroup;
 			children = (
-				974F20042823C999000238E7 /* WarrantyDetailsExtraInfoCell.swift */,
 				975006AC2852258500D4E51E /* TopPresentationCell.swift */,
 				975006AE285227F300D4E51E /* InvoicePhotoCell.swift */,
+				974F20042823C999000238E7 /* WarrantyDetailsExtraInfoCell.swift */,
 			);
 			path = WarrantyDetails;
 			sourceTree = "<group>";
@@ -390,7 +390,6 @@
 				9706C96127EE089900DBD876 /* DeletionAlert.swift */,
 				9763049D275A6C1E00688DDB /* CornerRadius.swift */,
 				976304C32763A73D00688DDB /* AddShadow.swift */,
-				97ECFC23277DD93600CA973D /* BottomBorder.swift */,
 				97ECFC25277E014600CA973D /* TruncateDecimals.swift */,
 				97ECFC3027870C4100CA973D /* AddDoneButtonToKeyboard.swift */,
 				970D86A2278F30FD00216ED7 /* ResizeImage.swift */,
@@ -398,6 +397,7 @@
 				97999EFA2796E2E200C8184C /* StartOfDay.swift */,
 				972660A527B3E37000A8F7E9 /* HideKeyboardWithTap.swift */,
 				972660AB27B554A300A8F7E9 /* Bundle.swift */,
+				97C0DCB72857637100499002 /* BottomBorder.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -713,8 +713,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				97C0DCB82857637100499002 /* BottomBorder.swift in Sources */,
 				971F6FBD27DA44AA0074A80A /* TextViewTableViewCell.swift in Sources */,
-				97ECFC24277DD93600CA973D /* BottomBorder.swift in Sources */,
 				972660AC27B554A400A8F7E9 /* Bundle.swift in Sources */,
 				97E03BD52767639800EFEE79 /* SettingsCoordinator.swift in Sources */,
 				9769C953276A299100BAC736 /* Storage Service.swift in Sources */,

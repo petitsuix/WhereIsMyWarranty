@@ -27,10 +27,6 @@ class InvoicePhotoCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError(Strings.initCoderNotImplemented)
     }
-    
-    @objc func showFullScreenImage() {
-        viewModel?.showFullScreenInvoicePhoto()
-    }
 }
 
 extension InvoicePhotoCell {
@@ -39,14 +35,20 @@ extension InvoicePhotoCell {
         invoiceImageView.translatesAutoresizingMaskIntoConstraints = false
         invoiceImageView.contentMode = .scaleAspectFit
         invoiceImageView.isUserInteractionEnabled = true
-        invoiceImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showFullScreenImage)))
+       // invoiceImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showFullScreenImage)))
         
+        selectionStyle = .none
         backgroundColor = MWColor.background
-        addSubview(invoiceImageView)
+        contentView.addSubview(invoiceImageView)
         
         NSLayoutConstraint.activate([
-            invoiceImageView.heightAnchor.constraint(equalToConstant: 90),
+//            invoiceImageView.heightAnchor.constraint(equalToConstant: 110),
+//            invoiceImageView.widthAnchor.constraint(equalToConstant: 150),
             invoiceImageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            invoiceImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 40),
+            invoiceImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -40),
+            invoiceImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 0),
+            invoiceImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 0)
         ])
     }
 }

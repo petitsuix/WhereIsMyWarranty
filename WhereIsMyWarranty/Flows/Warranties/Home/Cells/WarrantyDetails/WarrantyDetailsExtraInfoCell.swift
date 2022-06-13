@@ -12,8 +12,6 @@ class WarrantyDetailsExtraInfoCell: UITableViewCell {
     // MARK: - Internal properties
     
     static let identifier = "WarrantyDetailsExtraInfoCell"
-
-    var warranty: Warranty?
     
     // MARK: - Private properties
     
@@ -41,6 +39,7 @@ class WarrantyDetailsExtraInfoCell: UITableViewCell {
 
 extension WarrantyDetailsExtraInfoCell {
     func setup() {
+        isUserInteractionEnabled = false
         title.font = UIFont.preferredFont(forTextStyle: .subheadline)
         body.backgroundColor = MWColor.extraInfoCellBackground
         parentStackView.translatesAutoresizingMaskIntoConstraints = false

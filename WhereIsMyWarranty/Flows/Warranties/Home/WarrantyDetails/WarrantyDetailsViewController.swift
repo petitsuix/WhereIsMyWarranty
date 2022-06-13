@@ -5,6 +5,7 @@
 //  Created by Richardier on 22/12/2021.
 //
 //swiftlint:disable file_length
+//swiftlint:disable cyclomatic_complexity
 
 import UIKit
 
@@ -43,11 +44,9 @@ class WarrantyDetailsViewController: UIViewController {
     
     // MARK: - Private properties
     
-    private var tableViewDiffableDataSource: DataSource! = nil
+    private var tableViewDiffableDataSource: DataSource!
     
-    private let tableView = UITableView(frame: .zero, style: .plain)
-    
-    // private let bottomBorder = UIView()
+    private let tableView = UITableView(frame: .zero, style: .insetGrouped)
     
     private let bottomButtonsStackView = UIStackView()
     private let editWarrantyButton = UIButton()
@@ -72,77 +71,78 @@ class WarrantyDetailsViewController: UIViewController {
     // MARK: - Methods
     
     private func configureExtraInfoTableViewDataSource() {
-            tableViewDiffableDataSource = DataSource(tableView: tableView, cellProvider: { tableView, indexPath, itemIdentifier in
-                switch itemIdentifier {
-                case .topPresentation:
-                    let cell = tableView.dequeueReusableCell(withIdentifier: "TopPresentationCell", for: indexPath) as? TopPresentationCell
-                    cell?.viewModel = self.viewModel
-                    return cell
-                case .invoice:
-                    let cell = tableView.dequeueReusableCell(withIdentifier: "InvoicePhotoCell", for: indexPath) as? InvoicePhotoCell
-                    if let invoicePhotoAsData = self.viewModel?.warranty.invoicePhoto {
-                        cell?.invoiceImageView.image = UIImage(data: invoicePhotoAsData)
-                    }
-                    return cell
-                case .price:
-                    let cell = tableView.dequeueReusableCell(withIdentifier: "WarrantyDetailsExtraInfoCell", for: indexPath) as? WarrantyDetailsExtraInfoCell
-                    cell?.title.text = "Prix"
-                    cell?.body.text = String(self.viewModel?.warranty.price ?? 0)
-                    return cell
-                case .model:
-                    let cell = tableView.dequeueReusableCell(withIdentifier: "WarrantyDetailsExtraInfoCell", for: indexPath) as? WarrantyDetailsExtraInfoCell
-                    cell?.title.text = "Modèle"
-                    cell?.body.text = self.viewModel?.warranty.model
-                    return cell
-                case .serialNumber:
-                    let cell = tableView.dequeueReusableCell(withIdentifier: "WarrantyDetailsExtraInfoCell", for: indexPath) as? WarrantyDetailsExtraInfoCell
-                    cell?.title.text = "Numéro de série"
-                    cell?.body.text = self.viewModel?.warranty.serialNumber
-                    return cell
-                case .sellersName:
-                    let cell = tableView.dequeueReusableCell(withIdentifier: "WarrantyDetailsExtraInfoCell", for: indexPath) as? WarrantyDetailsExtraInfoCell
-                    cell?.title.text = "Nom"
-                    cell?.body.text = self.viewModel?.warranty.sellersName
-                    return cell
-                case .sellersLocation:
-                    let cell = tableView.dequeueReusableCell(withIdentifier: "WarrantyDetailsExtraInfoCell", for: indexPath) as? WarrantyDetailsExtraInfoCell
-                    cell?.title.text = "Adresse"
-                    cell?.body.text = self.viewModel?.warranty.sellersLocation
-                    return cell
-                case .sellersWebsite:
-                    let cell = tableView.dequeueReusableCell(withIdentifier: "WarrantyDetailsExtraInfoCell", for: indexPath) as? WarrantyDetailsExtraInfoCell
-                    cell?.title.text = "Site web"
-                    cell?.body.text = self.viewModel?.warranty.sellersWebsite
-                    return cell
-                case .sellersContact:
-                    let cell = tableView.dequeueReusableCell(withIdentifier: "WarrantyDetailsExtraInfoCell", for: indexPath) as? WarrantyDetailsExtraInfoCell
-                    cell?.title.text = "Contact"
-                    cell?.body.text = self.viewModel?.warranty.sellersContact
-                    return cell
-                case .notes:
-                    let cell = tableView.dequeueReusableCell(withIdentifier: "WarrantyDetailsExtraInfoCell", for: indexPath) as? WarrantyDetailsExtraInfoCell
-                    cell?.title.text = "Notes"
-                    cell?.body.text = self.viewModel?.warranty.notes
-                    return cell
+        tableViewDiffableDataSource = DataSource(tableView: tableView, cellProvider: { tableView, indexPath, itemIdentifier in
+            switch itemIdentifier {
+            case .topPresentation:
+                let cell = tableView.dequeueReusableCell(withIdentifier: "TopPresentationCell", for: indexPath) as? TopPresentationCell
+                cell?.warranty = self.viewModel?.warranty
+                return cell
+            case .invoice:
+                let cell = tableView.dequeueReusableCell(withIdentifier: "InvoicePhotoCell", for: indexPath) as? InvoicePhotoCell
+                if let invoicePhotoAsData = self.viewModel?.warranty.invoicePhoto {
+                    cell?.invoiceImageView.image = UIImage(data: invoicePhotoAsData)
                 }
-            })
-            let snapshot = createExtraInfosSnapshot()
-            tableViewDiffableDataSource.apply(snapshot)
-        }
+                return cell
+            case .price:
+                let cell = tableView.dequeueReusableCell(withIdentifier: "WarrantyDetailsExtraInfoCell", for: indexPath) as? WarrantyDetailsExtraInfoCell
+                cell?.title.text = "Prix"
+                cell?.body.text = String(self.viewModel?.warranty.price ?? 0)
+                return cell
+            case .model:
+                let cell = tableView.dequeueReusableCell(withIdentifier: "WarrantyDetailsExtraInfoCell", for: indexPath) as? WarrantyDetailsExtraInfoCell
+                cell?.title.text = "Modèle"
+                cell?.body.text = self.viewModel?.warranty.model
+                return cell
+            case .serialNumber:
+                let cell = tableView.dequeueReusableCell(withIdentifier: "WarrantyDetailsExtraInfoCell", for: indexPath) as? WarrantyDetailsExtraInfoCell
+                cell?.title.text = "Numéro de série"
+                cell?.body.text = self.viewModel?.warranty.serialNumber
+                return cell
+            case .sellersName:
+                let cell = tableView.dequeueReusableCell(withIdentifier: "WarrantyDetailsExtraInfoCell", for: indexPath) as? WarrantyDetailsExtraInfoCell
+                cell?.title.text = "Nom"
+                cell?.body.text = self.viewModel?.warranty.sellersName
+                return cell
+            case .sellersLocation:
+                let cell = tableView.dequeueReusableCell(withIdentifier: "WarrantyDetailsExtraInfoCell", for: indexPath) as? WarrantyDetailsExtraInfoCell
+                cell?.title.text = "Adresse"
+                cell?.body.text = self.viewModel?.warranty.sellersLocation
+                return cell
+            case .sellersWebsite:
+                let cell = tableView.dequeueReusableCell(withIdentifier: "WarrantyDetailsExtraInfoCell", for: indexPath) as? WarrantyDetailsExtraInfoCell
+                cell?.title.text = "Site web"
+                cell?.body.text = self.viewModel?.warranty.sellersWebsite
+                return cell
+            case .sellersContact:
+                let cell = tableView.dequeueReusableCell(withIdentifier: "WarrantyDetailsExtraInfoCell", for: indexPath) as? WarrantyDetailsExtraInfoCell
+                cell?.title.text = "Contact"
+                cell?.body.text = self.viewModel?.warranty.sellersContact
+                return cell
+            case .notes:
+                let cell = tableView.dequeueReusableCell(withIdentifier: "WarrantyDetailsExtraInfoCell", for: indexPath) as? WarrantyDetailsExtraInfoCell
+                cell?.title.text = "Notes"
+                cell?.body.text = self.viewModel?.warranty.notes
+                return cell
+            }
+        })
+        let snapshot = createExtraInfosSnapshot()
+        tableViewDiffableDataSource.apply(snapshot)
+    }
     
-        private func createExtraInfosSnapshot() -> NSDiffableDataSourceSnapshot<Section, Item> {
-            var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
-            snapshot.appendSections([.productPresentation, .invoice, .extraInfo])
-            snapshot.appendItems([.topPresentation], toSection: .productPresentation)
-            snapshot.appendItems([.invoice], toSection: .invoice)
-            snapshot.appendItems(extraInfoItems, toSection: .extraInfo)
-            return snapshot
-        }
+    private func createExtraInfosSnapshot() -> NSDiffableDataSourceSnapshot<Section, Item> {
+        var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
+        snapshot.appendSections([.productPresentation, .invoice, .extraInfo])
+        snapshot.appendItems([.topPresentation], toSection: .productPresentation)
+        snapshot.appendItems([.invoice], toSection: .invoice)
+        snapshot.appendItems(extraInfoItems, toSection: .extraInfo)
+        return snapshot
+    }
     
     // MARK: - @objc methods
     
     @objc func warrantyUpdated() {
         setupData()
+        configureExtraInfoTableViewDataSource()
         let snapshot = createExtraInfosSnapshot()
         tableViewDiffableDataSource.apply(snapshot)
     }
@@ -156,8 +156,8 @@ class WarrantyDetailsViewController: UIViewController {
     }
     
     private func deleteWarranty() {
-            viewModel?.deleteWarranty()
-        }
+        viewModel?.deleteWarranty()
+    }
     
     @objc func aboutToDeleteAlert() {
         let alertController = UIAlertController(title: Strings.delete, message: Strings.confirmDeletion, preferredStyle: .actionSheet)
@@ -178,13 +178,6 @@ extension WarrantyDetailsViewController {
     
     private func setupView() {
         view.backgroundColor = MWColor.background
-        
-        // bottomBorder.setBottomBorder()
-        //        extraWarrantyInfoTitle.text = "Informations additionnelles"
-        //        extraWarrantyInfoTitle.font = MWFont.invoicePhotoTitle
-        
-        //        extraInfoTableView.register(WarrantyDetailsExtraInfoCell.self, forCellReuseIdentifier: "WarrantyDetailsExtraInfoCell")
-        //        extraInfoTableView.delegate = self
         
         editWarrantyButton.setTitle(Strings.edit, for: .normal)
         editWarrantyButton.titleLabel?.font = MWFont.editWarrantyButton
@@ -218,13 +211,10 @@ extension WarrantyDetailsViewController {
         view.addSubview(bottomButtonsStackView)
         
         NSLayoutConstraint.activate([
-            
-            // bottomBorder.heightAnchor.constraint(equalToConstant: 1),
-            
-            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 24),
+            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
-          
+            
             editWarrantyButton.widthAnchor.constraint(equalToConstant: 140),
             editWarrantyButton.heightAnchor.constraint(equalToConstant: 37),
             
@@ -244,16 +234,25 @@ extension WarrantyDetailsViewController {
 }
 
 extension WarrantyDetailsViewController: UITableViewDelegate {
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.section == Section.extraInfo.rawValue {
             return 60
+        } else if indexPath.section == Section.productPresentation.rawValue {
+            return 190
         } else {
-            return 120
+            return 130
         }
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 20
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.section == Section.invoice.rawValue {
+            showFullScreenImage()
+        }
     }
 }
 

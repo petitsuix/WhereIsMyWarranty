@@ -99,7 +99,6 @@ extension TextViewTableViewCell {
         textView.spellCheckingType = .no
         textView.autocorrectionType = .no
         textView.translatesAutoresizingMaskIntoConstraints = false
-        textView.textColor = MWColor.systemBackground
         
         backgroundColor = MWColor.extraInfoCellBackground
         contentView.addSubview(textView)
