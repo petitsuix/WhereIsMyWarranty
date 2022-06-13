@@ -257,7 +257,7 @@ private extension ExtraInfoViewController {
     
     func setupView() {
         navigationController?.isNavigationBarHidden = false
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .close, target: self, action: #selector(deletionAlert))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .close, target: self, action: #selector(aboutToCloseAlert))
         
         extraInfoTitleLabel.text = "\tInfos complémentaires"
         extraInfoTitleLabel.textColor = MWColor.label

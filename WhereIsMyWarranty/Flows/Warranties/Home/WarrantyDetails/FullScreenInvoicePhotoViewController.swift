@@ -42,7 +42,6 @@ class FullScreenInvoicePhotoViewController: UIViewController {
     private func setup() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .close, target: self, action: #selector(dismissInvoicePhotoModal))
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(openActivityViewController))
-        view.backgroundColor = MWColor.systemBackground
         
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFit
@@ -54,6 +53,8 @@ class FullScreenInvoicePhotoViewController: UIViewController {
         scrollView.maximumZoomScale = 10.0
         scrollView.delegate = self
         scrollView.addSubview(imageView)
+        
+        view.backgroundColor = MWColor.systemBackground
         view.addSubview(scrollView)
         
         NSLayoutConstraint.activate([

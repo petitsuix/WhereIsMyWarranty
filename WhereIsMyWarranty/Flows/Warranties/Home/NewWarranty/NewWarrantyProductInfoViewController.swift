@@ -59,16 +59,6 @@ class NewWarrantyProductInfoViewController: UIViewController {
     
     // MARK: - objc methods
     
-    @objc func deletionAlert2() {
-        let alertVC = UIAlertController(title: "Voulez-vous fermer cette page ?", message: "Les modifications apportées ne seront pas enregistrées", preferredStyle: .actionSheet)
-        alertVC.addAction(UIAlertAction(title: "Oui", style: .destructive, handler: { _ in
-          //  self.viewModel = nil
-            self.dismiss(animated: true)
-        }))
-        alertVC.addAction(UIAlertAction(title: "Annuler", style: .cancel, handler: nil))
-        present(alertVC, animated: true, completion: nil)
-    }
-    
     @objc func nameTextfieldDidChange(textfield: UITextField) {
         viewModel?.name = textfield.text
     }
@@ -233,8 +223,7 @@ extension NewWarrantyProductInfoViewController {
     // MARK: - View configuration
     
     private func setupView() {
-        navigationController?.isNavigationBarHidden = false
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .close, target: self, action: #selector(deletionAlert2))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .close, target: self, action: #selector(aboutToCloseAlert))
         
         screenTitle.text = Strings.screenTitle
         screenTitle.font = MWFont.modalMainTitle

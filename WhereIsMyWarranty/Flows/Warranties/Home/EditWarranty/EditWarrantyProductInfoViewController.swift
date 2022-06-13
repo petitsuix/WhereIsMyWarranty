@@ -56,7 +56,6 @@ class EditWarrantyProductInfoViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.isNavigationBarHidden = true
         self.hideKeyboardWhenTappedAround()
     }
     
@@ -226,8 +225,7 @@ extension EditWarrantyProductInfoViewController {
     // MARK: - View configuration
     
     private func setupView() {
-        navigationController?.isNavigationBarHidden = false
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .close, target: self, action: #selector(deletionAlert))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .close, target: self, action: #selector(aboutToCloseAlert))
         
         screenTitle.text = Strings.screenTitle
         screenTitle.font = MWFont.modalMainTitle

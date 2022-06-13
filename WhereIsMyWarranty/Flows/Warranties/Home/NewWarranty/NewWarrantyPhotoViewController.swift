@@ -139,7 +139,7 @@ extension NewWarrantyPhotoViewController {
     
     private func setupView() {
         navigationController?.isNavigationBarHidden = false
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .close, target: self, action: #selector(deletionAlert))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .close, target: self, action: #selector(aboutToCloseAlert))
         
         addAPhotoTitleLabel.textColor = MWColor.label
         addAPhotoTitleLabel.font = MWFont.addAPhotoTitle

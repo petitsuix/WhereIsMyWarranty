@@ -14,15 +14,21 @@ class WarrantyDetailsViewController: UIViewController {
     private enum Section: Int, CaseIterable {
         case productPresentation
         case invoice
-        case extraInfo
+        case productExtraInfo
+        case sellerExtraInfo
+        case notes
         func description() -> String {
             switch self {
             case .productPresentation:
                 return ""
             case .invoice:
                 return "Facture"
-            case .extraInfo:
-                return "Informations additionnelles"
+            case .productExtraInfo:
+                return "Infos produit"
+            case .sellerExtraInfo:
+                return "Infos vendeur"
+            default:
+                return "Notes"
             }
         }
     }
@@ -37,7 +43,7 @@ class WarrantyDetailsViewController: UIViewController {
         case sellersLocation
         case sellersContact
         case sellersWebsite
-        case notes
+        case notesItem
     }
     
     var viewModel: WarrantyDetailsViewModel?
@@ -48,11 +54,8 @@ class WarrantyDetailsViewController: UIViewController {
     
     private let tableView = UITableView(frame: .zero, style: .insetGrouped)
     
-    private let bottomButtonsStackView = UIStackView()
-    private let editWarrantyButton = UIButton()
-    private let deleteWarrantyButton = UIButton()
-    
-    private var extraInfoItems: [Item] = [.price, .model, .serialNumber, .sellersName, .sellersLocation, .sellersContact, .sellersWebsite, .notes]
+    private var productExtraInfoItems: [Item] = [.price, .model, .serialNumber]
+    private var sellerExtraInfoItems: [Item] = [.sellersName, .sellersLocation, .sellersContact, .sellersWebsite]
     
     // MARK: - View life cycle methods
     
@@ -100,7 +103,7 @@ class WarrantyDetailsViewController: UIViewController {
                 return cell
             case .sellersName:
                 let cell = tableView.dequeueReusableCell(withIdentifier: "WarrantyDetailsExtraInfoCell", for: indexPath) as? WarrantyDetailsExtraInfoCell
-                cell?.title.text = "Nom"
+                cell?.title.text = "Nom du vendeur"
                 cell?.body.text = self.viewModel?.warranty.sellersName
                 return cell
             case .sellersLocation:
@@ -118,9 +121,9 @@ class WarrantyDetailsViewController: UIViewController {
                 cell?.title.text = "Contact"
                 cell?.body.text = self.viewModel?.warranty.sellersContact
                 return cell
-            case .notes:
+            case .notesItem:
                 let cell = tableView.dequeueReusableCell(withIdentifier: "WarrantyDetailsExtraInfoCell", for: indexPath) as? WarrantyDetailsExtraInfoCell
-                cell?.title.text = "Notes"
+                //cell?.title.text = "Notes"
                 cell?.body.text = self.viewModel?.warranty.notes
                 return cell
             }
@@ -131,11 +134,21 @@ class WarrantyDetailsViewController: UIViewController {
     
     private func createExtraInfosSnapshot() -> NSDiffableDataSourceSnapshot<Section, Item> {
         var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
-        snapshot.appendSections([.productPresentation, .invoice, .extraInfo])
+        snapshot.appendSections([.productPresentation, .invoice, .productExtraInfo, .sellerExtraInfo, .notes])
         snapshot.appendItems([.topPresentation], toSection: .productPresentation)
         snapshot.appendItems([.invoice], toSection: .invoice)
-        snapshot.appendItems(extraInfoItems, toSection: .extraInfo)
+        snapshot.appendItems(productExtraInfoItems, toSection: .productExtraInfo)
+        snapshot.appendItems(sellerExtraInfoItems, toSection: .sellerExtraInfo)
+        snapshot.appendItems([.notesItem], toSection: .notes)
         return snapshot
+    }
+    
+    private func editWarranty() {
+        viewModel?.editWarranty()
+    }
+    
+    private func deleteWarranty() {
+        viewModel?.deleteWarranty()
     }
     
     // MARK: - @objc methods
@@ -149,14 +162,6 @@ class WarrantyDetailsViewController: UIViewController {
     
     @objc func showFullScreenImage() {
         viewModel?.showFullScreenInvoicePhoto()
-    }
-    
-    @objc func editWarranty() {
-        viewModel?.editWarranty()
-    }
-    
-    private func deleteWarranty() {
-        viewModel?.deleteWarranty()
     }
     
     @objc func aboutToDeleteAlert() {
@@ -177,28 +182,7 @@ class WarrantyDetailsViewController: UIViewController {
 extension WarrantyDetailsViewController {
     
     private func setupView() {
-        view.backgroundColor = MWColor.background
-        
-        editWarrantyButton.setTitle(Strings.edit, for: .normal)
-        editWarrantyButton.titleLabel?.font = MWFont.editWarrantyButton
-        editWarrantyButton.setTitleColor(MWColor.label, for: .normal)
-        editWarrantyButton.backgroundColor = MWColor.bluegreyElement
-        editWarrantyButton.roundingViewCorners(radius: 11)
-        editWarrantyButton.addTarget(self, action: #selector(editWarranty), for: .touchUpInside)
-        
-        deleteWarrantyButton.setTitle(Strings.delete, for: .normal)
-        deleteWarrantyButton.titleLabel?.font = MWFont.deleteWarrantyButton
-        deleteWarrantyButton.setTitleColor(MWColor.label, for: .normal)
-        deleteWarrantyButton.backgroundColor = MWColor.red
-        deleteWarrantyButton.roundingViewCorners(radius: 11)
-        deleteWarrantyButton.addTarget(self, action: #selector(aboutToDeleteAlert), for: .touchUpInside)
-        
-        bottomButtonsStackView.axis = .horizontal
-        bottomButtonsStackView.alignment = .center
-        bottomButtonsStackView.spacing = 18
-        bottomButtonsStackView.translatesAutoresizingMaskIntoConstraints = false
-        bottomButtonsStackView.addArrangedSubview(editWarrantyButton)
-        bottomButtonsStackView.addArrangedSubview(deleteWarrantyButton)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "gear"), menu: createMenu())
         
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.delegate = self
@@ -207,25 +191,28 @@ extension WarrantyDetailsViewController {
         tableView.register(WarrantyDetailsExtraInfoCell.self, forCellReuseIdentifier: "WarrantyDetailsExtraInfoCell")
         tableView.backgroundColor = MWColor.background
         
+        view.backgroundColor = MWColor.background
         view.addSubview(tableView)
-        view.addSubview(bottomButtonsStackView)
         
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
-            
-            editWarrantyButton.widthAnchor.constraint(equalToConstant: 140),
-            editWarrantyButton.heightAnchor.constraint(equalToConstant: 37),
-            
-            deleteWarrantyButton.widthAnchor.constraint(equalToConstant: 140),
-            deleteWarrantyButton.heightAnchor.constraint(equalToConstant: 37),
-            
-            bottomButtonsStackView.topAnchor.constraint(equalTo: tableView.bottomAnchor, constant: 8),
-            bottomButtonsStackView.heightAnchor.constraint(equalToConstant: 60),
-            bottomButtonsStackView.centerXAnchor.constraint(equalTo: tableView.centerXAnchor),
-            bottomButtonsStackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -8)
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0)
         ])
+    }
+    
+    func createMenu() -> UIMenu {
+        let modifyAction = UIAction(title: "Modifier", image: UIImage(systemName: "pencil.circle")) { [weak self] _ in
+            guard let self = self else { return }
+            self.editWarranty()
+        }
+        let deleteAction = UIAction(title: "Supprimer", image: UIImage(systemName: "trash.circle")) { [weak self] _ in
+            guard let self = self else { return }
+            self.aboutToDeleteAlert()
+        }
+        let menu = UIMenu(title: "", children: [modifyAction, deleteAction])
+        return menu
     }
     
     func setupData() {
@@ -236,12 +223,12 @@ extension WarrantyDetailsViewController {
 extension WarrantyDetailsViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.section == Section.extraInfo.rawValue {
-            return 60
+        if indexPath.section == Section.invoice.rawValue {
+            return 130
         } else if indexPath.section == Section.productPresentation.rawValue {
             return 190
         } else {
-            return 130
+            return 60
         }
     }
     

@@ -10,7 +10,7 @@ import UIKit
 
 extension UIViewController {
     
-    @objc func deletionAlert() {
+    @objc func aboutToCloseAlert() {
         let alertVC = UIAlertController(title: "Voulez-vous fermer cette page ?", message: "Les modifications apportées ne seront pas enregistrées", preferredStyle: .actionSheet)
         alertVC.addAction(UIAlertAction(title: "Oui", style: .destructive, handler: { _ in
             self.dismiss(animated: true)
