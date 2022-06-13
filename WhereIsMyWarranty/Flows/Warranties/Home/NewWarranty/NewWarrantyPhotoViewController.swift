@@ -80,11 +80,13 @@ class NewWarrantyPhotoViewController: UIViewController {
         alert.addAction(UIAlertAction(title: Strings.galery, style: .default, handler: { _ in
             self.open(sourceType: .photoLibrary)
         }))
+        if photoMode == .invoicePhoto {
         alert.addAction(UIAlertAction(title: Strings.scan, style: .default, handler: { _ in
             let scannerViewController = VNDocumentCameraViewController()
             scannerViewController.delegate = self
             self.present(scannerViewController, animated: true)
         }))
+        }
         alert.addAction(UIAlertAction.init(title: Strings.cancel, style: .cancel, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
