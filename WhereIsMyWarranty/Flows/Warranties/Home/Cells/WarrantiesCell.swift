@@ -93,6 +93,7 @@ extension WarrantiesCell {
     private func setup() {
         warrantyProductImageView.translatesAutoresizingMaskIntoConstraints = false
         warrantyProductImageView.roundingViewCorners(radius: 10)
+        warrantyProductImageView.contentMode = .scaleAspectFill
         warrantyProductImageView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMinXMaxYCorner] // to round specific corners (top left and bottom left)
         
         warrantyName.font = MWFont.cellWarrantyName
@@ -101,7 +102,6 @@ extension WarrantiesCell {
         remainingTime.font = UIFont.preferredFont(forTextStyle: .body)
         remainingTime.textColor = MWColor.systemBackground
         
-        remainingTime.font = UIFont.preferredFont(forTextStyle: .body)
         warrantyEnd.textColor = MWColor.systemBackground
         warrantyEnd.numberOfLines = 0
         

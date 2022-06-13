@@ -100,6 +100,7 @@ class WarrantiesCoordinator: Coordinator, WarrantiesCoordinatorProtocol {
         fullScreenInvoicePhotoViewController.invoicePhoto = invoicePhoto
         modalNavigationController.modalPresentationStyle = .popover
         modalNavigationController.modalTransitionStyle = .coverVertical
+        fullScreenInvoicePhotoViewController.isModalInPresentation = true
         modalNavigationController = UINavigationController(rootViewController: fullScreenInvoicePhotoViewController)
         navigationController.present(modalNavigationController, animated: true, completion: nil)
     }

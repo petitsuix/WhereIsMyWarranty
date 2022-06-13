@@ -13,6 +13,7 @@ class FullScreenInvoicePhotoViewController: UIViewController {
     
     var invoicePhoto: Data?
     
+    private let scrollView = UIScrollView()
     private let imageView = UIImageView()
     
     // MARK: - View life cycle methods
@@ -32,8 +33,8 @@ class FullScreenInvoicePhotoViewController: UIViewController {
     
     @objc func openActivityViewController() {
         let items = [invoicePhoto]
-        let ac = UIActivityViewController(activityItems: items as [Any], applicationActivities: nil)
-        present(ac, animated: true)
+        let activityController = UIActivityViewController(activityItems: items as [Any], applicationActivities: nil)
+        present(activityController, animated: true)
     }
     
     // MARK: - UI configuration
@@ -48,15 +49,33 @@ class FullScreenInvoicePhotoViewController: UIViewController {
         if let invoicePhoto = invoicePhoto {
         imageView.image = UIImage(data: invoicePhoto)
         }
-        view.addSubview(imageView)
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.minimumZoomScale = 1.0
+        scrollView.maximumZoomScale = 10.0
+        scrollView.delegate = self
+        scrollView.addSubview(imageView)
+        view.addSubview(scrollView)
         
         NSLayoutConstraint.activate([
-            imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            imageView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            imageView.leadingAnchor.constraint(lessThanOrEqualTo: view.leadingAnchor, constant: 24),
-            imageView.trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor, constant: -24),
-            imageView.topAnchor.constraint(lessThanOrEqualTo: view.safeAreaLayoutGuide.topAnchor, constant: 24),
-            imageView.bottomAnchor.constraint(lessThanOrEqualTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -24)
+            scrollView.heightAnchor.constraint(equalTo: imageView.heightAnchor),
+            scrollView.widthAnchor.constraint(equalTo: imageView.widthAnchor),
+
+            scrollView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            scrollView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            scrollView.leadingAnchor.constraint(lessThanOrEqualTo: view.leadingAnchor, constant: 24),
+            scrollView.trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor, constant: -24),
+            scrollView.topAnchor.constraint(lessThanOrEqualTo: view.safeAreaLayoutGuide.topAnchor, constant: 24),
+            scrollView.bottomAnchor.constraint(lessThanOrEqualTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -24)
         ])
+    }
+}
+
+extension FullScreenInvoicePhotoViewController: UIScrollViewDelegate {
+    
+    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+        return imageView
+    }
+    
+    func scrollViewDidEndZooming(_ scrollView: UIScrollView, with view: UIView?, atScale scale: CGFloat) {
     }
 }

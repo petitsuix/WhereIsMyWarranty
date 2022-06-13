@@ -65,8 +65,7 @@ extension TopPresentationCell {
         productImageView.translatesAutoresizingMaskIntoConstraints = false
         productImageView.isAccessibilityElement = false
         productImageView.roundingViewCorners(radius: 74)
-        productImageView.layer.borderWidth = 1.5
-        productImageView.layer.borderColor = MWColor.background.cgColor
+        productImageView.contentMode = .scaleAspectFill
         
         productName.translatesAutoresizingMaskIntoConstraints = false
         productName.font = MWFont.warrantyDetailsProductName
