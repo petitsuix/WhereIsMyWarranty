@@ -49,7 +49,6 @@ class NewWarrantyProductInfoViewController: UIViewController {
         super.viewDidLoad()
         setupView()
         canGoToNextStep(canSave: false)
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -94,6 +93,9 @@ class NewWarrantyProductInfoViewController: UIViewController {
     }
     
     @objc func goToAddProductPhotoScreen() {
+        //FIXME: a assigner à l'action d'un switch
+        viewModel?.requestNotificationAuthorization()
+        
         viewModel?.startDate = datePicker.date
         viewModel?.isLifetimeWarranty = (lifetimeWarrantySwitch.isOn ? true : false)
         viewModel?.endDate = updatedDate
