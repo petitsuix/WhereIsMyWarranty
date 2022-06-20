@@ -12,12 +12,12 @@ class EditWarrantyViewModel {
     
     // MARK: - Internal properties
     
+    var warranty: Warranty
+    var notificationService = NotificationService()
+    
     weak var productInfoViewDelegate: EditWarrantyProductInfoViewController?
     weak var photoViewDelegate: EditWarrantyPhotoViewController?
     weak var extraInfoViewDelegate: ExtraInfoViewController?
-    
-    var warranty: Warranty
-    let userNotificationCenter = UNUserNotificationCenter.current()
     
     var name: String? {
         didSet {
@@ -25,8 +25,9 @@ class EditWarrantyViewModel {
         }
     }
     var startDate: Date?
-    var isLifetimeWarranty: Bool?
     var endDate: Date?
+    var isLifetimeWarranty: Bool?
+    var areNotificationsEnabled: Bool = false
     var productPhoto: Data?
     var invoicePhoto: Data?
     var price: Double? {
@@ -88,51 +89,7 @@ class EditWarrantyViewModel {
         let notification = Notification(name: notificationName)
         NotificationCenter.default.post(notification)
     }
-    
-    func requestNotificationAuthorization() {
-        let authOptions = UNAuthorizationOptions.init(arrayLiteral: .alert, .badge, .sound)
-        
-        self.userNotificationCenter.requestAuthorization(options: authOptions) { (_, error) in
-            if let error = error {
-                print("Error: ", error)
-            }
-        }
-    }
 
-    func configureNotification() {
-        let notificationContent = UNMutableNotificationContent()
-
-        notificationContent.title = "Une garantie arrive bientôt à expiration : \(name ?? "")"
-        notificationContent.body = "Tout fonctionne ? Sinon, c'est le moment de contacter le SAV 🦦"
-        notificationContent.badge = NSNumber(value: 3)
-
-        // Add an attachment to the notification content
-        if let url = Bundle.main.url(forResource: "icon-60",
-                                        withExtension: "png") {
-            if let attachment = try? UNNotificationAttachment(identifier: "icon-60",
-                                                                url: url,
-                                                                options: nil) {
-                notificationContent.attachments = [attachment]
-            }
-        }
-        
-        guard var nextTriggerDate = endDate else { return }
-        nextTriggerDate.addTimeInterval(-30*86400)
-        var comps = Calendar.current.dateComponents([.year, .month, .day], from: nextTriggerDate)
-        comps.hour = 18
-        comps.minute = 0
-        comps.second = 0
-        let trigger = UNCalendarNotificationTrigger(dateMatching: comps, repeats: false)
-        let request = UNNotificationRequest(identifier: "expiringWarrantyNotification",
-                                            content: notificationContent,
-                                            trigger: trigger)
-        userNotificationCenter.add(request) { (error) in
-            if let error = error {
-                print("Notification Error: ", error)
-            }
-        }
-    }
-    
     func goToEditProductPhotoScreen() {
         coordinator.showEditWarrantyProductPhotoScreen()
     }
@@ -154,7 +111,11 @@ class EditWarrantyViewModel {
         warranty.invoicePhoto = invoicePhoto
         warranty.notes = notes
         storageService.save()
-        configureNotification()
+        if areNotificationsEnabled == true, let name = name, let endDate = endDate {
+            let id = warranty.objectID.uriRepresentation().absoluteString
+            notificationService.cancelnotif(for: id)
+            notificationService.generateNotificationFor(name, endDate.addingTimeInterval(-30*86400), id: id)
+        }
         warrantySaved()
     }
     

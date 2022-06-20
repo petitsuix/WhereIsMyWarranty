@@ -146,7 +146,7 @@ extension NewWarrantyPhotoViewController {
         addAPhotoTitleLabel.textAlignment = .center
         addAPhotoTitleLabel.numberOfLines = 0
         
-        imageView.layer.borderWidth = 1
+        imageView.layer.borderWidth = 0.3
         imageView.layer.borderColor = MWColor.label.cgColor
         imageView.contentMode = .scaleAspectFill
         imageView.layer.masksToBounds = true

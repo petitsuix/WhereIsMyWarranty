@@ -17,6 +17,7 @@
 		972660A827B3FD5200A8F7E9 /* StorageServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972660A727B3FD5200A8F7E9 /* StorageServiceProtocol.swift */; };
 		972660AA27B43CD800A8F7E9 /* WarrantiesCoordinatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972660A927B43CD800A8F7E9 /* WarrantiesCoordinatorProtocol.swift */; };
 		972660AC27B554A400A8F7E9 /* Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972660AB27B554A300A8F7E9 /* Bundle.swift */; };
+		9741AA6B286077D900DBA1B2 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9741AA6A286077D900DBA1B2 /* NotificationService.swift */; };
 		974F1FF928227300000238E7 /* privacy_policy.txt in Resources */ = {isa = PBXBuildFile; fileRef = 974F1FF828227300000238E7 /* privacy_policy.txt */; };
 		974F1FFD2822837E000238E7 /* terms_and_conditions.txt in Resources */ = {isa = PBXBuildFile; fileRef = 974F1FFC2822837E000238E7 /* terms_and_conditions.txt */; };
 		974F20052823C999000238E7 /* WarrantyDetailsExtraInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 974F20042823C999000238E7 /* WarrantyDetailsExtraInfoCell.swift */; };
@@ -47,7 +48,7 @@
 		976304C0276365F700688DDB /* HomeWarrantiesListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976304BF276365F700688DDB /* HomeWarrantiesListViewModel.swift */; };
 		976304C2276393CF00688DDB /* WarrantiesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976304C1276393CF00688DDB /* WarrantiesCell.swift */; };
 		976304C42763A73D00688DDB /* AddShadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976304C32763A73D00688DDB /* AddShadow.swift */; };
-		9769C953276A299100BAC736 /* Storage Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9769C952276A299100BAC736 /* Storage Service.swift */; };
+		9769C953276A299100BAC736 /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9769C952276A299100BAC736 /* StorageService.swift */; };
 		9769C955276A32C600BAC736 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9769C954276A32C600BAC736 /* Alert.swift */; };
 		9769C957276A429900BAC736 /* NewWarrantyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9769C956276A429900BAC736 /* NewWarrantyViewModel.swift */; };
 		976C0C6327AC1E620038E942 /* FullScreenInvoicePhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976C0C6227AC1E620038E942 /* FullScreenInvoicePhotoViewController.swift */; };
@@ -123,6 +124,7 @@
 		972660A727B3FD5200A8F7E9 /* StorageServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageServiceProtocol.swift; sourceTree = "<group>"; };
 		972660A927B43CD800A8F7E9 /* WarrantiesCoordinatorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarrantiesCoordinatorProtocol.swift; sourceTree = "<group>"; };
 		972660AB27B554A300A8F7E9 /* Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bundle.swift; sourceTree = "<group>"; };
+		9741AA6A286077D900DBA1B2 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		974F1FF828227300000238E7 /* privacy_policy.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = privacy_policy.txt; sourceTree = "<group>"; };
 		974F1FFC2822837E000238E7 /* terms_and_conditions.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = terms_and_conditions.txt; sourceTree = "<group>"; };
 		974F20042823C999000238E7 /* WarrantyDetailsExtraInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarrantyDetailsExtraInfoCell.swift; sourceTree = "<group>"; };
@@ -157,7 +159,7 @@
 		976304BF276365F700688DDB /* HomeWarrantiesListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeWarrantiesListViewModel.swift; sourceTree = "<group>"; };
 		976304C1276393CF00688DDB /* WarrantiesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarrantiesCell.swift; sourceTree = "<group>"; };
 		976304C32763A73D00688DDB /* AddShadow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddShadow.swift; sourceTree = "<group>"; };
-		9769C952276A299100BAC736 /* Storage Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Storage Service.swift"; sourceTree = "<group>"; };
+		9769C952276A299100BAC736 /* StorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageService.swift; sourceTree = "<group>"; };
 		9769C954276A32C600BAC736 /* Alert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		9769C956276A429900BAC736 /* NewWarrantyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWarrantyViewModel.swift; sourceTree = "<group>"; };
 		976C0C6227AC1E620038E942 /* FullScreenInvoicePhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullScreenInvoicePhotoViewController.swift; sourceTree = "<group>"; };
@@ -238,6 +240,14 @@
 				97F7F5F727A9523000C4A50E /* EditWarrantyViewModelTests.swift */,
 			);
 			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		9741AA69286077AA00DBA1B2 /* UserNotifications */ = {
+			isa = PBXGroup;
+			children = (
+				9741AA6A286077D900DBA1B2 /* NotificationService.swift */,
+			);
+			path = UserNotifications;
 			sourceTree = "<group>";
 		};
 		975006AB285224D300D4E51E /* WarrantyDetailsCells */ = {
@@ -339,6 +349,7 @@
 		97630494275A6AC200688DDB /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				9741AA69286077AA00DBA1B2 /* UserNotifications */,
 				976304AB275A6ED700688DDB /* Storage */,
 			);
 			path = Service;
@@ -436,7 +447,7 @@
 		976304AB275A6ED700688DDB /* Storage */ = {
 			isa = PBXGroup;
 			children = (
-				9769C952276A299100BAC736 /* Storage Service.swift */,
+				9769C952276A299100BAC736 /* StorageService.swift */,
 				972660A727B3FD5200A8F7E9 /* StorageServiceProtocol.swift */,
 			);
 			path = Storage;
@@ -717,7 +728,7 @@
 				971F6FBD27DA44AA0074A80A /* TextViewTableViewCell.swift in Sources */,
 				972660AC27B554A400A8F7E9 /* Bundle.swift in Sources */,
 				97E03BD52767639800EFEE79 /* SettingsCoordinator.swift in Sources */,
-				9769C953276A299100BAC736 /* Storage Service.swift in Sources */,
+				9769C953276A299100BAC736 /* StorageService.swift in Sources */,
 				97FE356A2791C606009CEF78 /* EditWarrantyProductInfoViewController.swift in Sources */,
 				97999EFB2796E2E200C8184C /* StartOfDay.swift in Sources */,
 				9792550D27C392A4008EB997 /* ManageChildViewController.swift in Sources */,
@@ -736,6 +747,7 @@
 				976304A4275A6EB100688DDB /* Strings.swift in Sources */,
 				97D74009281BE709009DC461 /* SettingsCoordinatorProtocol.swift in Sources */,
 				97ECFC28277E235600CA973D /* NewWarrantyPhotoViewController.swift in Sources */,
+				9741AA6B286077D900DBA1B2 /* NotificationService.swift in Sources */,
 				974F20052823C999000238E7 /* WarrantyDetailsExtraInfoCell.swift in Sources */,
 				976304A9275A6ECC00688DDB /* MWImages.swift in Sources */,
 				976304B2275A6F4000688DDB /* TopCategoriesCell.swift in Sources */,
@@ -952,7 +964,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = WhereIsMyWarranty/WhereIsMyWarranty.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = T4959W6459;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = WhereIsMyWarranty/Info.plist;
@@ -982,7 +994,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = WhereIsMyWarranty/WhereIsMyWarranty.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = T4959W6459;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = WhereIsMyWarranty/Info.plist;

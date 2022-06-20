@@ -110,7 +110,7 @@ extension TopPresentationCell {
             //productImageView.bottomAnchor.constraint(equalTo: bottomBorder.topAnchor, constant: -24),
             
             innerRightStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20),
-            innerRightStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -24),
+            innerRightStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
             innerRightStackView.bottomAnchor.constraint(equalTo: bottomBorder.topAnchor, constant: -40),
             
             warrantyStatusLabel.leadingAnchor.constraint(equalTo: warrantyStatusView.leadingAnchor, constant: 8),
@@ -121,7 +121,7 @@ extension TopPresentationCell {
             bottomBorder.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             bottomBorder.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             bottomBorder.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12),
-            bottomBorder.heightAnchor.constraint(equalToConstant: 1)
+            bottomBorder.heightAnchor.constraint(equalToConstant: 0.6)
         ])
     }
     

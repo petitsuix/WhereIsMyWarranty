@@ -103,7 +103,7 @@ class WarrantyDetailsViewController: UIViewController {
                 return cell
             case .sellersName:
                 let cell = tableView.dequeueReusableCell(withIdentifier: "WarrantyDetailsExtraInfoCell", for: indexPath) as? WarrantyDetailsExtraInfoCell
-                cell?.title.text = "Nom du vendeur"
+                cell?.title.text = "Nom"
                 cell?.body.text = self.viewModel?.warranty.sellersName
                 return cell
             case .sellersLocation:
@@ -123,7 +123,6 @@ class WarrantyDetailsViewController: UIViewController {
                 return cell
             case .notesItem:
                 let cell = tableView.dequeueReusableCell(withIdentifier: "WarrantyDetailsExtraInfoCell", for: indexPath) as? WarrantyDetailsExtraInfoCell
-                //cell?.title.text = "Notes"
                 cell?.body.text = self.viewModel?.warranty.notes
                 return cell
             }

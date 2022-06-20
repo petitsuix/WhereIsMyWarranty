@@ -10,6 +10,7 @@ class WarrantyDetailsViewModel {
     // MARK: - Internal properties
     
     weak var viewDelegate: WarrantyDetailsViewController?
+    private var notificationService = NotificationService()
     
     var warranty: Warranty
     
@@ -35,6 +36,8 @@ class WarrantyDetailsViewModel {
     func deleteWarranty() {
         do {
             try storageService.deleteWarranty(warranty)
+            let id = warranty.objectID.uriRepresentation().absoluteString
+            notificationService.cancelnotif(for: id)
         } catch {
             print(error) }
     }

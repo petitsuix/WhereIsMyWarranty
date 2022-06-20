@@ -16,6 +16,7 @@ class NewWarrantyProductInfoViewController: UIViewController {
     
     // MARK: - Private properties
     
+    private let scrollView = UIScrollView()
     private let parentStackView = UIStackView()
     
     private let nameAndStartDateStackView = UIStackView()
@@ -27,6 +28,10 @@ class NewWarrantyProductInfoViewController: UIViewController {
     private let startDateStackView = UIStackView()
     private let startDateTitle = UILabel()
     private let datePicker = UIDatePicker()
+    
+    private let notificationStackView = UIStackView()
+    private let notificationTitle = UILabel()
+    private let notificationSwitch = UISwitch()
     
     private let customLengthStackView = UIStackView()
     private let validityLengthTitle = UILabel()
@@ -62,16 +67,26 @@ class NewWarrantyProductInfoViewController: UIViewController {
         viewModel?.name = textfield.text
     }
     
-    @objc func switchAction() {
+    @objc func lifetimeSwitchAction() {
         UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseInOut, animations: {
             self.yearsView.isHidden.toggle()
             self.monthsView.isHidden.toggle()
             self.weeksView.isHidden.toggle()
+            self.notificationStackView.isHidden.toggle()
         }, completion: nil)
         if lifetimeWarrantySwitch.isOn {
             endDateLabel.text = Strings.lifetimeWarrantyDefaultText
         } else {
             updateDateAfterTurningSwitchOff()
+        }
+    }
+    
+    @objc func notificationSwitchAction() {
+        if notificationSwitch.isOn {
+            NotificationService.requestNotificationAuthorization()
+            viewModel?.areNotificationsEnabled = true
+        } else {
+            viewModel?.areNotificationsEnabled = false
         }
     }
     
@@ -93,8 +108,7 @@ class NewWarrantyProductInfoViewController: UIViewController {
     }
     
     @objc func goToAddProductPhotoScreen() {
-        //FIXME: a assigner à l'action d'un switch
-        viewModel?.requestNotificationAuthorization()
+        //FIXME: a assigner à l'action d'un bouton switch
         
         viewModel?.startDate = datePicker.date
         viewModel?.isLifetimeWarranty = (lifetimeWarrantySwitch.isOn ? true : false)
@@ -260,11 +274,19 @@ extension NewWarrantyProductInfoViewController {
         nameAndStartDateStackView.addArrangedSubview(nameStackView)
         nameAndStartDateStackView.addArrangedSubview(startDateStackView)
         
+        notificationTitle.text = "Rappel"
+        notificationTitle.font = MWFont.modalSubtitles
+        notificationSwitch.addTarget(self, action: #selector(notificationSwitchAction), for: .valueChanged)
+        
+        notificationStackView.axis = .horizontal
+        notificationStackView.addArrangedSubview(notificationTitle)
+        notificationStackView.addArrangedSubview(notificationSwitch)
+
         validityLengthTitle.text = Strings.validityLength
         validityLengthTitle.font = MWFont.modalSubtitles
         
         lifetimeWarrantyTitle.text = Strings.lifetimeWarranty
-        lifetimeWarrantySwitch.addTarget(self, action: #selector(switchAction), for: .valueChanged)
+        lifetimeWarrantySwitch.addTarget(self, action: #selector(lifetimeSwitchAction), for: .valueChanged)
         
         lifetimeWarrantyStackView.axis = .horizontal
         lifetimeWarrantyStackView.addArrangedSubview(lifetimeWarrantyTitle)
@@ -290,6 +312,8 @@ extension NewWarrantyProductInfoViewController {
         customLengthStackView.addArrangedSubview(yearsView)
         customLengthStackView.addArrangedSubview(monthsView)
         customLengthStackView.addArrangedSubview(weeksView)
+        customLengthStackView.addArrangedSubview(notificationStackView)
+        customLengthStackView.setCustomSpacing(40, after: weeksView)
         
         endDateLabel.textAlignment = .center
         endDateLabel.text = Strings.productCoveredUntil
@@ -302,20 +326,31 @@ extension NewWarrantyProductInfoViewController {
         parentStackView.addArrangedSubview(customLengthStackView)
         parentStackView.addArrangedSubview(endDateLabel)
         
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.addSubview(parentStackView)
+        
         endCurrentScreenButton.setup(title: Strings.nextStepButtonTitle)
         endCurrentScreenButton.addTarget(self, action: #selector(goToAddProductPhotoScreen), for: .touchUpInside)
         
         view.backgroundColor = MWColor.background
-        view.addSubview(parentStackView)
+        view.addSubview(scrollView)
         view.addSubview(endCurrentScreenButton)
         
         NSLayoutConstraint.activate([
             endDateLabel.heightAnchor.constraint(equalToConstant: 60),
             
-            parentStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
-            parentStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
-            parentStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
-            parentStackView.bottomAnchor.constraint(lessThanOrEqualTo: endCurrentScreenButton.topAnchor, constant: -16),
+            parentStackView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 0),
+            parentStackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 0),
+            parentStackView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: 0),
+            parentStackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: 0),
+            
+            scrollView.heightAnchor.constraint(equalTo: parentStackView.heightAnchor),
+            scrollView.widthAnchor.constraint(equalTo: parentStackView.widthAnchor, constant: 4),
+
+            scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
+            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
+            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
+            scrollView.bottomAnchor.constraint(lessThanOrEqualTo: endCurrentScreenButton.topAnchor, constant: -16),
             
             endCurrentScreenButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             endCurrentScreenButton.bottomAnchor.constraint(lessThanOrEqualTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -24),
