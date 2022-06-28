@@ -43,7 +43,7 @@ extension WarrantyExpirationDateCell {
             endDateLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0),
             endDateLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0),
             endDateLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0),
-            endDateLabel.topAnchor.constraint(equalTo: topAnchor, constant: 0),
+            endDateLabel.topAnchor.constraint(equalTo: topAnchor, constant: 24)
         ])
     }
     

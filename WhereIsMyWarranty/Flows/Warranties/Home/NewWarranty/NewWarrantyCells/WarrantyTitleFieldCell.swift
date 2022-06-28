@@ -50,16 +50,15 @@ extension WarrantyTitleFieldCell {
         nameField.placeholder = Strings.productNamePlaceHolder
         nameField.setBottomBorder()
         nameField.addDoneToolbar()
-        // nameField.addTarget(self, action: #selector(nameTextfieldDidChange), for: .editingChanged)
         nameField.becomeFirstResponder()
         
         addSubview(nameField)
         
         NSLayoutConstraint.activate([
-            nameField.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 0),
-            nameField.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 0),
-            nameField.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 0),
-            nameField.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 0)
+            nameField.topAnchor.constraint(equalTo: topAnchor, constant: 16),
+            nameField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0),
+            nameField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0),
+            nameField.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -24)
         ])
     }
     

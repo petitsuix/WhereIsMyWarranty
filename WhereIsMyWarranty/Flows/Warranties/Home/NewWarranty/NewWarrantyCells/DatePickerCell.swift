@@ -51,13 +51,12 @@ extension DatePickerCell {
         datePicker.datePickerMode = .date
         // datePicker.addTarget(self, action: #selector(updateTimeIntervals), for: .editingDidEnd)
         
-        addSubview(datePicker)
+        contentView.addSubview(datePicker)
         
         NSLayoutConstraint.activate([
-            datePicker.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 0),
-            datePicker.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 0),
-            // datePicker.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 0),
-            datePicker.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 0)
+            datePicker.topAnchor.constraint(equalTo: topAnchor, constant: 16),
+            datePicker.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0),
+            datePicker.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0)
         ])
     }
     

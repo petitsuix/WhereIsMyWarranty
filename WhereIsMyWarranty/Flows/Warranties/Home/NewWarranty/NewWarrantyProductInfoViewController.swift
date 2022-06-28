@@ -71,7 +71,7 @@ class NewWarrantyProductInfoViewController: UIViewController {
     
     private let lifetimeWarrantyStackView = UIStackView()
     private let lifetimeWarrantyTitle = UILabel()
-    private let lifetimeWarrantySwitch = UISwitch()
+    //private let lifetimeWarrantySwitch = UISwitch()
     private let yearsView = TextWithStepperView()
     private let monthsView = TextWithStepperView()
     private let weeksView = TextWithStepperView()
@@ -84,6 +84,7 @@ class NewWarrantyProductInfoViewController: UIViewController {
     
     private var diffableDataSource: UICollectionViewDiffableDataSource<Section, Item>!
     private var collectionView: UICollectionView!
+    private var isLifeTimeWarranty: Bool = false
     
     // MARK: - View life cycle methods
     
@@ -106,16 +107,16 @@ class NewWarrantyProductInfoViewController: UIViewController {
     }
     
     @objc func lifetimeSwitchAction() {
-        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseInOut, animations: {
-            self.yearsView.isHidden.toggle()
-            self.monthsView.isHidden.toggle()
-            self.weeksView.isHidden.toggle()
-            self.notificationStackView.isHidden.toggle()
-        }, completion: nil)
-        if lifetimeWarrantySwitch.isOn {
-            endDate = Strings.lifetimeWarrantyDefaultText
-        } else {
+        if isLifeTimeWarranty {
             updateDateAfterTurningSwitchOff()
+            let snapshot = createSnapshot()
+            diffableDataSource.apply(snapshot)
+            isLifeTimeWarranty = false
+        } else {
+            endDate = Strings.lifetimeWarrantyDefaultText
+            let snapshot = createSnapshotForLifeTimeWarranties()
+            diffableDataSource.apply(snapshot)
+            isLifeTimeWarranty = true
         }
     }
     
@@ -140,14 +141,14 @@ class NewWarrantyProductInfoViewController: UIViewController {
         if yearsView.timeUnitAmount.text != "0" {
             updateYears()
         }
-        if lifetimeWarrantySwitch.isOn {
+        if isLifeTimeWarranty {
             endDate = Strings.lifetimeWarrantyDefaultText
         }
     }
     
     @objc func goToAddProductPhotoScreen() {
         viewModel?.startDate = datePicker.date
-        viewModel?.isLifetimeWarranty = (lifetimeWarrantySwitch.isOn ? true : false)
+        viewModel?.isLifetimeWarranty = (isLifeTimeWarranty ? true : false)
         viewModel?.endDate = updatedDate
         viewModel?.goToAddProductPhotoScreen()
     }
@@ -285,6 +286,9 @@ class NewWarrantyProductInfoViewController: UIViewController {
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constant.labelAndSwitchCellIdentifier, for: indexPath) as? LabelAndSwitchCell
                 cell?.label.text = Strings.lifetimeWarranty
                 cell?.switchButton.addTarget(self, action: #selector(self.lifetimeSwitchAction), for: .valueChanged)
+                if let isSwitchOn = cell?.switchButton.isOn {
+                self.isLifeTimeWarranty = isSwitchOn
+                }
                 return cell
             case .yearsStepper:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constant.timeSpanWithStepperCellIdentifier, for: indexPath) as? TimeSpanWithStepperCell
@@ -341,10 +345,20 @@ class NewWarrantyProductInfoViewController: UIViewController {
         return snapshot
     }
     
+    private func createSnapshotForLifeTimeWarranties() -> NSDiffableDataSourceSnapshot<Section, Item> {
+        var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
+        snapshot.appendSections([Section.warrantyTitle, Section.warrantyStart, Section.validityLength, Section.warrantyExpirationSection])
+        snapshot.appendItems([.warrantyTitleField], toSection: .warrantyTitle)
+        snapshot.appendItems([.datePicker], toSection: .warrantyStart)
+        snapshot.appendItems([.lifetimeWarranty], toSection: .warrantyStart)
+        snapshot.appendItems([.warrantyExpirationItem(expirationDate: endDate)], toSection: .warrantyExpirationSection)
+        return snapshot
+    }
+    
     private func configureLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewCompositionalLayout { sectionIndex, environment in
-        var configuration = UICollectionLayoutListConfiguration(appearance: .grouped)
-        configuration.backgroundColor = MWColor.extraInfoCellBackground
+            var configuration = UICollectionLayoutListConfiguration(appearance: .sidebar)
+            configuration.backgroundColor = MWColor.background
             let section = NSCollectionLayoutSection.list(using: configuration, layoutEnvironment: environment)
             let sectionItem = self.diffableDataSource.snapshot().sectionIdentifiers[sectionIndex]
             if sectionItem.headerTitle != nil {
@@ -364,6 +378,7 @@ extension NewWarrantyProductInfoViewController: UICollectionViewDelegate, UIColl
 //            return CGSize(width: view.frame.size.width, height: 90)
 //        }
 //    }
+    
 }
 
 private extension NewWarrantyProductInfoViewController {
@@ -393,11 +408,7 @@ extension NewWarrantyProductInfoViewController {
     
     private func setupView() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .close, target: self, action: #selector(aboutToCloseAlert))
-        
-        //let collectionViewLayout = UICollectionViewFlowLayout()
-        //collectionViewLayout.scrollDirection = .vertical
-        //collectionViewLayout.itemSize = CGSize(width: view.frame.size.width, height: view.frame.size.width/2)
-        //collectionViewLayout.minimumLineSpacing = 32
+
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: configureLayout())
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.delegate = self
@@ -417,8 +428,8 @@ extension NewWarrantyProductInfoViewController {
         
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
-            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
-            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
+            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
+            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
            
             endCurrentScreenButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             endCurrentScreenButton.topAnchor.constraint(equalTo: collectionView.bottomAnchor, constant: 16),

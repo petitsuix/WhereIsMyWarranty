@@ -84,13 +84,13 @@ extension TimeSpanWithStepperCell {
         parentStackView.addArrangedSubview(timeUnitTitle)
         parentStackView.addArrangedSubview(stepperStackView)
         
-        addSubview(parentStackView)
+        contentView.addSubview(parentStackView)
         
         NSLayoutConstraint.activate([
-            parentStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0),
-            parentStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0),
-            parentStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0),
-            parentStackView.topAnchor.constraint(equalTo: topAnchor, constant: 0),
+            parentStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 0),
+            parentStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 0),
+            parentStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
+            parentStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
             
             timeUnitAmount.widthAnchor.constraint(equalToConstant: 25)
         ])
