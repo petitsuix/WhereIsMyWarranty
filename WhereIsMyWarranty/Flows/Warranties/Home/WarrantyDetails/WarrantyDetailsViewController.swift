@@ -154,6 +154,7 @@ class WarrantyDetailsViewController: UIViewController {
     
     @objc func warrantyUpdated() {
         setupData()
+        // FIXME: never call DataSrouce config twice
         configureExtraInfoTableViewDataSource()
         let snapshot = createExtraInfosSnapshot()
         tableViewDiffableDataSource.apply(snapshot)

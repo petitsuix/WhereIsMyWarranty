@@ -242,7 +242,7 @@ extension EditWarrantyProductInfoViewController {
     private func setupView() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .close, target: self, action: #selector(aboutToCloseAlert))
         
-        screenTitle.text = Strings.screenTitle
+        screenTitle.text = Strings.warrantyInfoTitle
         screenTitle.font = MWFont.modalMainTitle
         screenTitle.textAlignment = .natural
         

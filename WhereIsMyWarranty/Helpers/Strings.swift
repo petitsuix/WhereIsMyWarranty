@@ -24,7 +24,7 @@ enum Strings {
     static let coveredUntil = "Couvert jusqu'au "
     static let remainingDays = " jours restants"
     // Warranty product Info
-    static let screenTitle = "Informations garantie"
+    static let warrantyInfoTitle = "Informations garantie"
     static let productNamePlaceHolder = "Ordinateur, Machine à laver..."
     static let warrantyStartDate = "Date de début de garantie"
     static let validityLength = "Durée de validité"
@@ -33,6 +33,7 @@ enum Strings {
     static let months = "Mois"
     static let weeks = "Semaines"
     static let nextStepButtonTitle = "Suivant"
+    static let reminder = "Rappel"
     // Warranty photo VC
     static let addProductPhoto = "Photo produit"
     static let addWarrantyProof = "Preuve de garantie"
