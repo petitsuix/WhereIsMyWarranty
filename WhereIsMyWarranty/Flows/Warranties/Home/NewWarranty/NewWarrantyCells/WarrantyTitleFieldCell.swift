@@ -58,7 +58,7 @@ extension WarrantyTitleFieldCell {
             nameField.topAnchor.constraint(equalTo: topAnchor, constant: 16),
             nameField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0),
             nameField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0),
-            nameField.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -24)
+            nameField.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0)
         ])
     }
     

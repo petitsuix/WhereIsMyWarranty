@@ -54,17 +54,13 @@ extension LabelAndSwitchCell {
     func setupUI() {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .natural
-//        label.backgroundColor = .orange
         accessories = [.customView(configuration: .init(customView: switchButton, placement: .trailing()))]
         addSubview(label)
-        //contentView.backgroundColor = .green
         NSLayoutConstraint.activate([
             label.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 24),
-            label.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0),
-            label.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0),
-            //label.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 0),
-            //switchButton.centerYAnchor.constraint(equalTo: label.centerYAnchor)
-            label.centerYAnchor.constraint(equalTo: centerYAnchor)
+            label.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 0),
+            label.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: 0),
+            label.centerYAnchor.constraint(equalTo: safeAreaLayoutGuide.centerYAnchor)
         ])
     }
     
