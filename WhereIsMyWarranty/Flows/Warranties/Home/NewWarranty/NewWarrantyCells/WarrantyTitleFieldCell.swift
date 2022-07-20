@@ -62,8 +62,21 @@ extension WarrantyTitleFieldCell {
         ])
     }
     
+    func configure(with item: Configuration) {
+        nameField.placeholder = item.placeholder
+    }
+    
     func setupData() {
        
     }
 }
 
+extension WarrantyTitleFieldCell {
+    struct Configuration {
+        let placeholder: String?
+
+        init(placeholder: String?) {
+            self.placeholder = placeholder
+        }
+    }
+}

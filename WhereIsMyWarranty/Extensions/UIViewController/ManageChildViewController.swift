@@ -23,7 +23,6 @@ extension UIViewController {
             child.didMove(toParent: self)
         }
     
-    
     func remove() {
             guard parent != nil else { return }
             willMove(toParent: nil)

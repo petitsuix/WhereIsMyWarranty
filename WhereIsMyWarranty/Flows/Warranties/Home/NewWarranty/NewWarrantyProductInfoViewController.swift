@@ -12,7 +12,7 @@ class NewWarrantyProductInfoViewController: UIViewController {
     
     // MARK: - Enums
     
-    private enum Section: Int, CaseIterable {
+    private enum Section {
         case warrantyTitle
         case warrantyStart
         case validityLength
@@ -49,34 +49,6 @@ class NewWarrantyProductInfoViewController: UIViewController {
     
     // MARK: - Private properties
     
-    private let scrollView = UIScrollView()
-    private let parentStackView = UIStackView()
-    
-    private let nameAndStartDateStackView = UIStackView()
-    
-    private var nameStackView = UIStackView()
-    private let screenTitle = UILabel()
-    private let nameField = UITextField()
-    
-    private let startDateStackView = UIStackView()
-    private let startDateTitle = UILabel()
-    private let datePicker = UIDatePicker()
-    
-    private let notificationStackView = UIStackView()
-    private let notificationTitle = UILabel()
-    private let notificationSwitch = UISwitch()
-    
-    private let customLengthStackView = UIStackView()
-    private let validityLengthTitle = UILabel()
-    
-    private let lifetimeWarrantyStackView = UIStackView()
-    private let lifetimeWarrantyTitle = UILabel()
-    //private let lifetimeWarrantySwitch = UISwitch()
-    private let yearsView = TextWithStepperView()
-    private let monthsView = TextWithStepperView()
-    private let weeksView = TextWithStepperView()
-    
-    //private let endDateLabel = UILabel()
     private let endCurrentScreenButton = ActionButton()
     
     private var updatedDate: Date?
@@ -85,6 +57,13 @@ class NewWarrantyProductInfoViewController: UIViewController {
     private var diffableDataSource: UICollectionViewDiffableDataSource<Section, Item>!
     private var collectionView: UICollectionView!
     private var isLifeTimeWarranty: Bool = false
+    private var isReminderOn: Bool = false
+    
+    var datePickerCell: DatePickerCell?
+    var weeksCell: TimeSpanWithStepperCell?
+    var monthsCell: TimeSpanWithStepperCell?
+    var yearsCell: TimeSpanWithStepperCell?
+    var warrantyExpirationDateCell: WarrantyExpirationDateCell?
     
     // MARK: - View life cycle methods
     
@@ -109,45 +88,54 @@ class NewWarrantyProductInfoViewController: UIViewController {
     @objc func lifetimeSwitchAction() {
         if isLifeTimeWarranty {
             updateDateAfterTurningSwitchOff()
-            let snapshot = createSnapshot()
-            diffableDataSource.apply(snapshot)
             isLifeTimeWarranty = false
         } else {
             endDate = Strings.lifetimeWarrantyDefaultText
-            let snapshot = createSnapshotForLifeTimeWarranties()
-            diffableDataSource.apply(snapshot)
             isLifeTimeWarranty = true
         }
+        let snapshot = createSnapshot()
+        diffableDataSource.apply(snapshot)
     }
     
     @objc func notificationSwitchAction() {
-        if notificationSwitch.isOn {
+        if isReminderOn {
+            viewModel?.areNotificationsEnabled = false
+            isReminderOn = false
+        } else {
             NotificationService.requestNotificationAuthorization()
             viewModel?.areNotificationsEnabled = true
-        } else {
-            viewModel?.areNotificationsEnabled = false
+            isReminderOn = true
         }
     }
     
     /// In case the user changes the initial warranty start date in the date-picker, calling the 3 update methods in the function below will ensure that the endDate is re-calculated according to the stepper values that he previously gave, if any.
     @objc func updateTimeIntervals() {
-        updatedDate = datePicker.date
-        if weeksView.timeUnitAmount.text != "0" {
+        updatedDate = datePickerCell?.datePicker.date
+        if weeksCell?.timeUnitAmount.text != "0" {
             updateWeeks()
         }
-        if monthsView.timeUnitAmount.text != "0" {
+        if monthsCell?.timeUnitAmount.text != "0" {
             updateMonths()
         }
-        if yearsView.timeUnitAmount.text != "0" {
+        if yearsCell?.timeUnitAmount.text != "0" {
             updateYears()
         }
         if isLifeTimeWarranty {
             endDate = Strings.lifetimeWarrantyDefaultText
         }
+        let formatter1 = DateFormatter()
+        formatter1.dateStyle = .full
+        formatter1.locale = Locale(identifier: Strings.localeIdentifier)
+        if let updatedDate = updatedDate {
+            warrantyExpirationDateCell?.endDateLabel.text = Strings.productCoveredUntil + formatter1.string(from: updatedDate)
+            self.updatedDate = updatedDate
+        }
+        let snapshot = createSnapshot()
+        diffableDataSource.apply(snapshot)
     }
     
     @objc func goToAddProductPhotoScreen() {
-        viewModel?.startDate = datePicker.date
+        viewModel?.startDate = datePickerCell?.datePicker.date
         viewModel?.isLifetimeWarranty = (isLifeTimeWarranty ? true : false)
         viewModel?.endDate = updatedDate
         viewModel?.goToAddProductPhotoScreen()
@@ -155,44 +143,50 @@ class NewWarrantyProductInfoViewController: UIViewController {
     
     @objc func weeksStepperTapped() {
         if updatedDate == nil {
-            updatedDate = datePicker.date
+            updatedDate = datePickerCell?.datePicker.date
         }
         let formatter1 = DateFormatter()
         formatter1.dateStyle = .full
         formatter1.locale = Locale(identifier: Strings.localeIdentifier)
-        updatedDate = updatedDate?.adding(.day, value: (weeksView.didIncrementStepper ? 7 : -7))
+        updatedDate = updatedDate?.adding(.day, value: (weeksCell?.didIncrementStepper ?? false ? 7 : -7))
         if let updatedDate = updatedDate {
             endDate = Strings.productCoveredUntil + formatter1.string(from: updatedDate)
             self.updatedDate = updatedDate
         }
+        let snapshot = createSnapshot()
+        diffableDataSource.apply(snapshot)
     }
     
     @objc func monthsStepperTapped() {
         if updatedDate == nil {
-            updatedDate = datePicker.date
+            updatedDate = datePickerCell?.datePicker.date
         }
         let formatter1 = DateFormatter()
         formatter1.dateStyle = .full
         formatter1.locale = Locale(identifier: Strings.localeIdentifier)
-        updatedDate = updatedDate?.adding(.month, value: (monthsView.didIncrementStepper ? 1 : -1))
+        updatedDate = updatedDate?.adding(.month, value: (monthsCell?.didIncrementStepper ?? false ? 1 : -1))
         if let updatedDate = updatedDate {
             endDate = Strings.productCoveredUntil + formatter1.string(from: updatedDate)
             self.updatedDate = updatedDate
         }
+        let snapshot = createSnapshot()
+        diffableDataSource.apply(snapshot)
     }
     
     @objc func yearsStepperTapped() {
         if updatedDate == nil {
-            updatedDate = datePicker.date
+            updatedDate = datePickerCell?.datePicker.date
         }
         let formatter1 = DateFormatter()
         formatter1.dateStyle = .full
         formatter1.locale = Locale(identifier: Strings.localeIdentifier)
-        updatedDate = updatedDate?.adding(.year, value: (yearsView.didIncrementStepper ? 1 : -1))
+        updatedDate = updatedDate?.adding(.year, value: (yearsCell?.didIncrementStepper ?? false ? 1 : -1))
         if let updatedDate = updatedDate {
             endDate = Strings.productCoveredUntil + formatter1.string(from: updatedDate)
             self.updatedDate = updatedDate
         }
+        let snapshot = createSnapshot()
+        diffableDataSource.apply(snapshot)
     }
     
     // MARK: - Methods
@@ -210,65 +204,46 @@ class NewWarrantyProductInfoViewController: UIViewController {
     // MARK: - Private methods
     
     private func updateWeeks() {
-        let formatter1 = DateFormatter()
-        formatter1.dateStyle = .full
-        formatter1.locale = Locale(identifier: Strings.localeIdentifier)
-        if let timeUnitAmount = weeksView.timeUnitAmount.text {
+        if let timeUnitAmount = weeksCell?.timeUnitAmount.text {
             if let timeUnitAmountAsInt = Int(timeUnitAmount) {
                 updatedDate = updatedDate?.adding(.day, value: timeUnitAmountAsInt * 7)
             }
         }
-        if let updatedDate = updatedDate {
-            endDate = Strings.productCoveredUntil + formatter1.string(from: updatedDate)
-            self.updatedDate = updatedDate
-        }
     }
     
     private func updateMonths() {
-        let formatter1 = DateFormatter()
-        formatter1.dateStyle = .full
-        formatter1.locale = Locale(identifier: Strings.localeIdentifier)
-        if let timeUnitAmount = monthsView.timeUnitAmount.text {
+        if let timeUnitAmount = monthsCell?.timeUnitAmount.text {
             if let timeUnitAmountAsInt = Int(timeUnitAmount) {
                 updatedDate = updatedDate?.adding(.month, value: timeUnitAmountAsInt)
             }
         }
-        if let updatedDate = updatedDate {
-            endDate = Strings.productCoveredUntil + formatter1.string(from: updatedDate)
-            self.updatedDate = updatedDate
-        }
     }
     
     private func updateYears() {
-        let formatter1 = DateFormatter()
-        formatter1.dateStyle = .full
-        formatter1.locale = Locale(identifier: Strings.localeIdentifier)
-        if let timeUnitAmount = yearsView.timeUnitAmount.text {
+        if let timeUnitAmount = yearsCell?.timeUnitAmount.text {
             if let timeUnitAmountAsInt = Int(timeUnitAmount) {
                 updatedDate = updatedDate?.adding(.year, value: timeUnitAmountAsInt)
             }
-        }
-        if let updatedDate = updatedDate {
-            endDate = Strings.productCoveredUntil + formatter1.string(from: updatedDate)
-            self.updatedDate = updatedDate
         }
     }
     
     private func updateDateAfterTurningSwitchOff() {
         if updatedDate == nil {
-            updatedDate = datePicker.date
+            updatedDate = datePickerCell?.datePicker.date
         }
         let formatter1 = DateFormatter()
         formatter1.dateStyle = .full
         formatter1.locale = Locale(identifier: Strings.localeIdentifier)
         if let updatedDate = updatedDate {
-            if weeksView.timeUnitAmount.text == "0" && monthsView.timeUnitAmount.text == "0" && yearsView.timeUnitAmount.text == "0" {
+            if weeksCell?.timeUnitAmount.text == "0" && monthsCell?.timeUnitAmount.text == "0" && yearsCell?.timeUnitAmount.text == "0" {
                 endDate = Strings.productCoveredUntil
             } else {
                 endDate = Strings.productCoveredUntil + formatter1.string(from: updatedDate)
             }
         }
     }
+    
+    // MARK: - CollectionView configuration
     
     private func configureDataSource() {
         diffableDataSource = UICollectionViewDiffableDataSource<Section, Item>(collectionView: collectionView, cellProvider: { collectionView, indexPath, itemIdentifier in
@@ -279,31 +254,34 @@ class NewWarrantyProductInfoViewController: UIViewController {
                 return cell
             case .datePicker:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constant.datePickerCellIdentifier, for: indexPath) as? DatePickerCell
-                // cell?.comic = result
                 cell?.datePicker.addTarget(self, action: #selector(self.updateTimeIntervals), for: .editingDidEnd)
+                self.datePickerCell = cell
                 return cell
             case .lifetimeWarranty:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constant.labelAndSwitchCellIdentifier, for: indexPath) as? LabelAndSwitchCell
                 cell?.label.text = Strings.lifetimeWarranty
                 cell?.switchButton.addTarget(self, action: #selector(self.lifetimeSwitchAction), for: .valueChanged)
                 if let isSwitchOn = cell?.switchButton.isOn {
-                self.isLifeTimeWarranty = isSwitchOn
+                    self.isLifeTimeWarranty = isSwitchOn
                 }
                 return cell
             case .yearsStepper:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constant.timeSpanWithStepperCellIdentifier, for: indexPath) as? TimeSpanWithStepperCell
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constant.yearsCellIdentifier, for: indexPath) as? TimeSpanWithStepperCell
                 cell?.timeUnitTitle.text = Strings.years
                 cell?.stepper.addTarget(self, action: #selector(self.yearsStepperTapped), for: .valueChanged)
+                self.yearsCell = cell
                 return cell
             case .monthsStepper:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constant.timeSpanWithStepperCellIdentifier, for: indexPath) as? TimeSpanWithStepperCell
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constant.monthsCellIdentifier, for: indexPath) as? TimeSpanWithStepperCell
                 cell?.timeUnitTitle.text = Strings.months
                 cell?.stepper.addTarget(self, action: #selector(self.monthsStepperTapped), for: .valueChanged)
+                self.monthsCell = cell
                 return cell
             case .weeksStepper:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constant.timeSpanWithStepperCellIdentifier, for: indexPath) as? TimeSpanWithStepperCell
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constant.weeksCellIdentifier, for: indexPath) as? TimeSpanWithStepperCell
                 cell?.timeUnitTitle.text = Strings.weeks
                 cell?.stepper.addTarget(self, action: #selector(self.weeksStepperTapped), for: .valueChanged)
+                self.weeksCell = cell
                 return cell
             case .reminder:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constant.labelAndSwitchCellIdentifier, for: indexPath) as? LabelAndSwitchCell
@@ -314,6 +292,7 @@ class NewWarrantyProductInfoViewController: UIViewController {
             case .warrantyExpirationItem(let expirationDate):
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constant.warrantyExpirationDateCellIdentifier, for: indexPath) as? WarrantyExpirationDateCell
                 cell?.endDateLabel.text = expirationDate
+                self.warrantyExpirationDateCell = cell
                 return cell
             }
         })
@@ -340,17 +319,11 @@ class NewWarrantyProductInfoViewController: UIViewController {
         snapshot.appendSections([Section.warrantyTitle, Section.warrantyStart, Section.validityLength, Section.warrantyExpirationSection])
         snapshot.appendItems([.warrantyTitleField], toSection: .warrantyTitle)
         snapshot.appendItems([.datePicker], toSection: .warrantyStart)
-        snapshot.appendItems([.lifetimeWarranty, .yearsStepper, .monthsStepper, .weeksStepper, .reminder], toSection: .warrantyStart)
-        snapshot.appendItems([.warrantyExpirationItem(expirationDate: endDate)], toSection: .warrantyExpirationSection)
-        return snapshot
-    }
-    
-    private func createSnapshotForLifeTimeWarranties() -> NSDiffableDataSourceSnapshot<Section, Item> {
-        var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
-        snapshot.appendSections([Section.warrantyTitle, Section.warrantyStart, Section.validityLength, Section.warrantyExpirationSection])
-        snapshot.appendItems([.warrantyTitleField], toSection: .warrantyTitle)
-        snapshot.appendItems([.datePicker], toSection: .warrantyStart)
-        snapshot.appendItems([.lifetimeWarranty], toSection: .warrantyStart)
+        if isLifeTimeWarranty {
+            snapshot.appendItems([.lifetimeWarranty], toSection: .validityLength)
+        } else {
+            snapshot.appendItems([.lifetimeWarranty, .yearsStepper, .monthsStepper, .weeksStepper, .reminder], toSection: .validityLength)
+        }
         snapshot.appendItems([.warrantyExpirationItem(expirationDate: endDate)], toSection: .warrantyExpirationSection)
         return snapshot
     }
@@ -372,28 +345,6 @@ class NewWarrantyProductInfoViewController: UIViewController {
     }
 }
 
-extension NewWarrantyProductInfoViewController: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        if indexPath.section == Section.warrantyExpirationSection.rawValue {
-//            return CGSize(width: view.frame.size.width, height: 90)
-//        }
-//    }
-    
-}
-
-private extension NewWarrantyProductInfoViewController {
-    private class DataSource: UICollectionViewDiffableDataSource<Section, Item> {
-//        collecion
-//        override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-//            let sectionKind = Section(rawValue: section)
-//            return sectionKind?.headerTitle
-//        }
-//        override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-//            return false
-//        }
-    }
-}
-
 extension NewWarrantyProductInfoViewController {
     
     // MARK: - View configuration
@@ -404,11 +355,16 @@ extension NewWarrantyProductInfoViewController {
         static let labelAndSwitchCellIdentifier = "LabelAndSwitchCell"
         static let timeSpanWithStepperCellIdentifier = "TimeSpanWithStepperCell"
         static let warrantyExpirationDateCellIdentifier = "WarrantyExpirationDateCell"
+        
+        static let yearsCellIdentifier = "YearsCellIdentifier"
+        static let monthsCellIdentifier = "MonthsCellIdentifier"
+        static let weeksCellIdentifier = "WeeksCellIdentifier"
+
     }
     
     private func setupView() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .close, target: self, action: #selector(aboutToCloseAlert))
-
+        
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: configureLayout())
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.delegate = self
@@ -416,9 +372,14 @@ extension NewWarrantyProductInfoViewController {
         collectionView.register(WarrantyTitleFieldCell.self, forCellWithReuseIdentifier: WarrantyTitleFieldCell.identifier)
         collectionView.register(DatePickerCell.self, forCellWithReuseIdentifier: DatePickerCell.identifier)
         collectionView.register(LabelAndSwitchCell.self, forCellWithReuseIdentifier: LabelAndSwitchCell.identifier)
-        collectionView.register(TimeSpanWithStepperCell.self, forCellWithReuseIdentifier: TimeSpanWithStepperCell.identifier)
-        collectionView.register(WarrantyExpirationDateCell.self, forCellWithReuseIdentifier: WarrantyExpirationDateCell.identifier)
+      //  collectionView.register(TimeSpanWithStepperCell.self, forCellWithReuseIdentifier: TimeSpanWithStepperCell.identifier)
+        collectionView.register(TimeSpanWithStepperCell.self, forCellWithReuseIdentifier: TimeSpanWithStepperCell.yearsCellIdentifier)
+        collectionView.register(TimeSpanWithStepperCell.self, forCellWithReuseIdentifier: TimeSpanWithStepperCell.monthsCellIdentifier)
+        collectionView.register(TimeSpanWithStepperCell.self, forCellWithReuseIdentifier: TimeSpanWithStepperCell.weeksCellIdentifier)
 
+
+        collectionView.register(WarrantyExpirationDateCell.self, forCellWithReuseIdentifier: WarrantyExpirationDateCell.identifier)
+        
         endCurrentScreenButton.setup(title: Strings.nextStepButtonTitle)
         endCurrentScreenButton.addTarget(self, action: #selector(goToAddProductPhotoScreen), for: .touchUpInside)
         
@@ -430,7 +391,7 @@ extension NewWarrantyProductInfoViewController {
             collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
-           
+            
             endCurrentScreenButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             endCurrentScreenButton.topAnchor.constraint(equalTo: collectionView.bottomAnchor, constant: 16),
             endCurrentScreenButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -24),
@@ -439,6 +400,8 @@ extension NewWarrantyProductInfoViewController {
         ])
     }
 }
+
+extension NewWarrantyProductInfoViewController: UICollectionViewDelegate {}
 
 
 //import UIKit

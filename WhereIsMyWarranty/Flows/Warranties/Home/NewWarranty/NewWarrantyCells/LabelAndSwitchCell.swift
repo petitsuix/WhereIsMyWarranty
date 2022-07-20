@@ -21,6 +21,7 @@ class LabelAndSwitchCell: UICollectionViewListCell {
         }
     }
     
+    
     let label = UILabel()
     let switchButton = UISwitch()
     
@@ -49,6 +50,7 @@ class LabelAndSwitchCell: UICollectionViewListCell {
 // MARK: - Configuration
 
 extension LabelAndSwitchCell {
+    
     func setupUI() {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .natural
@@ -66,7 +68,21 @@ extension LabelAndSwitchCell {
         ])
     }
     
+    func configure(with item: Configuration) {
+        label.text = item.title
+    }
+    
     func setupData() {
+    }
+}
+
+extension LabelAndSwitchCell {
+    struct Configuration {
+        let title: String?
+
+        init(title: String?) {
+            self.title = title
+        }
     }
 }
 

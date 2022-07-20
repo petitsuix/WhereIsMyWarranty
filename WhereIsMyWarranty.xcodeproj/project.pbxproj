@@ -514,8 +514,8 @@
 		97E03BD6276763A600EFEE79 /* Coordinators */ = {
 			isa = PBXGroup;
 			children = (
-				97E03BD9276763FE00EFEE79 /* Coordinator Protocol */,
 				976304B7275E396300688DDB /* AppCoordinator.swift */,
+				97E03BD9276763FE00EFEE79 /* Coordinator Protocol */,
 				97E03BD7276763BA00EFEE79 /* Child Coordinators */,
 			);
 			path = Coordinators;

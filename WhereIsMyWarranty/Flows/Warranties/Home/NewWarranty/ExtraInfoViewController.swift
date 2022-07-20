@@ -143,9 +143,8 @@ class ExtraInfoViewController: UIViewController {
     
     // MARK: - Methods
     //swiftlint:disable cyclomatic_complexity
-    /// FIX ME : data source configuration method bellow initially created cells by switching on itemIdentifier. Depending on the case (.model, .price...), a cell was returned. But we needed to find a way to save the values held inside each
-    /// cell's textField : both when creating and editing a warranty. Delegate method didSelectRowAt doesn't work, it is never called (probably because the interaction is handled by the textField right away, not the cell itself). Best way found
-    /// so far is to add a target to the textField, create @objc methods that will be called upon editing. Another benefit is that while edtiting a warranty, only edited values are saved, instead of saving all values once again. But this method is very heavy.
+    /// FIX ME : data source configuration method bellow initially created cells by switching on itemIdentifier. Depending on the case (.model, .price...), a cell was returned. But we needed to find a way to save the values held inside each cell's textField : both when creating and editing a warranty. Delegate method didSelectRowAt doesn't work, it is never called (probably because the interaction is handled by the textField right away, not the cell itself).
+    /// Best way found so far is to add a target to the textField, create @objc methods that will be called upon editing. Another benefit is that while edtiting a warranty, only edited values are saved, instead of saving all values once again. But this method is very heavy.
     private func configureExtraInfoTableViewDataSource() {
         extraInfoTableViewDiffableDataSource = DataSource(tableView: tableView, cellProvider: { tableView, indexPath, itemIdentifier in
             

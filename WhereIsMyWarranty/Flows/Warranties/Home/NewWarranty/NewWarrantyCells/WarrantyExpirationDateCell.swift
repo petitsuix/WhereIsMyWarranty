@@ -47,8 +47,21 @@ extension WarrantyExpirationDateCell {
         ])
     }
     
+    func configure(with item: Configuration) {
+        endDateLabel.text = item.endDateLabelTitle
+    }
+    
     func setupData() {
         
     }
 }
 
+extension WarrantyExpirationDateCell {
+    struct Configuration {
+        let endDateLabelTitle: String?
+
+        init(endDateLabelTitle: String?) {
+            self.endDateLabelTitle = endDateLabelTitle
+        }
+    }
+}

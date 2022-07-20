@@ -11,10 +11,14 @@ class TimeSpanWithStepperCell: UICollectionViewListCell {
     
     // MARK: - Internal properties
     
-    static let identifier = "TimeSpanWithStepperCell"
+    static let yearsCellIdentifier = "YearsCellIdentifier"
+    static let monthsCellIdentifier = "MonthsCellIdentifier"
+    static let weeksCellIdentifier = "WeeksCellIdentifier"
     
     var timeUnitTitle = UILabel()
     var stepper = UIStepper()
+    var timeUnitAmount = UILabel()
+    
     var didIncrementStepper: Bool = false
     
     var stepperAmount: Double = 0 {
@@ -23,8 +27,6 @@ class TimeSpanWithStepperCell: UICollectionViewListCell {
             stepperValue = stepperAmount
         }
     }
-    
-    var timeUnitAmount = UILabel()
     
     // MARK: - Private properties
     
@@ -73,6 +75,7 @@ extension TimeSpanWithStepperCell {
         stepper.maximumValue = 99
         stepper.addTarget(self, action: #selector(updateTimeUnitAmount(_:)), for: .valueChanged)
         timeUnitAmount.text = "0"
+        timeUnitAmount.backgroundColor = .green
         
         stepperStackView.axis = .horizontal
         stepperStackView.spacing = 24
@@ -95,5 +98,18 @@ extension TimeSpanWithStepperCell {
             timeUnitAmount.widthAnchor.constraint(equalToConstant: 25)
         ])
     }
+    
+    func configure(with item: Configuration) {
+        timeUnitTitle.text = item.timeUnitTitle
+    }
 }
 
+extension TimeSpanWithStepperCell {
+    struct Configuration {
+        let timeUnitTitle: String?
+
+        init(timeUnitTitle: String?) {
+            self.timeUnitTitle = timeUnitTitle
+        }
+    }
+}
